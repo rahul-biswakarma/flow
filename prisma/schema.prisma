@@ -1,0 +1,148 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider     = "postgresql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  emailVerified DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  workspaceMemberships WorkspaceMembership[]
+  userRoles            UserRole[]
+
+  @@index([id])
+}
+
+model Workspace {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+  roles       Role[]
+  slug        String  @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relationship
+  workspaceMembers WorkspaceMembership[]
+
+  @@index([id])
+}
+
+model Role {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationship
+  workspaceId String
+  workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  userRoles   UserRole[]
+
+  @@index([workspaceId])
+}
+
+model UserRole {
+  userId      String
+  roleId      String
+  permissions Permissions[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+  @@index([roleId])
+  @@index([userId])
+}
+
+model WorkspaceMembership {
+  userId      String
+  workspaceId String
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@id([userId, workspaceId])
+  @@index([userId])
+  @@index([workspaceId])
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+enum WorkspaceState {
+  ACTIVE
+  INACTIVE
+  DELETED
+  PENDING
+}
+
+enum UserState {
+  ACTIVE
+  INACTIVE
+  DELETED
+  PENDING
+}
+
+enum Permissions {
+  CREATE_NODES
+  DELETE_NODES
+  UPDATE_NODES
+  READ_NODES
+
+  CREATE_ISSUES
+  DELETE_ISSUES
+  UPDATE_ISSUES
+  READ_ISSUES
+
+  CREATE_COMMENTS
+  READ_COMMENTS
+}
