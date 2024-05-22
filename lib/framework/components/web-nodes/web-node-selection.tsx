@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { action_nodes, visual_nodes } from '@/schemas/web.schema';
+import { action_nodes, visual_nodes } from '../../schemas';
 
 import { TextNodeWireFrame } from './text-node';
 
@@ -15,7 +15,6 @@ export const WebNodesSelection = ({ node }: NodeProps) => {
   switch (node.type) {
     case 'text':
       return <TextNodeWireFrame {...node} />;
-
     default:
       return null;
   }

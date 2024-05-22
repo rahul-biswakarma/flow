@@ -21,24 +21,23 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  workspaceMemberships WorkspaceMembership[]
-  userRoles            UserRole[]
+  projectMemberships ProjectMembership[]
+  userRoles          UserRole[]
 
   @@index([id])
 }
 
-model Workspace {
+model Project {
   id          String  @id @default(cuid())
   name        String
   description String?
   roles       Role[]
-  slug        String  @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relationship
-  workspaceMembers WorkspaceMembership[]
+  projectMembers ProjectMembership[]
 
   @@index([id])
 }
@@ -51,11 +50,11 @@ model Role {
   updatedAt   DateTime @updatedAt
 
   // Relationship
-  workspaceId String
-  workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  userRoles   UserRole[]
+  projectId String
+  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userRoles UserRole[]
 
-  @@index([workspaceId])
+  @@index([projectId])
 }
 
 model UserRole {
@@ -71,16 +70,24 @@ model UserRole {
   @@index([userId])
 }
 
-model WorkspaceMembership {
-  userId      String
-  workspaceId String
+model ProjectMembership {
+  userId    String
+  projectId String
 
-  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
-  @@id([userId, workspaceId])
+  @@id([userId, projectId])
   @@index([userId])
-  @@index([workspaceId])
+  @@index([projectId])
+}
+
+model Page {
+  id        String   @id @default(cuid())
+  name      String
+  config    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Account {
@@ -118,7 +125,7 @@ model Session {
   @@index([userId])
 }
 
-enum WorkspaceState {
+enum ProjectState {
   ACTIVE
   INACTIVE
   DELETED
