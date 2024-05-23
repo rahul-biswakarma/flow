@@ -11,5 +11,5 @@ export const ProjectRedirect = (projectSlug: string) => {
 };
 
 export const ProjectSelectionRedirect = () => {
-  redirect('/', RedirectType.replace);
+  redirect('/project-selection', RedirectType.replace);
 };
