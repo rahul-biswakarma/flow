@@ -32,12 +32,14 @@ model Project {
   name        String
   description String?
   roles       Role[]
+  slug        String  @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relationship
   projectMembers ProjectMembership[]
+  pages          Page[]
 
   @@index([id])
 }
@@ -83,11 +85,16 @@ model ProjectMembership {
 }
 
 model Page {
-  id        String   @id @default(cuid())
+  id        String  @id @default(cuid())
   name      String
   config    String
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([projectId])
 }
 
 model Account {
