@@ -6,6 +6,10 @@ export const LoginRedirect = () => {
   redirect(NextAuthConstants.SignIn, RedirectType.replace);
 };
 
-export const WorkspaceRedirect = (workspaceId: string) => {
-  redirect(`/${workspaceId}`, RedirectType.push);
+export const ProjectRedirect = (projectSlug: string) => {
+  redirect(`/${projectSlug}`, RedirectType.push);
+};
+
+export const ProjectSelectionRedirect = () => {
+  redirect('/', RedirectType.replace);
 };
