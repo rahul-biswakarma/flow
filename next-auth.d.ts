@@ -5,7 +5,7 @@ declare module 'next-auth' {
     user: DefaultSession['user'] & {
       isNewUser: boolean;
     };
-    organization?: {
+    project?: {
       id: string;
       slug: string;
     };
