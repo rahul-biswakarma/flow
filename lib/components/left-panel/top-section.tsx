@@ -1,5 +1,6 @@
-import { Tabs, Tab } from '@nextui-org/tabs';
 import { Page } from '@prisma/client';
+
+import { TabsList, TabsTrigger, TabsContent, Tabs } from '../ui/tabs';
 
 import { PagesContainer } from './containers/pages';
 
@@ -10,13 +11,17 @@ interface TopSectionProps {
 export const TopSection = ({ pages }: TopSectionProps) => {
   return (
     <div className="flex w-full flex-col">
-      <Tabs fullWidth aria-label="Options">
-        <Tab key="pages" title="Pages">
+      <Tabs className="w-[400px]" defaultValue="account">
+        <TabsList>
+          <TabsTrigger value="pages">Pages</TabsTrigger>
+          <TabsTrigger value="components">Components</TabsTrigger>
+        </TabsList>
+        <TabsContent value="account">
           <PagesContainer pages={pages} />
-        </Tab>
-        <Tab key="components" title="Components">
+        </TabsContent>
+        <TabsContent value="password">
           <div>Bye</div>
-        </Tab>
+        </TabsContent>
       </Tabs>
     </div>
   );

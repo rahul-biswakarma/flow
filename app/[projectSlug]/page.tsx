@@ -1,3 +1,4 @@
+import { ProjectSelection } from '@/lib/components';
 import { auth } from '@/lib/utils/auth';
 import { prisma } from '@/lib/utils/db';
 import { LoginRedirect } from '@/lib/utils/redirects';
@@ -10,7 +11,7 @@ export default async function Project({ params }: { params: { projectSlug: strin
     LoginRedirect();
   }
 
-  const project = prisma.project.findUnique({
+  const project = await prisma.project.findUnique({
     where: {
       slug: params.projectSlug,
       projectMembers: {
@@ -25,12 +26,8 @@ export default async function Project({ params }: { params: { projectSlug: strin
   });
 
   if (!project) {
-    return <div>Project not found</div>;
+    return <ProjectSelection userId={userId} />;
   }
 
-  return (
-    <div>
-      <h1>Project</h1>
-    </div>
-  );
+  return <div className="flex gap-x-10">{project.name}</div>;
 }

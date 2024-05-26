@@ -1,10 +1,11 @@
 'use client';
 
 import { IconPlus } from '@tabler/icons-react';
-import { Button } from '@nextui-org/button';
 import { Page } from '@prisma/client';
 import { useState } from 'react';
-import { Input } from '@nextui-org/input';
+
+import { Button } from '../../ui/button';
+import { Input } from '../../ui/input';
 
 import { IconSize, IconStrokeWidth } from '@/lib/constants/ui';
 import { useClickOutside } from '@/lib/hooks';
@@ -28,13 +29,7 @@ export const PagesContainer = ({ pages }: PagesContainerProps) => {
     <div className="flex h-full w-full flex-col gap-4">
       <div className="flex w-full items-center justify-between">
         <span>Pages</span>
-        <Button
-          isIconOnly
-          aria-label="Add new page"
-          size="sm"
-          variant="light"
-          onClick={() => setEnableCreatePage(true)}
-        >
+        <Button aria-label="Add new page" size="icon" onClick={() => setEnableCreatePage(true)}>
           <IconPlus size={IconSize.MD} strokeWidth={IconStrokeWidth} />
         </Button>
       </div>
@@ -45,8 +40,6 @@ export const PagesContainer = ({ pages }: PagesContainerProps) => {
             ref={newPageInputRef}
             autoFocus
             placeholder="Page Name"
-            radius="sm"
-            size="sm"
             value={newPageName}
             onChange={(e) => setNewPageName(e.target.value)}
           />

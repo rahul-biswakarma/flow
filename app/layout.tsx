@@ -2,11 +2,9 @@ import '@/lib/styles/globals.css';
 import { Metadata, Viewport } from 'next';
 import clsx from 'clsx';
 
-import { Providers } from './providers';
-
 import { siteConfig } from '@/lib/config/site';
 import { fontSans } from '@/lib/config/fonts';
-import { NextAuthProvider } from '@/lib/components';
+import { NextAuthProvider, ThemeProvider } from '@/lib/components';
 
 export const metadata: Metadata = {
   title: {
@@ -32,9 +30,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html suppressHydrationWarning lang="en">
         <head />
         <body className={clsx('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
-          <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
+          <ThemeProvider enableSystem attribute="class" defaultTheme="system">
             <div className="relative flex h-screen flex-col">{children}</div>
-          </Providers>
+          </ThemeProvider>
         </body>
       </html>
     </NextAuthProvider>
