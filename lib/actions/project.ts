@@ -1,11 +1,17 @@
+'use server';
+
 import { auth } from '../utils/auth';
 import { prisma } from '../utils/db';
 
-export const createProject = async (name: string, slug: string) => {
-  'use server';
+export const createProject = async (prevState: any, formData: FormData) => {
+  const name = formData.get('project-name') as string;
+  const slug = formData.get('project-slug') as string;
+
+  console.log('formData', formData);
+
   const session = await auth();
 
-  prisma.project.create({
+  await prisma.project.create({
     data: {
       name,
       slug,
