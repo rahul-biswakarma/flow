@@ -7,11 +7,9 @@ export const createProject = async (prevState: any, formData: FormData) => {
   const name = formData.get('project-name') as string;
   const slug = formData.get('project-slug') as string;
 
-  console.log('formData', formData);
-
   const session = await auth();
 
-  await prisma.project.create({
+  return await prisma.project.create({
     data: {
       name,
       slug,

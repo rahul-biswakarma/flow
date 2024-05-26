@@ -1,4 +1,4 @@
-import { ProjectSelection } from '@/lib/components';
+import { Onboarding } from '@/lib/components/onboarding/onboarding';
 import { auth } from '@/lib/utils/auth';
 import { prisma } from '@/lib/utils/db';
 import { LoginRedirect } from '@/lib/utils/redirects';
@@ -26,7 +26,7 @@ export default async function Project({ params }: { params: { projectSlug: strin
   });
 
   if (!project) {
-    return <ProjectSelection userId={userId} />;
+    return <Onboarding userId={userId} />;
   }
 
   return <div className="flex gap-x-10">{project.name}</div>;
