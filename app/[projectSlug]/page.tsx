@@ -1,3 +1,4 @@
+import { Product } from '@/lib/components';
 import { Onboarding } from '@/lib/components/onboarding/onboarding';
 import { auth } from '@/lib/utils/auth';
 import { prisma } from '@/lib/utils/db';
@@ -29,5 +30,5 @@ export default async function Project({ params }: { params: { projectSlug: strin
     return <Onboarding userId={userId} />;
   }
 
-  return <div className="flex gap-x-10">{project.name}</div>;
+  return <Product project={project} />;
 }

@@ -12,7 +12,7 @@ interface LeftPanelProps {
 
 export const LeftPanel = ({ pages }: LeftPanelProps) => {
   return (
-    <div className="h-full w-full bg-content1">
+    <div className="h-full w-full">
       <ResizablePanelGroup direction="vertical">
         <ResizablePanel defaultSize={60}>
           <TopSection pages={pages} />
