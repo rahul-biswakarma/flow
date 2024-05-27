@@ -11,15 +11,15 @@ interface TopSectionProps {
 export const TopSection = ({ pages }: TopSectionProps) => {
   return (
     <div className="flex w-full flex-col">
-      <Tabs className="w-[400px]" defaultValue="account">
-        <TabsList>
+      <Tabs className="w-[400px]" defaultValue="pages">
+        <TabsList className="w-full">
           <TabsTrigger value="pages">Pages</TabsTrigger>
           <TabsTrigger value="components">Components</TabsTrigger>
         </TabsList>
-        <TabsContent value="account">
+        <TabsContent value="pages">
           <PagesContainer pages={pages} />
         </TabsContent>
-        <TabsContent value="password">
+        <TabsContent value="components">
           <div>Bye</div>
         </TabsContent>
       </Tabs>

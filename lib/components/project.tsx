@@ -8,8 +8,9 @@ type ProjectWithPages = Project & {
 
 export const Product = ({ project }: { project: ProjectWithPages }) => {
   return (
-    <div>
+    <div className="flex h-full w-full">
       <LeftPanel pages={project.pages ?? []} />
+      <div>Hello</div>
     </div>
   );
 };
