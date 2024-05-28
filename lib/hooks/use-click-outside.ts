@@ -1,74 +1,58 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-interface Props {
-  onTriggered: (e: Event) => void;
-  disableClick?: boolean;
-  disableTouch?: boolean;
-  disableKeys?: boolean;
-  allowAnyKey?: boolean;
-  triggerKeys?: string[];
-}
+type HandlerType = (event: MouseEvent | TouchEvent) => void;
 
-type ClickOrTouchListener = (e: MouseEvent | TouchEvent) => void;
-type KeyListener = (e: KeyboardEvent) => void;
-type EventConfigItem = [boolean | undefined, string, (e: Event) => void];
-
-export function useClickOutside<T extends HTMLElement>({
-  onTriggered,
-  disableClick,
-  disableTouch,
-  disableKeys,
-  allowAnyKey,
-  triggerKeys,
-}: Props) {
-  const ref = useRef<T | null>(null);
-
-  const keyListener = useCallback<KeyListener>(
-    (e) => {
-      if (allowAnyKey) {
-        onTriggered(e);
-      } else if (triggerKeys && triggerKeys.includes(e.key)) {
-        onTriggered(e);
-      } else if (e.key === 'Escape') {
-        onTriggered(e);
-      }
-    },
-    [allowAnyKey, triggerKeys, onTriggered],
-  );
-
-  const clickOrTouchListener = useCallback<ClickOrTouchListener>(
-    (e) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        onTriggered(e);
-      }
-    },
-    [onTriggered],
-  );
-
-  const eventsConfig: EventConfigItem[] = useMemo(
-    () => [
-      [disableClick, 'click', clickOrTouchListener as unknown as (e: Event) => void],
-      [disableTouch, 'touchstart', clickOrTouchListener as unknown as (e: Event) => void],
-      [disableKeys, 'keyup', keyListener as unknown as (e: Event) => void],
-    ],
-    [disableClick, disableTouch, disableKeys, clickOrTouchListener, keyListener],
-  );
+/**
+ * @param ref Reference to the element (or list of elements) on which we want to detect outside click
+ * @param handler A callback that will be called if user clicks outside `ref` element
+ * @param when If provided, it will only add event listeners when `when` is truthful
+ */
+export function useOnClickOutside(
+  ref: React.RefObject<HTMLElement> | React.RefObject<HTMLElement>[],
+  handler: HandlerType,
+  when = true,
+) {
+  const refs = usePropRef(getArrayOfValues(ref));
+  const handlerRef = useRef<HandlerType>(() => void 0);
 
   useEffect(() => {
-    eventsConfig.forEach(([isDisabled, eventName, listener]) => {
-      if (!isDisabled) {
-        document.addEventListener(eventName, listener);
+    handlerRef.current = handler;
+  }, [handler]);
+
+  useEffect(() => {
+    if (!when) return;
+
+    const listener: HandlerType = (event: MouseEvent | TouchEvent) => {
+      if (!refs.current) return;
+      const target = event.target as Element;
+
+      // Do nothing if clicking ref's element or descendent elements
+      if (refs.current.some((r) => r.current?.contains(target))) {
+        return;
       }
-    });
+      handlerRef.current?.(event);
+    };
+
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
 
     return () => {
-      eventsConfig.forEach(([isDisabled, eventName, listener]) => {
-        if (!isDisabled) {
-          document.removeEventListener(eventName, listener);
-        }
-      });
+      document.removeEventListener('mousedown', listener);
+      document.removeEventListener('touchstart', listener);
     };
-  }, [eventsConfig]);
+  }, [refs, when]);
+}
+
+function getArrayOfValues<T>(data: T | Array<T>): Array<T> {
+  return data !== undefined && data !== null ? (Array.isArray(data) ? data : [data]) : [];
+}
+
+function usePropRef<T>(propValue: T) {
+  const ref = useRef(propValue);
+
+  useEffect(() => {
+    ref.current = propValue;
+  }, [propValue]);
 
   return ref;
 }

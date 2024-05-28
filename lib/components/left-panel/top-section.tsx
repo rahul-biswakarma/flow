@@ -10,8 +10,8 @@ interface TopSectionProps {
 
 export const TopSection = ({ pages }: TopSectionProps) => {
   return (
-    <div className="flex w-full flex-col">
-      <Tabs className="w-[400px]" defaultValue="pages">
+    <div className="flex w-full flex-col p-3">
+      <Tabs defaultValue="pages">
         <TabsList className="w-full">
           <TabsTrigger value="pages">Pages</TabsTrigger>
           <TabsTrigger value="components">Components</TabsTrigger>
