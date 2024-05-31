@@ -1,14 +1,8 @@
-import { Page } from '@prisma/client';
-
 import { TabsList, TabsTrigger, TabsContent, Tabs } from '../ui/tabs';
 
-import { PagesContainer } from './containers/pages';
+import { PagesContainer } from './containers/pages/pages';
 
-interface TopSectionProps {
-  pages: Page[];
-}
-
-export const TopSection = ({ pages }: TopSectionProps) => {
+export const TopSection = () => {
   return (
     <div className="flex w-full flex-col p-3">
       <Tabs defaultValue="pages">
@@ -17,7 +11,7 @@ export const TopSection = ({ pages }: TopSectionProps) => {
           <TabsTrigger value="components">Components</TabsTrigger>
         </TabsList>
         <TabsContent value="pages">
-          <PagesContainer pages={pages} />
+          <PagesContainer />
         </TabsContent>
         <TabsContent value="components">
           <div>Bye</div>

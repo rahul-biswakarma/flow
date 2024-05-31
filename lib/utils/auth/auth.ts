@@ -5,7 +5,7 @@ import { prisma } from '../db';
 
 import authConfig from './auth.config';
 
-const { handlers, auth }: { handlers: any; auth: any } = NextAuth({
+const { handlers, auth, unstable_update }: { handlers: any; auth: any; unstable_update: any } = NextAuth({
   adapter: PrismaAdapter(prisma),
   callbacks: {
     jwt({ token, user, trigger }) {
@@ -29,4 +29,4 @@ const { handlers, auth }: { handlers: any; auth: any } = NextAuth({
   ...authConfig,
 });
 
-export { auth, handlers };
+export { auth, handlers, unstable_update as updateSession };

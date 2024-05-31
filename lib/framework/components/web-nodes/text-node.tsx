@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { text_node } from '@/schemas/web.schema';
+import { text_node } from '../../schemas/web.schema';
 
 type TextNodeType = z.infer<typeof text_node>;
 

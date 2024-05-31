@@ -1,21 +1,15 @@
 'use client';
 
-import { Page } from '@prisma/client';
-
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '../ui/resizable';
 
 import { TopSection } from './top-section';
 
-interface LeftPanelProps {
-  pages: Page[];
-}
-
-export const LeftPanel = ({ pages }: LeftPanelProps) => {
+export const LeftPanel = () => {
   return (
     <div className="h-full w-full max-w-[350px]">
       <ResizablePanelGroup direction="vertical">
         <ResizablePanel defaultSize={60}>
-          <TopSection pages={pages} />
+          <TopSection />
         </ResizablePanel>
         <ResizableHandle />
         <ResizablePanel>Two</ResizablePanel>

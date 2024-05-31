@@ -1,5 +1,6 @@
 import { Product } from '@/lib/components';
 import { Onboarding } from '@/lib/components/onboarding/onboarding';
+import { ProjectContextProvider } from '@/lib/context';
 import { auth } from '@/lib/utils/auth';
 import { prisma } from '@/lib/utils/db';
 import { LoginRedirect } from '@/lib/utils/redirects';
@@ -30,5 +31,9 @@ export default async function Project({ params }: { params: { projectSlug: strin
     return <Onboarding userId={userId} />;
   }
 
-  return <Product project={project} />;
+  return (
+    <ProjectContextProvider projectWithPages={project}>
+      <Product />
+    </ProjectContextProvider>
+  );
 }
