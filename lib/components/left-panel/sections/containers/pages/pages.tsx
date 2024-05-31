@@ -35,7 +35,7 @@ export const PagesContainer = () => {
   return (
     <div className="flex h-full w-full flex-col">
       <Header />
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1">
         {pages?.map((page) => (
           <ListPageItem
             key={page.id}
