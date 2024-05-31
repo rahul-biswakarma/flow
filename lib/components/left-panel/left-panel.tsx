@@ -6,7 +6,7 @@ import { TopSection } from './sections/top-section';
 
 export const LeftPanel = () => {
   return (
-    <div className="h-full w-full max-w-[350px]">
+    <div className="h-full w-full">
       <ResizablePanelGroup direction="vertical">
         <ResizablePanel defaultSize={60}>
           <TopSection />

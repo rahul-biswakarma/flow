@@ -4,7 +4,8 @@ import clsx from 'clsx';
 
 import { siteConfig } from '@/lib/config/site';
 import { fontSans } from '@/lib/config/fonts';
-import { NextAuthProvider, ThemeProvider } from '@/lib/components';
+import { ThemeProvider } from '@/lib/components';
+import { NextAuthProvider } from '@/lib/context';
 
 export const metadata: Metadata = {
   title: {
