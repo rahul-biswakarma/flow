@@ -1,4 +1,4 @@
-import { LeftPanel } from './left-panel';
+import { LeftPanel } from './left-panel/left-panel';
 
 export const Product = async () => {
   return (

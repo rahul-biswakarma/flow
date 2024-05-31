@@ -2,7 +2,7 @@
 
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '../ui/resizable';
 
-import { TopSection } from './top-section';
+import { TopSection } from './sections/top-section';
 
 export const LeftPanel = () => {
   return (

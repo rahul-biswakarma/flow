@@ -3,7 +3,7 @@
 import { IconPlus } from '@tabler/icons-react';
 import { useState } from 'react';
 
-import { Button } from '../../../ui/button';
+import { Button } from '../../../../ui/button';
 
 import { ListPageItem } from './list-page-item';
 import { CreatePage } from './create-page';

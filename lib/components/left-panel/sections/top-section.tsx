@@ -1,4 +1,4 @@
-import { TabsList, TabsTrigger, TabsContent, Tabs } from '../ui/tabs';
+import { TabsList, TabsTrigger, TabsContent, Tabs } from '../../ui/tabs';
 
 import { PagesContainer } from './containers/pages/pages';
 
