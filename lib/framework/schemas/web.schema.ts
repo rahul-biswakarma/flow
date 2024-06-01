@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export enum WebNodeTypes {
-  Text = 'web-node-text',
+  Label = 'web-node-label',
   Button = 'web-node-button',
   State = 'web-node-state',
   DataFetcher = 'web-node-data-fetcher',
@@ -13,13 +13,10 @@ export enum WebNodeTypes {
 
 export const WebNodeTextTypes = z.enum(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span']);
 
-export const text_node = z.object({
-  properties: z.object({
-    content: z.string(),
-    style: z.record(z.any()),
-    type: WebNodeTextTypes,
-  }),
-  type: z.enum([WebNodeTypes.Text]),
+export const label_node = z.object({
+  label: z.string(),
+  htmlTag: WebNodeTextTypes,
+  type: z.enum([WebNodeTypes.Label]),
 });
 
 export const button_node = z.object({
@@ -80,5 +77,5 @@ export const app_node = z.object({
   type: z.enum([WebNodeTypes.App]),
 });
 
-export const visual_nodes: any = z.lazy(() => z.union([text_node, button_node, container_node]));
+export const visual_nodes: any = z.lazy(() => z.union([label_node, button_node, container_node]));
 export const action_nodes: any = z.lazy(() => z.union([state_node, data_fetcher_node, redirect_node]));

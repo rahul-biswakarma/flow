@@ -1,1 +1,1 @@
-export * from './web-node-selection';
+export * from './label-node';
