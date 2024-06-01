@@ -1,5 +1,17 @@
+import { FC } from 'react';
+
 import LabelNode from './components/web-nodes/label-node';
 
-export const nodeTypes = {
-  label: LabelNode,
-};
+type WebNodeTypesType = {
+  id: string;
+  name: string;
+  renderer: FC<any>;
+}[];
+
+export const webNodeTypes: WebNodeTypesType = [
+  {
+    id: 'label-node',
+    name: 'Label',
+    renderer: LabelNode,
+  },
+];

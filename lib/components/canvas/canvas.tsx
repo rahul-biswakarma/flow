@@ -1,9 +1,15 @@
+import { FC } from 'react';
 import { ReactFlow } from '@xyflow/react';
 
-import { nodeTypes } from '@/lib/framework';
+import { webNodeTypes } from '@/lib/framework';
+
 import '@xyflow/react/dist/style.css';
 
 const proOptions = { hideAttribution: true };
+
+const nodeTypes: Record<string, FC<any>> = {};
+
+webNodeTypes.map((node) => (nodeTypes[node.id] = node.renderer));
 
 export const Canvas = () => {
   const initialNodes = [

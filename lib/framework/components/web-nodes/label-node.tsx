@@ -30,7 +30,7 @@ type LabelNodeProps = {
   isConnectable: boolean;
 };
 
-const LabelNode = memo(function LabelNodeRenderer({ data, isConnectable }: LabelNodeProps) {
+const LabelNode: React.FC<LabelNodeProps> = memo(function LabelNodeRenderer({ data, isConnectable }) {
   return (
     <>
       <Handle

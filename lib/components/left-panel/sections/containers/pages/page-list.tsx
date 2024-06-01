@@ -1,43 +1,27 @@
 'use client';
 
-import { IconPlus } from '@tabler/icons-react';
 import { useState } from 'react';
 
-import { Button } from '../../../../ui/button';
+import { TopSectionHeader } from '../../header';
 
-import { ListPageItem } from './list-page-item';
+import { PageListItem } from './page-list-item';
 import { CreatePage } from './create-page';
 
-import { IconSize, IconStrokeWidth } from '@/lib/constants/ui';
 import { useProjectContext } from '@/lib/context';
 
-export const PagesContainer = () => {
+export const ListPage = () => {
   const { project, currentPageId, setCurrentPageId } = useProjectContext();
 
   const [isCreatePageEnable, setIsCreatePageEnable] = useState(false);
 
   const pages = project?.pages;
 
-  const Header = () => (
-    <div className="flex w-full items-center justify-between">
-      <span>Pages</span>
-      <Button
-        aria-label="Add new page"
-        size="icon"
-        variant="ghost"
-        onClick={() => setIsCreatePageEnable(!isCreatePageEnable)}
-      >
-        <IconPlus size={IconSize.MD} strokeWidth={IconStrokeWidth} />
-      </Button>
-    </div>
-  );
-
   return (
     <div className="flex h-full w-full flex-col">
-      <Header />
+      <TopSectionHeader label="Pages" onClick={() => setIsCreatePageEnable(!isCreatePageEnable)} />
       <div className="flex flex-col gap-1">
         {pages?.map((page) => (
-          <ListPageItem
+          <PageListItem
             key={page.id}
             isActive={currentPageId === page.id}
             page={page}

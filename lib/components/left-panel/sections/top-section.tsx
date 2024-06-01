@@ -1,6 +1,7 @@
 import { TabsList, TabsTrigger, TabsContent, Tabs } from '../../ui/tabs';
 
-import { PagesContainer } from './containers/pages/pages';
+import { ComponentList } from './containers/components/component-list';
+import { ListPage } from './containers/pages/page-list';
 
 export const TopSection = () => {
   return (
@@ -11,10 +12,10 @@ export const TopSection = () => {
           <TabsTrigger value="components">Components</TabsTrigger>
         </TabsList>
         <TabsContent value="pages">
-          <PagesContainer />
+          <ListPage />
         </TabsContent>
         <TabsContent value="components">
-          <div>Bye</div>
+          <ComponentList />
         </TabsContent>
       </Tabs>
     </div>
