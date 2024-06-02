@@ -3,7 +3,16 @@
 import '@xyflow/react/dist/style.css';
 
 import { FC, useCallback, useRef, useState } from 'react';
-import { Connection, ReactFlow, ReactFlowInstance, addEdge, useEdgesState, useNodesState } from '@xyflow/react';
+import {
+  Connection,
+  Edge,
+  Node,
+  ReactFlow,
+  ReactFlowInstance,
+  addEdge,
+  useEdgesState,
+  useNodesState,
+} from '@xyflow/react';
 import { nanoid } from 'nanoid';
 
 import { webNodeTypes } from '@/lib/framework';
@@ -16,39 +25,41 @@ webNodeTypes.map((node) => (nodeTypes[node.id] = node.renderer));
 
 export const Canvas = () => {
   const reactFlowWrapper = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
 
   const onConnect = useCallback((params: Connection) => setEdges((eds) => addEdge(params, eds)), []);
 
-  const onDragOver = useCallback((event) => {
+  const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
   }, []);
 
   const onDrop = useCallback(
-    (event) => {
+    (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault();
 
-      const type = event.dataTransfer.getData('application/reactflow');
-
-      // check if the dropped element is valid
-      if (typeof type === 'undefined' || !type) {
+      if (!reactFlowInstance) {
         return;
       }
 
-      // reactFlowInstance.project was renamed to reactFlowInstance.screenToFlowPosition
-      // and you don't need to subtract the reactFlowBounds.left/top anymore
-      // details: https://reactflow.dev/whats-new/2023-11-10
+      const type = event.dataTransfer.getData('application/reactflow');
+
+      if (!type) {
+        return;
+      }
+
       const position = reactFlowInstance.screenToFlowPosition({
         x: event.clientX,
         y: event.clientY,
       });
-      const newNode = {
+
+      const newNode: Node = {
         id: nanoid(),
         type,
         position,
+        data: {},
       };
 
       setNodes((nds) => nds.concat(newNode));
