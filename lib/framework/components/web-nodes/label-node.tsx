@@ -5,7 +5,7 @@ import { Handle, Position } from '@xyflow/react';
 import { memo } from 'react';
 import React from 'react';
 
-import { label_node, SettingsTypes, NodeSettingType, WebNodeTypes } from '../../schemas';
+import { label_node, SettingsTypes, NodeSettingType } from '../../schemas';
 
 type LabelNodeType = z.infer<typeof label_node>;
 
@@ -30,16 +30,10 @@ type LabelNodeProps = {
   isConnectable: boolean;
 };
 
-const defaultLabelNodeData: LabelNodeType = {
-  label: 'Default Label',
-  htmlTag: 'p',
-  type: WebNodeTypes.Label,
-};
+const LabelNode: React.FC<LabelNodeProps> = memo(function LabelNodeRenderer({ data, isConnectable }) {
+  const htmlTag = data?.node?.htmlTag ?? HTMLTextComponents.p;
+  const label = data?.node?.label ?? 'Default Label';
 
-const LabelNode: React.FC<LabelNodeProps> = memo(function LabelNodeRenderer({
-  data = { node: defaultLabelNodeData, settings: [] },
-  isConnectable,
-}) {
   return (
     <>
       <Handle
@@ -49,7 +43,7 @@ const LabelNode: React.FC<LabelNodeProps> = memo(function LabelNodeRenderer({
         type="target"
         // onConnect={(params) => console.log('handle onConnect', params)}
       />
-      {React.createElement(HTMLTextComponents[data.node.htmlTag] || HTMLTextComponents.p, {}, data.node.label)}
+      {React.createElement(htmlTag, {}, label)}
     </>
   );
 });
