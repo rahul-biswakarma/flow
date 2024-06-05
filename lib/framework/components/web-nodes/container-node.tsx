@@ -5,41 +5,21 @@ import { Handle, Position } from '@xyflow/react';
 import { memo } from 'react';
 import React from 'react';
 
-import { label_node, SettingsTypes, NodeSettingType, WebNodeTypes } from '../../schemas';
+import { SettingsTypes, NodeSettingType, container_node } from '../../schemas';
 
-type LabelNodeType = z.infer<typeof label_node>;
-
-const HTMLTextComponents = {
-  h1: 'h1',
-  h2: 'h2',
-  h3: 'h3',
-  h4: 'h4',
-  h5: 'h5',
-  h6: 'h6',
-  p: 'p',
-  span: 'span',
-} as const;
+type ContainerNodeType = z.infer<typeof container_node>;
 
 type DataType = {
-  node: LabelNodeType & typeof NodeSettingType;
+  node: ContainerNodeType & typeof NodeSettingType;
   settings: (typeof SettingsTypes)[];
 };
 
-type LabelNodeProps = {
+type ContainerNodeProps = {
   data: DataType;
   isConnectable: boolean;
 };
 
-const defaultLabelNodeData: LabelNodeType = {
-  label: 'Default Label',
-  htmlTag: 'p',
-  type: WebNodeTypes.Label,
-};
-
-const LabelNode: React.FC<LabelNodeProps> = memo(function LabelNodeRenderer({
-  data = { node: defaultLabelNodeData, settings: [] },
-  isConnectable,
-}) {
+const ContainerNode: React.FC<ContainerNodeProps> = memo(function LabelNodeRenderer({ data, isConnectable }) {
   return (
     <>
       <Handle
@@ -49,9 +29,16 @@ const LabelNode: React.FC<LabelNodeProps> = memo(function LabelNodeRenderer({
         type="target"
         // onConnect={(params) => console.log('handle onConnect', params)}
       />
-      {React.createElement(HTMLTextComponents[data.node.htmlTag] || HTMLTextComponents.p, {}, data.node.label)}
+      <div className="p-4">Container</div>
+      <Handle
+        isConnectable={isConnectable}
+        position={Position.Bottom}
+        style={{ background: '#555' }}
+        type="source"
+        // onConnect={(params) => console.log('handle onConnect', params)}
+      />
     </>
   );
 });
 
-export default LabelNode;
+export default ContainerNode;
