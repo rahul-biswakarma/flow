@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
-import LabelNode from './components/web-nodes/label-node';
-import ContainerNode from './components/web-nodes/container-node';
+import { LabelNode, ContainerNode, ButtonNode } from './components';
 
 type WebNodeTypesType = {
   id: string;
@@ -19,5 +18,10 @@ export const webNodeTypes: WebNodeTypesType = [
     id: 'container-node',
     name: 'Container',
     renderer: ContainerNode,
+  },
+  {
+    id: 'button-node',
+    name: 'Button',
+    renderer: ButtonNode,
   },
 ];

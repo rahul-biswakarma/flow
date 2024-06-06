@@ -30,22 +30,17 @@ type LabelNodeProps = {
   isConnectable: boolean;
 };
 
-const LabelNode: React.FC<LabelNodeProps> = memo(function LabelNodeRenderer({ data, isConnectable }) {
-  const htmlTag = data?.node?.htmlTag ?? HTMLTextComponents.p;
-  const label = data?.node?.label ?? 'Default Label';
+export const LabelNode: React.FC<LabelNodeProps> = memo(function LabelNodeRenderer({ data, isConnectable }) {
+  const properties = data.node.properties;
+  const { htmlTag: specifiedHtmlTag, label: specifiedLabel } = properties;
+
+  const htmlTag = specifiedHtmlTag ?? HTMLTextComponents.p;
+  const label = specifiedLabel ?? 'Default Label';
 
   return (
     <>
-      <Handle
-        isConnectable={isConnectable}
-        position={Position.Top}
-        style={{ background: '#555' }}
-        type="target"
-        // onConnect={(params) => console.log('handle onConnect', params)}
-      />
+      <Handle isConnectable={isConnectable} position={Position.Top} style={{ background: '#555' }} type="target" />
       {React.createElement(htmlTag, {}, label)}
     </>
   );
 });
-
-export default LabelNode;
