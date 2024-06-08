@@ -31,7 +31,7 @@ type LabelNodeProps = {
 };
 
 export const LabelNode: React.FC<LabelNodeProps> = memo(function LabelNodeRenderer({ data, isConnectable }) {
-  const properties = data.node.properties;
+  const { properties } = data.node;
   const { htmlTag: specifiedHtmlTag, label: specifiedLabel } = properties;
 
   const htmlTag = specifiedHtmlTag ?? HTMLTextComponents.p;

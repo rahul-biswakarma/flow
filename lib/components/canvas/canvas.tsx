@@ -59,7 +59,9 @@ export const Canvas = () => {
         id: nanoid(),
         type,
         position,
-        data: {},
+        data: {
+          node: { properties: {} },
+        },
       };
 
       setNodes((nds) => nds.concat(newNode));

@@ -7,6 +7,8 @@ import React from 'react';
 
 import { button_node } from '../../schemas';
 
+import { Button } from '@/lib/components';
+
 type ButtonNodeType = z.infer<typeof button_node>;
 
 type DataType = {
@@ -20,18 +22,15 @@ type ButtonNodeProps = {
 };
 
 export const ButtonNode: React.FC<ButtonNodeProps> = memo(function ButtonNodeRenderer({ data, isConnectable }) {
-  const { properties } = data.node;
-  const { text } = properties;
-
   return (
     <>
       <Handle isConnectable={isConnectable} position={Position.Top} style={{ background: '#555' }} type="target" />
-      <button>{text}</button>
+      <Button>Button</Button>
       <Handle
         id="button-left-slot"
         isConnectable={isConnectable}
         position={Position.Bottom}
-        style={{ background: '#555' }}
+        style={{ background: '#555', left: 8 }}
         type="source"
       />
       <Handle
@@ -45,6 +44,13 @@ export const ButtonNode: React.FC<ButtonNodeProps> = memo(function ButtonNodeRen
         id="button-right-slot"
         isConnectable={isConnectable}
         position={Position.Bottom}
+        style={{ background: '#555', left: 70 }}
+        type="source"
+      />
+      <Handle
+        id="button-on-click"
+        isConnectable={isConnectable}
+        position={Position.Right}
         style={{ background: '#555' }}
         type="source"
       />
