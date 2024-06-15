@@ -22,8 +22,8 @@ export const Canvas = () => {
   const onSave = useOnSave();
   const reactFlowWrapper = useRef(null);
 
-  const { nodes, setNodes, onNodesChange, edges, setEdges, onEdgesChange } = useProjectContext();
   const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
+  const { nodes, setNodes, onNodesChange, edges, setEdges, onEdgesChange } = useProjectContext();
 
   const onConnect = useCallback((params: Connection) => setEdges((eds) => addEdge(params, eds)), []);
 

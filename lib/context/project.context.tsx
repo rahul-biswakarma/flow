@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { Page, Project } from '@prisma/client';
 import { useNodesState, useEdgesState, Edge, Node, OnNodesChange, OnEdgesChange } from '@xyflow/react';
 
@@ -37,6 +37,17 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
 
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+
+  useEffect(() => {
+    const currentPage = project.pages.find((page) => page.id === currentPageId);
+
+    if (!currentPage) return;
+
+    const data = JSON.parse(currentPage.data);
+
+    setNodes(data.nodes);
+    setEdges(data.edges);
+  }, [currentPageId, project.pages, setNodes, setEdges]);
 
   return (
     <ProjectContext.Provider
