@@ -33,12 +33,12 @@
     "next": "15.0.0-rc.0",
     "next-auth": "5.0.0-beta.19",
     "next-themes": "^0.3.0",
-    "pg": "^8.12.0",
+    "pg": "^8.11.5",
     "postcss": "8.4.38",
     "react": "19.0.0-rc-935180c7e0-20240524",
     "react-dom": "19.0.0-rc-935180c7e0-20240524",
+    "react-hotkeys-hook": "^4.5.0",
     "react-resizable-panels": "^2.0.19",
-    "react-shortcuts": "^2.1.0",
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.3.0",
     "tailwind-variants": "^0.1.20",
@@ -71,5 +71,10 @@
     "prettier-plugin-tailwindcss": "^0.5.14",
     "prisma": "^5.15.0"
   },
-  "packageManager": "pnpm@9.1.4"
+  "packageManager": "pnpm@9.1.4",
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  }
 }
