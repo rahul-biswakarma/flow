@@ -3,19 +3,11 @@
 import '@xyflow/react/dist/style.css';
 
 import { FC, useCallback, useRef, useState } from 'react';
-import {
-  Connection,
-  Edge,
-  Node,
-  ReactFlow,
-  ReactFlowInstance,
-  addEdge,
-  useEdgesState,
-  useNodesState,
-} from '@xyflow/react';
+import { Connection, Node, ReactFlow, ReactFlowInstance, addEdge } from '@xyflow/react';
 import { nanoid } from 'nanoid';
 
 import { webNodeTypes } from '@/lib/framework';
+import { useProjectContext } from '@/lib/context';
 
 const proOptions = { hideAttribution: true };
 
@@ -25,8 +17,7 @@ webNodeTypes.map((node) => (nodeTypes[node.id] = node.renderer));
 
 export const Canvas = () => {
   const reactFlowWrapper = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const { nodes, setNodes, onNodesChange, edges, setEdges, onEdgesChange } = useProjectContext();
   const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
 
   const onConnect = useCallback((params: Connection) => setEdges((eds) => addEdge(params, eds)), []);

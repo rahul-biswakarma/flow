@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState } from 'react';
 import { Page, Project } from '@prisma/client';
+import { useNodesState, useEdgesState, Edge, Node, OnNodesChange, OnEdgesChange } from '@xyflow/react';
 
 type ProjectWithPages = Project & {
   pages: Page[];
@@ -10,8 +11,17 @@ type ProjectWithPages = Project & {
 type ProjectContextType = {
   project: ProjectWithPages;
   setProject: React.Dispatch<React.SetStateAction<ProjectWithPages>>;
+
   currentPageId: string;
   setCurrentPageId: React.Dispatch<React.SetStateAction<string>>;
+
+  edges: Edge[];
+  setEdges: React.Dispatch<React.SetStateAction<Edge[]>>;
+  onEdgesChange: OnEdgesChange<Edge>;
+
+  nodes: Node[];
+  setNodes: React.Dispatch<React.SetStateAction<Node[]>>;
+  onNodesChange: OnNodesChange<Node>;
 };
 
 const ProjectContext = createContext<ProjectContextType | null>(null);
@@ -25,8 +35,24 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
   const [project, setProject] = useState<ProjectWithPages>(projectWithPages);
   const [currentPageId, setCurrentPageId] = useState<string>(project?.pages[0]?.id ?? '');
 
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+
   return (
-    <ProjectContext.Provider value={{ project, setProject, currentPageId, setCurrentPageId }}>
+    <ProjectContext.Provider
+      value={{
+        project,
+        setProject,
+        currentPageId,
+        setCurrentPageId,
+        nodes,
+        setNodes,
+        onNodesChange,
+        edges,
+        setEdges,
+        onEdgesChange,
+      }}
+    >
       {children}
     </ProjectContext.Provider>
   );
