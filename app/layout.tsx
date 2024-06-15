@@ -6,6 +6,7 @@ import { siteConfig } from '@/lib/config/site';
 import { fontSans } from '@/lib/config/fonts';
 import { ThemeProvider } from '@/lib/components';
 import { NextAuthProvider } from '@/lib/context';
+import { Toaster } from '@/lib/components/ui/sonner';
 
 export const metadata: Metadata = {
   title: {
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <body className={clsx('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
           <ThemeProvider enableSystem attribute="class" defaultTheme="system">
             <div className="relative flex h-screen flex-col">{children}</div>
+            <Toaster />
           </ThemeProvider>
         </body>
       </html>
