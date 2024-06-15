@@ -1,3 +1,3 @@
 export const HotKeys = {
-  SAVE: 'command+s',
+  SAVE: 'mod+s',
 };

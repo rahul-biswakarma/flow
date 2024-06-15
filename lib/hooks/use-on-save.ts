@@ -1,20 +1,20 @@
+'use client';
+
 import { useCallback } from 'react';
 import { toast } from 'sonner';
 
 import { useProjectContext } from '../context';
-import { prisma } from '../utils/db';
+import { updatePageData } from '../actions/page';
 
 export const useOnSave = () => {
   const { nodes, edges, currentPageId } = useProjectContext();
   const stringifiedData = JSON.stringify({ nodes, edges });
 
   const saveData = useCallback(async () => {
+    toast('Saving...');
     try {
       toast('Saving...');
-      await prisma.page.update({
-        where: { id: currentPageId },
-        data: { data: stringifiedData },
-      });
+      await updatePageData(currentPageId, stringifiedData);
       toast('Saved successfully!');
     } catch (error) {
       toast('Failed to save data');

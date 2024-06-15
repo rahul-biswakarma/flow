@@ -27,9 +27,8 @@ export const Canvas = () => {
 
   const onConnect = useCallback((params: Connection) => setEdges((eds) => addEdge(params, eds)), []);
 
-  useHotkeys(HotKeys.SAVE, () => {
-    console.log('onSave');
-    onSave();
+  useHotkeys(HotKeys.SAVE, onSave, {
+    preventDefault: true,
   });
 
   const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
