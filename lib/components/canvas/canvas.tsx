@@ -3,14 +3,14 @@
 import '@xyflow/react/dist/style.css';
 
 import { FC, useCallback, useRef, useState } from 'react';
-import { Connection, Node, ReactFlow, ReactFlowInstance, addEdge } from '@xyflow/react';
-import { nanoid } from 'nanoid';
+import { Connection, ReactFlow, ReactFlowInstance, addEdge } from '@xyflow/react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 import { webNodeTypes } from '@/lib/framework';
 import { useProjectContext } from '@/lib/context';
 import { HotKeys } from '@/lib/utils/hotkeys';
 import { useOnSave } from '@/lib/hooks/use-on-save';
+import { onDropHandler } from '@/lib/utils/canvas';
 
 const proOptions = { hideAttribution: true };
 
@@ -36,39 +36,6 @@ export const Canvas = () => {
     event.dataTransfer.dropEffect = 'move';
   }, []);
 
-  const onDrop = useCallback(
-    (event: React.DragEvent<HTMLDivElement>) => {
-      event.preventDefault();
-
-      if (!reactFlowInstance) {
-        return;
-      }
-
-      const type = event.dataTransfer.getData('application/reactflow');
-
-      if (!type) {
-        return;
-      }
-
-      const position = reactFlowInstance.screenToFlowPosition({
-        x: event.clientX,
-        y: event.clientY,
-      });
-
-      const newNode: Node = {
-        id: nanoid(),
-        type,
-        position,
-        data: {
-          node: { properties: {} },
-        },
-      };
-
-      setNodes((nds) => nds.concat(newNode));
-    },
-    [reactFlowInstance],
-  );
-
   return (
     <div ref={reactFlowWrapper} className="h-full w-full">
       <ReactFlow
@@ -80,7 +47,7 @@ export const Canvas = () => {
         proOptions={proOptions}
         onConnect={onConnect}
         onDragOver={onDragOver}
-        onDrop={onDrop}
+        onDrop={(e) => onDropHandler({ event: e, setNodes, reactFlowInstance })}
         onEdgesChange={onEdgesChange}
         onInit={setReactFlowInstance}
         onNodesChange={onNodesChange}

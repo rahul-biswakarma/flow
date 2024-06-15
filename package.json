@@ -27,6 +27,7 @@
     "babel-plugin-react-compiler": "0.0.0-experimental-592953e-20240517",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dagre": "^0.8.5",
     "framer-motion": "^11.2.10",
     "intl-messageformat": "^10.5.14",
     "nanoid": "^5.0.7",
@@ -48,6 +49,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/dagre": "^0.7.52",
     "@types/node": "20.5.7",
     "@types/pg": "^8.11.6",
     "@types/react": "18.3.2",
