@@ -11,7 +11,6 @@ export const useOnSave = () => {
   const stringifiedData = JSON.stringify({ nodes, edges });
 
   const saveData = useCallback(async () => {
-    toast('Saving...');
     try {
       toast('Saving...');
       await updatePageData(currentPageId, stringifiedData);
