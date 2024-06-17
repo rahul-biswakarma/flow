@@ -1,12 +1,11 @@
-import '@/lib/styles/globals.css';
+import '@radix-ui/themes/styles.css';
 import { Metadata, Viewport } from 'next';
 import clsx from 'clsx';
+import { Theme, ThemePanel } from '@radix-ui/themes';
 
 import { siteConfig } from '@/lib/config/site';
 import { fontSans } from '@/lib/config/fonts';
-import { ThemeProvider } from '@/lib/components';
 import { NextAuthProvider } from '@/lib/context';
-import { Toaster } from '@/lib/components/ui/sonner';
 
 export const metadata: Metadata = {
   title: {
@@ -32,10 +31,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html suppressHydrationWarning lang="en">
         <head />
         <body className={clsx('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
-          <ThemeProvider enableSystem attribute="class" defaultTheme="system">
+          <Theme
+            accentColor="indigo"
+            appearance="inherit"
+            grayColor="slate"
+            panelBackground="translucent"
+            radius="medium"
+            scaling="100%"
+          >
             <div className="relative flex h-screen flex-col">{children}</div>
-            <Toaster />
-          </ThemeProvider>
+            <ThemePanel />
+          </Theme>
         </body>
       </html>
     </NextAuthProvider>
