@@ -2,11 +2,13 @@ import { Box, Flex, SegmentedControl } from '@radix-ui/themes';
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
+import { LeftPanelTopSectionView } from '../type';
+
 import { ListPage } from './containers/pages/page-list';
 import { ComponentList } from './containers/components/component-list';
 
 export const TopSection = () => {
-  const [view, setView] = useState('pages');
+  const [view, setView] = useState<LeftPanelTopSectionView>('pages');
 
   return (
     <Flex direction="column">
@@ -17,7 +19,7 @@ export const TopSection = () => {
             width: '100%',
           }}
           value={view}
-          onValueChange={(view) => setView(view)}
+          onValueChange={(view: LeftPanelTopSectionView) => setView(view)}
         >
           <SegmentedControl.Item value="pages">Pages</SegmentedControl.Item>
           <SegmentedControl.Item value="components">Components</SegmentedControl.Item>

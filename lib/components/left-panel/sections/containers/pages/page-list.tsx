@@ -19,8 +19,8 @@ export const ListPage = () => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <TopSectionHeader label="Pages" onClick={() => setIsCreatePageEnable(!isCreatePageEnable)} />
-      <Flex direction="column" gap="1">
+      <TopSectionHeader label="Pages" view="pages" onClick={() => setIsCreatePageEnable(!isCreatePageEnable)} />
+      <Flex direction="column">
         {pages?.map((page) => (
           <PageListItem
             key={page.id}

@@ -9,7 +9,11 @@ export const ComponentList = () => {
 
   return (
     <div>
-      <TopSectionHeader label="Components" onClick={() => setIsCreateComponentEnable(!isCreateComponentEnable)} />
+      <TopSectionHeader
+        label="Components"
+        view="components"
+        onClick={() => setIsCreateComponentEnable(!isCreateComponentEnable)}
+      />
       <div className="flex flex-col gap-2">
         {webNodeTypes.map((node) => (
           <div

@@ -1,4 +1,4 @@
-import { Container } from '@radix-ui/themes';
+import { Container, Flex } from '@radix-ui/themes';
 import { Prisma } from '@prisma/client';
 
 import { OnboardingSectionContainer } from './onboarding-section-container';
@@ -23,8 +23,16 @@ export const Onboarding = async ({ userId }: { userId: string }) => {
   }>[] = [];
 
   return (
-    <Container align="center" size="2">
-      <OnboardingSectionContainer {...{ projects, invitations }} />
-    </Container>
+    <Flex
+      align="center"
+      justify="center"
+      style={{
+        height: '100vh',
+      }}
+    >
+      <Container align="center" size="2">
+        <OnboardingSectionContainer {...{ projects, invitations }} />
+      </Container>
+    </Flex>
   );
 };
