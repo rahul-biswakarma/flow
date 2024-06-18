@@ -1,3 +1,5 @@
+import { Flex } from '@radix-ui/themes';
+
 import { Product } from '@/lib/components';
 import { Onboarding } from '@/lib/components/onboarding/onboarding';
 import { ProjectContextProvider } from '@/lib/context';
@@ -28,7 +30,17 @@ export default async function Project({ params }: { params: { projectSlug: strin
   });
 
   if (!project) {
-    return <Onboarding userId={userId} />;
+    return (
+      <Flex
+        align="center"
+        justify="center"
+        style={{
+          minHeight: '100vh',
+        }}
+      >
+        <Onboarding userId={userId} />
+      </Flex>
+    );
   }
 
   return (

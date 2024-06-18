@@ -1,4 +1,5 @@
 import { Project } from '@prisma/client';
+import { Box, Flex, Heading, Text } from '@radix-ui/themes';
 
 import { ProjectCard } from '../project-card';
 
@@ -8,18 +9,31 @@ type SelectProjectProps = {
 
 export const SelectProject = ({ projects }: SelectProjectProps) => {
   return (
-    <div className="flex flex-col gap-4">
-      <span>
-        <h3>Active Projects</h3>
-        <p>Your current workspaces where you can collaborate and contribute.</p>
-      </span>
-      <ul className="flex flex-col gap-2">
+    <Flex direction="column" gap="2">
+      <Box>
+        <Heading
+          as="h3"
+          size="3"
+          style={{
+            color: 'var(--gray-11)',
+          }}
+        >
+          Active Projects
+        </Heading>
+        <Text
+          size="2"
+          style={{
+            color: 'var(--gray-10)',
+          }}
+        >
+          Your current workspaces where you can collaborate and contribute.
+        </Text>
+      </Box>
+      <Flex direction="column" gap="2">
         {projects.map((project) => (
-          <li key={project.id}>
-            <ProjectCard project={project} />
-          </li>
+          <ProjectCard key={`selection-card-${project.id}}`} project={project} />
         ))}
-      </ul>
-    </div>
+      </Flex>
+    </Flex>
   );
 };

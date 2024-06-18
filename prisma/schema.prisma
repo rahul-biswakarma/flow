@@ -34,13 +34,13 @@ model Project {
   roles       Role[]
   slug        String  @unique
 
-
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relationship
   projectMembers ProjectMembership[]
   pages          Page[]
+  Invitation     Invitation[]
 
   @@index([id])
 }
@@ -132,6 +132,27 @@ model Session {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+model Invitation {
+  id        String          @id @default(cuid())
+  email     String
+  projectId String
+  role      String
+  state     InvitationState
+  expires   DateTime
+  project   Project         @relation(fields: [projectId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId])
+}
+
+enum InvitationState {
+  PENDING
+  ACCEPTED
+  REJECTED
 }
 
 enum ProjectState {

@@ -1,6 +1,14 @@
-import { Project } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
-export const SelectInvitation = ({ invitations }: { invitations: Project[] }) => {
+type SelectInvitationProps = {
+  invitations: Prisma.InvitationGetPayload<{
+    include: {
+      project: true;
+    };
+  }>[];
+};
+
+export const SelectInvitation = ({ invitations }: SelectInvitationProps) => {
   return (
     <div className="flex flex-col gap-4">
       <span>
@@ -10,7 +18,7 @@ export const SelectInvitation = ({ invitations }: { invitations: Project[] }) =>
       <ul>
         {invitations.map((invitation) => (
           <li key={invitation.id}>
-            <a href={`/${invitation.slug}`}>{invitation.name}</a>
+            <a href={`/${invitation.project.slug}`}>{invitation.project.name}</a>
           </li>
         ))}
       </ul>

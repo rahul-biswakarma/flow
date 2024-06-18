@@ -1,8 +1,10 @@
 import '@radix-ui/themes/styles.css';
+import '@/lib/styles/globals.css';
+
 import { Metadata, Viewport } from 'next';
-import clsx from 'clsx';
 import { Theme, ThemePanel } from '@radix-ui/themes';
 
+import styles from '@/lib/styles/page.module.css';
 import { siteConfig } from '@/lib/config/site';
 import { fontSans } from '@/lib/config/fonts';
 import { NextAuthProvider } from '@/lib/context';
@@ -30,16 +32,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <NextAuthProvider>
       <html suppressHydrationWarning lang="en">
         <head />
-        <body className={clsx('min-h-screen bg-background font-sans antialiased', fontSans.variable)}>
+        <body className={fontSans.variable}>
           <Theme
             accentColor="indigo"
-            appearance="inherit"
+            appearance="dark"
             grayColor="slate"
             panelBackground="translucent"
             radius="medium"
             scaling="100%"
           >
-            <div className="relative flex h-screen flex-col">{children}</div>
+            <div className={styles.page}>{children}</div>
             <ThemePanel />
           </Theme>
         </body>

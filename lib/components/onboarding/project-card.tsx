@@ -1,21 +1,34 @@
 import { Project } from '@prisma/client';
+import { Avatar, Card, Flex, IconButton, Text } from '@radix-ui/themes';
+import { ArrowRightIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
 
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Label } from '../ui/label';
+import styles from './onboarding.module.css';
 
 export const ProjectCard = ({ project }: { project: Project }) => {
   return (
-    <a href={`/${project.slug}`}>
-      <div className="flex cursor-pointer items-center gap-2 rounded-md border border-border bg-card p-2">
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-        <span className="flex flex-col">
-          <Label>{project.name}</Label>
-          <span>{project.slug}</span>
-        </span>
-      </div>
-    </a>
+    <Link href={`/${project.slug}`}>
+      <Card className={styles.onboardingProjectCard}>
+        <Flex align="center" gap="2" justify="between">
+          <Flex align="center" gap="2">
+            <Avatar fallback="CN" size="3" src="https://github.com/shadcn.png" />
+            <Flex direction="column" gap="0">
+              <Text style={{}}>{project.name}</Text>
+              <Text
+                style={{
+                  marginTop: '-3px',
+                  color: 'var(--gray-10)',
+                }}
+              >
+                {project.slug}
+              </Text>
+            </Flex>
+          </Flex>
+          <IconButton className={styles.projectCardIconButton} size="2" variant="ghost">
+            <ArrowRightIcon />
+          </IconButton>
+        </Flex>
+      </Card>
+    </Link>
   );
 };

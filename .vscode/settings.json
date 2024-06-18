@@ -28,18 +28,7 @@
     "source.fixAll.eslint": "explicit"
   },
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
-  "tailwindCSS.classAttributes": ["class", "className", "ngClass", ".*ClassName"],
-  "tailwindCSS.experimental.classRegex": [
-    // Enable TailwindCSS intellisense in className props of an object
-    "className:\\s*?[\"'`]([^\"'`]*).*?,",
-    // Enable TailwindCSS intellisense when using clsx
-    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^\"'`]*)(?:'|\"|`)"],
-    // Enable TailwindCSS intellisense in variants props of an object used for Raw Design System theme configuration
-    [
-      "variants:\\s*?(\\{(?:[^}{]|\\{(?:[^}{]|\\{(?:[^}{]|\\{[^}{]*\\})*\\})*\\})*\\})",
-      "(?:'|\"|`)([^\"'`]*)(?:'|\"|`)"
-    ]
-  ],
+  "prettier.stylelintIntegration": true,
   "cSpell.words": ["supabase"],
   "eslint.workingDirectories": [
     {

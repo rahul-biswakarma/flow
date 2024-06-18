@@ -2,9 +2,6 @@
 
 import { useActionState } from 'react';
 
-import { Button } from '../../ui/button';
-import { Input } from '../../ui/input';
-import { Label } from '../../ui/label';
 import { ProjectSections } from '../onboarding-section-container';
 
 import { createProject } from '@/lib/actions';
