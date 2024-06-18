@@ -1,23 +1,45 @@
-import { TabsList, TabsTrigger, TabsContent, Tabs } from '../../ui/tabs';
+import { Box, Flex, SegmentedControl } from '@radix-ui/themes';
+import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 
-import { ComponentList } from './containers/components/component-list';
 import { ListPage } from './containers/pages/page-list';
+import { ComponentList } from './containers/components/component-list';
 
 export const TopSection = () => {
+  const [view, setView] = useState('pages');
+
   return (
-    <div className="flex w-full flex-col p-3">
-      <Tabs defaultValue="pages">
-        <TabsList className="w-full">
-          <TabsTrigger value="pages">Pages</TabsTrigger>
-          <TabsTrigger value="components">Components</TabsTrigger>
-        </TabsList>
-        <TabsContent value="pages">
+    <Flex direction="column">
+      <Box p="2">
+        <SegmentedControl.Root
+          defaultValue="pages"
+          style={{
+            width: '100%',
+          }}
+          value={view}
+          onValueChange={(view) => setView(view)}
+        >
+          <SegmentedControl.Item value="pages">Pages</SegmentedControl.Item>
+          <SegmentedControl.Item value="components">Components</SegmentedControl.Item>
+        </SegmentedControl.Root>
+      </Box>
+
+      <AnimatePresence>
+        <Box
+          style={{
+            display: view === 'pages' ? 'block' : 'none',
+          }}
+        >
           <ListPage />
-        </TabsContent>
-        <TabsContent value="components">
+        </Box>
+        <Box
+          style={{
+            display: view === 'components' ? 'block' : 'none',
+          }}
+        >
           <ComponentList />
-        </TabsContent>
-      </Tabs>
-    </div>
+        </Box>
+      </AnimatePresence>
+    </Flex>
   );
 };

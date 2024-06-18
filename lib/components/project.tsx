@@ -1,19 +1,35 @@
-export const Product = async () => {
-  return null;
+'use client';
 
-  // return (
-  //   <ReactFlowProvider>
-  //     <div className="flex h-full w-full">
-  //       <ResizablePanelGroup direction="horizontal">
-  //         <ResizablePanel defaultSize={25}>
-  //           <LeftPanel />
-  //         </ResizablePanel>
-  //         <ResizableHandle />
-  //         <ResizablePanel>
-  //           <Canvas />
-  //         </ResizablePanel>
-  //       </ResizablePanelGroup>
-  //     </div>
-  //   </ReactFlowProvider>
-  // );
+import { Box, Separator } from '@radix-ui/themes';
+import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
+
+import { LeftPanel } from './left-panel/left-panel';
+import { Canvas } from './canvas/canvas';
+
+export const Product = async () => {
+  return (
+    <Box
+      style={{
+        height: '100vh',
+      }}
+    >
+      <PanelGroup autoSaveId="project-container" direction="horizontal">
+        <Panel defaultSize={25}>
+          <LeftPanel />
+        </Panel>
+        <PanelResizeHandle>
+          <Separator
+            orientation="vertical"
+            size="4"
+            style={{
+              backgroundColor: 'var(--gray-3)',
+            }}
+          />
+        </PanelResizeHandle>
+        <Panel>
+          <Canvas />
+        </Panel>
+      </PanelGroup>
+    </Box>
+  );
 };

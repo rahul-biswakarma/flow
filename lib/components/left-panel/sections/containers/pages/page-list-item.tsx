@@ -1,5 +1,8 @@
 import { Page } from '@prisma/client';
-import clsx from 'clsx';
+import { FileIcon } from '@radix-ui/react-icons';
+import { Flex } from '@radix-ui/themes';
+
+import styles from '../../../left-panel.module.css';
 
 type PageListItemProps = {
   page: Page;
@@ -9,8 +12,9 @@ type PageListItemProps = {
 
 export const PageListItem = ({ page, isActive, onClickHandler }: PageListItemProps) => {
   return (
-    <div className={clsx('cursor-pointer rounded-md p-1', { 'bg-slate-800': isActive })} onClick={onClickHandler}>
+    <Flex align="center" className={styles.pageListItem} data-active={isActive} gap="1" onClick={onClickHandler}>
+      <FileIcon />
       {page.name}
-    </div>
+    </Flex>
   );
 };

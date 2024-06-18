@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Flex } from '@radix-ui/themes';
 
 import { TopSectionHeader } from '../../header';
 
@@ -19,7 +20,7 @@ export const ListPage = () => {
   return (
     <div className="flex h-full w-full flex-col">
       <TopSectionHeader label="Pages" onClick={() => setIsCreatePageEnable(!isCreatePageEnable)} />
-      <div className="flex flex-col gap-1">
+      <Flex direction="column" gap="1">
         {pages?.map((page) => (
           <PageListItem
             key={page.id}
@@ -33,7 +34,7 @@ export const ListPage = () => {
           projectId={project.id}
           onReset={() => setIsCreatePageEnable(false)}
         />
-      </div>
+      </Flex>
     </div>
   );
 };

@@ -4,10 +4,9 @@ import { z } from 'zod';
 import { Handle, Position } from '@xyflow/react';
 import { memo } from 'react';
 import React from 'react';
+import { Button } from '@radix-ui/themes';
 
 import { button_node } from '../../schemas';
-
-import { Button } from '@/lib/components';
 
 type ButtonNodeType = z.infer<typeof button_node>;
 

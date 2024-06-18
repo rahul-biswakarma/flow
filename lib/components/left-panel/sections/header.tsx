@@ -1,8 +1,5 @@
-import { IconPlus } from '@tabler/icons-react';
-
-import { Button } from '../../ui';
-
-import { IconSize, IconStrokeWidth } from '@/lib/constants/ui';
+import { ArchiveIcon, PlusIcon } from '@radix-ui/react-icons';
+import { Flex, IconButton } from '@radix-ui/themes';
 
 type TopSectionHeaderProps = {
   label: string;
@@ -10,10 +7,19 @@ type TopSectionHeaderProps = {
 };
 
 export const TopSectionHeader = ({ label, onClick }: TopSectionHeaderProps) => (
-  <div className="flex w-full items-center justify-between">
-    <span>{label}</span>
-    <Button aria-label="Add new page" size="icon" variant="ghost" onClick={onClick}>
-      <IconPlus size={IconSize.MD} strokeWidth={IconStrokeWidth} />
-    </Button>
-  </div>
+  <Flex align="center" gap="2" justify="between" p="2">
+    <Flex
+      align="center"
+      gap="1"
+      style={{
+        color: 'var(--gray-11)',
+      }}
+    >
+      <ArchiveIcon />
+      {label}
+    </Flex>
+    <IconButton aria-label="Add new page" color="gray" variant="ghost" onClick={onClick}>
+      <PlusIcon />
+    </IconButton>
+  </Flex>
 );
