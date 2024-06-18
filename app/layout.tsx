@@ -2,7 +2,7 @@ import '@radix-ui/themes/styles.css';
 import '@/lib/styles/globals.css';
 
 import { Metadata, Viewport } from 'next';
-import { Theme, ThemePanel } from '@radix-ui/themes';
+import { Theme } from '@radix-ui/themes';
 
 import styles from '@/lib/styles/page.module.css';
 import { siteConfig } from '@/lib/config/site';
@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             scaling="100%"
           >
             <div className={styles.page}>{children}</div>
-            <ThemePanel />
+            {/* <ThemePanel /> */}
           </Theme>
         </body>
       </html>

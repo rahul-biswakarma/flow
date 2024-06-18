@@ -8,6 +8,7 @@ import { PlusIcon } from '@radix-ui/react-icons';
 import { CreateProject } from './sections/create-project';
 import { SelectInvitation } from './sections/select-invitation';
 import { SelectProject } from './sections/select-project';
+import { ProjectSections } from './type';
 
 type OnboardingSectionContainerProps = {
   projects: Project[];
@@ -18,13 +19,8 @@ type OnboardingSectionContainerProps = {
   }>[];
 };
 
-export enum ProjectSections {
-  Selection,
-  Creation,
-}
-
 export const OnboardingSectionContainer = ({ projects, invitations }: OnboardingSectionContainerProps) => {
-  const [section, setSection] = useState(ProjectSections.Selection);
+  const [section, setSection] = useState<ProjectSections>('selection');
 
   const changeSection = (section: ProjectSections) => {
     setSection(section);
@@ -34,7 +30,7 @@ export const OnboardingSectionContainer = ({ projects, invitations }: Onboarding
 
   return (
     <>
-      {section === ProjectSections.Selection && (
+      {section === 'selection' && (
         <Flex direction="column" gap="7">
           <Heading as="h1">Select Project</Heading>
           <SelectProject projects={projects} />
@@ -44,7 +40,7 @@ export const OnboardingSectionContainer = ({ projects, invitations }: Onboarding
               style={{
                 width: '100%',
               }}
-              onClick={() => changeSection(ProjectSections.Creation)}
+              onClick={() => changeSection('creation')}
             >
               <PlusIcon />
               <Text>Create Project</Text>
@@ -61,7 +57,7 @@ export const OnboardingSectionContainer = ({ projects, invitations }: Onboarding
         </Flex>
       )}
 
-      {section === ProjectSections.Creation && <CreateProject changeSection={changeSection} />}
+      {section === 'creation' && <CreateProject changeSection={changeSection} />}
     </>
   );
 };
