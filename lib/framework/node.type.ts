@@ -2,13 +2,13 @@ import { FC } from 'react';
 
 import { LabelNode, ContainerNode, ButtonNode } from './components';
 
-type WebNodeTypesType = {
+export type WebNodeTypesType = {
   id: string;
   name: string;
   renderer: FC<any>;
-}[];
+};
 
-export const webNodeTypes: WebNodeTypesType = [
+export const webNodeTypes: WebNodeTypesType[] = [
   {
     id: 'label-node',
     name: 'Label',

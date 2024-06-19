@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { Flex } from '@radix-ui/themes';
 
 import { TopSectionHeader } from '../../header';
+
+import { ComponentListItem } from './component-list-item';
 
 import { webNodeTypes } from '@/lib/framework';
 
@@ -8,26 +11,17 @@ export const ComponentList = () => {
   const [isCreateComponentEnable, setIsCreateComponentEnable] = useState(false);
 
   return (
-    <div>
+    <>
       <TopSectionHeader
         label="Components"
         view="components"
         onClick={() => setIsCreateComponentEnable(!isCreateComponentEnable)}
       />
-      <div className="flex flex-col gap-2">
+      <Flex direction="column">
         {webNodeTypes.map((node) => (
-          <div
-            key={node.id}
-            draggable
-            className="dndnode w-full cursor-pointer rounded-md bg-slate-800 px-2 py-1"
-            onDragStart={(event) => {
-              event.dataTransfer.setData('application/reactflow', node.id);
-            }}
-          >
-            {node.name}
-          </div>
+          <ComponentListItem key={node.id} node={node} />
         ))}
-      </div>
-    </div>
+      </Flex>
+    </>
   );
 };

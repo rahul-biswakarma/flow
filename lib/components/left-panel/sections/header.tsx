@@ -1,4 +1,4 @@
-import { ArchiveIcon, Component1Icon, PlusIcon } from '@radix-ui/react-icons';
+import { ArchiveIcon, PlusIcon, TokensIcon } from '@radix-ui/react-icons';
 import { Flex, IconButton } from '@radix-ui/themes';
 
 import { LeftPanelTopSectionView } from '../type';
@@ -18,7 +18,7 @@ export const TopSectionHeader = ({ label, view, onClick }: TopSectionHeaderProps
         color: 'var(--gray-11)',
       }}
     >
-      {view === 'pages' ? <ArchiveIcon /> : <Component1Icon />}
+      {view === 'pages' ? <ArchiveIcon /> : <TokensIcon />}
       {label}
     </Flex>
     <IconButton aria-label="Add new page" color="gray" variant="ghost" onClick={onClick}>

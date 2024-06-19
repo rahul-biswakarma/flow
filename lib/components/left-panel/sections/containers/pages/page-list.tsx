@@ -18,7 +18,7 @@ export const ListPage = () => {
   const pages = project?.pages;
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <>
       <TopSectionHeader label="Pages" view="pages" onClick={() => setIsCreatePageEnable(!isCreatePageEnable)} />
       <Flex direction="column">
         {pages?.map((page) => (
@@ -35,6 +35,6 @@ export const ListPage = () => {
           onReset={() => setIsCreatePageEnable(false)}
         />
       </Flex>
-    </div>
+    </>
   );
 };
