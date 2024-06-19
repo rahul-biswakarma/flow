@@ -2,13 +2,13 @@
 
 import { Prisma, Project } from '@prisma/client';
 import { useState } from 'react';
-import { Button, Flex, Heading, Text } from '@radix-ui/themes';
-import { PlusIcon } from '@radix-ui/react-icons';
+import { Flex, Heading } from '@radix-ui/themes';
 
 import { CreateProject } from './sections/create-project';
 import { SelectInvitation } from './sections/select-invitation';
 import { SelectProject } from './sections/select-project';
 import { ProjectSections } from './type';
+import { CreateProjectButton } from './create-project-button';
 
 type OnboardingSectionContainerProps = {
   projects: Project[];
@@ -35,25 +35,7 @@ export const OnboardingSectionContainer = ({ projects, invitations }: Onboarding
           <Heading as="h1">Select Project</Heading>
           <SelectProject projects={projects} />
           {isInvitationPresent && <SelectInvitation invitations={invitations} />}
-          <Flex align="center" direction="column" gap="1">
-            <Button
-              style={{
-                width: '100%',
-              }}
-              onClick={() => changeSection('creation')}
-            >
-              <PlusIcon />
-              <Text>Create Project</Text>
-            </Button>
-            <Text
-              size="1"
-              style={{
-                color: 'var(--gray-10)',
-              }}
-            >
-              Create your own workspace and invite others to collaborate
-            </Text>
-          </Flex>
+          <CreateProjectButton changeSection={changeSection} />
         </Flex>
       )}
 
