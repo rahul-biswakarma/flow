@@ -5,6 +5,7 @@ import '@xyflow/react/dist/style.css';
 import { FC, useCallback, useRef, useState } from 'react';
 import { Connection, ReactFlow, ReactFlowInstance, addEdge } from '@xyflow/react';
 import { useHotkeys } from 'react-hotkeys-hook';
+import { Box } from '@radix-ui/themes';
 
 import { webNodeTypes } from '@/lib/framework';
 import { useProjectContext } from '@/lib/context';
@@ -37,7 +38,13 @@ export const Canvas = () => {
   }, []);
 
   return (
-    <div ref={reactFlowWrapper} className="h-full w-full">
+    <Box
+      ref={reactFlowWrapper}
+      style={{
+        width: '100%',
+        height: '100%',
+      }}
+    >
       <ReactFlow
         fitView
         nodesDraggable
@@ -52,6 +59,6 @@ export const Canvas = () => {
         onInit={setReactFlowInstance}
         onNodesChange={onNodesChange}
       />
-    </div>
+    </Box>
   );
 };

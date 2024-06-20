@@ -43,10 +43,15 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
 
     if (!currentPage) return;
 
-    const data = JSON.parse(currentPage.data);
+    try {
+      const data = JSON.parse(currentPage.data);
 
-    setNodes(data.nodes);
-    setEdges(data.edges);
+      setNodes(data.nodes);
+      setEdges(data.edges);
+    } catch {
+      setNodes([]);
+      setEdges([]);
+    }
   }, [currentPageId, project.pages, setNodes, setEdges]);
 
   return (
