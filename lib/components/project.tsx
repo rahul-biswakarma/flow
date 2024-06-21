@@ -3,10 +3,11 @@
 import { Box, Separator } from '@radix-ui/themes';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 
-import { LeftPanel } from './left-panel/left-panel';
-import { Canvas } from './canvas/canvas';
+import { FlowPage } from '../framework';
 
-export const Product = async () => {
+import { LeftPanel } from './left-panel/left-panel';
+
+export const Product = () => {
   return (
     <Box
       style={{
@@ -27,7 +28,7 @@ export const Product = async () => {
           />
         </PanelResizeHandle>
         <Panel>
-          <Canvas />
+          <FlowPage />
         </Panel>
       </PanelGroup>
     </Box>

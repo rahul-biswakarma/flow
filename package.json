@@ -23,6 +23,7 @@
     "babel-plugin-react-compiler": "0.0.0-experimental-592953e-20240517",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "d3": "^7.9.0",
     "dagre": "^0.8.5",
     "framer-motion": "^11.2.10",
     "intl-messageformat": "^10.5.14",
