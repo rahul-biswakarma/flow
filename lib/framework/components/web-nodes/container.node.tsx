@@ -24,7 +24,7 @@ export const ContainerNode: React.FC<ContainerNodeProps> = memo(function LabelNo
     <Card style={{ position: 'relative', isolation: 'isolate', padding: '40px', overflow: 'auto', margin: '40px' }}>
       <div
         style={{
-          zIndex: 20,
+          zIndex: 30,
           width: '60%',
           height: '10px',
           position: 'absolute',
