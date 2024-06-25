@@ -1,0 +1,57 @@
+.nodeContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--gray-2);
+  border-radius: var(--radius-4);
+  width: fit-content;
+  border: 1px solid var(--gray-3);
+  min-width: 200px;
+  min-height: 80px;
+  isolation: isolate;
+  z-index: auto;
+}
+
+.contentContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 30px;
+  z-index: 10;
+}
+
+.topHandlerContainer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  z-index: 1;
+}
+
+.bottomHandlerContainer {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  z-index: 1;
+}
+
+.handler {
+  background: var(--gray-3);
+  border-radius: var(--radius-3);
+  border: 1px solid var(--gray-5);
+  max-width: 60%;
+  width: 100%;
+  height: 10px;
+}
