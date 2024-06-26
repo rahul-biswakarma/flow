@@ -9,7 +9,7 @@ export const createProject = async (prevState: any, formData: FormData) => {
 
   const session = await auth();
 
-  return await prisma.project.create({
+  const project = await prisma.project.create({
     data: {
       name,
       slug,
@@ -18,6 +18,16 @@ export const createProject = async (prevState: any, formData: FormData) => {
           userId: session.user.id,
         },
       },
+      pages: {
+        create: {
+          name: 'home',
+          config: '{}',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      },
     },
   });
+
+  return project;
 };
