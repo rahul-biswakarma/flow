@@ -10,52 +10,46 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  emailVerified DateTime?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  id                 String              @id @default(cuid())
+  name               String?
+  email              String              @unique
+  image              String?
+  accounts           Account[]
+  sessions           Session[]
+  emailVerified      DateTime?
   projectMemberships ProjectMembership[]
   userRoles          UserRole[]
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
 
   @@index([id])
 }
 
 model Project {
-  id          String  @id @default(cuid())
-  name        String
-  description String?
-  roles       Role[]
-  slug        String  @unique
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relationship
+  id             String              @id @default(cuid())
+  name           String
+  description    String?
+  slug           String              @unique
+  roles          Role[]
   projectMembers ProjectMembership[]
   pages          Page[]
-  Invitation     Invitation[]
+  components     Component[]
+  invitations    Invitation[]
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
 
   @@index([id])
 }
 
 model Role {
-  id          String   @id @default(cuid())
+  id          String     @id @default(cuid())
   name        String
   description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relationship
-  projectId String
-  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  userRoles UserRole[]
+  projectId   String
+  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userRoles   UserRole[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 
   @@index([projectId])
 }
@@ -64,9 +58,8 @@ model UserRole {
   userId      String
   roleId      String
   permissions Permissions[]
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role        Role          @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
   @@id([userId, roleId])
   @@index([roleId])
@@ -76,9 +69,8 @@ model UserRole {
 model ProjectMembership {
   userId    String
   projectId String
-
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@id([userId, projectId])
   @@index([userId])
@@ -86,16 +78,60 @@ model ProjectMembership {
 }
 
 model Page {
-  id        String  @id @default(cuid())
+  id        String   @id @default(cuid())
   name      String
-  config    String
+  config    Json
   projectId String
-  data      String  @default("")
-  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
-
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  nodes     Node[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@index([projectId])
+}
+
+model Node {
+  id            String     @id @default(cuid())
+  type          String
+  config        Json
+  pageId        String
+  page          Page       @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  edgesAsSource Edge[]     @relation("SourceNode")
+  edgesAsTarget Edge[]     @relation("TargetNode")
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  Component     Component? @relation(fields: [componentId], references: [id])
+  componentId   String?
+
+  @@index([pageId])
+  @@index([componentId])
+}
+
+model Edge {
+  id           String   @id @default(cuid())
+  sourceNodeId String
+  targetNodeId String
+  config       Json
+  sourceNode   Node     @relation("SourceNode", fields: [sourceNodeId], references: [id], onDelete: Cascade)
+  targetNode   Node     @relation("TargetNode", fields: [targetNodeId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([sourceNodeId])
+  @@index([targetNodeId])
+}
+
+model Component {
+  id        String   @id @default(cuid())
+  name      String
+  config    Json
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  nodes     Node[]
+
+  @@unique([name, projectId])
   @@index([projectId])
 }
 
@@ -111,11 +147,9 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   @@id([provider, providerAccountId])
   @@index([userId])
@@ -125,11 +159,9 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@index([userId])
 }
@@ -142,9 +174,8 @@ model Invitation {
   state     InvitationState
   expires   DateTime
   project   Project         @relation(fields: [projectId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
 
   @@index([projectId])
 }
@@ -174,12 +205,13 @@ enum Permissions {
   DELETE_NODES
   UPDATE_NODES
   READ_NODES
+}
 
-  CREATE_ISSUES
-  DELETE_ISSUES
-  UPDATE_ISSUES
-  READ_ISSUES
-
-  CREATE_COMMENTS
-  READ_COMMENTS
+enum Atoms {
+  CONTAINER
+  TEXT
+  IMAGE
+  BUTTON
+  INPUT
+  FORM
 }
