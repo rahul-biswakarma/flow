@@ -10,3 +10,8 @@ export type EdgeType = {
   source: string;
   target: string;
 };
+
+export type DropItemType = {
+  type: string;
+  name: string;
+};

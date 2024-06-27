@@ -1,58 +1,60 @@
 'use client';
 
+import { Box } from '@radix-ui/themes';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
 import { nanoid } from 'nanoid';
-import { RefObject } from 'react';
+import React, { useRef } from 'react';
 
-import { ContainerNode } from '../web-nodes';
+import { NodeRenderer } from '../node-renderer';
 
 import { useProjectContext } from '@/lib/context';
 import { DragDropItemType } from '@/lib/constants';
+import { DropItemType } from '@/lib/types';
 
 export const FlowPage: React.FC = () => {
   const { nodes, setNodes } = useProjectContext();
+  const dropRef = useRef<HTMLDivElement>(null);
 
-  const handleDrop = (item: Record<string, any>, monitor: DropTargetMonitor<unknown, unknown>) => {
+  const handleDrop = (item: DropItemType, monitor: DropTargetMonitor) => {
     const clientOffset = monitor.getClientOffset();
-    const position = {
-      x: clientOffset?.x ?? 0,
-      y: clientOffset?.y ?? 0,
-    };
+    const dropTargetRect = dropRef.current?.getBoundingClientRect();
 
-    setNodes((prevNodes) => [...prevNodes, { id: nanoid(), type: item?.type, name: item?.name, position, config: {} }]);
+    console.log('dropTargetRect', dropTargetRect);
+
+    if (clientOffset) {
+      const position = {
+        x: clientOffset.x - (dropTargetRect?.left ?? 0),
+        y: clientOffset.y - (dropTargetRect?.top ?? 0),
+      };
+
+      setNodes((prevNodes) => [...prevNodes, { id: nanoid(), type: item.type, position, config: {} }]);
+    }
   };
 
-  const [{ isOver }, drop] = useDrop({
+  const [{ isOver }, drop] = useDrop(() => ({
     accept: DragDropItemType,
-    drop: handleDrop,
+    drop: (item: DropItemType, monitor) => handleDrop(item, monitor),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
-  });
+  }));
+
+  drop(dropRef);
 
   return (
-    <div
-      ref={drop as unknown as RefObject<HTMLDivElement>}
-      role="Dustbin"
+    <Box
+      ref={dropRef}
       style={{
         padding: '40px',
         height: '100vh',
         width: '100%',
         position: 'relative',
-        background: isOver ? 'rgba(24, 108, 242, 0.01)' : 'transparent',
+        background: isOver ? 'rgba(0, 0, 0, 0.1)' : 'transparent',
       }}
     >
       {nodes.map((node) => (
-        <ContainerNode
-          key={node.id}
-          node={node}
-          style={{
-            position: 'absolute',
-            left: node.position.x,
-            top: node.position.y,
-          }}
-        />
+        <NodeRenderer key={node.id} node={node} />
       ))}
-    </div>
+    </Box>
   );
 };

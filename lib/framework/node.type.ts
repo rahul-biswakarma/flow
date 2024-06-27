@@ -25,3 +25,5 @@ export const webNodeTypes: WebNodeTypesType[] = [
     renderer: ButtonNode,
   },
 ];
+
+export const getWebNode = (type: string) => webNodeTypes.find((node) => node.type === type);
