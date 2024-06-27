@@ -1,4 +1,4 @@
-import { ArchiveIcon, PlusIcon, TokensIcon } from '@radix-ui/react-icons';
+import { PlusIcon } from '@radix-ui/react-icons';
 import { Flex, IconButton } from '@radix-ui/themes';
 
 import { LeftPanelTopSectionView } from '../type';
@@ -9,7 +9,7 @@ type TopSectionHeaderProps = {
   view: LeftPanelTopSectionView;
 };
 
-export const TopSectionHeader = ({ label, view, onClick }: TopSectionHeaderProps) => (
+export const TopSectionHeader = ({ label, onClick }: TopSectionHeaderProps) => (
   <Flex align="center" gap="2" justify="between" p="2">
     <Flex
       align="center"
@@ -18,7 +18,6 @@ export const TopSectionHeader = ({ label, view, onClick }: TopSectionHeaderProps
         color: 'var(--gray-11)',
       }}
     >
-      {view === 'pages' ? <ArchiveIcon /> : <TokensIcon />}
       {label}
     </Flex>
     <IconButton aria-label="Add new page" color="gray" variant="ghost" onClick={onClick}>
