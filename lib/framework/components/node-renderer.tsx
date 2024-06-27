@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { MoveIcon } from '@radix-ui/react-icons';
 
 import { getWebNode } from '../node.type';
 
+import styles from './framework.module.css';
+
 import { NodeType } from '@/lib/types';
+import { useProjectContext } from '@/lib/context';
 
 export const NodeRenderer = ({ node }: { node: NodeType }) => {
+  const { setNodes } = useProjectContext();
+
   const NodeComponent = getWebNode(node.type)?.renderer;
   const [position, setPosition] = useState({ x: node.position.x, y: node.position.y });
   const [dragging, setDragging] = useState(false);
@@ -28,6 +34,7 @@ export const NodeRenderer = ({ node }: { node: NodeType }) => {
 
   const onMouseUp = () => {
     setDragging(false);
+    setNodes((prevNodes) => prevNodes.map((n) => (n.id === node.id ? { ...n, position } : n)));
   };
 
   useEffect(() => {
@@ -51,14 +58,22 @@ export const NodeRenderer = ({ node }: { node: NodeType }) => {
 
   return (
     <div
+      className={styles.nodeRenderer}
       style={{
-        position: 'absolute',
         left: position.x,
         top: position.y,
-        cursor: dragging ? 'grabbing' : 'grab',
       }}
-      onMouseDown={onMouseDown}
     >
+      <div
+        className={styles.nodeMoveHandler}
+        style={{
+          cursor: dragging ? 'grabbing' : 'grab',
+          ...(dragging && { display: 'flex' }),
+        }}
+        onMouseDown={onMouseDown}
+      >
+        <MoveIcon />
+      </div>
       <NodeComponent node={node} />
     </div>
   );
