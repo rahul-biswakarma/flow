@@ -39,7 +39,7 @@ export const FlowPage: React.FC = () => {
         height: '100vh',
         width: '100%',
         position: 'relative',
-        background: isOver ? 'rgba(0, 0, 0, 0.1)' : 'red',
+        background: isOver ? 'rgba(24, 108, 242, 0.01)' : 'transparent',
       }}
     >
       {nodes.map((node) => (
