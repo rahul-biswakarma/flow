@@ -22,7 +22,7 @@ export const ComponentListItem = ({ node }: { node: WebNodeTypesType }) => {
       ref={drag as unknown as RefObject<HTMLDivElement>}
       className={clsx(styles.pageListItem, 'dndnode')}
       role="Handle"
-      style={{ opacity: isDragging ? 0.5 : 1, display: 'flex', alignItems: 'center' }}
+      style={{ opacity: isDragging ? 0.5 : 1, display: 'flex', alignItems: 'center', gap: '4px' }}
     >
       <Component1Icon />
       {node.name}

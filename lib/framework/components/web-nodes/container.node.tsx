@@ -1,27 +1,17 @@
 'use client';
 
-import { z } from 'zod';
-import { memo } from 'react';
 import React from 'react';
 import { Text } from '@radix-ui/themes';
 
-import { SettingsTypes, NodeSettingType, container_node } from '../../schemas';
-
 import styles from './node.module.css';
 
-type ContainerNodeType = z.infer<typeof container_node>;
-
-type DataType = {
-  node: ContainerNodeType & typeof NodeSettingType;
-  settings: (typeof SettingsTypes)[];
-};
+import { NodeType } from '@/lib/types';
 
 type ContainerNodeProps = {
-  data: DataType;
-  isConnectable: boolean;
+  node: NodeType;
 };
 
-export const ContainerNode: React.FC<ContainerNodeProps> = memo(function LabelNodeRenderer({ data, isConnectable }) {
+export const ContainerNode = ({ node }: ContainerNodeProps) => {
   return (
     <div className={styles.nodeContainer}>
       <div className={styles.topHandlerContainer}>
@@ -34,4 +24,4 @@ export const ContainerNode: React.FC<ContainerNodeProps> = memo(function LabelNo
       </div>
     </div>
   );
-});
+};

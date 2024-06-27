@@ -19,8 +19,6 @@ export const FlowPage: React.FC = () => {
     const clientOffset = monitor.getClientOffset();
     const dropTargetRect = dropRef.current?.getBoundingClientRect();
 
-    console.log('dropTargetRect', dropTargetRect);
-
     if (clientOffset) {
       const position = {
         x: clientOffset.x - (dropTargetRect?.left ?? 0),
