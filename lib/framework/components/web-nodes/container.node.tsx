@@ -30,6 +30,7 @@ export const ContainerNode: React.FC<ContainerNodeProps> = memo(function LabelNo
       <Text className={styles.contentContainer}>Container</Text>
       <div className={styles.bottomHandlerContainer}>
         <div className={styles.handler} />
+        <div className={styles.handler} />
       </div>
     </div>
   );

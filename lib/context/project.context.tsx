@@ -1,8 +1,9 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { Page, Project } from '@prisma/client';
-import { useNodesState, useEdgesState, Edge, Node, OnNodesChange, OnEdgesChange } from '@xyflow/react';
+
+import { EdgeType, NodeType } from '../types';
 
 type ProjectWithPages = Project & {
   pages: Page[];
@@ -15,13 +16,11 @@ type ProjectContextType = {
   currentPageId: string;
   setCurrentPageId: React.Dispatch<React.SetStateAction<string>>;
 
-  edges: Edge[];
-  setEdges: React.Dispatch<React.SetStateAction<Edge[]>>;
-  onEdgesChange: OnEdgesChange<Edge>;
+  edges: EdgeType[];
+  setEdges: React.Dispatch<React.SetStateAction<EdgeType[]>>;
 
-  nodes: Node[];
-  setNodes: React.Dispatch<React.SetStateAction<Node[]>>;
-  onNodesChange: OnNodesChange<Node>;
+  nodes: NodeType[];
+  setNodes: React.Dispatch<React.SetStateAction<NodeType[]>>;
 };
 
 const ProjectContext = createContext<ProjectContextType | null>(null);
@@ -35,24 +34,24 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
   const [project, setProject] = useState<ProjectWithPages>(projectWithPages);
   const [currentPageId, setCurrentPageId] = useState<string>(project?.pages[0]?.id ?? '');
 
-  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const [nodes, setNodes] = useState<NodeType[]>([]);
+  const [edges, setEdges] = useState<EdgeType[]>([]);
 
-  useEffect(() => {
-    const currentPage = project.pages.find((page) => page.id === currentPageId);
+  // useEffect(() => {
+  //   const currentPage = project.pages.find((page) => page.id === currentPageId);
 
-    if (!currentPage) return;
+  //   if (!currentPage) return;
 
-    try {
-      const data = JSON.parse(currentPage.data);
+  //   try {
+  //     const data = JSON.parse(currentPage.data);
 
-      setNodes(data.nodes);
-      setEdges(data.edges);
-    } catch {
-      setNodes([]);
-      setEdges([]);
-    }
-  }, [currentPageId, project.pages, setNodes, setEdges]);
+  //     setNodes(data.nodes);
+  //     setEdges(data.edges);
+  //   } catch {
+  //     setNodes([]);
+  //     setEdges([]);
+  //   }
+  // }, [currentPageId, project.pages, setNodes, setEdges]);
 
   return (
     <ProjectContext.Provider
@@ -63,10 +62,8 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
         setCurrentPageId,
         nodes,
         setNodes,
-        onNodesChange,
         edges,
         setEdges,
-        onEdgesChange,
       }}
     >
       {children}
