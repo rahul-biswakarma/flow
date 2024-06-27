@@ -1,1 +1,1 @@
-export const AcceptedDropItem = 'components';
+export const DragDropItemType = 'components';

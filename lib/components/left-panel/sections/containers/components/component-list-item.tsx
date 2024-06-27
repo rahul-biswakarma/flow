@@ -1,42 +1,31 @@
-import React, { useRef, useEffect } from 'react';
+import React, { RefObject } from 'react';
 import { useDrag } from 'react-dnd';
 import clsx from 'clsx';
-import { Flex } from '@radix-ui/themes';
 import { Component1Icon } from '@radix-ui/react-icons';
 
 import styles from '../../../left-panel.module.css';
 
 import { WebNodeTypesType } from '@/lib/framework';
-
-const ItemType = 'COMPONENT';
+import { DragDropItemType } from '@/lib/constants';
 
 export const ComponentListItem = ({ node }: { node: WebNodeTypesType }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
-    type: ItemType,
-    item: { id: node.id, name: node.name },
+    type: DragDropItemType,
+    item: { name: node.name, type: node.type },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
   }));
 
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (ref.current) {
-      drag(ref.current);
-    }
-  }, [drag]);
-
   return (
-    <Flex
-      ref={ref}
-      align="center"
+    <div
+      ref={drag as unknown as RefObject<HTMLDivElement>}
       className={clsx(styles.pageListItem, 'dndnode')}
-      gap="1"
-      style={{ opacity: isDragging ? 0.5 : 1 }}
+      role="Handle"
+      style={{ opacity: isDragging ? 0.5 : 1, display: 'flex', alignItems: 'center' }}
     >
       <Component1Icon />
       {node.name}
-    </Flex>
+    </div>
   );
 };

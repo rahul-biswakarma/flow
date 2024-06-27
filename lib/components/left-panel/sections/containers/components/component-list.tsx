@@ -19,7 +19,7 @@ export const ComponentList = () => {
       />
       <Flex direction="column">
         {webNodeTypes.map((node) => (
-          <div key={node.id}>
+          <div key={node.name}>
             <ComponentListItem node={node} />
           </div>
         ))}
