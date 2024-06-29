@@ -6,7 +6,7 @@ export function extractSchemaInfo(schema: ZodSchema<any>) {
   }
 
   if (schema instanceof ZodEnum) {
-    return { type: 'enum', values: schema._def.values };
+    return { type: 'enum', options: schema._def.values };
   }
 
   if (schema instanceof z.ZodString) {

@@ -1,18 +1,21 @@
-import { Box, Flex, Text } from '@radix-ui/themes';
+import { Text } from '@radix-ui/themes';
+import * as Accordion from '@radix-ui/react-accordion';
 
 import { PositionRenderer } from './option-renderer/position-renderer';
 
 export const StyleSetting = () => {
   return (
-    <Flex direction="column" gap="2">
-      <Box
-        style={{
-          borderBottom: '1px solid var(--gray-4)',
-        }}
-      >
-        <Text>Styles</Text>
-      </Box>
-      <PositionRenderer />
-    </Flex>
+    <Accordion.Root collapsible defaultValue="setting" type="single">
+      <Accordion.Item value="setting">
+        <Accordion.Header>
+          <Accordion.Trigger>
+            <Text>Styles</Text>
+          </Accordion.Trigger>
+        </Accordion.Header>
+        <Accordion.Content>
+          <PositionRenderer />
+        </Accordion.Content>
+      </Accordion.Item>
+    </Accordion.Root>
   );
 };

@@ -1,0 +1,14 @@
+.responseDropdownTriggerContainer {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: var(--radius-2);
+  cursor: pointer;
+}
+
+.responseDropdownTriggerContainer:hover,
+.responseDropdownTriggerContainer[data-state='open'] {
+  background-color: var(--gray-5);
+}
