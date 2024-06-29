@@ -24,7 +24,6 @@ export const ContainerNode = ({ node }: ContainerNodeProps) => {
       </WebNodeContentWrapper>
       <div className={styles.bottomHandlerContainer}>
         <div className={styles.handler} />
-        <div className={styles.handler} />
       </div>
     </div>
   );

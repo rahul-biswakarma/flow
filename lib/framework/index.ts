@@ -1,3 +1,3 @@
 export * from './schemas';
 export * from './node.type';
-export { FlowPage } from './components';
+export { FlowPage, SettingsRightPanel } from './components';

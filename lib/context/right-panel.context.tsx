@@ -2,10 +2,14 @@
 
 import React, { createContext, useContext, useState } from 'react';
 
+type RightPanelMode = 'settings' | null;
+
 interface RightPanelContextType {
   isOpen: boolean;
+  mode: RightPanelMode;
+  setMode: (mode: RightPanelMode) => void;
   data: Record<string, any> | null;
-  openPanel: (panelData: Record<string, any>) => void;
+  openPanel: (panelData: Record<string, any>, mode: RightPanelMode) => void;
   closePanel: () => void;
 }
 
@@ -13,9 +17,11 @@ const RightPanelContext = createContext<RightPanelContextType | undefined>(undef
 
 export const RightPanelProvider = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [mode, setMode] = useState<RightPanelMode>(null);
   const [data, setData] = useState<Record<string, any> | null>(null);
 
-  const openPanel = (panelData: Record<string, any>) => {
+  const openPanel = (panelData: Record<string, any>, mode: RightPanelMode) => {
+    setMode(mode);
     setData(panelData);
     setIsOpen(true);
   };
@@ -26,7 +32,9 @@ export const RightPanelProvider = ({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <RightPanelContext.Provider value={{ isOpen, data, openPanel, closePanel }}>{children}</RightPanelContext.Provider>
+    <RightPanelContext.Provider value={{ isOpen, data, openPanel, closePanel, setMode, mode }}>
+      {children}
+    </RightPanelContext.Provider>
   );
 };
 
