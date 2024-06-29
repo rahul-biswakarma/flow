@@ -6,9 +6,24 @@
 }
 
 .settingGroupTrigger {
-  padding: 0 24px;
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  padding: 16px 24px;
   margin: 0;
   background: transparent;
   border: none;
   color: var(--gray-10);
+}
+
+.settingGroupTrigger[data-state='closed'] {
+  background-color: var(--gray-3);
+  border-bottom: 1px solid var(--gray-4);
+}
+
+.settingGroupTrigger[data-state='open'] .settingGroupTriggerIcon {
+  transform: rotate(180deg);
 }

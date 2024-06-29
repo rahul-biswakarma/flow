@@ -1,4 +1,4 @@
-import { Text } from '@radix-ui/themes';
+import { ChevronDownIcon, Text } from '@radix-ui/themes';
 import * as Accordion from '@radix-ui/react-accordion';
 
 import styles from '../setting.module.css';
@@ -17,12 +17,17 @@ export const StyleSetting = ({
   return (
     <Accordion.Root collapsible defaultValue="setting" type="single">
       <Accordion.Item value="setting">
-        <Accordion.Header>
+        <Accordion.Header style={{ margin: 0 }}>
           <Accordion.Trigger className={styles.settingGroupTrigger}>
             <Text>Styles</Text>
+            <ChevronDownIcon className={styles.settingGroupTriggerIcon} />
           </Accordion.Trigger>
         </Accordion.Header>
-        <Accordion.Content>
+        <Accordion.Content
+          style={{
+            padding: '0 24px',
+          }}
+        >
           <PositionRenderer
             value={config?.position}
             onChange={(value) => {
