@@ -32,7 +32,7 @@ export const StyleSetting = ({
             <ChevronDownIcon className={styles.settingGroupTriggerIcon} />
           </Accordion.Trigger>
         </Accordion.Header>
-        <Accordion.Content style={{ padding: '0 24px' }}>
+        <Accordion.Content className={styles.settingFieldContainer} style={{ padding: '0 24px' }}>
           <EnumRenderer<PositionOptionType>
             label="Position"
             schema={styleSettingSchema.shape.position}

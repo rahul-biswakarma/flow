@@ -1,8 +1,10 @@
 .settingFieldContainer {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  max-width: 100%;
+  row-gap: 12px;
+  column-gap: 16px;
   align-items: center;
-  gap: 20px;
-  width: 100%;
 }
 
 .settingGroupTrigger {

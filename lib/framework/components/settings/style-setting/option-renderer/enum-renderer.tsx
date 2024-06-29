@@ -1,8 +1,6 @@
 import React from 'react';
-import { Box, Text } from '@radix-ui/themes';
+import { Text } from '@radix-ui/themes';
 import { ZodEnum, ZodOptional } from 'zod';
-
-import styles from '../../setting.module.css';
 
 import ResponsiveDropdown from '@/lib/components/ui/responsive-dropdown';
 
@@ -18,7 +16,7 @@ const EnumRenderer = <T extends string>({ label, schema, value, onChange }: Enum
   const enumValues = (enumSchema as ZodEnum<any>)._def.values;
 
   return (
-    <Box className={styles.settingFieldContainer}>
+    <>
       <Text>{label}</Text>
       <ResponsiveDropdown<T>
         hasValue={value ? 'true' : 'false'}
@@ -26,7 +24,7 @@ const EnumRenderer = <T extends string>({ label, schema, value, onChange }: Enum
         triggerContent={value ?? '-'}
         onChange={(selectedItem: T) => onChange(selectedItem)}
       />
-    </Box>
+    </>
   );
 };
 
