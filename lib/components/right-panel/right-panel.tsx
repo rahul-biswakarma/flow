@@ -12,9 +12,17 @@ import { SettingsRightPanel } from '@/lib/framework';
 export const RightPanel = () => {
   const { isOpen, closePanel, data, mode } = useRightPanel();
 
+  const nodeId = data?.nodeId;
+
   const noModeRenderer = (
     <Flex>
       <Text>No Mode Found</Text>
+    </Flex>
+  );
+
+  const nodeIdNotFound = (
+    <Flex align="center" justify="center" p="24px">
+      Node Id not found
     </Flex>
   );
 
@@ -29,9 +37,10 @@ export const RightPanel = () => {
       <div
         style={{
           overflowY: 'auto',
+          height: '100%',
         }}
       >
-        {mode === 'settings' && <SettingsRightPanel />}
+        {mode === 'settings' && nodeId ? <SettingsRightPanel nodeId={nodeId} /> : nodeIdNotFound}
       </div>
     </>
   );

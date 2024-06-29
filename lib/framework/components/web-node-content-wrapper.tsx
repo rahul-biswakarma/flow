@@ -13,7 +13,15 @@ export const WebNodeContentWrapper = ({ node, children }: { node: NodeType; chil
       style={{
         cursor: 'pointer',
       }}
-      onClick={() => openPanel(node, 'settings')}
+      onClick={() =>
+        openPanel(
+          {
+            nodeId: node.id,
+            title: node.name,
+          },
+          'settings',
+        )
+      }
     >
       {children}
     </div>

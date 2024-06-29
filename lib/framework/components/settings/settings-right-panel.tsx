@@ -1,24 +1,32 @@
 import { Flex } from '@radix-ui/themes';
 
+import { StyleSettingType } from '../../node.type';
+
 import { StyleSetting } from './style-setting/style-setting';
 
 import { useProjectContext } from '@/lib/context';
 
 export const SettingsRightPanel = ({ nodeId }: { nodeId: string }) => {
-  const { nodes } = useProjectContext();
+  const { nodes, setNodes } = useProjectContext();
   const nodeData = nodes[nodeId];
   const nodeConfig = nodeData?.config;
-  let parsedNodeConfig: any = {};
 
-  try {
-    parsedNodeConfig = JSON.parse(nodeConfig);
-  } catch {
-    parsedNodeConfig = {};
-  }
+  const updateStyleConfig = (newConfig: StyleSettingType) => {
+    setNodes((prev) => ({
+      ...prev,
+      [nodeId]: {
+        ...prev[nodeId],
+        config: {
+          ...(prev[nodeId]?.config ?? {}),
+          styles: newConfig,
+        },
+      },
+    }));
+  };
 
   return (
     <Flex direction="column" gap="2">
-      <StyleSetting config={parsedNodeConfig.styles ?? {}} />
+      <StyleSetting config={nodeConfig?.styles ?? {}} updateStyleConfig={updateStyleConfig} />
     </Flex>
   );
 };

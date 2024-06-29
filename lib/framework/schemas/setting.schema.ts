@@ -23,11 +23,3 @@ export const styleSettingSchema = z.object({
   padding: z.string().optional(),
   border: z.string().optional(),
 });
-
-export const NodeSettingType = z.object({
-  style: styleSettingSchema,
-});
-
-export const SettingsTypes = {
-  style: styleSettingSchema,
-};

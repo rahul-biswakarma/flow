@@ -34,7 +34,13 @@ export const NodeRenderer = ({ node }: { node: NodeType }) => {
 
   const onMouseUp = () => {
     setDragging(false);
-    setNodes((prevNodes) => prevNodes.map((n) => (n.id === node.id ? { ...n, position } : n)));
+    setNodes((prev) => ({
+      ...prev,
+      [node.id]: {
+        ...prev[node.id],
+        position,
+      },
+    }));
   };
 
   useEffect(() => {

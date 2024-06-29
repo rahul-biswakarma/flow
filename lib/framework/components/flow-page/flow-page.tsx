@@ -29,6 +29,7 @@ export const FlowPage: React.FC = () => {
       const newNodeData = {
         id: newNodeId,
         type: item.type,
+        name: item.name,
         position,
         config: {},
       };

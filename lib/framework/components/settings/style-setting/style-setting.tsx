@@ -1,16 +1,19 @@
 import { Text } from '@radix-ui/themes';
 import * as Accordion from '@radix-ui/react-accordion';
-import { z } from 'zod';
 
 import styles from '../setting.module.css';
 
 import { PositionRenderer } from './option-renderer/position-renderer';
 
-import { styleSettingSchema } from '@/lib/framework/schemas';
+import { StyleSettingType } from '@/lib/framework/node.type';
 
-type StyleSettingType = z.infer<typeof styleSettingSchema>;
-
-export const StyleSetting = ({ config }: { config: StyleSettingType }) => {
+export const StyleSetting = ({
+  config,
+  updateStyleConfig,
+}: {
+  config: StyleSettingType;
+  updateStyleConfig: (newConfig: StyleSettingType) => void;
+}) => {
   return (
     <Accordion.Root collapsible defaultValue="setting" type="single">
       <Accordion.Item value="setting">
@@ -20,7 +23,15 @@ export const StyleSetting = ({ config }: { config: StyleSettingType }) => {
           </Accordion.Trigger>
         </Accordion.Header>
         <Accordion.Content>
-          <PositionRenderer value={config?.position} />
+          <PositionRenderer
+            value={config?.position}
+            onChange={(value) => {
+              updateStyleConfig({
+                ...config,
+                position: value,
+              });
+            }}
+          />
         </Accordion.Content>
       </Accordion.Item>
     </Accordion.Root>
