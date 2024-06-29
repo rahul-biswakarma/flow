@@ -6,10 +6,16 @@ import styles from '@/lib/styles/ui.module.css';
 interface ResponsiveDropdownProps<T> {
   triggerContent: ReactNode;
   menuItems: T[];
+  hasValue: 'true' | 'false';
   onChange?: (selectedItem: T) => void;
 }
 
-const ResponsiveDropdown = <T extends string>({ triggerContent, menuItems, onChange }: ResponsiveDropdownProps<T>) => {
+const ResponsiveDropdown = <T extends string>({
+  triggerContent,
+  menuItems,
+  onChange,
+  hasValue,
+}: ResponsiveDropdownProps<T>) => {
   const triggerRef = useRef<HTMLDivElement>(null);
   const [contentWidth, setContentWidth] = useState<number | undefined>(undefined);
 
@@ -22,7 +28,7 @@ const ResponsiveDropdown = <T extends string>({ triggerContent, menuItems, onCha
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <Box ref={triggerRef} className={styles.responseDropdownTriggerContainer}>
+        <Box ref={triggerRef} className={styles.responseDropdownTriggerContainer} data-hasValue={hasValue}>
           {triggerContent}
         </Box>
       </DropdownMenu.Trigger>

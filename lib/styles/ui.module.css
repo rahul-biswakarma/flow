@@ -6,6 +6,11 @@
   padding: 4px 8px;
   border-radius: var(--radius-2);
   cursor: pointer;
+  text-transform: capitalize;
+}
+
+.responseDropdownTriggerContainer[data-hasValue='true'] {
+  background-color: var(--gray-4);
 }
 
 .responseDropdownTriggerContainer:hover,

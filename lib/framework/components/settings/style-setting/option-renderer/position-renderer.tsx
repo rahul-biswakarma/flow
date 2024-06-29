@@ -17,6 +17,7 @@ export const PositionRenderer = ({ value, onChange }: { value?: string; onChange
     <Box className={styles.settingFieldContainer}>
       <Text>Position</Text>
       <ResponsiveDropdown<OptionsType>
+        hasValue={value ? 'true' : 'false'}
         menuItems={positionSchemaInfo.options}
         triggerContent={value ?? '-'}
         onChange={(selectedItem: OptionsType) => onChange(selectedItem)}
