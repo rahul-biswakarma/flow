@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 import { Page, Project } from '@prisma/client';
 
 import { EdgeType, NodeType } from '../types';
@@ -21,6 +21,8 @@ type ProjectContextType = {
 
   nodes: Record<string, NodeType>;
   setNodes: React.Dispatch<React.SetStateAction<Record<string, NodeType>>>;
+
+  deleteNode: (nodeId: string) => void;
 };
 
 const ProjectContext = createContext<ProjectContextType | null>(null);
@@ -36,6 +38,23 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
 
   const [nodes, setNodes] = useState<Record<string, NodeType>>({});
   const [edges, setEdges] = useState<EdgeType[]>([]);
+
+  const deleteNode = useCallback(
+    (nodeId: string) => {
+      setNodes((prevNodes) => {
+        const newNodes = { ...prevNodes };
+
+        delete newNodes[nodeId];
+
+        return newNodes;
+      });
+
+      setEdges((prevEdges) => {
+        return prevEdges.filter((edge) => edge.source !== nodeId && edge.target !== nodeId);
+      });
+    },
+    [setNodes, setEdges],
+  );
 
   // useEffect(() => {
   //   const currentPage = project.pages.find((page) => page.id === currentPageId);
@@ -64,6 +83,7 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
         setNodes,
         edges,
         setEdges,
+        deleteNode,
       }}
     >
       {children}
