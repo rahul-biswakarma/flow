@@ -7,8 +7,7 @@ import { Theme } from '@radix-ui/themes';
 import styles from '@/lib/styles/page.module.css';
 import { siteConfig } from '@/lib/config/site';
 import { fontSans } from '@/lib/config/fonts';
-import { NextAuthProvider, RightPanelProvider } from '@/lib/context';
-import { RightPanel } from '@/lib/components';
+import { NextAuthProvider } from '@/lib/context';
 
 export const metadata: Metadata = {
   title: {
@@ -47,10 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             radius="medium"
             scaling="100%"
           >
-            <RightPanelProvider>
-              <div className={styles.page}>{children}</div>
-              <RightPanel />
-            </RightPanelProvider>
+            <div className={styles.page}>{children}</div>
           </Theme>
         </body>
       </html>

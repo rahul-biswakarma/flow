@@ -19,8 +19,8 @@ type ProjectContextType = {
   edges: EdgeType[];
   setEdges: React.Dispatch<React.SetStateAction<EdgeType[]>>;
 
-  nodes: NodeType[];
-  setNodes: React.Dispatch<React.SetStateAction<NodeType[]>>;
+  nodes: Record<string, NodeType>;
+  setNodes: React.Dispatch<React.SetStateAction<Record<string, NodeType>>>;
 };
 
 const ProjectContext = createContext<ProjectContextType | null>(null);
@@ -34,7 +34,7 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
   const [project, setProject] = useState<ProjectWithPages>(projectWithPages);
   const [currentPageId, setCurrentPageId] = useState<string>(project?.pages[0]?.id ?? '');
 
-  const [nodes, setNodes] = useState<NodeType[]>([]);
+  const [nodes, setNodes] = useState<Record<string, NodeType>>({});
   const [edges, setEdges] = useState<EdgeType[]>([]);
 
   // useEffect(() => {

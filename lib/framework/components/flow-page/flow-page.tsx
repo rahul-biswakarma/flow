@@ -25,7 +25,20 @@ export const FlowPage: React.FC = () => {
         y: clientOffset.y - (dropTargetRect?.top ?? 0),
       };
 
-      setNodes((prevNodes) => [...prevNodes, { id: nanoid(), type: item.type, position, config: {} }]);
+      const newNodeId = nanoid();
+      const newNodeData = {
+        id: newNodeId,
+        type: item.type,
+        position,
+        config: {},
+      };
+
+      setNodes((prevNodes) => {
+        return {
+          ...prevNodes,
+          [newNodeId]: newNodeData,
+        };
+      });
     }
   };
 
@@ -50,7 +63,7 @@ export const FlowPage: React.FC = () => {
         background: isOver ? 'rgba(0, 0, 0, 0.1)' : 'transparent',
       }}
     >
-      {nodes.map((node) => (
+      {Object.values(nodes).map((node) => (
         <NodeRenderer key={node.id} node={node} />
       ))}
     </Box>

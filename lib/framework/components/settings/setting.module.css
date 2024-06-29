@@ -4,3 +4,11 @@
   gap: 20px;
   width: 100%;
 }
+
+.settingGroupTrigger {
+  padding: 0 24px;
+  margin: 0;
+  background: transparent;
+  border: none;
+  color: var(--gray-10);
+}

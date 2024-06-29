@@ -6,7 +6,7 @@ import { styleSettingSchema } from '@/lib/framework/schemas';
 import { extractSchemaInfo } from '@/lib/framework/utils';
 import ResponsiveDropdown from '@/lib/components/ui/responsive-dropdown';
 
-export const PositionRenderer = ({ value }: { value: string }) => {
+export const PositionRenderer = ({ value }: { value?: string }) => {
   const positionSchema = styleSettingSchema.shape.position;
   const positionSchemaInfo = extractSchemaInfo(positionSchema);
 

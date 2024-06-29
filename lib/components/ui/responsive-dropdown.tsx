@@ -25,7 +25,7 @@ const ResponsiveDropdown: React.FC<ResponsiveDropdownProps> = ({ triggerContent,
           {triggerContent}
         </Box>
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content style={{ width: contentWidth, marginRight: '-10px' }}>
+      <DropdownMenu.Content color="gray" style={{ width: contentWidth, marginRight: '-10px' }}>
         {menuItems.map((item) => (
           <DropdownMenu.Item key={item} style={{ textTransform: 'capitalize' }}>
             {item}
