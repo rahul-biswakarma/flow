@@ -29,7 +29,11 @@ export const TemporaryEdge = ({ containerRef }: { containerRef: React.RefObject<
     };
   }, [connection, setMousePosition]);
 
-  if (!connection?.from || !mousePosition || !containerPosition) return null;
+  if (!connection?.from || !mousePosition || !containerPosition) {
+    mousePosition !== null && setMousePosition(null);
+
+    return null;
+  }
 
   const handlerId = generateHandlerId(connection.from);
   const fromHandlerElement = document.querySelector(`[data-handler-id="${handlerId}"]`);
