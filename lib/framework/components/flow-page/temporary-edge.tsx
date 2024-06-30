@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { generateConnectionId, generateHandlerId } from '../../utils';
+import { generateHandlerId } from '../../utils';
 
 import { useProjectContext } from '@/lib/context';
 
@@ -40,6 +40,12 @@ export const TemporaryEdge = ({ containerRef }: { containerRef: React.RefObject<
   const fromX = fromPosition.left + fromPosition.width / 2;
   const fromY = fromPosition.top + fromPosition.height / 2;
 
+  // Calculate control points for the cubic Bezier curve
+  const controlPointX1 = fromX;
+  const controlPointY1 = fromY + (mousePosition.y - fromY) / 2;
+  const controlPointX2 = mousePosition.x;
+  const controlPointY2 = fromY + (mousePosition.y - fromY) / 2;
+
   return (
     <svg
       style={{
@@ -48,16 +54,17 @@ export const TemporaryEdge = ({ containerRef }: { containerRef: React.RefObject<
         left: 0,
         width: '100%',
         height: '100%',
+        pointerEvents: 'none',
       }}
     >
-      <line
-        key={generateConnectionId(connection.from)}
+      <path
+        d={`M ${fromX - containerPosition.left} ${fromY - containerPosition.top}
+           C ${controlPointX1 - containerPosition.left} ${controlPointY1 - containerPosition.top},
+             ${controlPointX2 - containerPosition.left} ${controlPointY2 - containerPosition.top},
+             ${mousePosition.x - containerPosition.left} ${mousePosition.y - containerPosition.top}`}
+        fill="none"
         stroke="white"
         strokeWidth="2"
-        x1={fromX - containerPosition?.left}
-        x2={mousePosition.x - containerPosition?.left}
-        y1={fromY - containerPosition?.top}
-        y2={mousePosition.y - containerPosition?.top}
       />
     </svg>
   );
