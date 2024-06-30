@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useState } from 'react';
 import { Page, Project } from '@prisma/client';
 
-import { EdgeType, NodeType } from '../types';
+import { EdgeType, NodeType, ProjectConfig } from '../types';
 
 type ProjectWithPages = Project & {
   pages: Page[];
@@ -12,6 +12,9 @@ type ProjectWithPages = Project & {
 type ProjectContextType = {
   project: ProjectWithPages;
   setProject: React.Dispatch<React.SetStateAction<ProjectWithPages>>;
+
+  projectConfig: ProjectConfig;
+  setProjectConfig: React.Dispatch<React.SetStateAction<ProjectConfig>>;
 
   currentPageId: string;
   setCurrentPageId: React.Dispatch<React.SetStateAction<string>>;
@@ -34,6 +37,9 @@ type ProjectContextProviderProps = {
 
 export const ProjectContextProvider = ({ children, projectWithPages }: ProjectContextProviderProps) => {
   const [project, setProject] = useState<ProjectWithPages>(projectWithPages);
+  const [projectConfig, setProjectConfig] = useState<ProjectConfig>({
+    defaultUnit: 'px',
+  });
   const [currentPageId, setCurrentPageId] = useState<string>(project?.pages[0]?.id ?? '');
 
   const [nodes, setNodes] = useState<Record<string, NodeType>>({});
@@ -79,6 +85,8 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
         setProject,
         currentPageId,
         setCurrentPageId,
+        projectConfig,
+        setProjectConfig,
         nodes,
         setNodes,
         edges,

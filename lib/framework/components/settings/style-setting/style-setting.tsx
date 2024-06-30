@@ -1,9 +1,9 @@
+import React from 'react';
 import { ChevronDownIcon, Text } from '@radix-ui/themes';
 import * as Accordion from '@radix-ui/react-accordion';
 
 import styles from '../setting.module.css';
 
-import EnumRenderer from './option-renderer/enum-renderer';
 import {
   AlignItemsOptionType,
   DisplayOptionType,
@@ -12,6 +12,7 @@ import {
   PositionOptionType,
   TextAlignOptionType,
 } from './types';
+import { ColorRenderer, EnumRenderer, StringRenderer, StringWithUnitRenderer } from './option-renderer';
 
 import { StyleSettingType } from '@/lib/framework/node.type';
 import { styleSettingSchema } from '@/lib/framework/schemas/setting.schema';
@@ -79,6 +80,69 @@ export const StyleSetting = ({
             value={config?.alignItems}
             onChange={(value) => {
               updateStyleConfig({ ...config, alignItems: value });
+            }}
+          />
+          <ColorRenderer
+            label="Background Color"
+            value={config?.backgroundColor}
+            onChange={(value) => {
+              updateStyleConfig({ ...config, backgroundColor: value });
+            }}
+          />
+          <ColorRenderer
+            label="Color"
+            value={config?.color}
+            onChange={(value) => {
+              updateStyleConfig({ ...config, color: value });
+            }}
+          />
+          <StringWithUnitRenderer
+            label="Font Size"
+            value={config?.fontSize}
+            onChange={(value) => {
+              updateStyleConfig({ ...config, fontSize: value });
+            }}
+          />
+          <StringRenderer
+            label="Font Weight"
+            value={config?.fontWeight}
+            onChange={(value) => {
+              updateStyleConfig({ ...config, fontWeight: value });
+            }}
+          />
+          <StringWithUnitRenderer
+            label="Width"
+            value={config?.width}
+            onChange={(value) => {
+              updateStyleConfig({ ...config, width: value });
+            }}
+          />
+          <StringWithUnitRenderer
+            label="Height"
+            value={config?.height}
+            onChange={(value) => {
+              updateStyleConfig({ ...config, height: value });
+            }}
+          />
+          <StringWithUnitRenderer
+            label="Margin"
+            value={config?.margin}
+            onChange={(value) => {
+              updateStyleConfig({ ...config, margin: value });
+            }}
+          />
+          <StringWithUnitRenderer
+            label="Padding"
+            value={config?.padding}
+            onChange={(value) => {
+              updateStyleConfig({ ...config, padding: value });
+            }}
+          />
+          <StringWithUnitRenderer
+            label="Border"
+            value={config?.border}
+            onChange={(value) => {
+              updateStyleConfig({ ...config, border: value });
             }}
           />
         </Accordion.Content>

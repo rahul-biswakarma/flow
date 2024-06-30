@@ -8,6 +8,7 @@ interface ResponsiveDropdownProps<T> {
   menuItems: T[];
   hasValue: 'true' | 'false';
   onChange?: (selectedItem: T) => void;
+  textTransform?: 'capitalize' | 'uppercase' | 'lowercase';
 }
 
 const ResponsiveDropdown = <T extends string>({
@@ -15,6 +16,7 @@ const ResponsiveDropdown = <T extends string>({
   menuItems,
   onChange,
   hasValue,
+  textTransform = 'capitalize',
 }: ResponsiveDropdownProps<T>) => {
   const triggerRef = useRef<HTMLDivElement>(null);
   const [contentWidth, setContentWidth] = useState<number | undefined>(undefined);
@@ -34,7 +36,7 @@ const ResponsiveDropdown = <T extends string>({
       </DropdownMenu.Trigger>
       <DropdownMenu.Content color="gray" style={{ width: contentWidth, marginRight: '-10px' }}>
         {menuItems.map((item) => (
-          <DropdownMenu.Item key={item} style={{ textTransform: 'capitalize' }} onSelect={() => onChange?.(item)}>
+          <DropdownMenu.Item key={item} style={{ textTransform }} onSelect={() => onChange?.(item)}>
             {item}
           </DropdownMenu.Item>
         ))}

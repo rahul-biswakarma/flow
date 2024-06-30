@@ -11,7 +11,7 @@ interface EnumRendererProps<T> {
   onChange: (value: T) => void;
 }
 
-const EnumRenderer = <T extends string>({ label, schema, value, onChange }: EnumRendererProps<T>) => {
+export const EnumRenderer = <T extends string>({ label, schema, value, onChange }: EnumRendererProps<T>) => {
   const enumSchema = schema instanceof ZodOptional ? schema._def.innerType : schema;
   const enumValues = (enumSchema as ZodEnum<any>)._def.values;
 
@@ -27,5 +27,3 @@ const EnumRenderer = <T extends string>({ label, schema, value, onChange }: Enum
     </>
   );
 };
-
-export default EnumRenderer;

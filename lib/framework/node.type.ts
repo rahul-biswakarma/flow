@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { z } from 'zod';
 
 import { LabelNode, ContainerNode, ButtonNode } from './components';
-import { styleSettingSchema } from './schemas';
+import { styleSettingSchema } from './schemas/setting.schema';
 
 export type WebNodeTypesType = {
   type: string;

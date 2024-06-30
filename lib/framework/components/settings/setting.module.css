@@ -29,3 +29,23 @@
 .settingGroupTrigger[data-state='open'] .settingGroupTriggerIcon {
   transform: rotate(180deg);
 }
+
+.settingTypeInputContainer {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+}
+
+.settingTypeInputContainer input[data-hasValue='true'],
+.settingTypeInputContainer:hover {
+  background-color: var(--gray-4);
+}
+
+.settingTypeInputContainer {
+  flex: 1;
+}
+
+.colorPickerContainer {
+  width: 150px;
+  height: 150px;
+}
