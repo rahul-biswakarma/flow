@@ -8,7 +8,7 @@ import { NodeRendererProps } from '../../node.type';
 
 import styles from './node.module.css';
 
-export const ContainerNode = ({ node }: NodeRendererProps) => {
+export const ButtonNode = ({ node }: NodeRendererProps) => {
   return (
     <WebNodeContextMenu node={node}>
       <div className={styles.nodeContainer}>
@@ -16,9 +16,11 @@ export const ContainerNode = ({ node }: NodeRendererProps) => {
           <div className={styles.handler} />
         </div>
         <WebNodeContentWrapper node={node}>
-          <Text className={styles.contentContainer}>Container</Text>
+          <Text className={styles.contentContainer}>Button</Text>
         </WebNodeContentWrapper>
         <div className={styles.bottomHandlerContainer}>
+          <div className={styles.handler} />
+          <div className={styles.handler} />
           <div className={styles.handler} />
         </div>
       </div>

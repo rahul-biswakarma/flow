@@ -1,6 +1,8 @@
 import { FC } from 'react';
 import { z } from 'zod';
 
+import { NodeType } from '../types';
+
 import { LabelNode, ContainerNode, ButtonNode } from './components';
 import { styleSettingSchema } from './schemas/setting.schema';
 
@@ -31,3 +33,7 @@ export const webNodeTypes: WebNodeTypesType[] = [
 export const getWebNode = (type: string) => webNodeTypes.find((node) => node.type === type);
 
 export type StyleSettingType = z.infer<typeof styleSettingSchema>;
+
+export type NodeRendererProps = {
+  node: NodeType;
+};
