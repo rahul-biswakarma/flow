@@ -19,22 +19,37 @@ const ResponsiveDropdown = <T extends string>({
   textTransform = 'capitalize',
 }: ResponsiveDropdownProps<T>) => {
   const triggerRef = useRef<HTMLDivElement>(null);
+
+  const [marginRight, setMarginRight] = useState<string>('-10px');
   const [contentWidth, setContentWidth] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     if (triggerRef.current) {
-      setContentWidth(triggerRef.current.clientWidth);
+      const clientWidth = triggerRef.current.clientWidth;
+
+      if (clientWidth > 200) {
+        setContentWidth(clientWidth);
+        setMarginRight('-10px');
+      } else {
+        setContentWidth(200);
+        setMarginRight('0');
+      }
     }
   }, [triggerRef.current?.clientWidth]);
 
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <Box ref={triggerRef} className={styles.responseDropdownTriggerContainer} data-hasValue={hasValue}>
+        <Box
+          ref={triggerRef}
+          className={styles.responseDropdownTriggerContainer}
+          data-hasValue={hasValue}
+          style={{ textTransform }}
+        >
           {triggerContent}
         </Box>
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content color="gray" style={{ width: contentWidth, marginRight: '-10px' }}>
+      <DropdownMenu.Content color="gray" style={{ width: contentWidth, marginRight }}>
         {menuItems.map((item) => (
           <DropdownMenu.Item key={item} style={{ textTransform }} onSelect={() => onChange?.(item)}>
             {item}

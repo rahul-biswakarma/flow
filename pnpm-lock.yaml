@@ -83,9 +83,9 @@ importers:
       react:
         specifier: 19.0.0-rc-935180c7e0-20240524
         version: 19.0.0-rc-935180c7e0-20240524
-      react-colorful:
-        specifier: ^5.6.1
-        version: 5.6.1(react-dom@19.0.0-rc-935180c7e0-20240524(react@19.0.0-rc-935180c7e0-20240524))(react@19.0.0-rc-935180c7e0-20240524)
+      react-color-palette:
+        specifier: ^7.2.0
+        version: 7.2.0(react@19.0.0-rc-935180c7e0-20240524)
       react-dnd:
         specifier: ^16.0.1
         version: 16.0.1(@types/node@20.5.7)(@types/react@18.3.2)(react@19.0.0-rc-935180c7e0-20240524)
@@ -3056,11 +3056,11 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  react-colorful@5.6.1:
-    resolution: {integrity: sha512-1exovf0uGTGyq5mXQT0zgQ80uvj2PCwvF8zY1RN9/vbJVSjSo3fsB/4L3ObbF7u70NduSiK4xu4Y6q1MHoUGEw==}
+  react-color-palette@7.2.0:
+    resolution: {integrity: sha512-CC/yCcGAo/gUKSvdCQm6aKdJQLFA8SZkMsyqmIbY/A9edenMdHcuVVZGWXOdoDpuyKOEkOq9PZz/PNLZ5OAXjw==}
+    engines: {node: '>=10'}
     peerDependencies:
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
+      react: '>=16.8'
 
   react-dnd-html5-backend@16.0.1:
     resolution: {integrity: sha512-Wu3dw5aDJmOGw8WjH1I1/yTH+vlXEL4vmjk5p+MHxP8HuHJS1lAGeIdG/hze1AvNeXWo/JgULV87LyQOr+r5jw==}
@@ -6716,10 +6716,9 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  react-colorful@5.6.1(react-dom@19.0.0-rc-935180c7e0-20240524(react@19.0.0-rc-935180c7e0-20240524))(react@19.0.0-rc-935180c7e0-20240524):
+  react-color-palette@7.2.0(react@19.0.0-rc-935180c7e0-20240524):
     dependencies:
       react: 19.0.0-rc-935180c7e0-20240524
-      react-dom: 19.0.0-rc-935180c7e0-20240524(react@19.0.0-rc-935180c7e0-20240524)
 
   react-dnd-html5-backend@16.0.1:
     dependencies:

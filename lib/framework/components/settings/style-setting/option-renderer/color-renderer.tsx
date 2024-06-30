@@ -1,8 +1,9 @@
-import React from 'react';
-import { HexColorPicker } from 'react-colorful';
-import { Box, Flex, Text, TextField } from '@radix-ui/themes';
+'use client';
 
-import styles from '../../setting.module.css';
+import React from 'react';
+import { Box, Grid, Popover, Text } from '@radix-ui/themes';
+import 'react-color-palette/css';
+import { ColorPicker, useColor } from 'react-color-palette';
 
 interface ColorRendererProps {
   label: string;
@@ -10,25 +11,46 @@ interface ColorRendererProps {
   onChange: (value: string) => void;
 }
 
-export const ColorRenderer: React.FC<ColorRendererProps> = ({ label, value, onChange }) => {
+export const ColorRenderer: React.FC<ColorRendererProps> = ({ label, value = '#000000', onChange }) => {
+  const [color, setColor] = useColor(value);
+
   return (
     <>
       <Text>{label}</Text>
-      <Flex align="center" gap="2" width="100%">
-        <Box className={styles.colorPickerContainer}>
-          <HexColorPicker color={value ?? '#000000'} onChange={onChange} />
-        </Box>
-        <TextField.Root
-          className={styles.settingTypeInputContainer}
-          color="gray"
-          placeholder="#000000"
-          radius="small"
-          size="2"
-          value={value ?? ''}
-          variant="soft"
-          onChange={(e) => onChange(e.target.value)}
-        />
-      </Flex>
+      <Popover.Root>
+        <Popover.Trigger>
+          <Grid
+            align="center"
+            columns="auto 1fr"
+            gap="2"
+            style={{
+              background: 'var(--gray-4)',
+              padding: '4px',
+              borderRadius: 'var(--radius-2)',
+              cursor: 'pointer',
+            }}
+          >
+            <Box
+              style={{
+                width: '20px',
+                height: '20px',
+                backgroundColor: color.hex,
+                borderRadius: 'var(--radius-2)',
+              }}
+            />
+            <Text>{color.hex}</Text>
+          </Grid>
+        </Popover.Trigger>
+        <Popover.Content width="360px">
+          <ColorPicker
+            color={color}
+            onChange={(color) => {
+              setColor(color);
+              onChange(color.hex);
+            }}
+          />
+        </Popover.Content>
+      </Popover.Root>
     </>
   );
 };
