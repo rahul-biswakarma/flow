@@ -3,7 +3,7 @@
 import React from 'react';
 import { Text } from '@radix-ui/themes';
 
-import { WebNodeContentWrapper, WebNodeContextMenu } from '../web-node-helper';
+import { NodeHandler, WebNodeContentWrapper, WebNodeContextMenu } from '../web-node-helper';
 import { NodeRendererProps } from '../../node.type';
 
 import styles from './node.module.css';
@@ -13,13 +13,13 @@ export const ContainerNode = ({ node }: NodeRendererProps) => {
     <WebNodeContextMenu node={node}>
       <div className={styles.nodeContainer}>
         <div className={styles.topHandlerContainer}>
-          <div className={styles.handler} />
+          <NodeHandler handlerKey="content" handlerType="visual-source" nodeId={node.id} />
         </div>
         <WebNodeContentWrapper node={node}>
           <Text className={styles.contentContainer}>Container</Text>
         </WebNodeContentWrapper>
         <div className={styles.bottomHandlerContainer}>
-          <div className={styles.handler} />
+          <NodeHandler handlerKey="content" handlerType="visual-target" nodeId={node.id} />
         </div>
       </div>
     </WebNodeContextMenu>

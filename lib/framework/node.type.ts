@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { z } from 'zod';
 
-import { NodeType } from '../types';
+import { EdgeKeys, EdgeTypes, NodeType } from '../types';
 
 import { LabelNode, ContainerNode, ButtonNode } from './components';
 import { styleSettingSchema } from './schemas/setting.schema';

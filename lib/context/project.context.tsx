@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useState } from 'react';
 import { Page, Project } from '@prisma/client';
 
-import { EdgeType, NodeType, ProjectConfig } from '../types';
+import { ConnectionType, EdgeType, NodeType, ProjectConfig } from '../types';
 
 type ProjectWithPages = Project & {
   pages: Page[];
@@ -26,6 +26,9 @@ type ProjectContextType = {
   setNodes: React.Dispatch<React.SetStateAction<Record<string, NodeType>>>;
 
   deleteNode: (nodeId: string) => void;
+
+  connection: ConnectionType | null;
+  setConnection: React.Dispatch<React.SetStateAction<ConnectionType | null>>;
 };
 
 const ProjectContext = createContext<ProjectContextType | null>(null);
@@ -44,6 +47,7 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
 
   const [nodes, setNodes] = useState<Record<string, NodeType>>({});
   const [edges, setEdges] = useState<EdgeType[]>([]);
+  const [connection, setConnection] = useState<ConnectionType | null>(null);
 
   const deleteNode = useCallback(
     (nodeId: string) => {
@@ -92,6 +96,8 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
         edges,
         setEdges,
         deleteNode,
+        connection,
+        setConnection,
       }}
     >
       {children}

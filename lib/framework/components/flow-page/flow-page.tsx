@@ -7,12 +7,14 @@ import React, { useRef } from 'react';
 
 import { NodeRenderer } from '../node-renderer';
 
+import { TemporaryEdge } from './temporary-edge';
+
 import { useProjectContext } from '@/lib/context';
 import { DragDropItemType } from '@/lib/constants';
 import { DropItemType } from '@/lib/types';
 
 export const FlowPage: React.FC = () => {
-  const { nodes, setNodes } = useProjectContext();
+  const { nodes, setNodes, setConnection } = useProjectContext();
   const dropRef = useRef<HTMLDivElement>(null);
 
   const handleDrop = (item: DropItemType, monitor: DropTargetMonitor) => {
@@ -63,10 +65,12 @@ export const FlowPage: React.FC = () => {
         position: 'relative',
         background: isOver ? 'rgba(0, 0, 0, 0.1)' : 'transparent',
       }}
+      onMouseUp={() => setConnection(null)}
     >
       {Object.values(nodes).map((node) => (
         <NodeRenderer key={node.id} node={node} />
       ))}
+      <TemporaryEdge containerRef={dropRef} />
     </Box>
   );
 };
