@@ -3,19 +3,30 @@
 import { Box } from '@radix-ui/themes';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
 import { nanoid } from 'nanoid';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { NodeRenderer } from '../node-renderer';
 
 import { TemporaryEdge } from './temporary-edge';
+import { Edges } from './edges';
 
-import { useProjectContext } from '@/lib/context';
+import { useContainerPosition, useProjectContext } from '@/lib/context';
 import { DragDropItemType } from '@/lib/constants';
 import { DropItemType } from '@/lib/types';
+import { useResizeObserver } from '@/lib/hooks';
 
 export const FlowPage: React.FC = () => {
   const { nodes, setNodes, setConnection } = useProjectContext();
   const dropRef = useRef<HTMLDivElement>(null);
+
+  const { updateContainerPosition } = useContainerPosition();
+  const containerRect = useResizeObserver(dropRef);
+
+  useEffect(() => {
+    if (containerRect) {
+      updateContainerPosition(containerRect.left, containerRect.top);
+    }
+  }, [containerRect, updateContainerPosition]);
 
   const handleDrop = (item: DropItemType, monitor: DropTargetMonitor) => {
     const clientOffset = monitor.getClientOffset();
@@ -71,6 +82,7 @@ export const FlowPage: React.FC = () => {
         <NodeRenderer key={node.id} node={node} />
       ))}
       <TemporaryEdge containerRef={dropRef} />
+      <Edges containerRef={dropRef} />
     </Box>
   );
 };

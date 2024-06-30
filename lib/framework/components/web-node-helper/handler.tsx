@@ -5,7 +5,7 @@ import { useProjectContext } from '@/lib/context';
 import { NodeHandlerType } from '@/lib/types';
 
 export const NodeHandler = (props: NodeHandlerType) => {
-  const { connection, setConnection } = useProjectContext();
+  const { connection, setConnection, createEdge } = useProjectContext();
 
   const handleStartConnection = ({ nodeId, handlerType, handlerKey }: NodeHandlerType) => {
     setConnection({
@@ -22,14 +22,7 @@ export const NodeHandler = (props: NodeHandlerType) => {
       const isValidConnection = validateConnection(connection.from, { nodeId, handlerType, handlerKey });
 
       if (isValidConnection) {
-        setConnection({
-          from: connection.from,
-          to: {
-            nodeId,
-            handlerKey,
-            handlerType,
-          },
-        });
+        createEdge(connection.from, { nodeId, handlerType, handlerKey });
       }
     }
     setConnection(null);

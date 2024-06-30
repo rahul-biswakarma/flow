@@ -10,8 +10,8 @@ export type NodeType = {
 
 export type EdgeType = {
   id: string;
-  source: string;
-  target: string;
+  source: NodeHandlerType;
+  target: NodeHandlerType;
 };
 
 export type DropItemType = {

@@ -1,9 +1,10 @@
 'use client';
 
-import { createContext, useCallback, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { Page, Project } from '@prisma/client';
 
-import { ConnectionType, EdgeType, NodeType, ProjectConfig } from '../types';
+import { ConnectionType, EdgeType, NodeHandlerType, NodeType, ProjectConfig } from '../types';
+import { generateEdgeId } from '../framework/utils';
 
 type ProjectWithPages = Project & {
   pages: Page[];
@@ -26,6 +27,8 @@ type ProjectContextType = {
   setNodes: React.Dispatch<React.SetStateAction<Record<string, NodeType>>>;
 
   deleteNode: (nodeId: string) => void;
+  createEdge: (from: NodeHandlerType, to: NodeHandlerType) => void;
+  nodeEdgeMapping: Record<string, string[]>;
 
   connection: ConnectionType | null;
   setConnection: React.Dispatch<React.SetStateAction<ConnectionType | null>>;
@@ -48,6 +51,44 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
   const [nodes, setNodes] = useState<Record<string, NodeType>>({});
   const [edges, setEdges] = useState<EdgeType[]>([]);
   const [connection, setConnection] = useState<ConnectionType | null>(null);
+  const [nodeEdgeMapping, setNodeEdgeMapping] = useState<Record<string, string[]>>({});
+
+  useEffect(() => {
+    const newMapping: Record<string, string[]> = {};
+
+    edges.forEach((edge) => {
+      if (newMapping[edge.source.nodeId]) {
+        newMapping[edge.source.nodeId].push(edge.id);
+      } else {
+        newMapping[edge.source.nodeId] = [edge.id];
+      }
+
+      if (newMapping[edge.target.nodeId]) {
+        newMapping[edge.target.nodeId].push(edge.id);
+      } else {
+        newMapping[edge.target.nodeId] = [edge.id];
+      }
+    });
+
+    setNodeEdgeMapping(newMapping);
+  }, [edges]);
+
+  const createEdge = useCallback(
+    (from: NodeHandlerType, to: NodeHandlerType) => {
+      console.log('createEdge', from, to);
+      setEdges((prevEdges) => {
+        return [
+          ...prevEdges,
+          {
+            id: `${generateEdgeId(from)}-${generateEdgeId(to)}`,
+            source: from,
+            target: to,
+          },
+        ];
+      });
+    },
+    [setEdges],
+  );
 
   const deleteNode = useCallback(
     (nodeId: string) => {
@@ -60,7 +101,7 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
       });
 
       setEdges((prevEdges) => {
-        return prevEdges.filter((edge) => edge.source !== nodeId && edge.target !== nodeId);
+        return prevEdges.filter((edge) => edge.source.nodeId !== nodeId && edge.target.nodeId !== nodeId);
       });
     },
     [setNodes, setEdges],
@@ -98,6 +139,8 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
         deleteNode,
         connection,
         setConnection,
+        createEdge,
+        nodeEdgeMapping,
       }}
     >
       {children}

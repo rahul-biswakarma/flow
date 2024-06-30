@@ -6,7 +6,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 
 import { FlowPage } from '../framework';
-import { RightPanelProvider } from '../context';
+import { ContainerPositionProvider, RightPanelProvider } from '../context';
 
 import { LeftPanel } from './left-panel/left-panel';
 import { RightPanel } from './right-panel/right-panel';
@@ -34,7 +34,9 @@ export const Product = () => {
               />
             </PanelResizeHandle>
             <Panel>
-              <FlowPage />
+              <ContainerPositionProvider>
+                <FlowPage />
+              </ContainerPositionProvider>
             </Panel>
           </PanelGroup>
         </DndProvider>
