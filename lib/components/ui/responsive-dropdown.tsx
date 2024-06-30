@@ -1,11 +1,12 @@
 import React, { useRef, useEffect, useState, ReactNode } from 'react';
-import { Box, DropdownMenu } from '@radix-ui/themes';
+import { ChevronDownIcon, DropdownMenu, Flex } from '@radix-ui/themes';
 
 import styles from '@/lib/styles/ui.module.css';
 
 interface ResponsiveDropdownProps<T> {
   triggerContent: ReactNode;
   menuItems: T[];
+  showTriggerIcon?: boolean;
   hasValue: 'true' | 'false';
   onChange?: (selectedItem: T) => void;
   textTransform?: 'capitalize' | 'uppercase' | 'lowercase';
@@ -15,6 +16,7 @@ const ResponsiveDropdown = <T extends string>({
   triggerContent,
   menuItems,
   onChange,
+  showTriggerIcon = false,
   hasValue,
   textTransform = 'capitalize',
 }: ResponsiveDropdownProps<T>) => {
@@ -40,14 +42,17 @@ const ResponsiveDropdown = <T extends string>({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <Box
+        <Flex
           ref={triggerRef}
+          align="center"
           className={styles.responseDropdownTriggerContainer}
           data-hasValue={hasValue}
+          justify="between"
           style={{ textTransform }}
         >
           {triggerContent}
-        </Box>
+          {showTriggerIcon && <ChevronDownIcon />}
+        </Flex>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content color="gray" style={{ width: contentWidth, marginRight }}>
         {menuItems.map((item) => (

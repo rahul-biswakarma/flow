@@ -16,6 +16,7 @@ export const UnitRenderer: React.FC<UnitRendererProps> = ({ value, onChange }) =
 
   return (
     <ResponsiveDropdown<UnitType>
+      showTriggerIcon
       hasValue={value ? 'true' : 'false'}
       menuItems={unitValues}
       textTransform="lowercase"
