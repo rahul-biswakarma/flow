@@ -25,7 +25,7 @@ export const SettingsRightPanel = ({ nodeId }: { nodeId: string }) => {
   };
 
   return (
-    <Flex direction="column" gap="2">
+    <Flex direction="column" gap="3">
       <StyleSetting config={nodeConfig?.styles ?? {}} updateStyleConfig={updateStyleConfig} />
     </Flex>
   );
