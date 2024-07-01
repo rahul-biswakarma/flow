@@ -4,11 +4,7 @@ import { Edge } from './edge';
 
 import { useProjectContext } from '@/lib/context';
 
-interface EdgesProps {
-  containerRef: React.RefObject<HTMLDivElement>;
-}
-
-export const Edges = ({ containerRef }: EdgesProps) => {
+export const Edges = () => {
   const { edges } = useProjectContext();
 
   return (

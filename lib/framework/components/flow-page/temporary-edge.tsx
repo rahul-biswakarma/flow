@@ -6,7 +6,7 @@ import { Edge } from './edge';
 
 import { useProjectContext } from '@/lib/context';
 
-export const TemporaryEdge = ({ containerRef }: { containerRef: React.RefObject<HTMLDivElement> }) => {
+export const TemporaryEdge = () => {
   const { connection } = useProjectContext();
 
   const [mousePosition, setMousePosition] = useState<{ x: number; y: number } | null>(null);

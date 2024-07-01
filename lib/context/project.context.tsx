@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 import { Page, Project } from '@prisma/client';
 
 import { ConnectionType, EdgeType, NodeHandlerType, NodeType, ProjectConfig } from '../types';
@@ -28,7 +28,7 @@ type ProjectContextType = {
 
   deleteNode: (nodeId: string) => void;
   createEdge: (from: NodeHandlerType, to: NodeHandlerType) => void;
-  nodeEdgeMapping: Record<string, string[]>;
+  updateNodePosition: (nodeId: string, position: { x: number; y: number }) => void;
 
   connection: ConnectionType | null;
   setConnection: React.Dispatch<React.SetStateAction<ConnectionType | null>>;
@@ -51,31 +51,9 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
   const [nodes, setNodes] = useState<Record<string, NodeType>>({});
   const [edges, setEdges] = useState<EdgeType[]>([]);
   const [connection, setConnection] = useState<ConnectionType | null>(null);
-  const [nodeEdgeMapping, setNodeEdgeMapping] = useState<Record<string, string[]>>({});
-
-  useEffect(() => {
-    const newMapping: Record<string, string[]> = {};
-
-    edges.forEach((edge) => {
-      if (newMapping[edge.source.nodeId]) {
-        newMapping[edge.source.nodeId].push(edge.id);
-      } else {
-        newMapping[edge.source.nodeId] = [edge.id];
-      }
-
-      if (newMapping[edge.target.nodeId]) {
-        newMapping[edge.target.nodeId].push(edge.id);
-      } else {
-        newMapping[edge.target.nodeId] = [edge.id];
-      }
-    });
-
-    setNodeEdgeMapping(newMapping);
-  }, [edges]);
 
   const createEdge = useCallback(
     (from: NodeHandlerType, to: NodeHandlerType) => {
-      console.log('createEdge', from, to);
       setEdges((prevEdges) => {
         return [
           ...prevEdges,
@@ -88,6 +66,33 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
       });
     },
     [setEdges],
+  );
+
+  const updateNodePosition = useCallback(
+    (nodeId: string, position: { x: number; y: number }) => {
+      setNodes((prevNodes) => ({
+        ...prevNodes,
+        [nodeId]: {
+          ...prevNodes[nodeId],
+          position,
+        },
+      }));
+
+      setEdges((prevEdges) => {
+        return prevEdges.map((edge) => {
+          if (edge.source.nodeId === nodeId || edge.target.nodeId === nodeId) {
+            return {
+              ...edge,
+              source: edge.source.nodeId === nodeId ? { ...edge.source, position } : edge.source,
+              target: edge.target.nodeId === nodeId ? { ...edge.target, position } : edge.target,
+            };
+          }
+
+          return edge;
+        });
+      });
+    },
+    [setNodes, setEdges],
   );
 
   const deleteNode = useCallback(
@@ -107,22 +112,6 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
     [setNodes, setEdges],
   );
 
-  // useEffect(() => {
-  //   const currentPage = project.pages.find((page) => page.id === currentPageId);
-
-  //   if (!currentPage) return;
-
-  //   try {
-  //     const data = JSON.parse(currentPage.data);
-
-  //     setNodes(data.nodes);
-  //     setEdges(data.edges);
-  //   } catch {
-  //     setNodes([]);
-  //     setEdges([]);
-  //   }
-  // }, [currentPageId, project.pages, setNodes, setEdges]);
-
   return (
     <ProjectContext.Provider
       value={{
@@ -140,7 +129,7 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
         connection,
         setConnection,
         createEdge,
-        nodeEdgeMapping,
+        updateNodePosition,
       }}
     >
       {children}

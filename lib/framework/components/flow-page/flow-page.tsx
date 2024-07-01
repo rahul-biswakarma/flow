@@ -81,8 +81,8 @@ export const FlowPage: React.FC = () => {
       {Object.values(nodes).map((node) => (
         <NodeRenderer key={node.id} node={node} />
       ))}
-      <TemporaryEdge containerRef={dropRef} />
-      <Edges containerRef={dropRef} />
+      <TemporaryEdge />
+      <Edges />
     </Box>
   );
 };

@@ -47,7 +47,7 @@ export const Edge: React.FC<EdgeProps> = ({ fromX, fromY, toX, toY }) => {
              ${controlPointX2} ${controlPointY2},
              ${adjustedToX} ${adjustedToY}`}
         fill="none"
-        stroke="white"
+        stroke="var(--gray-5)"
         strokeWidth="2"
       />
     </svg>

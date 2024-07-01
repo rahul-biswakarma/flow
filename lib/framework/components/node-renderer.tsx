@@ -9,7 +9,7 @@ import { NodeType } from '@/lib/types';
 import { useProjectContext } from '@/lib/context';
 
 export const NodeRenderer = ({ node }: { node: NodeType }) => {
-  const { setNodes } = useProjectContext();
+  const { updateNodePosition } = useProjectContext();
 
   const NodeComponent = getWebNode(node.type)?.renderer;
   const [position, setPosition] = useState({ x: node.position.x, y: node.position.y });
@@ -30,17 +30,11 @@ export const NodeRenderer = ({ node }: { node: NodeType }) => {
     const newY = e.clientY - startPos.y;
 
     setPosition({ x: newX, y: newY });
+    updateNodePosition(node.id, { x: newX, y: newY });
   };
 
   const onMouseUp = () => {
     setDragging(false);
-    setNodes((prev) => ({
-      ...prev,
-      [node.id]: {
-        ...prev[node.id],
-        position,
-      },
-    }));
   };
 
   useEffect(() => {

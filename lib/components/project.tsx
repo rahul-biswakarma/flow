@@ -1,9 +1,8 @@
 'use client';
 
-import { Box, Separator } from '@radix-ui/themes';
+import { Box } from '@radix-ui/themes';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
 
 import { FlowPage } from '../framework';
 import { ContainerPositionProvider, RightPanelProvider } from '../context';
@@ -20,25 +19,17 @@ export const Product = () => {
         }}
       >
         <DndProvider backend={HTML5Backend}>
-          <PanelGroup autoSaveId="project-container" direction="horizontal">
-            <Panel defaultSize={25}>
-              <LeftPanel />
-            </Panel>
-            <PanelResizeHandle>
-              <Separator
-                orientation="vertical"
-                size="4"
-                style={{
-                  backgroundColor: 'var(--gray-3)',
-                }}
-              />
-            </PanelResizeHandle>
-            <Panel>
-              <ContainerPositionProvider>
-                <FlowPage />
-              </ContainerPositionProvider>
-            </Panel>
-          </PanelGroup>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 3fr',
+            }}
+          >
+            <LeftPanel />
+            <ContainerPositionProvider>
+              <FlowPage />
+            </ContainerPositionProvider>
+          </div>
         </DndProvider>
       </Box>
       <RightPanel />
