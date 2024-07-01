@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { z } from 'zod';
 
-import { EdgeKeys, EdgeTypes, NodeType } from '../types';
+import { NodeType } from '../types';
 
-import { LabelNode, ContainerNode, ButtonNode } from './components';
+import { TextNode, ButtonNode, FlexNode, GridNode, BoxNode } from './components';
 import { styleSettingSchema } from './schemas/setting.schema';
 
 export type WebNodeTypesType = {
@@ -14,14 +14,24 @@ export type WebNodeTypesType = {
 
 export const webNodeTypes: WebNodeTypesType[] = [
   {
-    type: 'system-label-node',
-    name: 'Label',
-    renderer: LabelNode,
+    type: 'system-box-node',
+    name: 'Box',
+    renderer: BoxNode,
   },
   {
-    type: 'system-container-node',
-    name: 'Container',
-    renderer: ContainerNode,
+    type: 'system-flex-node',
+    name: 'Flex',
+    renderer: FlexNode,
+  },
+  {
+    type: 'system-grid-node',
+    name: 'Grid',
+    renderer: GridNode,
+  },
+  {
+    type: 'system-text-node',
+    name: 'Text',
+    renderer: TextNode,
   },
   {
     type: 'system-button-node',

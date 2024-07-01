@@ -8,7 +8,7 @@ import { NodeRendererProps } from '../../node.type';
 
 import styles from './node.module.css';
 
-export const LabelNode = ({ node }: NodeRendererProps) => {
+export const FlexNode = ({ node }: NodeRendererProps) => {
   return (
     <WebNodeContextMenu node={node}>
       <div className={styles.nodeContainer}>
@@ -16,8 +16,11 @@ export const LabelNode = ({ node }: NodeRendererProps) => {
           <NodeHandler handlerKey="content" handlerType="visual-source" nodeId={node.id} />
         </div>
         <WebNodeContentWrapper node={node}>
-          <Text className={styles.contentContainer}>Label</Text>
+          <Text className={styles.contentContainer}>Flex</Text>
         </WebNodeContentWrapper>
+        <div className={styles.bottomHandlerContainer}>
+          <NodeHandler handlerKey="content" handlerType="visual-target" nodeId={node.id} />
+        </div>
       </div>
     </WebNodeContextMenu>
   );
