@@ -1,5 +1,7 @@
 import React from 'react';
 
+import styles from '../framework.module.css';
+
 import { useContainerPosition } from '@/lib/context';
 
 interface EdgeProps {
@@ -38,16 +40,15 @@ export const Edge: React.FC<EdgeProps> = ({ fromX, fromY, toX, toY }) => {
         left: 0,
         width: '100%',
         height: '100%',
-        pointerEvents: 'none',
       }}
     >
       <path
+        className={styles.edge}
         d={`M ${adjustedFromX} ${adjustedFromY}
            C ${controlPointX1} ${controlPointY1},
              ${controlPointX2} ${controlPointY2},
              ${adjustedToX} ${adjustedToY}`}
         fill="none"
-        stroke="var(--gray-5)"
         strokeWidth="2"
       />
     </svg>

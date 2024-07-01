@@ -21,3 +21,13 @@
 .nodeRenderer:hover .nodeMoveHandler {
   display: flex;
 }
+
+.edge {
+  cursor: pointer;
+  stroke: var(--gray-5);
+}
+
+.edge:hover {
+  stroke: var(--indigo-10);
+  stroke-width: 3;
+}

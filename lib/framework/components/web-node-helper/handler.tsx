@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import styles from '../web-nodes/node.module.css';
 import { generateHandlerId, validateConnection } from '../../utils';
 
@@ -6,6 +8,7 @@ import { NodeHandlerType } from '@/lib/types';
 
 export const NodeHandler = (props: NodeHandlerType) => {
   const { connection, setConnection, createEdge } = useProjectContext();
+  const [isValidConnection, setIsValidConnection] = useState<boolean | null>(null);
 
   const handleStartConnection = ({ nodeId, handlerType, handlerKey }: NodeHandlerType) => {
     setConnection({
@@ -17,11 +20,23 @@ export const NodeHandler = (props: NodeHandlerType) => {
     });
   };
 
+  const handleMouseOver = ({ nodeId, handlerType, handlerKey }: NodeHandlerType) => {
+    if (connection?.from) {
+      const valid = validateConnection(connection.from, { nodeId, handlerType, handlerKey });
+
+      setIsValidConnection(valid);
+    }
+  };
+
+  const handleMouseOut = () => {
+    setIsValidConnection(null);
+  };
+
   const handleCompleteConnection = ({ nodeId, handlerType, handlerKey }: NodeHandlerType) => {
     if (connection?.from) {
-      const isValidConnection = validateConnection(connection.from, { nodeId, handlerType, handlerKey });
+      const valid = validateConnection(connection.from, { nodeId, handlerType, handlerKey });
 
-      if (isValidConnection) {
+      if (valid) {
         createEdge(connection.from, { nodeId, handlerType, handlerKey });
       }
     }
@@ -30,9 +45,13 @@ export const NodeHandler = (props: NodeHandlerType) => {
 
   return (
     <div
-      className={styles.handler}
+      className={`${styles.handler} ${
+        isValidConnection === true ? styles.acceptHandler : isValidConnection === false ? styles.rejectHandler : ''
+      }`}
       data-handler-id={generateHandlerId(props)}
       onMouseDown={() => handleStartConnection(props)}
+      onMouseOut={handleMouseOut}
+      onMouseOver={() => handleMouseOver(props)}
       onMouseUp={() => handleCompleteConnection(props)}
     />
   );

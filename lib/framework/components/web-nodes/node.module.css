@@ -58,3 +58,13 @@
   z-index: 1;
   cursor: pointer;
 }
+
+.acceptHandler {
+  background: var(--green-3);
+  border-color: var(--green-7);
+}
+
+.rejectHandler {
+  background: var(--red-3);
+  border-color: var(--red-7);
+}
