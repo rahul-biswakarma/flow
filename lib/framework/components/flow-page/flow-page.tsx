@@ -1,6 +1,6 @@
 'use client';
 
-import { Box } from '@radix-ui/themes';
+import { Box, Text } from '@radix-ui/themes';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
 import { nanoid } from 'nanoid';
 import React, { useEffect, useRef } from 'react';
@@ -16,7 +16,7 @@ import { DropItemType } from '@/lib/types';
 import { useResizeObserver } from '@/lib/hooks';
 
 export const FlowPage: React.FC = () => {
-  const { nodes, setNodes, setConnection } = useProjectContext();
+  const { nodes, setNodes, setConnection, currentPage } = useProjectContext();
   const dropRef = useRef<HTMLDivElement>(null);
 
   const { updateContainerPosition } = useContainerPosition();
@@ -78,6 +78,19 @@ export const FlowPage: React.FC = () => {
       }}
       onMouseUp={() => setConnection(null)}
     >
+      <Text
+        style={{
+          position: 'absolute',
+          pointerEvents: 'none',
+          userSelect: 'none',
+          top: '20px',
+          left: '20px',
+          color: 'var(--gray-8)',
+          fontSize: '14px',
+        }}
+      >
+        {currentPage?.name}.tsx
+      </Text>
       {Object.values(nodes).map((node) => (
         <NodeRenderer key={node.id} node={node} />
       ))}

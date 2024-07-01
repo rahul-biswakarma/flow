@@ -32,6 +32,8 @@ type ProjectContextType = {
 
   connection: ConnectionType | null;
   setConnection: React.Dispatch<React.SetStateAction<ConnectionType | null>>;
+
+  currentPage: Page | undefined;
 };
 
 const ProjectContext = createContext<ProjectContextType | null>(null);
@@ -51,6 +53,8 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
   const [nodes, setNodes] = useState<Record<string, NodeType>>({});
   const [edges, setEdges] = useState<EdgeType[]>([]);
   const [connection, setConnection] = useState<ConnectionType | null>(null);
+
+  const currentPage = project.pages.find((page) => page.id === currentPageId);
 
   const createEdge = useCallback(
     (from: NodeHandlerType, to: NodeHandlerType) => {
@@ -130,6 +134,7 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
         setConnection,
         createEdge,
         updateNodePosition,
+        currentPage,
       }}
     >
       {children}
