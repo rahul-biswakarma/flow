@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { NodeType } from '../types';
 
-import { TextNode, ButtonNode, FlexNode, GridNode, BoxNode, ContainerNode } from './components';
+import { TextNode, ButtonNode, ContainerNode, BodyNode } from './components';
 import { styleSettingSchema } from './schemas/setting.schema';
 
 export type WebNodeTypesType = {
@@ -14,24 +14,6 @@ export type WebNodeTypesType = {
 };
 
 export const webNodeTypes: WebNodeTypesType[] = [
-  {
-    type: 'system-box-node',
-    name: 'Box',
-    renderer: BoxNode,
-    visibility: 'public',
-  },
-  {
-    type: 'system-flex-node',
-    name: 'Flex',
-    renderer: FlexNode,
-    visibility: 'public',
-  },
-  {
-    type: 'system-grid-node',
-    name: 'Grid',
-    renderer: GridNode,
-    visibility: 'public',
-  },
   {
     type: 'system-text-node',
     name: 'Text',
@@ -48,6 +30,12 @@ export const webNodeTypes: WebNodeTypesType[] = [
     type: 'system-container-node',
     name: 'Container',
     renderer: ContainerNode,
+    visibility: 'public',
+  },
+  {
+    type: 'system-body-node',
+    name: 'Body',
+    renderer: BodyNode,
     visibility: 'private',
   },
 ];

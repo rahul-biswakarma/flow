@@ -1,7 +1,7 @@
 import { PlusIcon } from '@radix-ui/react-icons';
 import { Flex, IconButton } from '@radix-ui/themes';
 
-import { LeftPanelTopSectionView } from '../type';
+import { LeftPanelTopSectionView } from '../../type';
 
 type TopSectionHeaderProps = {
   label: string;

@@ -11,6 +11,9 @@ import styles from './node.module.css';
 export const ContainerNode = ({ node }: NodeRendererProps) => {
   return (
     <div className={styles.nodeContainer}>
+      <div className={styles.topHandlerContainer}>
+        <NodeHandler handlerKey="content" handlerType="visual-source" nodeId={node.id} />
+      </div>
       <WebNodeContentWrapper node={node}>
         <Text className={styles.contentContainer}>Container</Text>
       </WebNodeContentWrapper>

@@ -21,6 +21,7 @@ export type DropItemType = {
 
 export type NodeConfigType = {
   styles?: StyleSettingType;
+  attributes?: Record<string, any>;
 };
 
 export type NodeHandlerType = {

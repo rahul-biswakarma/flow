@@ -8,15 +8,12 @@ import { NodeRendererProps } from '../../node.type';
 
 import styles from './node.module.css';
 
-export const FlexNode = ({ node }: NodeRendererProps) => {
+export const BodyNode = ({ node }: NodeRendererProps) => {
   return (
     <WebNodeContextMenu node={node}>
       <div className={styles.nodeContainer}>
-        <div className={styles.topHandlerContainer}>
-          <NodeHandler handlerKey="content" handlerType="visual-source" nodeId={node.id} />
-        </div>
         <WebNodeContentWrapper node={node}>
-          <Text className={styles.contentContainer}>Flex</Text>
+          <Text className={styles.contentContainer}>Body</Text>
         </WebNodeContentWrapper>
         <div className={styles.bottomHandlerContainer}>
           <NodeHandler handlerKey="content" handlerType="visual-target" nodeId={node.id} />

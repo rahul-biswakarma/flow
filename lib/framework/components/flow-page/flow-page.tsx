@@ -35,8 +35,8 @@ export const FlowPage: React.FC = () => {
     setNodes({
       [nodeId]: {
         id: nodeId,
-        type: 'system-container-node',
-        name: 'Container',
+        type: 'system-body-node',
+        name: 'Body',
         position: { x: containerWidth ? containerWidth / 2 - 100 : 100, y: 100 },
         config: {},
       },
