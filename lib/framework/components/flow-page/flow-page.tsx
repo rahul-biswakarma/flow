@@ -17,10 +17,11 @@ import { useResizeObserver } from '@/lib/hooks';
 
 export const FlowPage: React.FC = () => {
   const { nodes, setNodes, setConnection, currentPage } = useProjectContext();
-  const dropRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const { updateContainerPosition } = useContainerPosition();
-  const containerRect = useResizeObserver(dropRef);
+  const containerRect = useResizeObserver(containerRef);
+  const containerWidth = containerRef.current?.clientWidth ?? 0;
 
   useEffect(() => {
     if (containerRect) {
@@ -28,9 +29,23 @@ export const FlowPage: React.FC = () => {
     }
   }, [containerRect, updateContainerPosition]);
 
+  if (nodes && Object.keys(nodes).length === 0) {
+    const nodeId = nanoid();
+
+    setNodes({
+      [nodeId]: {
+        id: nodeId,
+        type: 'system-container-node',
+        name: 'Container',
+        position: { x: containerWidth ? containerWidth / 2 - 100 : 100, y: 100 },
+        config: {},
+      },
+    });
+  }
+
   const handleDrop = (item: DropItemType, monitor: DropTargetMonitor) => {
     const clientOffset = monitor.getClientOffset();
-    const dropTargetRect = dropRef.current?.getBoundingClientRect();
+    const dropTargetRect = containerRef.current?.getBoundingClientRect();
 
     if (clientOffset) {
       const position = {
@@ -64,11 +79,11 @@ export const FlowPage: React.FC = () => {
     }),
   }));
 
-  drop(dropRef);
+  drop(containerRef);
 
   return (
     <Box
-      ref={dropRef}
+      ref={containerRef}
       style={{
         padding: '40px',
         height: '100vh',
