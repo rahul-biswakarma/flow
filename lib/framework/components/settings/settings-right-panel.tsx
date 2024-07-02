@@ -1,6 +1,6 @@
 import { Flex } from '@radix-ui/themes';
 
-import { StyleSettingType } from '../../node.type';
+import { StyleSettingType } from '../../types';
 
 import { StyleSetting } from './style-setting/style-setting';
 

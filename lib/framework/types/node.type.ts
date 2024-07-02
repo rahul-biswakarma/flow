@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { z } from 'zod';
 
-import { NodeType } from '../types';
+import { TextNode, ButtonNode, ContainerNode, BodyNode } from '../components';
+import { styleSettingSchema } from '../schemas/setting.schema';
 
-import { TextNode, ButtonNode, ContainerNode, BodyNode } from './components';
-import { styleSettingSchema } from './schemas/setting.schema';
+import { NodeType } from '@/lib/types';
 
 export type WebNodeTypesType = {
   type: string;

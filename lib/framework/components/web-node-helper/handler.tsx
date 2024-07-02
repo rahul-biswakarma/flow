@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import styles from '../web-nodes/node.module.css';
 import { generateHandlerId, validateConnection } from '../../utils';
 
+import styles from '@/lib/styles/node.module.css';
 import { useProjectContext } from '@/lib/context';
 import { NodeHandlerType } from '@/lib/types';
 

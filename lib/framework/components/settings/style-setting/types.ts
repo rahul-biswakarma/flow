@@ -1,4 +1,4 @@
-import { StyleSettingType } from '@/lib/framework/node.type';
+import { StyleSettingType } from '@/lib/framework/types';
 
 export type PositionOptionType = Exclude<StyleSettingType['position'], undefined>;
 export type DisplayOptionType = Exclude<StyleSettingType['display'], undefined>;

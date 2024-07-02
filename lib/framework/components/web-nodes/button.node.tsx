@@ -4,9 +4,9 @@ import React from 'react';
 import { Text } from '@radix-ui/themes';
 
 import { NodeHandler, WebNodeContentWrapper, WebNodeContextMenu } from '../web-node-helper';
-import { NodeRendererProps } from '../../node.type';
+import { NodeRendererProps } from '../../types';
 
-import styles from './node.module.css';
+import styles from '@/lib/styles/node.module.css';
 
 export const ButtonNode = ({ node }: NodeRendererProps) => {
   return (

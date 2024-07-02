@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { MoveIcon } from '@radix-ui/react-icons';
 
-import { getWebNode } from '../node.type';
+import { getWebNode } from '../types';
 
-import styles from './framework.module.css';
-
+import styles from '@/lib/styles/framework.module.css';
 import { NodeType } from '@/lib/types';
 import { useProjectContext } from '@/lib/context';
 

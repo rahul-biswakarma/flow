@@ -1,7 +1,6 @@
 import React from 'react';
 
-import styles from '../framework.module.css';
-
+import styles from '@/lib/styles/framework.module.css';
 import { useContainerPosition } from '@/lib/context';
 
 interface EdgeProps {

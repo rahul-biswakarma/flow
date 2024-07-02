@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TextField } from '@radix-ui/themes';
 
-import styles from '../../setting.module.css';
+import styles from '@/lib/styles/setting.module.css';
 
 interface StringRendererProps {
   label: string;

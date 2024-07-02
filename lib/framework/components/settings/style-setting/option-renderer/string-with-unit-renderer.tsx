@@ -2,10 +2,9 @@ import React from 'react';
 import { Grid, Text, TextField } from '@radix-ui/themes';
 import { z } from 'zod';
 
-import styles from '../../setting.module.css';
-
 import { UnitRenderer } from './unit-renderer';
 
+import styles from '@/lib/styles/setting.module.css';
 import { stringWithUnitSchema, unitSchema } from '@/lib/framework/schemas/setting.schema';
 import { useProjectContext } from '@/lib/context';
 

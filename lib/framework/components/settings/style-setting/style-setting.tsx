@@ -2,8 +2,6 @@ import React from 'react';
 import { ChevronDownIcon, Text } from '@radix-ui/themes';
 import * as Accordion from '@radix-ui/react-accordion';
 
-import styles from '../setting.module.css';
-
 import {
   AlignItemsOptionType,
   DisplayOptionType,
@@ -14,8 +12,9 @@ import {
 } from './types';
 import { ColorRenderer, EnumRenderer, StringRenderer, StringWithUnitRenderer } from './option-renderer';
 
-import { StyleSettingType } from '@/lib/framework/node.type';
+import styles from '@/lib/styles/setting.module.css';
 import { styleSettingSchema } from '@/lib/framework/schemas/setting.schema';
+import { StyleSettingType } from '@/lib/framework/types';
 
 export const StyleSetting = ({
   config,
