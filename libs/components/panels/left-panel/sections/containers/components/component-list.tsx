@@ -1,0 +1,32 @@
+import { useState } from 'react';
+import { Flex } from '@radix-ui/themes';
+
+import { TopSectionHeader } from '../../header';
+
+import { ComponentListItem } from './component-list-item';
+
+import { webNodeTypes } from '@/libs/framework';
+
+export const ComponentList = () => {
+  const [isCreateComponentEnable, setIsCreateComponentEnable] = useState(false);
+
+  return (
+    <>
+      <TopSectionHeader
+        label="Components"
+        view="components"
+        onClick={() => setIsCreateComponentEnable(!isCreateComponentEnable)}
+      />
+      <Flex direction="column">
+        {webNodeTypes.map(
+          (node) =>
+            node.visibility === 'public' && (
+              <div key={node.name}>
+                <ComponentListItem node={node} />
+              </div>
+            ),
+        )}
+      </Flex>
+    </>
+  );
+};

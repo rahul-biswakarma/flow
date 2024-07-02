@@ -1,13 +1,13 @@
 import '@radix-ui/themes/styles.css';
-import '@/lib/styles/globals.css';
+import '@/libs/styles/globals.css';
 
 import { Metadata, Viewport } from 'next';
 import { Theme } from '@radix-ui/themes';
 
-import styles from '@/lib/styles/page.module.css';
-import { siteConfig } from '@/lib/config/site';
-import { fontSans } from '@/lib/config/fonts';
-import { NextAuthProvider } from '@/lib/context';
+import styles from '@/libs/styles/page.module.css';
+import { siteConfig } from '@/libs/config/site';
+import { fontSans } from '@/libs/config/fonts';
+import { NextAuthProvider } from '@/libs/context';
 
 export const metadata: Metadata = {
   title: {

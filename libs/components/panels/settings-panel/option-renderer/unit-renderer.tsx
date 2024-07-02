@@ -1,0 +1,27 @@
+import React from 'react';
+import { z } from 'zod';
+
+import ResponsiveDropdown from '@/libs/components/ui/responsive-dropdown';
+import { unitSchema } from '@/libs/framework/schemas/setting.schema';
+
+type UnitType = z.infer<typeof unitSchema>;
+
+interface UnitRendererProps {
+  value?: UnitType;
+  onChange: (value: UnitType) => void;
+}
+
+export const UnitRenderer: React.FC<UnitRendererProps> = ({ value, onChange }) => {
+  const unitValues = unitSchema.options;
+
+  return (
+    <ResponsiveDropdown<UnitType>
+      showTriggerIcon
+      hasValue={value ? 'true' : 'false'}
+      menuItems={unitValues}
+      textTransform="lowercase"
+      triggerContent={value ?? '-'}
+      onChange={onChange}
+    />
+  );
+};

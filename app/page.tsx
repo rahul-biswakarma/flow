@@ -1,5 +1,5 @@
-import { auth } from '@/lib/utils/auth';
-import { LoginRedirect, ProjectRedirect, ProjectSelectionRedirect } from '@/lib/utils/redirects';
+import { auth } from '@/libs/utils/auth';
+import { LoginRedirect, ProjectRedirect, ProjectSelectionRedirect } from '@/libs/utils/redirects';
 
 export default async function Home() {
   const session = await auth();
