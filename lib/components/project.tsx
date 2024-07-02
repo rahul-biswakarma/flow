@@ -35,12 +35,13 @@ export const Product = () => {
           >
             <LeftPanel />
             <ContainerPositionProvider>
-              <Box
+              <div
                 style={{
                   position: 'relative',
                   width: '100%',
                   height: '100%',
                   overflow: 'hidden',
+                  isolation: 'isolate',
                 }}
               >
                 <ViewToggler setViewMode={setViewMode} viewMode={viewMode} />
@@ -53,9 +54,12 @@ export const Product = () => {
                     </Panel>
                     <PanelResizeHandle>
                       <Separator
+                        orientation="horizontal"
                         size="4"
                         style={{
                           backgroundColor: 'var(--gray-3)',
+                          width: '2px',
+                          height: '100%',
                         }}
                       />
                     </PanelResizeHandle>
@@ -64,7 +68,7 @@ export const Product = () => {
                     </Panel>
                   </PanelGroup>
                 )}
-              </Box>
+              </div>
             </ContainerPositionProvider>
           </div>
         </DndProvider>

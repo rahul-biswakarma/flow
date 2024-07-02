@@ -1,12 +1,13 @@
 'use client';
 
-import React, { FC } from 'react';
-// eslint-disable-next-line unused-imports/no-unused-imports
-import { Box, Text, Button } from '@radix-ui/themes';
+import React, { FC, ReactNode } from 'react';
+import { Box } from '@radix-ui/themes';
 
 import { WebNodeToPreview } from '@/lib/framework';
 import { NodeType, EdgeType } from '@/lib/types';
 import { useProjectContext } from '@/lib/context';
+
+type PreviewNodeType = NodeType & { children: PreviewNodeType[] };
 
 const applyStyles = (styles: Record<string, any>) => {
   const styleObj: React.CSSProperties = {};
@@ -18,7 +19,7 @@ const applyStyles = (styles: Record<string, any>) => {
   return styleObj;
 };
 
-const NodePreview: FC<{ node: NodeType }> = ({ node }) => {
+const NodePreview: FC<{ node: PreviewNodeType; children?: ReactNode }> = ({ node, children }) => {
   const Component = WebNodeToPreview(node.type);
 
   if (!Component) {
@@ -26,16 +27,18 @@ const NodePreview: FC<{ node: NodeType }> = ({ node }) => {
   }
 
   const { styles, attributes } = node.config || {};
+  const { children: nodeContent, ...otherAttributes } = attributes || {};
 
   return (
-    <Component style={styles ? applyStyles(styles) : {}} {...attributes}>
-      {node.name}
+    <Component style={styles ? applyStyles(styles) : {}} {...otherAttributes}>
+      {nodeContent}
+      {children}
     </Component>
   );
 };
 
-const buildTree = (nodes: Record<string, NodeType>, edges: EdgeType[]) => {
-  const nodeTree: Record<string, NodeType & { children: NodeType[] }> = {};
+const buildTree = (nodes: Record<string, NodeType>, edges: EdgeType[]): PreviewNodeType[] => {
+  const nodeTree: Record<string, PreviewNodeType> = {};
   const rootNodeIds = new Set(Object.keys(nodes));
 
   // Initialize tree nodes with children array
@@ -58,23 +61,11 @@ const buildTree = (nodes: Record<string, NodeType>, edges: EdgeType[]) => {
   return Array.from(rootNodeIds).map((rootNodeId) => nodeTree[rootNodeId]);
 };
 
-const renderTree = (node: NodeType & { children: NodeType[] }) => {
-  return (
-    <Box
-      key={node.id}
-      style={{
-        position: 'absolute',
-        left: node.position.x,
-        top: node.position.y,
-      }}
-    >
-      <NodePreview node={node} />
-      {node.children.map((childNode) => renderTree(childNode))}
-    </Box>
-  );
+const renderTree = (node: PreviewNodeType): JSX.Element => {
+  return <NodePreview node={node}>{node.children.map((childNode) => renderTree(childNode))}</NodePreview>;
 };
 
-export const Preview = () => {
+export const Preview: FC = () => {
   const { nodes, edges } = useProjectContext();
 
   const rootNodes = buildTree(nodes, edges);

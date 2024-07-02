@@ -16,7 +16,7 @@ export const ViewToggler = ({
         top: '10px',
         left: '50%',
         transform: 'translateX(-50%)',
-        zIndex: 10,
+        zIndex: 100,
       }}
     >
       <SegmentedControl.Root defaultValue={viewMode} onValueChange={(view: CanvasViewMode) => setViewMode(view)}>
