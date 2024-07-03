@@ -1,3 +1,5 @@
+import { IconAlignJustified } from '@tabler/icons-react';
+
 import { TextNode, ButtonNode, ContainerNode, BodyNode } from '@/libs/framework';
 import { WebNodeTypesType, NodeType } from '@/libs/flow';
 
@@ -7,6 +9,8 @@ export const webNodeTypes: WebNodeTypesType[] = [
     name: 'Text',
     renderer: TextNode,
     visibility: 'public',
+    description: 'Node for displaying text content.',
+    icon: IconAlignJustified,
   },
   {
     type: 'system-button-node',

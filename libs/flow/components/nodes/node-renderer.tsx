@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MoveIcon } from '@radix-ui/react-icons';
+import { IconArrowsMove } from '@tabler/icons-react';
 
 import { NodeType } from '../../types';
 
@@ -80,7 +80,7 @@ export const NodeRenderer = ({ node, updateNodePosition, getNodeRendererById }: 
         }}
         onMouseDown={onMouseDown}
       >
-        <MoveIcon />
+        <IconArrowsMove />
       </div>
       <NodeComponent node={node} />
     </div>

@@ -24,7 +24,7 @@ export const NodeDragWrapper = ({ node, children, className }: NodeDragWrapperPr
   drag(dragRef);
 
   return (
-    <div ref={dragRef} className={className} role="Handle" style={{ opacity: isDragging ? 0.5 : 1 }}>
+    <div ref={dragRef} className={className} role="Handle" style={{ opacity: isDragging ? 0.5 : 1, width: '100%' }}>
       {children}
     </div>
   );

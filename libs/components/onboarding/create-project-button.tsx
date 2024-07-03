@@ -1,5 +1,5 @@
-import { PlusIcon } from '@radix-ui/react-icons';
 import { Flex, Button, Text } from '@radix-ui/themes';
+import { IconPlus } from '@tabler/icons-react';
 
 import { ProjectSections } from '@/libs/types';
 
@@ -12,7 +12,7 @@ export const CreateProjectButton = ({ changeSection }: { changeSection: (view: P
         }}
         onClick={() => changeSection('creation')}
       >
-        <PlusIcon />
+        <IconPlus size="16px" />
         <Text>Create Project</Text>
       </Button>
       <Text

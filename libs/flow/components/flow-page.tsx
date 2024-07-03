@@ -86,7 +86,7 @@ export const FlowPage = ({ watermarks, getNodeRendererByType }: FlowPageProps) =
           position: 'absolute',
           pointerEvents: 'none',
           userSelect: 'none',
-          top: '20px',
+          top: '10px',
           left: '20px',
           color: 'var(--gray-8)',
           fontSize: '14px',

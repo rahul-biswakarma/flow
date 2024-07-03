@@ -23,9 +23,6 @@ importers:
       '@radix-ui/react-form':
         specifier: ^0.0.3
         version: 0.0.3(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@19.0.0-rc-935180c7e0-20240524(react@19.0.0-rc-935180c7e0-20240524))(react@19.0.0-rc-935180c7e0-20240524)
-      '@radix-ui/react-icons':
-        specifier: ^1.3.0
-        version: 1.3.0(react@19.0.0-rc-935180c7e0-20240524)
       '@radix-ui/themes':
         specifier: ^3.1.1
         version: 3.1.1(@types/react-dom@18.3.0)(@types/react@18.3.2)(react-dom@19.0.0-rc-935180c7e0-20240524(react@19.0.0-rc-935180c7e0-20240524))(react@19.0.0-rc-935180c7e0-20240524)
@@ -35,6 +32,9 @@ importers:
       '@react-aria/visually-hidden':
         specifier: ^3.8.12
         version: 3.8.12(react@19.0.0-rc-935180c7e0-20240524)
+      '@tabler/icons-react':
+        specifier: ^3.8.0
+        version: 3.8.0(react@19.0.0-rc-935180c7e0-20240524)
       autoprefixer:
         specifier: 10.4.19
         version: 10.4.19(postcss@8.4.38)
@@ -853,11 +853,6 @@ packages:
       '@types/react-dom':
         optional: true
 
-  '@radix-ui/react-icons@1.3.0':
-    resolution: {integrity: sha512-jQxj/0LKgp+j9BiTXz3O3sgs26RNet2iLWmsPyRz2SIcR4q/4SbazXfnYwbAr+vLYKSfc7qxzyGQA1HLlYiuNw==}
-    peerDependencies:
-      react: ^16.x || ^17.x || ^18.x
-
   '@radix-ui/react-id@1.0.1':
     resolution: {integrity: sha512-tI7sT/kqYp8p96yGWY1OAnLHrqDgzHefRBKQ2YAkBS5ja7QLcZ9Z/uY7bEjPUatf8RomoXM8/1sMj1IJaE5UzQ==}
     peerDependencies:
@@ -1313,6 +1308,14 @@ packages:
 
   '@swc/helpers@0.5.11':
     resolution: {integrity: sha512-YNlnKRWF2sVojTpIyzwou9XoTNbzbzONwRhOoniEioF1AtaitTvVZblaQRrAzChWQ1bLYyYSWzM18y4WwgzJ+A==}
+
+  '@tabler/icons-react@3.8.0':
+    resolution: {integrity: sha512-+M7x4uCmaZlFBuAXKnu7cCvjX48Ml//GJxgGTOoAq8N5R6NkIGV0o7UmGVlb9Vfw2GhJ638MSSJ7mksSjdSXgQ==}
+    peerDependencies:
+      react: '>= 16'
+
+  '@tabler/icons@3.8.0':
+    resolution: {integrity: sha512-SVZSrb0REaTEu+soj+9RTnPpCqIWFYHJ0lhyk+oo6uXr33Ecx2JBcBGeEo/WbIWZg4UF8NIZSVKQgI2PHBokJA==}
 
   '@types/cookie@0.6.0':
     resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
@@ -3898,10 +3901,6 @@ snapshots:
       '@types/react': 18.3.2
       '@types/react-dom': 18.3.0
 
-  '@radix-ui/react-icons@1.3.0(react@19.0.0-rc-935180c7e0-20240524)':
-    dependencies:
-      react: 19.0.0-rc-935180c7e0-20240524
-
   '@radix-ui/react-id@1.0.1(@types/react@18.3.2)(react@19.0.0-rc-935180c7e0-20240524)':
     dependencies:
       '@babel/runtime': 7.24.7
@@ -4423,6 +4422,13 @@ snapshots:
   '@swc/helpers@0.5.11':
     dependencies:
       tslib: 2.6.3
+
+  '@tabler/icons-react@3.8.0(react@19.0.0-rc-935180c7e0-20240524)':
+    dependencies:
+      '@tabler/icons': 3.8.0
+      react: 19.0.0-rc-935180c7e0-20240524
+
+  '@tabler/icons@3.8.0': {}
 
   '@types/cookie@0.6.0': {}
 

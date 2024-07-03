@@ -1,6 +1,6 @@
 import { Project } from '@prisma/client';
 import { Avatar, Box, Card, Flex, IconButton, Text } from '@radix-ui/themes';
-import { ArrowRightIcon } from '@radix-ui/react-icons';
+import { IconArrowRight } from '@tabler/icons-react';
 
 import styles from '@/libs/styles/onboarding.module.css';
 
@@ -25,7 +25,7 @@ export const ProjectCard = ({ project }: { project: Project }) => {
               </Flex>
             </Flex>
             <IconButton className={styles.projectCardIconButton} size="2" variant="ghost">
-              <ArrowRightIcon />
+              <IconArrowRight size="16px" />
             </IconButton>
           </Flex>
         </a>

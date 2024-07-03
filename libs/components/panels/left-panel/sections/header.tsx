@@ -1,5 +1,5 @@
-import { PlusIcon } from '@radix-ui/react-icons';
 import { Flex, IconButton } from '@radix-ui/themes';
+import { IconPlus } from '@tabler/icons-react';
 
 import { LeftPanelTopSectionView } from '@/libs/types';
 
@@ -21,7 +21,7 @@ export const TopSectionHeader = ({ label, onClick }: TopSectionHeaderProps) => (
       {label}
     </Flex>
     <IconButton aria-label="Add new page" color="gray" variant="ghost" onClick={onClick}>
-      <PlusIcon />
+      <IconPlus size="16px" />
     </IconButton>
   </Flex>
 );

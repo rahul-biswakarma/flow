@@ -3,10 +3,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 import { ResizableBox, ResizeCallbackData } from 'react-resizable';
-import { Cross2Icon, GearIcon } from '@radix-ui/react-icons';
 import { Button, Flex, ScrollArea, Text } from '@radix-ui/themes';
 import clsx from 'clsx';
 import 'react-resizable/css/styles.css';
+
+import { IconSettings, IconX } from '@tabler/icons-react';
 
 import { FloatingWidgetContent } from './floating-panel-widgets';
 
@@ -107,11 +108,11 @@ export const FloatingWidget = () => {
             style={{ padding: '12px 16px' }}
           >
             <Flex align="center" gap="2">
-              <GearIcon />
+              <IconSettings size="16px" />
               <Text>{data?.title}</Text>
             </Flex>
             <Button color="gray" variant="ghost" onClick={closePanel}>
-              <Cross2Icon />
+              <IconX size="16px" />
             </Button>
           </Flex>
           <ScrollArea className={styles.scrollArea}>

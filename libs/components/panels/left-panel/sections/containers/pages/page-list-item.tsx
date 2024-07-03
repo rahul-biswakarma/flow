@@ -1,6 +1,6 @@
 import { Page } from '@prisma/client';
-import { FileIcon } from '@radix-ui/react-icons';
 import { Flex } from '@radix-ui/themes';
+import { IconFile } from '@tabler/icons-react';
 
 import styles from '@/libs/styles/left-panel.module.css';
 
@@ -13,7 +13,7 @@ type PageListItemProps = {
 export const PageListItem = ({ page, isActive, onClickHandler }: PageListItemProps) => {
   return (
     <Flex align="center" className={styles.pageListItem} data-active={isActive} gap="1" onClick={onClickHandler}>
-      <FileIcon />
+      <IconFile size="18px" />
       {page.name}
     </Flex>
   );

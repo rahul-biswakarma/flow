@@ -10,6 +10,10 @@
   user-select: none;
 }
 
+.componentListItem {
+  padding: 5px 8px;
+}
+
 .pageListItem:hover {
   background-color: var(--gray-3);
 }

@@ -40,6 +40,8 @@ export type WebNodeTypesType = {
   name: string;
   renderer: FC<any>;
   visibility: 'public' | 'private';
+  description?: string;
+  icon?: FC<any>;
 };
 
 export type EdgeTypes = 'visual-target' | 'visual-source' | 'action-target' | 'action-source';

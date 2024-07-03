@@ -1,16 +1,32 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Component1Icon } from '@radix-ui/react-icons';
+import { Card, Flex, Text, Tooltip } from '@radix-ui/themes';
+import { IconBox } from '@tabler/icons-react';
 
 import styles from '@/libs/styles/left-panel.module.css';
-import { WebNodeTypesType } from '@/libs/flow';
-import { NodeDragWrapper } from '@/libs/flow/components/nodes/node-drag-wrapper';
+import { WebNodeTypesType, NodeDragWrapper } from '@/libs/flow';
 
 export const ComponentListItem = ({ node }: { node: WebNodeTypesType }) => {
+  const IconComponent = node.icon ?? IconBox;
+
+  const renderer = (
+    <Card
+      style={{
+        width: '100%',
+      }}
+    >
+      <Flex align="center" gap="4">
+        <IconComponent size="20px" />
+        <Text>{node.name}</Text>
+      </Flex>
+    </Card>
+  );
+
   return (
-    <NodeDragWrapper className={clsx(styles.pageListItem)} node={node}>
-      <Component1Icon />
-      {node.name}
-    </NodeDragWrapper>
+    <div className={clsx(styles.pageListItem, styles.componentListItem)}>
+      <NodeDragWrapper node={node}>
+        {node.description ? <Tooltip content={node.description}>{renderer}</Tooltip> : renderer}
+      </NodeDragWrapper>
+    </div>
   );
 };
