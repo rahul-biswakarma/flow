@@ -7,7 +7,7 @@ import { TopSection } from './sections/top-section';
 
 export const LeftPanel = () => {
   return (
-    <Box style={{ padding: '10px' }}>
+    <Box style={{ padding: '10px', paddingRight: '0px', zIndex: 10 }}>
       <PanelGroup
         autoSaveId="left-panel"
         direction="vertical"
