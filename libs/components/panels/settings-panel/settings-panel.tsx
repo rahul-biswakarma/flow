@@ -69,7 +69,7 @@ export const SettingsPanel = ({ nodeId }: { nodeId: string }) => {
       <Accordion.Root collapsible type="single">
         <Accordion.Item value="attributes">
           <AccordionHeader label="Attributes" />
-          <Accordion.Content className={styles.settingFieldContainer} style={{ padding: '0 24px' }}>
+          <Accordion.Content className={styles.settingFieldContainer}>
             <AttributeFields
               getAttributeValue={getAttributeValue}
               updateAttributeConfig={updateAttributeConfig}
@@ -79,7 +79,7 @@ export const SettingsPanel = ({ nodeId }: { nodeId: string }) => {
         </Accordion.Item>
         <Accordion.Item value="style">
           <AccordionHeader label="Style" />
-          <Accordion.Content className={styles.settingFieldContainer} style={{ padding: '0 24px' }}>
+          <Accordion.Content className={styles.settingFieldContainer}>
             <StyleFields getStyleValue={getStyleValue} updateStyleConfig={updateStyleConfig} />
           </Accordion.Content>
         </Accordion.Item>

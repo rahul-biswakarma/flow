@@ -3,30 +3,27 @@
 import { Box } from '@radix-ui/themes';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useState } from 'react';
 
 import { FlowContextProvider } from '../flow';
-import { RightPanelProvider } from '../context';
-import { CanvasViewMode } from '../types';
+import { FloatingWidgetProvider } from '../context';
 
-import { RightPanel } from './panels/floating-panel/right-panel';
-import { LeftPanel } from './panels';
+import { LeftPanel, FloatingWidget } from './panels';
 import { Canvas } from './canvas/canvas';
 
 export const Product = () => {
   return (
-    <RightPanelProvider>
-      <Box
-        style={{
-          height: '100vh',
-        }}
-      >
-        <DndProvider backend={HTML5Backend}>
-          <FlowContextProvider>
+    <FloatingWidgetProvider>
+      <FlowContextProvider>
+        <Box
+          style={{
+            height: '100vh',
+          }}
+        >
+          <DndProvider backend={HTML5Backend}>
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: '1fr 3fr',
+                gridTemplateColumns: 'auto 1fr',
                 height: '100%',
               }}
             >
@@ -43,10 +40,10 @@ export const Product = () => {
                 <Canvas />
               </div>
             </div>
-          </FlowContextProvider>
-        </DndProvider>
-      </Box>
-      <RightPanel />
-    </RightPanelProvider>
+          </DndProvider>
+        </Box>
+        <FloatingWidget />
+      </FlowContextProvider>
+    </FloatingWidgetProvider>
   );
 };

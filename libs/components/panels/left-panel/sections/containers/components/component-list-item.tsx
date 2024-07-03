@@ -8,11 +8,9 @@ import { NodeDragWrapper } from '@/libs/flow/components/nodes/node-drag-wrapper'
 
 export const ComponentListItem = ({ node }: { node: WebNodeTypesType }) => {
   return (
-    <NodeDragWrapper node={node}>
-      <div className={clsx(styles.pageListItem)}>
-        <Component1Icon />
-        {node.name}
-      </div>
+    <NodeDragWrapper className={clsx(styles.pageListItem)} node={node}>
+      <Component1Icon />
+      {node.name}
     </NodeDragWrapper>
   );
 };

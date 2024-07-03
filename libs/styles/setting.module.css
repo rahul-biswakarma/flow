@@ -5,6 +5,11 @@
   row-gap: 12px;
   column-gap: 16px;
   align-items: center;
+  padding: 0 16px;
+}
+
+.settingFieldContainer[data-state='open'] {
+  padding-bottom: 16px;
 }
 
 .settingGroupTrigger {
@@ -14,7 +19,7 @@
   justify-content: space-between;
   gap: 10px;
   cursor: pointer;
-  padding: 16px 24px;
+  padding: 12px 16px;
   margin: 0;
   background: transparent;
   border: none;
@@ -23,7 +28,7 @@
 
 .settingGroupTrigger[data-state='closed'] {
   background-color: var(--gray-3);
-  border-bottom: 1px solid var(--gray-4);
+  border-bottom: 1px solid var(--gray-5);
 }
 
 .settingGroupTrigger[data-state='open'] .settingGroupTriggerIcon {

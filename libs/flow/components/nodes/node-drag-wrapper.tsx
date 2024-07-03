@@ -1,9 +1,8 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useRef } from 'react';
 import { useDrag } from 'react-dnd';
 
 import { DragDropItemType } from '../../constant';
 import { WebNodeTypesType } from '../../types';
-import { useFlowContext } from '../../context/flow.context';
 
 type NodeDragWrapperProps = {
   node: WebNodeTypesType;
@@ -12,7 +11,7 @@ type NodeDragWrapperProps = {
 };
 
 export const NodeDragWrapper = ({ node, children, className }: NodeDragWrapperProps) => {
-  const { dragRef } = useFlowContext();
+  const dragRef = useRef(null);
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: DragDropItemType,

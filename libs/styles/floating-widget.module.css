@@ -1,0 +1,23 @@
+.floatingWidget {
+  position: absolute;
+  z-index: 999;
+  background-color: var(--gray-2);
+  border: 1px solid var(--gray-4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-4);
+  overflow: hidden;
+  max-height: 100%;
+}
+
+.floatingWidgetHandler {
+  cursor: move;
+  background-color: var(--gray-surface);
+  border-bottom: 1px solid var(--gray-4);
+  padding: 8px;
+}
+
+.scrollArea {
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

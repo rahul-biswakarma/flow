@@ -18,14 +18,7 @@ export const ComponentList = () => {
         onClick={() => setIsCreateComponentEnable(!isCreateComponentEnable)}
       />
       <Flex direction="column">
-        {webNodeTypes.map(
-          (node) =>
-            node.visibility === 'public' && (
-              <div key={node.name}>
-                <ComponentListItem node={node} />
-              </div>
-            ),
-        )}
+        {webNodeTypes.map((node) => node.visibility === 'public' && <ComponentListItem key={node.name} node={node} />)}
       </Flex>
     </>
   );

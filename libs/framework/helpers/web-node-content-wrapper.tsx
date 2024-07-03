@@ -2,11 +2,11 @@
 
 import { ReactNode } from 'react';
 
-import { useRightPanel } from '@/libs/context';
+import { useFloatingWidget } from '@/libs/context';
 import { NodeType } from '@/libs/flow';
 
 export const WebNodeContentWrapper = ({ node, children }: { node: NodeType; children: ReactNode }) => {
-  const { openPanel } = useRightPanel();
+  const { openPanel } = useFloatingWidget();
 
   return (
     <div
