@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid';
 import React, { useEffect } from 'react';
 
 import { DragDropItemType } from '../constant';
-import { ConnectionType, DropItemType, EdgeType, NodeType } from '../types';
+import { DropItemType, NodeType } from '../types';
 import { useFlowContext } from '../context/flow.context';
 
 import { NodeRenderer } from './nodes/node-renderer';
@@ -15,28 +15,13 @@ import { Connection, Edges } from './edges';
 import { useResizeObserver } from '@/libs/hooks';
 
 interface FlowPageProps {
-  nodes: Record<string, NodeType>;
-  setNodes: React.Dispatch<React.SetStateAction<Record<string, NodeType>>>;
-  edges: EdgeType[];
-  setEdges: React.Dispatch<React.SetStateAction<EdgeType[]>>;
-  connection: ConnectionType;
-  setConnection: React.Dispatch<React.SetStateAction<ConnectionType | null>>;
   watermarks?: string;
-  updateNodePosition: (nodeId: string, position: { x: number; y: number }) => void;
-  getNodeRendererById: (nodeId: string) => React.FC<{ node: NodeType }> | undefined;
+  getNodeRendererByType: (nodeId: string) => React.FC<{ node: NodeType }> | undefined;
 }
 
-export const FlowPage = ({
-  nodes,
-  edges,
-  setNodes,
-  connection,
-  setConnection,
-  watermarks,
-  updateNodePosition,
-  getNodeRendererById,
-}: FlowPageProps) => {
-  const { updateContainerPosition, dropRef } = useFlowContext();
+export const FlowPage = ({ watermarks, getNodeRendererByType }: FlowPageProps) => {
+  const { updateContainerPosition, dropRef, nodes, setNodes, edges, connection, setConnection, updateNodePosition } =
+    useFlowContext();
 
   const containerRect = useResizeObserver(dropRef);
 
@@ -112,7 +97,7 @@ export const FlowPage = ({
       {Object.values(nodes).map((node) => (
         <NodeRenderer
           key={node.id}
-          getNodeRendererById={getNodeRendererById}
+          getNodeRendererById={getNodeRendererByType}
           node={node}
           updateNodePosition={updateNodePosition}
         />

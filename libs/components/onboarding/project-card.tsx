@@ -2,7 +2,7 @@ import { Project } from '@prisma/client';
 import { Avatar, Box, Card, Flex, IconButton, Text } from '@radix-ui/themes';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
 
-import styles from './onboarding.module.css';
+import styles from '@/libs/styles/onboarding.module.css';
 
 export const ProjectCard = ({ project }: { project: Project }) => {
   return (

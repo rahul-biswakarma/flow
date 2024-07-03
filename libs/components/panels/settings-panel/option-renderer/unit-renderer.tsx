@@ -1,10 +1,9 @@
 import React from 'react';
-import { z } from 'zod';
 
 import ResponsiveDropdown from '@/libs/components/ui/responsive-dropdown';
-import { unitSchema } from '@/libs/framework/schemas/setting.schema';
+import { SettingUnit, settingUnitsOptions } from '@/libs/schemas';
 
-type UnitType = z.infer<typeof unitSchema>;
+type UnitType = SettingUnit;
 
 interface UnitRendererProps {
   value?: UnitType;
@@ -12,7 +11,7 @@ interface UnitRendererProps {
 }
 
 export const UnitRenderer: React.FC<UnitRendererProps> = ({ value, onChange }) => {
-  const unitValues = unitSchema.options;
+  const unitValues = settingUnitsOptions.map((unit) => unit);
 
   return (
     <ResponsiveDropdown<UnitType>

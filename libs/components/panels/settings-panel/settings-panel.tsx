@@ -4,8 +4,8 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { StyleFields } from './fields/style-fields';
 import { AttributeFields } from './fields/attribute-fields';
 
-import { useProjectContext } from '@/libs/context';
 import styles from '@/libs/styles/setting.module.css';
+import { useFlowContext } from '@/libs/flow';
 
 const AccordionHeader = ({ label }: { label: string }) => {
   return (
@@ -18,8 +18,9 @@ const AccordionHeader = ({ label }: { label: string }) => {
   );
 };
 
-export const SettingsRightPanel = ({ nodeId }: { nodeId: string }) => {
-  const { nodes, setNodes } = useProjectContext();
+export const SettingsPanel = ({ nodeId }: { nodeId: string }) => {
+  const { nodes, setNodes } = useFlowContext();
+
   const nodeData = nodes[nodeId];
   const nodeConfig = nodeData?.config;
 

@@ -5,7 +5,7 @@ import { ConnectionType } from '../../types';
 
 import { Edge } from './edge';
 
-export const Connection = ({ connection }: { connection: ConnectionType }) => {
+export const Connection = ({ connection }: { connection: ConnectionType | null }) => {
   const [mousePosition, setMousePosition] = useState<{ x: number; y: number } | null>(null);
 
   useEffect(() => {

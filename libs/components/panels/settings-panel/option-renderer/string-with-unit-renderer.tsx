@@ -1,17 +1,16 @@
 import React from 'react';
 import { Grid, Text, TextField } from '@radix-ui/themes';
-import { z } from 'zod';
 
 import { UnitRenderer } from './unit-renderer';
 
 import styles from '@/libs/styles/setting.module.css';
-import { stringWithUnitSchema, unitSchema } from '@/libs/framework/schemas/setting.schema';
 import { useProjectContext } from '@/libs/context';
+import { SettingUnit } from '@/libs/schemas';
 
 interface StringRendererProps {
   label: string;
-  value?: z.infer<typeof stringWithUnitSchema>;
-  onChange: (value: z.infer<typeof stringWithUnitSchema>) => void;
+  value?: any;
+  onChange: (value: any) => void;
 }
 
 export const StringWithUnitRenderer: React.FC<StringRendererProps> = ({ label, value, onChange }) => {
@@ -22,8 +21,8 @@ export const StringWithUnitRenderer: React.FC<StringRendererProps> = ({ label, v
     onChange({ value: newValue, unit: value?.unit ?? defaultUnit });
   };
 
-  const handleUnitChange = (newUnit: z.infer<typeof unitSchema>) => {
-    onChange({ value: value?.value ?? '', unit: newUnit });
+  const handleUnitChange = (newUnit: SettingUnit) => {
+    onChange({ value: value?.value ?? '', unit: newUnit as SettingUnit });
   };
 
   return (

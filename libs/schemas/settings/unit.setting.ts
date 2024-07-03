@@ -1,4 +1,4 @@
-export const settingUnits = [
+export const settingUnitsOptions = [
   'auto',
   'px',
   'em',
@@ -14,4 +14,6 @@ export const settingUnits = [
   'initial',
   'inherit',
   'revert',
-];
+] as const;
+
+export type SettingUnit = (typeof settingUnitsOptions)[number];

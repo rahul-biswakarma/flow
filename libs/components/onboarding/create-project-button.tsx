@@ -1,7 +1,7 @@
 import { PlusIcon } from '@radix-ui/react-icons';
 import { Flex, Button, Text } from '@radix-ui/themes';
 
-import { ProjectSections } from './type';
+import { ProjectSections } from '@/libs/types';
 
 export const CreateProjectButton = ({ changeSection }: { changeSection: (view: ProjectSections) => void }) => {
   return (

@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { webNodeStyles } from '../../../framework/types/style.setting';
 import { ColorRenderer, EnumRenderer, StringRenderer, StringWithUnitRenderer } from '../option-renderer';
+
+import { webNodeStyles } from '@/libs/schemas';
 
 type StyleFieldType = {
   getStyleValue: (attrName: string) => any;

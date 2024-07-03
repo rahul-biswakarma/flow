@@ -1,24 +1,11 @@
 import '@radix-ui/themes/styles.css';
 import '@/libs/styles/globals.css';
 
-import { Metadata, Viewport } from 'next';
+import { Viewport } from 'next';
 import { Theme } from '@radix-ui/themes';
 
 import styles from '@/libs/styles/page.module.css';
-import { siteConfig } from '@/libs/config/site';
-import { fontSans } from '@/libs/config/fonts';
 import { NextAuthProvider } from '@/libs/context';
-
-export const metadata: Metadata = {
-  title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  icons: {
-    icon: '/favicon.ico',
-  },
-};
 
 export const viewport: Viewport = {
   themeColor: [
@@ -33,7 +20,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html suppressHydrationWarning lang="en">
         <head />
         <body
-          className={fontSans.variable}
           style={{
             position: 'relative',
           }}

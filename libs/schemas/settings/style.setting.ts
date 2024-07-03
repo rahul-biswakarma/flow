@@ -43,7 +43,7 @@ export const webNodeStyles: Style[] = [
   },
   {
     label: 'Background Color',
-    name: 'background-color',
+    name: 'backgroundColor',
     type: 'color',
   },
   {
@@ -53,18 +53,18 @@ export const webNodeStyles: Style[] = [
   },
   {
     label: 'Font Size',
-    name: 'font-size',
+    name: 'fontSize',
     type: 'stringWithUnit',
   },
   {
     label: 'Font Weight',
-    name: 'font-weight',
+    name: 'fontWeight',
     type: 'enum',
     options: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   },
   {
     label: 'Text Align',
-    name: 'text-align',
+    name: 'textAlign',
     type: 'enum',
     options: ['left', 'center', 'right', 'justify'],
   },
@@ -75,19 +75,19 @@ export const webNodeStyles: Style[] = [
   //   },
   {
     label: 'Flex Direction',
-    name: 'flex-direction',
+    name: 'flexDirection',
     type: 'enum',
     options: ['row', 'column', 'row-reverse', 'column-reverse'],
   },
   {
     label: 'Justify Content',
-    name: 'justify-content',
+    name: 'justifyContent',
     type: 'enum',
     options: ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'],
   },
   {
     label: 'Align Items',
-    name: 'align-items',
+    name: 'alignItems',
     type: 'enum',
     options: ['stretch', 'flex-start', 'flex-end', 'center', 'baseline'],
   },
@@ -102,8 +102,8 @@ export const webNodeStyles: Style[] = [
     type: 'number',
   },
   {
-    label: 'Z Index',
-    name: 'z-index',
+    label: 'z-Index',
+    name: 'zIndex',
     type: 'number',
   },
   //   {

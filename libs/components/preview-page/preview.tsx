@@ -3,9 +3,8 @@
 import React, { FC, ReactNode } from 'react';
 import { Box } from '@radix-ui/themes';
 
-import { WebNodeToPreview } from '@/libs/framework';
-import { NodeType, EdgeType } from '@/libs/types';
-import { useProjectContext } from '@/libs/context';
+import { EdgeType, NodeType, useFlowContext } from '@/libs/flow';
+import { WebNodeToPreview } from '@/libs/types';
 
 type PreviewNodeType = NodeType & { children: PreviewNodeType[] };
 
@@ -66,7 +65,7 @@ const renderTree = (node: PreviewNodeType): JSX.Element => {
 };
 
 export const Preview: FC = () => {
-  const { nodes, edges } = useProjectContext();
+  const { nodes, edges } = useFlowContext();
 
   const rootNodes = buildTree(nodes, edges);
 

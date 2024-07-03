@@ -1,7 +1,8 @@
-import { z } from 'zod';
-
-import { unitSchema } from '../flow';
+import { SettingUnit } from '../schemas';
 
 export type ProjectConfig = {
-  defaultUnit: z.infer<typeof unitSchema>;
+  defaultUnit: SettingUnit;
 };
+
+export type LeftPanelTopSectionView = 'pages' | 'components';
+export type CanvasViewMode = 'node' | 'preview' | 'node+preview';

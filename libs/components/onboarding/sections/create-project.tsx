@@ -4,10 +4,9 @@ import { useActionState } from 'react';
 import { Button, Card, Flex, Heading, Text, TextField } from '@radix-ui/themes';
 import * as Form from '@radix-ui/react-form';
 
-import { ProjectSections } from '../type';
-
 import { createProject } from '@/libs/actions';
 import { ProjectRedirect } from '@/libs/utils/redirects';
+import { ProjectSections } from '@/libs/types';
 
 type CreateProjectProps = {
   changeSection: (section: ProjectSections) => void;

@@ -1,6 +1,6 @@
-import { StringRenderer } from './option-renderer';
+import { StringRenderer } from '../option-renderer';
 
-import { webNodeAttribute } from '@/libs/framework/types';
+import { webNodeAttribute } from '@/libs/schemas';
 
 type AttributeFieldType = {
   webNodeType: string;

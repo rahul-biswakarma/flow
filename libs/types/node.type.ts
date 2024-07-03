@@ -28,8 +28,7 @@ export const webNodeTypes: WebNodeTypesType[] = [
   },
 ];
 
-export const getWebNode = (type: string) => webNodeTypes.find((node) => node.type === type);
-
+export const getWebNodeRendererByType = (type: string) => webNodeTypes.find((node) => node.type === type)?.renderer;
 export type NodeRendererProps = {
   node: NodeType;
 };

@@ -8,7 +8,7 @@ import { useFlowContext } from '../../context/flow.context';
 type NodeDragWrapperProps = {
   node: WebNodeTypesType;
   children: ReactNode;
-  className: string;
+  className?: string;
 };
 
 export const NodeDragWrapper = ({ node, children, className }: NodeDragWrapperProps) => {

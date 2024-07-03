@@ -4,10 +4,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Button, Flex, Grid, ScrollArea, Text } from '@radix-ui/themes';
 import { Cross2Icon } from '@radix-ui/react-icons';
 
+import { SettingsPanel } from '../settings-panel';
+
 import styles from './right-panel.module.css';
 
 import { useRightPanel } from '@/libs/context';
-import { SettingsRightPanel } from '@/libs/framework';
 
 export const RightPanel = () => {
   const { isOpen, closePanel, data, mode } = useRightPanel();
@@ -34,7 +35,7 @@ export const RightPanel = () => {
           <Cross2Icon />
         </Button>
       </div>
-      <ScrollArea>{mode === 'settings' && nodeId ? <SettingsRightPanel nodeId={nodeId} /> : nodeIdNotFound}</ScrollArea>
+      <ScrollArea>{mode === 'settings' && nodeId ? <SettingsPanel nodeId={nodeId} /> : nodeIdNotFound}</ScrollArea>
     </Grid>
   );
 

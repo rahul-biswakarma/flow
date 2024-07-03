@@ -7,8 +7,9 @@ import { Flex, Heading } from '@radix-ui/themes';
 import { CreateProject } from './sections/create-project';
 import { SelectInvitation } from './sections/select-invitation';
 import { SelectProject } from './sections/select-project';
-import { ProjectSections } from './type';
 import { CreateProjectButton } from './create-project-button';
+
+import { ProjectSections } from '@/libs/types';
 
 type OnboardingSectionContainerProps = {
   projects: Project[];

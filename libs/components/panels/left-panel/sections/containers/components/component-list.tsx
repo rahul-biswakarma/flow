@@ -5,7 +5,7 @@ import { TopSectionHeader } from '../../header';
 
 import { ComponentListItem } from './component-list-item';
 
-import { webNodeTypes } from '@/libs/framework';
+import { webNodeTypes } from '@/libs/types';
 
 export const ComponentList = () => {
   const [isCreateComponentEnable, setIsCreateComponentEnable] = useState(false);
