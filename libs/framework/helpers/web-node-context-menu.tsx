@@ -2,8 +2,10 @@ import { ContextMenu } from '@radix-ui/themes';
 import { ReactNode } from 'react';
 
 import { NodeType, useFlowContext } from '@/libs/flow';
+import { useFloatingWidget } from '@/libs/context';
 
 export const WebNodeContextMenu = ({ children, node }: { children: ReactNode; node: NodeType }) => {
+  const { closePanel } = useFloatingWidget();
   const { deleteNode } = useFlowContext();
 
   return (
@@ -15,7 +17,13 @@ export const WebNodeContextMenu = ({ children, node }: { children: ReactNode; no
         }}
         variant="soft"
       >
-        <ContextMenu.Item color="red" onClick={() => deleteNode(node.id)}>
+        <ContextMenu.Item
+          color="red"
+          onClick={() => {
+            closePanel?.();
+            deleteNode(node.id);
+          }}
+        >
           Delete
         </ContextMenu.Item>
       </ContextMenu.Content>

@@ -5,6 +5,8 @@ import { ConnectionType } from '../../types';
 
 import { Edge } from './edge';
 
+import styles from '@/libs/styles/framework.module.css';
+
 export const Connection = ({ connection }: { connection: ConnectionType | null }) => {
   const [mousePosition, setMousePosition] = useState<{ x: number; y: number } | null>(null);
 
@@ -39,5 +41,5 @@ export const Connection = ({ connection }: { connection: ConnectionType | null }
   const fromX = fromPosition.left + fromPosition.width / 2;
   const fromY = fromPosition.top + fromPosition.height / 2;
 
-  return <Edge fromX={fromX} fromY={fromY} toX={mousePosition.x} toY={mousePosition.y} />;
+  return <Edge className={styles.connection} fromX={fromX} fromY={fromY} toX={mousePosition.x} toY={mousePosition.y} />;
 };

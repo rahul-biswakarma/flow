@@ -31,3 +31,7 @@
   stroke: var(--indigo-10);
   stroke-width: 3;
 }
+
+.connection {
+  stroke: var(--indigo-10);
+}

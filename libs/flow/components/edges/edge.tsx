@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 
 import { useFlowContext } from '../../context/flow.context';
 
@@ -9,9 +10,10 @@ interface EdgeProps {
   fromY: number;
   toX: number;
   toY: number;
+  className?: string;
 }
 
-export const Edge: React.FC<EdgeProps> = ({ fromX, fromY, toX, toY }) => {
+export const Edge: React.FC<EdgeProps> = ({ fromX, fromY, toX, toY, className }) => {
   const { containerPosition } = useFlowContext();
 
   if (!containerPosition) {
@@ -43,7 +45,7 @@ export const Edge: React.FC<EdgeProps> = ({ fromX, fromY, toX, toY }) => {
       }}
     >
       <path
-        className={styles.edge}
+        className={clsx(styles.edge, className)}
         d={`M ${adjustedFromX} ${adjustedFromY}
            C ${controlPointX1} ${controlPointY1},
              ${controlPointX2} ${controlPointY2},
