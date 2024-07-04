@@ -3,7 +3,7 @@
 import { Box } from '@radix-ui/themes';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
 import { FlowContextProvider } from '../flow';
@@ -14,7 +14,13 @@ import { Canvas } from './canvas/canvas';
 import { CollapsedLeftPanel } from './panels/left-panel/collapsed-left-panel';
 
 export const Product = () => {
-  const [isLeftPanelCollapsed, setIsLeftPanelCollapsed] = useState(false);
+  const [isLeftPanelCollapsed, setIsLeftPanelCollapsed] = useState(
+    localStorage.getItem('isLeftPanelCollapsed') === 'true' ? true : false,
+  );
+
+  useEffect(() => {
+    localStorage.setItem('isLeftPanelCollapsed', isLeftPanelCollapsed.toString());
+  }, [isLeftPanelCollapsed]);
 
   return (
     <FloatingWidgetProvider>
