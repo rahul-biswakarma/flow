@@ -1,4 +1,4 @@
-import { Box, Flex, SegmentedControl } from '@radix-ui/themes';
+import { Box, Flex, ScrollArea, SegmentedControl } from '@radix-ui/themes';
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
@@ -11,7 +11,7 @@ export const ProjectPanel = () => {
 
   return (
     <Flex direction="column">
-      <Box p="2">
+      <Box p="3">
         <SegmentedControl.Root
           defaultValue="pages"
           style={{
@@ -24,23 +24,26 @@ export const ProjectPanel = () => {
           <SegmentedControl.Item value="components">Components</SegmentedControl.Item>
         </SegmentedControl.Root>
       </Box>
-
-      <AnimatePresence>
-        <Box
-          style={{
-            display: view === 'pages' ? 'block' : 'none',
-          }}
-        >
-          <PagesWidget />
+      <ScrollArea>
+        <Box style={{ flex: 1, overflow: 'auto' }}>
+          <AnimatePresence>
+            <Box
+              style={{
+                display: view === 'pages' ? 'block' : 'none',
+              }}
+            >
+              <PagesWidget />
+            </Box>
+            <Box
+              style={{
+                display: view === 'components' ? 'block' : 'none',
+              }}
+            >
+              <ComponentsWidget />
+            </Box>
+          </AnimatePresence>
         </Box>
-        <Box
-          style={{
-            display: view === 'components' ? 'block' : 'none',
-          }}
-        >
-          <ComponentsWidget />
-        </Box>
-      </AnimatePresence>
+      </ScrollArea>
     </Flex>
   );
 };

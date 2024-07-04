@@ -10,7 +10,7 @@ export const LeftPanel = () => {
     <Grid
       gap="2"
       rows="1.4fr 1fr auto"
-      style={{ padding: '10px', paddingRight: '0px', position: 'relative', width: '370px' }}
+      style={{ padding: '10px', paddingRight: '0px', position: 'relative', width: '370px', maxHeight: '100vh' }}
     >
       <PanelWrapper>
         <ProjectPanel />

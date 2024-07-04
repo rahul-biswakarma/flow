@@ -1,4 +1,4 @@
-import { Flex, Box, SegmentedControl } from '@radix-ui/themes';
+import { Flex, Box, SegmentedControl, ScrollArea } from '@radix-ui/themes';
 import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 
@@ -10,13 +10,11 @@ export const ConfigPanel = () => {
   const [view, setView] = useState<LeftPanelConfigView>('config');
 
   return (
-    <Flex direction="column">
+    <Flex direction="column" style={{ height: '100%', overflow: 'hidden' }}>
       <Box p="2">
         <SegmentedControl.Root
           defaultValue="pages"
-          style={{
-            width: '100%',
-          }}
+          style={{ width: '100%' }}
           value={view}
           onValueChange={(view: LeftPanelConfigView) => setView(view)}
         >
@@ -25,24 +23,26 @@ export const ConfigPanel = () => {
         </SegmentedControl.Root>
       </Box>
 
-      <AnimatePresence>
-        <Box
-          style={{
-            padding: '10px',
-            display: view === 'config' ? 'block' : 'none',
-          }}
-        >
-          <ProjectConfigWidget />
+      <ScrollArea>
+        <Box p="2" style={{ flex: 1, overflow: 'auto' }}>
+          <AnimatePresence>
+            <Box
+              style={{
+                display: view === 'config' ? 'block' : 'none',
+              }}
+            >
+              <ProjectConfigWidget />
+            </Box>
+            <Box
+              style={{
+                display: view === 'setting' ? 'block' : 'none',
+              }}
+            >
+              Setting
+            </Box>
+          </AnimatePresence>
         </Box>
-        <Box
-          style={{
-            padding: '10px',
-            display: view === 'setting' ? 'block' : 'none',
-          }}
-        >
-          Setting
-        </Box>
-      </AnimatePresence>
+      </ScrollArea>
     </Flex>
   );
 };
