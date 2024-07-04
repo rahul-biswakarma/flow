@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
+import { TextField } from '@radix-ui/themes';
 
-import { Input } from '@/libs/components';
 import { createPage } from '@/libs/actions/page';
 import { useOnClickOutside } from '@/libs/hooks';
 
@@ -27,7 +27,7 @@ export const CreatePage = ({ isCreateEnable, onReset, projectId }: CreatePageTyp
   }
 
   return (
-    <Input
+    <TextField.Root
       ref={inputRef}
       autoFocus
       name="page-name"

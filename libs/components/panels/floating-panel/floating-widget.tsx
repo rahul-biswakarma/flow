@@ -4,9 +4,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import Draggable, { DraggableEvent, DraggableData } from 'react-draggable';
 import { ResizableBox, ResizeCallbackData } from 'react-resizable';
 import { Button, Flex, ScrollArea, Text } from '@radix-ui/themes';
-import clsx from 'clsx';
 import 'react-resizable/css/styles.css';
-
+import clsx from 'clsx';
 import { IconSettings, IconX } from '@tabler/icons-react';
 
 import { FloatingWidgetContent } from './floating-panel-widgets';
@@ -20,7 +19,7 @@ export const FloatingWidget = () => {
   const screenPadding = 10;
   const maxWidth = 370;
 
-  const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+  const [screenHeight, setScreenHeight] = useState(window?.innerHeight ?? 500);
   const maxHeight = screenHeight - 2 * screenPadding;
 
   const [position, setPosition] = useState({ x: window.innerWidth - maxWidth - screenPadding, y: screenPadding });
