@@ -2,10 +2,8 @@
 
 import { Grid } from '@radix-ui/themes';
 
-import { TopSection } from './sections/top-section';
-import { SessionControlPanel } from './sections/session-control-panel';
-import { BottomSection } from './sections/bottom-section';
-import { SectionWrapper } from './sections/section-wrapper';
+import { SessionPanel, ProjectPanel, ConfigPanel } from './panels';
+import { PanelWrapper } from './common/panel-wrapper';
 
 export const LeftPanel = () => {
   return (
@@ -14,15 +12,15 @@ export const LeftPanel = () => {
       rows="1.4fr 1fr auto"
       style={{ padding: '10px', paddingRight: '0px', position: 'relative', width: '370px' }}
     >
-      <SectionWrapper>
-        <TopSection />
-      </SectionWrapper>
-      <SectionWrapper>
-        <BottomSection />
-      </SectionWrapper>
-      <SectionWrapper>
-        <SessionControlPanel />
-      </SectionWrapper>
+      <PanelWrapper>
+        <ProjectPanel />
+      </PanelWrapper>
+      <PanelWrapper>
+        <ConfigPanel />
+      </PanelWrapper>
+      <PanelWrapper>
+        <SessionPanel />
+      </PanelWrapper>
     </Grid>
   );
 };

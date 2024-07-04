@@ -2,10 +2,12 @@ import { Flex, Box, SegmentedControl } from '@radix-ui/themes';
 import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 
-import { LeftPanelBottomSectionView } from '@/libs/types';
+import { ProjectConfigWidget } from '../widgets';
 
-export const BottomSection = () => {
-  const [view, setView] = useState<LeftPanelBottomSectionView>('config');
+import { LeftPanelConfigView } from '@/libs/types';
+
+export const ConfigPanel = () => {
+  const [view, setView] = useState<LeftPanelConfigView>('config');
 
   return (
     <Flex direction="column">
@@ -16,7 +18,7 @@ export const BottomSection = () => {
             width: '100%',
           }}
           value={view}
-          onValueChange={(view: LeftPanelBottomSectionView) => setView(view)}
+          onValueChange={(view: LeftPanelConfigView) => setView(view)}
         >
           <SegmentedControl.Item value="config">Config</SegmentedControl.Item>
           <SegmentedControl.Item value="setting">Setting</SegmentedControl.Item>
@@ -30,7 +32,7 @@ export const BottomSection = () => {
             display: view === 'config' ? 'block' : 'none',
           }}
         >
-          Config
+          <ProjectConfigWidget />
         </Box>
         <Box
           style={{

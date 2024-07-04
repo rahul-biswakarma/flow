@@ -2,7 +2,7 @@ import { Avatar, Button, Flex, Text, Tooltip } from '@radix-ui/themes';
 import { IconLayoutSidebarLeftCollapseFilled, IconSettings } from '@tabler/icons-react';
 import { useSession } from 'next-auth/react';
 
-export const SessionControlPanel = () => {
+export const SessionPanel = () => {
   const session = useSession();
 
   const userName = session?.data?.user?.name || 'User';
@@ -20,7 +20,7 @@ export const SessionControlPanel = () => {
             borderRadius: 'var(--radius-4)',
           }}
         />
-        <Flex direction="column">
+        <Flex direction="column" gap="2px">
           <Text
             style={{
               fontSize: '14px',

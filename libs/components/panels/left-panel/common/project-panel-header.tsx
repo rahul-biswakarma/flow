@@ -1,15 +1,15 @@
 import { Flex, IconButton, Tooltip } from '@radix-ui/themes';
 import { IconPlus } from '@tabler/icons-react';
 
-import { LeftPanelTopSectionView } from '@/libs/types';
+import { LeftPanelProjectView } from '@/libs/types';
 
 type TopSectionHeaderProps = {
   label: string;
   onClick: () => void;
-  view: LeftPanelTopSectionView;
+  view: LeftPanelProjectView;
 };
 
-export const TopSectionHeader = ({ label, onClick }: TopSectionHeaderProps) => (
+export const ProjectPanelHeader = ({ label, onClick }: TopSectionHeaderProps) => (
   <Flex align="center" gap="2" justify="between" p="2">
     <Flex
       align="center"

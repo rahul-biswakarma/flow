@@ -1,7 +1,7 @@
 import { Box } from '@radix-ui/themes';
 import { ReactNode } from 'react';
 
-export const SectionWrapper = ({ children }: { children: ReactNode }) => {
+export const PanelWrapper = ({ children }: { children: ReactNode }) => {
   return (
     <Box
       style={{
