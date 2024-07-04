@@ -1,9 +1,9 @@
 'use client';
 
-import { Box, Text } from '@radix-ui/themes';
+import { Box } from '@radix-ui/themes';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
 import { nanoid } from 'nanoid';
-import React, { useEffect } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 
 import { DragDropItemType } from '../constant';
 import { DropItemType, NodeType } from '../types';
@@ -15,7 +15,7 @@ import { Connection, Edges } from './edges';
 import { useResizeObserver } from '@/libs/hooks';
 
 interface FlowPageProps {
-  watermarks?: string;
+  watermarks?: ReactNode;
   getNodeRendererByType: (nodeId: string) => React.FC<{ node: NodeType }> | undefined;
 }
 
@@ -81,19 +81,19 @@ export const FlowPage = ({ watermarks, getNodeRendererByType }: FlowPageProps) =
       }}
       onMouseUp={() => setConnection(null)}
     >
-      <Text
+      <Box
         style={{
           position: 'absolute',
           pointerEvents: 'none',
           userSelect: 'none',
-          top: '10px',
-          left: '20px',
+          bottom: '10px',
+          left: '10px',
           color: 'var(--gray-8)',
           fontSize: '14px',
         }}
       >
         {watermarks}
-      </Text>
+      </Box>
       {Object.values(nodes).map((node) => (
         <NodeRenderer
           key={node.id}

@@ -34,16 +34,12 @@ export const Product = () => {
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'auto 1fr',
+                gridTemplateColumns: isLeftPanelCollapsed ? '1fr' : 'auto 1fr',
                 height: '100%',
               }}
             >
               <AnimatePresence>
-                {isLeftPanelCollapsed ? (
-                  <CollapsedLeftPanel {...{ setIsLeftPanelCollapsed }} />
-                ) : (
-                  <LeftPanel {...{ setIsLeftPanelCollapsed }} />
-                )}
+                {!isLeftPanelCollapsed && <LeftPanel {...{ setIsLeftPanelCollapsed }} />}
               </AnimatePresence>
               <div
                 style={{
@@ -54,6 +50,9 @@ export const Product = () => {
                   isolation: 'isolate',
                 }}
               >
+                <AnimatePresence>
+                  {isLeftPanelCollapsed && <CollapsedLeftPanel {...{ setIsLeftPanelCollapsed }} />}
+                </AnimatePresence>
                 <Canvas />
               </div>
             </div>

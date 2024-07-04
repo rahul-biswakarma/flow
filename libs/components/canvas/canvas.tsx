@@ -11,10 +11,13 @@ import { useProjectContext } from '@/libs/context';
 
 export const Canvas = () => {
   const [viewMode, setViewMode] = useState<CanvasViewMode>('node');
-  const { currentPage } = useProjectContext();
+  const { currentPage, project } = useProjectContext();
 
   const flowPage = (
-    <FlowPage getNodeRendererByType={getWebNodeRendererByType} watermarks={`${currentPage?.name}.tsx`} />
+    <FlowPage
+      getNodeRendererByType={getWebNodeRendererByType}
+      watermarks={`${project.name} / ${currentPage?.name}.tsx`}
+    />
   );
   const previewPage = <PreviewPage />;
 

@@ -24,7 +24,14 @@ export const CollapsedLeftPanel = ({
   const userAvatar = session?.data?.user?.image || '';
 
   return (
-    <Box p="10px">
+    <Box
+      p="10px"
+      style={{
+        position: 'absolute',
+        top: '5px',
+        left: '5px',
+      }}
+    >
       <NavigationMenu.Root className={styles.NavigationMenuRoot} orientation="vertical">
         <NavigationMenu.List className={styles.NavigationMenuList}>
           <NavigationMenu.Item>
