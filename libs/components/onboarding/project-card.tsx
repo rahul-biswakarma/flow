@@ -25,7 +25,7 @@ export const ProjectCard = ({ project }: { project: Project }) => {
               </Flex>
             </Flex>
             <IconButton className={styles.projectCardIconButton} size="2" variant="ghost">
-              <IconArrowRight size="16px" />
+              <IconArrowRight size="18px" />
             </IconButton>
           </Flex>
         </a>

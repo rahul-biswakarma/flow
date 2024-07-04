@@ -18,7 +18,7 @@ export const FloatingWidget = () => {
   const { isOpen, closePanel, data, mode } = useFloatingWidget();
 
   const screenPadding = 10;
-  const maxWidth = 350;
+  const maxWidth = 370;
 
   const [screenHeight, setScreenHeight] = useState(window.innerHeight);
   const maxHeight = screenHeight - 2 * screenPadding;
@@ -100,24 +100,26 @@ export const FloatingWidget = () => {
           width={maxWidth}
           onResizeStop={handleResizeStop}
         >
-          <Flex
-            align="center"
-            className={clsx('handle', styles.floatingWidgetHandler)}
-            gap="4"
-            justify="between"
-            style={{ padding: '12px 16px' }}
-          >
-            <Flex align="center" gap="2">
-              <IconSettings size="16px" />
-              <Text>{data?.title}</Text>
+          <Flex direction="column" style={{ height: '100%' }}>
+            <Flex
+              align="center"
+              className={clsx('handle', styles.floatingWidgetHandler)}
+              gap="4"
+              justify="between"
+              style={{ padding: '12px 16px' }}
+            >
+              <Flex align="center" gap="2">
+                <IconSettings size="18px" />
+                <Text>{data?.title}</Text>
+              </Flex>
+              <Button color="gray" variant="ghost" onClick={closePanel}>
+                <IconX size="18px" />
+              </Button>
             </Flex>
-            <Button color="gray" variant="ghost" onClick={closePanel}>
-              <IconX size="16px" />
-            </Button>
+            <ScrollArea className={styles.scrollArea}>
+              <FloatingWidgetContent data={data} mode={mode} />
+            </ScrollArea>
           </Flex>
-          <ScrollArea className={styles.scrollArea}>
-            <FloatingWidgetContent data={data} mode={mode} />
-          </ScrollArea>
         </ResizableBox>
       </div>
     </Draggable>

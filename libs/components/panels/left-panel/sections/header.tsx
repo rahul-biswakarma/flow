@@ -1,4 +1,4 @@
-import { Flex, IconButton } from '@radix-ui/themes';
+import { Flex, IconButton, Tooltip } from '@radix-ui/themes';
 import { IconPlus } from '@tabler/icons-react';
 
 import { LeftPanelTopSectionView } from '@/libs/types';
@@ -15,13 +15,20 @@ export const TopSectionHeader = ({ label, onClick }: TopSectionHeaderProps) => (
       align="center"
       gap="1"
       style={{
-        color: 'var(--gray-11)',
+        color: 'var(--gray-9)',
       }}
     >
       {label}
     </Flex>
-    <IconButton aria-label="Add new page" color="gray" variant="ghost" onClick={onClick}>
-      <IconPlus size="16px" />
-    </IconButton>
+    <Tooltip content={`Create new ${label}`}>
+      <IconButton aria-label="Add new page" color="gray" variant="ghost" onClick={onClick}>
+        <IconPlus
+          size="18px"
+          style={{
+            color: 'var(--gray-9)',
+          }}
+        />
+      </IconButton>
+    </Tooltip>
   </Flex>
 );

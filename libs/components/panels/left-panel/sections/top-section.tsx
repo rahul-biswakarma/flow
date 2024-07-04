@@ -2,10 +2,10 @@ import { Box, Flex, SegmentedControl } from '@radix-ui/themes';
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
-import { LeftPanelTopSectionView } from '../../type';
-
 import { ListPage } from './containers/pages/page-list';
 import { ComponentList } from './containers/components/component-list';
+
+import { LeftPanelTopSectionView } from '@/libs/types';
 
 export const TopSection = () => {
   const [view, setView] = useState<LeftPanelTopSectionView>('pages');

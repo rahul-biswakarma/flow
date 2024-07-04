@@ -12,7 +12,7 @@ export const CreateProjectButton = ({ changeSection }: { changeSection: (view: P
         }}
         onClick={() => changeSection('creation')}
       >
-        <IconPlus size="16px" />
+        <IconPlus size="18px" />
         <Text>Create Project</Text>
       </Button>
       <Text
