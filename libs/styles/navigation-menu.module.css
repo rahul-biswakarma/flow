@@ -1,0 +1,165 @@
+/* NavigationMenu.module.css */
+
+.navigationMenuRoot {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  max-width: max-content;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.navigationMenuList {
+  display: flex;
+  flex: 1;
+  list-style: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem; /* Equivalent to space-x-1 */
+}
+
+.navigationMenuTrigger {
+  display: inline-flex;
+  height: 2.25rem; /* 9 * 0.25rem */
+  max-width: max-content;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem; /* Equivalent to rounded-md */
+  background-color: red; /* Replace with your background variable */
+  padding: 0.5rem 1rem; /* Equivalent to px-4 py-2 */
+  font-size: 0.875rem; /* Equivalent to text-sm */
+  font-weight: 500; /* Equivalent to font-medium */
+  transition:
+    background-color 0.3s,
+    color 0.3s; /* Equivalent to transition-colors */
+}
+
+.navigationMenuTrigger:hover,
+.navigationMenuTrigger:focus,
+.navigationMenuTrigger:disabled,
+.navigationMenuTrigger[data-state='open'] {
+  background-color: blue; /* Replace with your accent variable */
+  color: white; /* Replace with your accent-foreground variable */
+}
+
+.navigationMenuTrigger:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.chevronIcon {
+  position: relative;
+  top: 0.0625rem; /* Equivalent to top-[1px] */
+  margin-left: 0.25rem; /* Equivalent to ml-1 */
+  height: 0.75rem; /* Equivalent to h-3 */
+  width: 0.75rem; /* Equivalent to w-3 */
+  transition: transform 0.3s;
+}
+
+.chevronIcon[data-state='open'] {
+  transform: rotate(180deg);
+}
+
+.navigationMenuContent {
+  left: 0;
+  top: 0;
+  width: 100%;
+  animation:
+    fadeIn 0.3s,
+    fadeOut 0.3s,
+    slideIn 0.3s,
+    slideOut 0.3s; /* Simplified for demonstration */
+}
+
+@media (min-width: 768px) {
+  .navigationMenuContent {
+    position: absolute;
+    width: auto;
+  }
+}
+
+.navigationMenuViewport {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  display: flex;
+  justify-content: center;
+  origin-top-center: 0;
+  margin-top: 0.375rem; /* Equivalent to mt-1.5 */
+  height: var(--radix-navigation-menu-viewport-height);
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.375rem; /* Equivalent to rounded-md */
+  border: 1px solid aqua; /* Replace with your border variable */
+  background-color: green; /* Replace with your popover variable */
+  color: white; /* Replace with your popover-foreground variable */
+  box-shadow: var(--shadow); /* Replace with your shadow variable */
+}
+
+@media (min-width: 768px) {
+  .navigationMenuViewport {
+    width: var(--radix-navigation-menu-viewport-width);
+  }
+}
+
+.navigationMenuIndicator {
+  position: absolute;
+  top: 100%;
+  z-index: 1;
+  display: flex;
+  height: 0.375rem; /* Equivalent to h-1.5 */
+  align-items: end;
+  justify-content: center;
+  overflow: hidden;
+  animation:
+    fadeIn 0.3s,
+    fadeOut 0.3s; /* Simplified for demonstration */
+}
+
+.navigationMenuIndicator div {
+  position: relative;
+  top: 60%;
+  height: 0.5rem; /* Equivalent to h-2 */
+  width: 0.5rem; /* Equivalent to w-2 */
+  transform: rotate(45deg);
+  border-radius: 0.125rem 0 0 0.125rem; /* Equivalent to rounded-tl-sm */
+  background-color: purple; /* Replace with your border variable */
+  box-shadow: var(--shadow-md); /* Replace with your shadow-md variable */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}

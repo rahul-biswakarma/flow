@@ -7,8 +7,9 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { FlowContextProvider } from '../flow';
 import { FloatingWidgetProvider } from '../context';
 
-import { LeftPanel, FloatingWidget } from './panels';
+import { FloatingWidget } from './panels';
 import { Canvas } from './canvas/canvas';
+import { CollapsedLeftPanel } from './panels/left-panel/collapsed-left-panel';
 
 export const Product = () => {
   return (
@@ -27,7 +28,7 @@ export const Product = () => {
                 height: '100%',
               }}
             >
-              <LeftPanel />
+              <CollapsedLeftPanel />
               <div
                 style={{
                   position: 'relative',
