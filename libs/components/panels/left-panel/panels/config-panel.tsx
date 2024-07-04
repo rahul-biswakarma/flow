@@ -24,7 +24,7 @@ export const ConfigPanel = () => {
       </Box>
 
       <ScrollArea>
-        <Box p="2" style={{ flex: 1, overflow: 'auto' }}>
+        <Box p="3" style={{ flex: 1, overflow: 'auto' }}>
           <AnimatePresence>
             <Box
               style={{

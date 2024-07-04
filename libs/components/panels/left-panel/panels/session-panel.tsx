@@ -2,7 +2,7 @@ import { Avatar, Button, Flex, Text, Tooltip } from '@radix-ui/themes';
 import { IconLayoutSidebarLeftCollapseFilled, IconSettings } from '@tabler/icons-react';
 import { useSession } from 'next-auth/react';
 
-export const SessionPanel = () => {
+export const SessionPanel = ({ setIsLeftPanelCollapsed }: { setIsLeftPanelCollapsed: (value: boolean) => void }) => {
   const session = useSession();
 
   const userName = session?.data?.user?.name || 'User';
@@ -48,7 +48,7 @@ export const SessionPanel = () => {
           </Button>
         </Tooltip>
         <Tooltip content="Toggle Left Panel">
-          <Button color="gray" variant="ghost">
+          <Button color="gray" variant="ghost" onClick={() => setIsLeftPanelCollapsed(true)}>
             <IconLayoutSidebarLeftCollapseFilled color="var(--gray-9)" size="20px" />
           </Button>
         </Tooltip>

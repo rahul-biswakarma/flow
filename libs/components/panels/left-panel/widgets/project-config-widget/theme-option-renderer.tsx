@@ -17,7 +17,7 @@ export const ThemeOptionRenderer = () => {
       {/* Accent Color */}
       <Flex direction="column" gap="2">
         <Text className={styles.sectionTitle}>Accent Color</Text>
-        <Grid aria-labelledby="accent-color-title" columns="10" gap="2" mt="3" role="group">
+        <Grid aria-labelledby="accent-color-title" columns="10" gap="2" role="group">
           {themePropDefs.accentColor.values.map((color) => (
             <label key={color} className="rt-ThemePanelSwatch" style={{ backgroundColor: `var(--${color}-9)` }}>
               <Tooltip content={<Text style={{ textTransform: 'capitalize' }}>{color}</Text>}>
@@ -38,7 +38,7 @@ export const ThemeOptionRenderer = () => {
       {/* Accent Color */}
       <Flex direction="column" gap="2">
         <Text className={styles.sectionTitle}>Accent Color</Text>
-        <Grid aria-labelledby="gray-color-title" columns="10" gap="2" mt="3" role="group">
+        <Grid aria-labelledby="gray-color-title" columns="10" gap="2" role="group">
           {themePropDefs.grayColor.values.map((gray) => (
             <Flex key={gray} asChild align="center" justify="center">
               <label

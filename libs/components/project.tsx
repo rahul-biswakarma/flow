@@ -3,15 +3,19 @@
 import { Box } from '@radix-ui/themes';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 
 import { FlowContextProvider } from '../flow';
 import { FloatingWidgetProvider } from '../context';
 
-import { FloatingWidget } from './panels';
+import { FloatingWidget, LeftPanel } from './panels';
 import { Canvas } from './canvas/canvas';
 import { CollapsedLeftPanel } from './panels/left-panel/collapsed-left-panel';
 
 export const Product = () => {
+  const [isLeftPanelCollapsed, setIsLeftPanelCollapsed] = useState(false);
+
   return (
     <FloatingWidgetProvider>
       <FlowContextProvider>
@@ -28,7 +32,13 @@ export const Product = () => {
                 height: '100%',
               }}
             >
-              <CollapsedLeftPanel />
+              <AnimatePresence>
+                {isLeftPanelCollapsed ? (
+                  <CollapsedLeftPanel {...{ setIsLeftPanelCollapsed }} />
+                ) : (
+                  <LeftPanel {...{ setIsLeftPanelCollapsed }} />
+                )}
+              </AnimatePresence>
               <div
                 style={{
                   position: 'relative',

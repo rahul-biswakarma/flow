@@ -5,7 +5,7 @@ import { Grid } from '@radix-ui/themes';
 import { SessionPanel, ProjectPanel, ConfigPanel } from './panels';
 import { PanelWrapper } from './common/panel-wrapper';
 
-export const LeftPanel = () => {
+export const LeftPanel = ({ setIsLeftPanelCollapsed }: { setIsLeftPanelCollapsed: (value: boolean) => void }) => {
   return (
     <Grid
       gap="2"
@@ -19,7 +19,7 @@ export const LeftPanel = () => {
         <ConfigPanel />
       </PanelWrapper>
       <PanelWrapper>
-        <SessionPanel />
+        <SessionPanel setIsLeftPanelCollapsed={setIsLeftPanelCollapsed} />
       </PanelWrapper>
     </Grid>
   );
