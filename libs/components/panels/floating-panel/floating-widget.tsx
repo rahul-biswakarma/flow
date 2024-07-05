@@ -9,8 +9,8 @@ import clsx from 'clsx';
 import { IconSettings, IconX } from '@tabler/icons-react';
 
 import { FloatingWidgetContent } from './floating-panel-widgets';
+import styles from './floating-widget.module.css';
 
-import styles from '@/libs/styles/floating-widget.module.css';
 import { useFloatingWidget } from '@/libs/context';
 
 export const FloatingWidget = () => {

@@ -46,7 +46,12 @@ export const NodeHandler = (props: NodeHandlerType) => {
         isValidConnection === true ? styles.acceptHandler : isValidConnection === false ? styles.rejectHandler : ''
       }`}
       data-handler-id={generateHandlerId(props)}
-      onMouseDown={() => handleStartConnection(props)}
+      onClick={(e) => e.stopPropagation()}
+      onMouseDown={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleStartConnection(props);
+      }}
       onMouseOut={handleMouseOut}
       onMouseOver={() => handleMouseOver(props)}
       onMouseUp={() => handleCompleteConnection(props)}

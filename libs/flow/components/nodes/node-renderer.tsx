@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { IconArrowsMove } from '@tabler/icons-react';
 
 import { NodeType } from '../../types';
 
@@ -73,15 +72,25 @@ export const NodeRenderer = ({ node, updateNodePosition, getNodeRendererById }: 
       }}
     >
       <div
-        className={styles.nodeMoveHandler}
+        className={styles.handlerLeft}
         style={{
           cursor: dragging ? 'grabbing' : 'grab',
-          ...(dragging && { display: 'flex' }),
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
         }}
         onMouseDown={onMouseDown}
-      >
-        <IconArrowsMove />
-      </div>
+      />
+      <div
+        className={styles.handlerRight}
+        style={{
+          cursor: dragging ? 'grabbing' : 'grab',
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        onMouseDown={onMouseDown}
+      />
       <NodeComponent node={node} />
     </div>
   );
