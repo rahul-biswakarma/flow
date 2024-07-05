@@ -66,7 +66,7 @@ export const SettingsPanel = ({ nodeId }: { nodeId: string }) => {
 
   return (
     <Flex direction="column" gap="3">
-      <Accordion.Root collapsible type="single">
+      <Accordion.Root collapsible defaultValue="attributes" type="single">
         <Accordion.Item value="attributes">
           <AccordionHeader label="Attributes" />
           <Accordion.Content className={styles.settingFieldContainer}>
