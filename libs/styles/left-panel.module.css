@@ -24,16 +24,19 @@
   border-color: var(--gray-6);
 }
 
-.configPanelWrapper:hover .collapsePanelButton {
-  display: flex;
-}
-
 .collapsePanelButton {
   position: sticky;
   bottom: 5px;
   right: 0;
   cursor: pointer;
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.configPanelWrapper:hover .collapsePanelButton {
+  opacity: 1;
+  pointer-events: all;
 }
