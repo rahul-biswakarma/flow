@@ -23,3 +23,17 @@
   background-color: var(--gray-surface);
   border-color: var(--gray-6);
 }
+
+.configPanelWrapper:hover .collapsePanelButton {
+  display: flex;
+}
+
+.collapsePanelButton {
+  position: sticky;
+  bottom: 5px;
+  right: 0;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}

@@ -25,39 +25,38 @@ export const Product = () => {
   return (
     <FloatingWidgetProvider>
       <FlowContextProvider>
-        <Box
-          style={{
-            height: '100vh',
-          }}
-        >
-          <DndProvider backend={HTML5Backend}>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: isLeftPanelCollapsed ? '1fr' : 'auto 1fr',
-                height: '100%',
-              }}
-            >
-              <AnimatePresence>
-                {!isLeftPanelCollapsed && <LeftPanel {...{ setIsLeftPanelCollapsed }} />}
-              </AnimatePresence>
+        <AnimatePresence>
+          <Box
+            style={{
+              height: '100vh',
+            }}
+          >
+            <DndProvider backend={HTML5Backend}>
               <div
                 style={{
-                  position: 'relative',
-                  width: '100%',
+                  display: 'grid',
+                  gridTemplateColumns: isLeftPanelCollapsed ? '1fr' : 'auto 1fr',
                   height: '100%',
-                  overflow: 'hidden',
-                  isolation: 'isolate',
                 }}
               >
-                <AnimatePresence>
+                {!isLeftPanelCollapsed && <LeftPanel {...{ setIsLeftPanelCollapsed }} />}
+
+                <div
+                  style={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '100%',
+                    overflow: 'hidden',
+                    isolation: 'isolate',
+                  }}
+                >
                   {isLeftPanelCollapsed && <CollapsedLeftPanel {...{ setIsLeftPanelCollapsed }} />}
-                </AnimatePresence>
-                <Canvas />
+                  <Canvas />
+                </div>
               </div>
-            </div>
-          </DndProvider>
-        </Box>
+            </DndProvider>
+          </Box>
+        </AnimatePresence>
         <FloatingWidget />
       </FlowContextProvider>
     </FloatingWidgetProvider>

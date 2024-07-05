@@ -1,9 +1,9 @@
-import { Box } from '@radix-ui/themes';
+import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
 
 export const PanelWrapper = ({ children }: { children: ReactNode }) => {
   return (
-    <Box
+    <motion.div
       style={{
         width: '100%',
         backgroundColor: 'var(--gray-surface)',
@@ -14,6 +14,6 @@ export const PanelWrapper = ({ children }: { children: ReactNode }) => {
       }}
     >
       {children}
-    </Box>
+    </motion.div>
   );
 };
