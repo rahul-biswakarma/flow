@@ -1,6 +1,7 @@
-import { Flex, Box, SegmentedControl, ScrollArea } from '@radix-ui/themes';
+import { Flex, Box, SegmentedControl, ScrollArea, Text, Button } from '@radix-ui/themes';
 import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import { IconChevronUp, IconSettings } from '@tabler/icons-react';
 
 import { ProjectConfigWidget } from '../widgets';
 
@@ -8,9 +9,12 @@ import { LeftPanelConfigView } from '@/libs/types';
 
 export const ConfigPanel = () => {
   const [view, setView] = useState<LeftPanelConfigView>('config');
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  if (isCollapsed) return <CollapsedConfigPanel {...{ setIsCollapsed }} />;
 
   return (
-    <Flex direction="column" style={{ height: '100%', overflow: 'hidden' }}>
+    <Flex direction="column" style={{ height: '100%', overflow: 'hidden', position: 'relative' }}>
       <Box p="2">
         <SegmentedControl.Root
           defaultValue="pages"
@@ -43,6 +47,33 @@ export const ConfigPanel = () => {
           </AnimatePresence>
         </Box>
       </ScrollArea>
+    </Flex>
+  );
+};
+
+const CollapsedConfigPanel = ({ setIsCollapsed }: { setIsCollapsed: (value: boolean) => void }) => {
+  return (
+    <Flex
+      align="center"
+      gap="2"
+      justify="between"
+      p="3"
+      style={{
+        color: 'var(--gray-9)',
+      }}
+    >
+      <Flex align="center" gap="2" justify="start">
+        <IconSettings size="20px" />
+        <Text>Project Settings</Text>
+      </Flex>
+      <Button color="gray" variant="ghost" onClick={() => setIsCollapsed(false)}>
+        <IconChevronUp
+          size="20px"
+          style={{
+            color: 'var(--gray-9)',
+          }}
+        />
+      </Button>
     </Flex>
   );
 };

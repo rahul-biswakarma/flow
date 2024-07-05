@@ -9,8 +9,14 @@ export const LeftPanel = ({ setIsLeftPanelCollapsed }: { setIsLeftPanelCollapsed
   return (
     <Grid
       gap="2"
-      rows="1.4fr 1fr auto"
-      style={{ padding: '10px', paddingRight: '0px', position: 'relative', width: '370px', maxHeight: '100vh' }}
+      rows="1fr minmax(auto, 40vh) max-content"
+      style={{
+        padding: '10px',
+        paddingRight: '0px',
+        position: 'relative',
+        width: '370px',
+        maxHeight: '100vh',
+      }}
     >
       <PanelWrapper>
         <ProjectPanel />

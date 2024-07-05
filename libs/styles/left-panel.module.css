@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 5px 16px;
+  padding: 10px 16px;
   border: '1px' solid transparent;
   border-left-width: 0;
   border-right-width: 0;
@@ -15,11 +15,11 @@
 }
 
 .pageListItem:hover {
-  background-color: var(--gray-3);
+  background-color: var(--gray-surface);
 }
 
 /* data-active */
 .pageListItem[data-active='true'] {
-  background-color: var(--gray-4);
+  background-color: var(--gray-surface);
   border-color: var(--gray-6);
 }

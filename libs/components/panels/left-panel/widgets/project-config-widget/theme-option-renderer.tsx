@@ -14,54 +14,6 @@ export const ThemeOptionRenderer = () => {
 
   return (
     <Flex direction="column" gap="4">
-      {/* Accent Color */}
-      <Flex direction="column" gap="2">
-        <Text className={styles.sectionTitle}>Accent Color</Text>
-        <Grid aria-labelledby="accent-color-title" columns="10" gap="2" role="group">
-          {themePropDefs.accentColor.values.map((color) => (
-            <label key={color} className="rt-ThemePanelSwatch" style={{ backgroundColor: `var(--${color}-9)` }}>
-              <Tooltip content={<Text style={{ textTransform: 'capitalize' }}>{color}</Text>}>
-                <input
-                  checked={accentColor === color}
-                  className="rt-ThemePanelSwatchInput"
-                  name="accentColor"
-                  type="radio"
-                  value={color}
-                  onChange={(event) => setAccentColor(event.target.value as typeof accentColor)}
-                />
-              </Tooltip>
-            </label>
-          ))}
-        </Grid>
-      </Flex>
-
-      {/* Accent Color */}
-      <Flex direction="column" gap="2">
-        <Text className={styles.sectionTitle}>Accent Color</Text>
-        <Grid aria-labelledby="gray-color-title" columns="10" gap="2" role="group">
-          {themePropDefs.grayColor.values.map((gray) => (
-            <Flex key={gray} asChild align="center" justify="center">
-              <label
-                className="rt-ThemePanelSwatch"
-                style={{
-                  backgroundColor: `var(--${gray}-9)`,
-                }}
-              >
-                <Tooltip content={<Text style={{ textTransform: 'capitalize' }}>{gray}</Text>}>
-                  <input
-                    checked={grayColor === gray}
-                    className="rt-ThemePanelSwatchInput"
-                    name="grayColor"
-                    type="radio"
-                    value={gray}
-                    onChange={(event) => setGrayColor(event.target.value as typeof grayColor)}
-                  />
-                </Tooltip>
-              </label>
-            </Flex>
-          ))}
-        </Grid>
-      </Flex>
       {/* Appearance */}
       <Flex direction="column" gap="2">
         <Text className={styles.sectionTitle}>Appearance</Text>
@@ -107,6 +59,55 @@ export const ThemeOptionRenderer = () => {
             </RadioCardItemWrapper>
           ))}
         </RadioCards.Root>
+      </Flex>
+
+      {/* Accent Color */}
+      <Flex direction="column" gap="2">
+        <Text className={styles.sectionTitle}>Accent Color</Text>
+        <Grid aria-labelledby="accent-color-title" columns="10" gap="2" role="group">
+          {themePropDefs.accentColor.values.map((color) => (
+            <label key={color} className="rt-ThemePanelSwatch" style={{ backgroundColor: `var(--${color}-9)` }}>
+              <Tooltip content={<Text style={{ textTransform: 'capitalize' }}>{color}</Text>}>
+                <input
+                  checked={accentColor === color}
+                  className="rt-ThemePanelSwatchInput"
+                  name="accentColor"
+                  type="radio"
+                  value={color}
+                  onChange={(event) => setAccentColor(event.target.value as typeof accentColor)}
+                />
+              </Tooltip>
+            </label>
+          ))}
+        </Grid>
+      </Flex>
+
+      {/* Gray Color */}
+      <Flex direction="column" gap="2">
+        <Text className={styles.sectionTitle}>Gray Color</Text>
+        <Grid aria-labelledby="gray-color-title" columns="10" gap="2" role="group">
+          {themePropDefs.grayColor.values.map((gray) => (
+            <Flex key={gray} asChild align="center" justify="center">
+              <label
+                className="rt-ThemePanelSwatch"
+                style={{
+                  backgroundColor: `var(--${gray}-9)`,
+                }}
+              >
+                <Tooltip content={<Text style={{ textTransform: 'capitalize' }}>{gray}</Text>}>
+                  <input
+                    checked={grayColor === gray}
+                    className="rt-ThemePanelSwatchInput"
+                    name="grayColor"
+                    type="radio"
+                    value={gray}
+                    onChange={(event) => setGrayColor(event.target.value as typeof grayColor)}
+                  />
+                </Tooltip>
+              </label>
+            </Flex>
+          ))}
+        </Grid>
       </Flex>
     </Flex>
   );

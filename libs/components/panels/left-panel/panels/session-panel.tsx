@@ -1,5 +1,5 @@
 import { Avatar, Button, Flex, Text, Tooltip } from '@radix-ui/themes';
-import { IconLayoutSidebarLeftCollapseFilled, IconSettings } from '@tabler/icons-react';
+import { IconLayoutSidebarLeftCollapse, IconSettings } from '@tabler/icons-react';
 import { useSession } from 'next-auth/react';
 
 export const SessionPanel = ({ setIsLeftPanelCollapsed }: { setIsLeftPanelCollapsed: (value: boolean) => void }) => {
@@ -21,17 +21,11 @@ export const SessionPanel = ({ setIsLeftPanelCollapsed }: { setIsLeftPanelCollap
           }}
         />
         <Flex direction="column" gap="2px">
-          <Text
-            style={{
-              fontSize: '14px',
-            }}
-          >
-            {userName.split(' ')[0] ?? userName}
-          </Text>
+          <Text size="2">{userName.split(' ')[0] ?? userName}</Text>
           {userEmail && (
             <Text
+              size="2"
               style={{
-                fontSize: '14px',
                 color: 'var(--gray-9)',
                 marginTop: '-5px',
               }}
@@ -49,7 +43,7 @@ export const SessionPanel = ({ setIsLeftPanelCollapsed }: { setIsLeftPanelCollap
         </Tooltip>
         <Tooltip content="Toggle Left Panel">
           <Button color="gray" variant="ghost" onClick={() => setIsLeftPanelCollapsed(true)}>
-            <IconLayoutSidebarLeftCollapseFilled color="var(--gray-9)" size="20px" />
+            <IconLayoutSidebarLeftCollapse color="var(--gray-9)" size="20px" />
           </Button>
         </Tooltip>
       </Flex>

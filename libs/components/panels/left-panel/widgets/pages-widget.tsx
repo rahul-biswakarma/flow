@@ -1,6 +1,6 @@
 'use client';
 
-import { Flex, ScrollArea, TextField } from '@radix-ui/themes';
+import { Flex, Text, ScrollArea, TextField, Box } from '@radix-ui/themes';
 import { Page } from '@prisma/client';
 import { IconFile } from '@tabler/icons-react';
 import { useRef, useState } from 'react';
@@ -59,10 +59,16 @@ export const PagesWidget = () => {
 
 export const PageListItem = ({ page, isActive, onClickHandler }: PageListItemProps) => {
   return (
-    <Flex align="center" className={styles.pageListItem} data-active={isActive} gap="1" onClick={onClickHandler}>
-      <IconFile size="18px" />
-      {page.name}
-    </Flex>
+    <Box
+      style={{
+        background: isActive ? 'var(--gray-a4)' : 'transparent',
+      }}
+    >
+      <Flex align="center" className={styles.pageListItem} data-active={isActive} gap="1" onClick={onClickHandler}>
+        <IconFile size="20px" />
+        <Text>{page.name}</Text>
+      </Flex>
+    </Box>
   );
 };
 
