@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { IconChevronDown, IconChevronUp, IconSettings } from '@tabler/icons-react';
 
 import { ProjectConfigWidget } from '../widgets';
+import { ProjectSettingsWidget } from '../widgets/project-settings-widget';
 
 import { LeftPanelConfigView } from '@/libs/types';
 import styles from '@/libs/styles/left-panel.module.css';
@@ -52,7 +53,7 @@ export const ConfigPanel = ({
                 display: view === 'setting' ? 'block' : 'none',
               }}
             >
-              Setting
+              <ProjectSettingsWidget />
             </Box>
           </Box>
 

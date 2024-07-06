@@ -1,17 +1,14 @@
 import { Separator } from '@radix-ui/themes';
-import { useState } from 'react';
 import { PanelGroup, Panel, PanelResizeHandle } from 'react-resizable-panels';
 
-import { ViewToggler } from '../ui/view-toggler';
 import { PreviewPage } from '../preview-page/preview-page';
 
-import { CanvasViewMode, getWebNodeRendererByType } from '@/libs/types';
+import { getWebNodeRendererByType } from '@/libs/types';
 import { FlowPage } from '@/libs/flow';
 import { useProjectContext } from '@/libs/context';
 
 export const Canvas = () => {
-  const [viewMode, setViewMode] = useState<CanvasViewMode>('node');
-  const { currentPage, project } = useProjectContext();
+  const { currentPage, project, viewMode } = useProjectContext();
 
   const flowPage = (
     <FlowPage
@@ -23,10 +20,9 @@ export const Canvas = () => {
 
   return (
     <div>
-      <ViewToggler setViewMode={setViewMode} viewMode={viewMode} />
       {viewMode === 'node' && flowPage}
       {viewMode === 'preview' && previewPage}
-      {viewMode === 'node+preview' && (
+      {viewMode === 'both' && (
         <PanelGroup autoSaveId="view-panel" direction="horizontal">
           <Panel defaultSize={50}>{flowPage}</Panel>
           <PanelResizeHandle>

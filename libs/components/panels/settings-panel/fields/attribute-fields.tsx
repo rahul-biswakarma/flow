@@ -1,6 +1,6 @@
 import { Flex, Text } from '@radix-ui/themes';
 
-import { StringRenderer } from '../option-renderer';
+import { StringRenderer } from '../../../field-renderer';
 
 import { webNodeAttribute } from '@/libs/schemas';
 

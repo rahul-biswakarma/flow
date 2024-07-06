@@ -12,6 +12,7 @@ import { useSession } from 'next-auth/react';
 
 import styles from './styles/collapsed-left-panel.module.css';
 import { ComponentsWidget, PagesWidget, ProjectConfigWidget } from './widgets';
+import { ProjectSettingsWidget } from './widgets/project-settings-widget';
 
 export const CollapsedLeftPanel = ({
   setIsLeftPanelCollapsed,
@@ -84,7 +85,7 @@ export const CollapsedLeftPanel = ({
             <NavigationMenu.Content className={styles.NavigationMenuContent}>
               <ContentWrapper>
                 <Flex direction="column" gap="10px" p="10px">
-                  <ProjectConfigWidget />
+                  <ProjectSettingsWidget />
                 </Flex>
               </ContentWrapper>
             </NavigationMenu.Content>

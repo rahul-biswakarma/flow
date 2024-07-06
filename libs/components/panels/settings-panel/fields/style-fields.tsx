@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ColorRenderer, EnumRenderer, StringRenderer, StringWithUnitRenderer } from '../option-renderer';
+import { ColorRenderer, EnumRenderer, StringRenderer, StringWithUnitRenderer } from '../../../field-renderer';
 
 import { webNodeStyles } from '@/libs/schemas';
 
