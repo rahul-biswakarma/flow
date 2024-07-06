@@ -1,9 +1,10 @@
 import { Flex, Grid, RadioCards, Text, Tooltip } from '@radix-ui/themes';
 import { themePropDefs } from '@radix-ui/themes/dist/cjs/components/theme.props';
 import { IconCircle, IconCircleFilled, IconMoonStars, IconSun } from '@tabler/icons-react';
-import { FC, ReactNode, useState } from 'react';
+import { useState } from 'react';
 
-import styles from './project-config-widget.module.css';
+import styles from '../../styles/project-config-widget.module.css';
+import { RadioCardItemWrapper } from '../../common/radio-card-wrapper';
 
 export const ThemeOptionRenderer = () => {
   const [accentColor, setAccentColor] = useState('blue' as string);
@@ -110,18 +111,5 @@ export const ThemeOptionRenderer = () => {
         </Grid>
       </Flex>
     </Flex>
-  );
-};
-
-const RadioCardItemWrapper = ({ value, children, icon }: { value: string; children: ReactNode; icon?: FC<any> }) => {
-  const IconComponent = icon;
-
-  return (
-    <RadioCards.Item className={styles.radioCardItemWrapper} value={value}>
-      <Flex align="center" className={styles.radioCardItem} gap="2" justify="center" width="100%">
-        {IconComponent && <IconComponent size="16px" />}
-        {children}
-      </Flex>
-    </RadioCards.Item>
   );
 };
