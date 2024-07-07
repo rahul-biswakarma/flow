@@ -4,6 +4,7 @@ import { createContext, useContext, useState } from 'react';
 import { Page, Project } from '@prisma/client';
 
 import { CanvasViewMode, ProjectConfig } from '../types';
+import { FlowContextProvider } from '../flow';
 
 type ProjectWithPages = Project & {
   pages: Page[];
@@ -41,6 +42,8 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
   const [currentPageId, setCurrentPageId] = useState<string>(project?.pages[0]?.id ?? '');
 
   const currentPage = project.pages.find((page) => page.id === currentPageId);
+  const currentPagesConfig = currentPage?.config as string;
+  const currentPagesConfigParsed = currentPagesConfig ? JSON.parse(currentPagesConfig) : {};
 
   return (
     <ProjectContext.Provider
@@ -56,7 +59,9 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
         currentPage,
       }}
     >
-      {children}
+      <FlowContextProvider edges={currentPagesConfigParsed.edges} nodes={currentPagesConfigParsed?.nodes}>
+        {children}
+      </FlowContextProvider>
     </ProjectContext.Provider>
   );
 };

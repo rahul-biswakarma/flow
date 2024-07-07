@@ -5,7 +5,13 @@ import { ReactNode } from 'react';
 import { useFloatingWidget } from '@/libs/context';
 import { NodeType, useFlowContext } from '@/libs/flow';
 
-export const WebNodeWrapper = ({ node, children }: { node: NodeType; children: ReactNode }) => {
+type WebNodeWrapperProps = {
+  node: NodeType;
+  children: ReactNode;
+  disableDelete?: boolean;
+};
+
+export const WebNodeWrapper = ({ node, children, disableDelete }: WebNodeWrapperProps) => {
   const { openPanel, closePanel } = useFloatingWidget();
   const { deleteNode } = useFlowContext();
 
@@ -37,6 +43,7 @@ export const WebNodeWrapper = ({ node, children }: { node: NodeType; children: R
       >
         <ContextMenu.Item
           color="red"
+          disabled={disableDelete}
           onClick={() => {
             closePanel?.();
             deleteNode(node.id);

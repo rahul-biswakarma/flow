@@ -19,6 +19,6 @@ export const createPage = async (pageName: string, projectId: string) => {
 export const updatePageData = async (pageId: string, data: string) => {
   await prisma.page.update({
     where: { id: pageId },
-    data: { data },
+    data: { config: data },
   });
 };

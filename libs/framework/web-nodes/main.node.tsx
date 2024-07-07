@@ -9,11 +9,11 @@ import { WebNodeWrapper } from '../helpers';
 import { NodeRendererProps } from '@/libs/types/node.type';
 import styles from '@/libs/styles/node.module.css';
 
-export const BodyNode = ({ node }: NodeRendererProps) => {
+export const MainNode = ({ node }: NodeRendererProps) => {
   return (
-    <WebNodeWrapper node={node}>
+    <WebNodeWrapper disableDelete={true} node={node}>
       <div className={styles.nodeContainer}>
-        <Text className={styles.contentContainer}>Body</Text>
+        <Text className={styles.contentContainer}>Main</Text>
         <div className={styles.bottomHandlerContainer}>
           <NodeHandler handlerKey="content" handlerType="visual-target" nodeId={node.id} />
         </div>

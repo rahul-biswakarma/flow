@@ -1,6 +1,6 @@
 import { IconAlignJustified } from '@tabler/icons-react';
 
-import { TextNode, ButtonNode, ContainerNode, BodyNode } from '@/libs/framework';
+import { TextNode, ButtonNode, ContainerNode, MainNode } from '@/libs/framework';
 import { WebNodeTypesType, NodeType } from '@/libs/flow';
 
 export const webNodeTypes: WebNodeTypesType[] = [
@@ -25,9 +25,9 @@ export const webNodeTypes: WebNodeTypesType[] = [
     visibility: 'public',
   },
   {
-    type: 'system-body-node',
-    name: 'Body',
-    renderer: BodyNode,
+    type: 'system-main-node',
+    name: 'Main',
+    renderer: MainNode,
     visibility: 'private',
   },
 ];

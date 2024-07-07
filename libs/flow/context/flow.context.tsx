@@ -32,9 +32,13 @@ interface FlowContextType {
 
 const FlowContext = createContext<FlowContextType | undefined>(undefined);
 
-export const FlowContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [nodes, setNodes] = useState<Record<string, NodeType>>({});
-  const [edges, setEdges] = useState<EdgeType[]>([]);
+export const FlowContextProvider: React.FC<{
+  children: React.ReactNode;
+  nodes?: Record<string, NodeType>;
+  edges?: EdgeType[];
+}> = ({ children, nodes: initialNodes, edges: initialEdges }) => {
+  const [nodes, setNodes] = useState<Record<string, NodeType>>(initialNodes ?? {});
+  const [edges, setEdges] = useState<EdgeType[]>(initialEdges ?? []);
   const [connection, setConnection] = useState<ConnectionType | null>(null);
 
   const dropRef = useRef<HTMLDivElement>(null);

@@ -6,7 +6,6 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 
-import { FlowContextProvider } from '../flow';
 import { FloatingWidgetProvider } from '../context';
 
 import { FloatingWidget, LeftPanel } from './panels';
@@ -24,41 +23,39 @@ export const Product = () => {
 
   return (
     <FloatingWidgetProvider>
-      <FlowContextProvider>
-        <AnimatePresence>
-          <Box
-            style={{
-              height: '100vh',
-            }}
-          >
-            <DndProvider backend={HTML5Backend}>
+      <AnimatePresence>
+        <Box
+          style={{
+            height: '100vh',
+          }}
+        >
+          <DndProvider backend={HTML5Backend}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: isLeftPanelCollapsed ? '1fr' : 'auto 1fr',
+                height: '100%',
+              }}
+            >
+              {!isLeftPanelCollapsed && <LeftPanel {...{ setIsLeftPanelCollapsed }} />}
+
               <div
                 style={{
-                  display: 'grid',
-                  gridTemplateColumns: isLeftPanelCollapsed ? '1fr' : 'auto 1fr',
+                  position: 'relative',
+                  width: '100%',
                   height: '100%',
+                  overflow: 'hidden',
+                  isolation: 'isolate',
                 }}
               >
-                {!isLeftPanelCollapsed && <LeftPanel {...{ setIsLeftPanelCollapsed }} />}
-
-                <div
-                  style={{
-                    position: 'relative',
-                    width: '100%',
-                    height: '100%',
-                    overflow: 'hidden',
-                    isolation: 'isolate',
-                  }}
-                >
-                  {isLeftPanelCollapsed && <CollapsedLeftPanel {...{ setIsLeftPanelCollapsed }} />}
-                  <Canvas />
-                </div>
+                {isLeftPanelCollapsed && <CollapsedLeftPanel {...{ setIsLeftPanelCollapsed }} />}
+                <Canvas />
               </div>
-            </DndProvider>
-          </Box>
-        </AnimatePresence>
-        <FloatingWidget />
-      </FlowContextProvider>
+            </div>
+          </DndProvider>
+        </Box>
+      </AnimatePresence>
+      <FloatingWidget />
     </FloatingWidgetProvider>
   );
 };

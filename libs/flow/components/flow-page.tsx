@@ -31,6 +31,21 @@ export const FlowPage = ({ watermarks, getNodeRendererByType }: FlowPageProps) =
     }
   }, [containerRect, updateContainerPosition]);
 
+  if (Object.keys(nodes).length === 0) {
+    const mainNodeId = nanoid();
+    const containerXCenter = (dropRef.current?.clientWidth ?? 1) / 2;
+
+    setNodes({
+      [mainNodeId]: {
+        id: mainNodeId,
+        type: 'system-main-node',
+        name: 'Main',
+        position: { x: containerXCenter, y: 100 },
+        config: {},
+      },
+    });
+  }
+
   const handleDrop = (item: DropItemType, monitor: DropTargetMonitor) => {
     const clientOffset = monitor.getClientOffset();
     const dropTargetRect = dropRef.current?.getBoundingClientRect();
