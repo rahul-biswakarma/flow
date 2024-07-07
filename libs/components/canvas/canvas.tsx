@@ -1,14 +1,22 @@
 import { Separator } from '@radix-ui/themes';
 import { PanelGroup, Panel, PanelResizeHandle } from 'react-resizable-panels';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 import { PreviewPage } from '../preview-page/preview-page';
 
 import { getWebNodeRendererByType } from '@/libs/types';
 import { FlowPage } from '@/libs/flow';
 import { useProjectContext } from '@/libs/context';
+import { useOnSave } from '@/libs/hooks/use-on-save';
+import { HotKeys } from '@/libs/utils/hotkeys';
 
 export const Canvas = () => {
   const { currentPage, project, viewMode } = useProjectContext();
+  const onSave = useOnSave();
+
+  useHotkeys(HotKeys.SAVE, onSave, {
+    preventDefault: true,
+  });
 
   const flowPage = (
     <FlowPage

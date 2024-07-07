@@ -2,11 +2,13 @@
 
 import { useCallback } from 'react';
 
-import { useProjectContext } from '../context';
 import { updatePageData } from '../actions/page';
+import { useFlowContext } from '../flow';
+import { useProjectContext } from '../context';
 
 export const useOnSave = () => {
-  const { nodes, edges, currentPageId } = useProjectContext();
+  const { currentPageId } = useProjectContext();
+  const { nodes, edges } = useFlowContext();
   const stringifiedData = JSON.stringify({ nodes, edges });
 
   const saveData = useCallback(async () => {
