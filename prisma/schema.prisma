@@ -83,42 +83,10 @@ model Page {
   config    Json
   projectId String
   project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  nodes     Node[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([projectId])
-}
-
-model Node {
-  id            String     @id @default(cuid())
-  type          String
-  config        Json
-  pageId        String
-  page          Page       @relation(fields: [pageId], references: [id], onDelete: Cascade)
-  edgesAsSource Edge[]     @relation("SourceNode")
-  edgesAsTarget Edge[]     @relation("TargetNode")
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  Component     Component? @relation(fields: [componentId], references: [id])
-  componentId   String?
-
-  @@index([pageId])
-  @@index([componentId])
-}
-
-model Edge {
-  id           String   @id @default(cuid())
-  sourceNodeId String
-  targetNodeId String
-  config       Json
-  sourceNode   Node     @relation("SourceNode", fields: [sourceNodeId], references: [id], onDelete: Cascade)
-  targetNode   Node     @relation("TargetNode", fields: [targetNodeId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  @@index([sourceNodeId])
-  @@index([targetNodeId])
 }
 
 model Component {
@@ -129,7 +97,6 @@ model Component {
   project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  nodes     Node[]
 
   @@unique([name, projectId])
   @@index([projectId])
