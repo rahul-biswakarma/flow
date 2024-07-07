@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { NodeType } from '../../types';
 
@@ -31,18 +31,21 @@ export const NodeRenderer = ({ node, updateNodePosition, getNodeRendererById }: 
     });
   };
 
-  const onMouseMove = (e: MouseEvent) => {
-    if (!dragging) return;
-    const newX = e.clientX - startPos.x;
-    const newY = e.clientY - startPos.y;
+  const onMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!dragging) return;
+      const newX = e.clientX - startPos.x;
+      const newY = e.clientY - startPos.y;
 
-    setPosition({ x: newX, y: newY });
-    updateNodePosition(node.id, { x: newX, y: newY });
-  };
+      setPosition({ x: newX, y: newY });
+      updateNodePosition(node.id, { x: newX, y: newY });
+    },
+    [dragging, startPos.x, startPos.y, node.id, updateNodePosition],
+  );
 
-  const onMouseUp = () => {
+  const onMouseUp = useCallback(() => {
     setDragging(false);
-  };
+  }, []);
 
   useEffect(() => {
     if (dragging) {

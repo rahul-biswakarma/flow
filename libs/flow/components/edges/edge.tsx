@@ -1,8 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { useFlowContext } from '../../context/flow.context';
-
 import styles from '@/libs/styles/framework.module.css';
 
 interface EdgeProps {
@@ -14,25 +12,10 @@ interface EdgeProps {
 }
 
 export const Edge: React.FC<EdgeProps> = ({ fromX, fromY, toX, toY, className }) => {
-  const { containerPosition } = useFlowContext();
-
-  if (!containerPosition) {
-    return null;
-  }
-
-  const { left, top } = containerPosition;
-
-  // Adjust positions based on the container's position
-  const adjustedFromX = fromX - left;
-  const adjustedFromY = fromY - top;
-  const adjustedToX = toX - left;
-  const adjustedToY = toY - top;
-
-  // Calculate control points for the cubic Bezier curve
-  const controlPointX1 = adjustedFromX;
-  const controlPointY1 = adjustedFromY + (adjustedToY - adjustedFromY) / 2;
-  const controlPointX2 = adjustedToX;
-  const controlPointY2 = adjustedFromY + (adjustedToY - adjustedFromY) / 2;
+  const controlPointX1 = fromX;
+  const controlPointY1 = fromY + (toY - fromY) / 2;
+  const controlPointX2 = toX;
+  const controlPointY2 = fromY + (toY - fromY) / 2;
 
   return (
     <svg
@@ -46,10 +29,10 @@ export const Edge: React.FC<EdgeProps> = ({ fromX, fromY, toX, toY, className })
     >
       <path
         className={clsx(styles.edge, className)}
-        d={`M ${adjustedFromX} ${adjustedFromY}
+        d={`M ${fromX} ${fromY}
            C ${controlPointX1} ${controlPointY1},
              ${controlPointX2} ${controlPointY2},
-             ${adjustedToX} ${adjustedToY}`}
+             ${toX} ${toY}`}
         fill="none"
         strokeWidth="2"
       />

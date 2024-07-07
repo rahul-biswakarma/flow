@@ -41,7 +41,7 @@ const ResizablePanel = ({
     const storedPosition = localStorage.getItem(`${localStorageKey}-position`);
 
     if (storedSize) {
-      setSize(JSON.parse(storedSize));
+      setSize(JSON.parse(storedSize) ?? { width: 0, height: 0 });
     } else if (parentRef.current) {
       setSize({
         width: parentRef.current.clientWidth,

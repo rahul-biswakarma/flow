@@ -3,7 +3,7 @@
 import { Box } from '@radix-ui/themes';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
 import { nanoid } from 'nanoid';
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect, useCallback } from 'react';
 
 import { DragDropItemType } from '../constant';
 import { DropItemType, NodeType } from '../types';
@@ -23,28 +23,30 @@ export const FlowPage = ({ watermarks, getNodeRendererByType }: FlowPageProps) =
   const { updateContainerPosition, dropRef, nodes, setNodes, edges, connection, setConnection, updateNodePosition } =
     useFlowContext();
 
-  const containerRect = useResizeObserver(dropRef);
+  const resizeObserverRect = useResizeObserver(dropRef);
 
   useEffect(() => {
-    if (containerRect) {
-      updateContainerPosition(containerRect.left, containerRect.top);
+    if (resizeObserverRect) {
+      updateContainerPosition(resizeObserverRect.left, resizeObserverRect.top);
     }
-  }, [containerRect, updateContainerPosition]);
+  }, [resizeObserverRect, updateContainerPosition]);
 
-  if (Object.keys(nodes).length === 0) {
-    const mainNodeId = nanoid();
-    const containerXCenter = (dropRef.current?.clientWidth ?? 1) / 2;
+  useEffect(() => {
+    if (Object.keys(nodes).length === 0) {
+      const mainNodeId = nanoid();
+      const containerXCenter = (dropRef.current?.clientWidth ?? 1) / 2;
 
-    setNodes({
-      [mainNodeId]: {
-        id: mainNodeId,
-        type: 'system-main-node',
-        name: 'Main',
-        position: { x: containerXCenter, y: 100 },
-        config: {},
-      },
-    });
-  }
+      setNodes({
+        [mainNodeId]: {
+          id: mainNodeId,
+          type: 'system-main-node',
+          name: 'Main',
+          position: { x: containerXCenter, y: 100 },
+          config: {},
+        },
+      });
+    }
+  }, [dropRef, setNodes, nodes]);
 
   const handleDrop = (item: DropItemType, monitor: DropTargetMonitor) => {
     const clientOffset = monitor.getClientOffset();
@@ -84,6 +86,18 @@ export const FlowPage = ({ watermarks, getNodeRendererByType }: FlowPageProps) =
 
   drop(dropRef);
 
+  const updateNodeAndEdgesPosition = useCallback(
+    (nodeId: string, position: { x: number; y: number }) => {
+      updateNodePosition(nodeId, position);
+    },
+    [updateNodePosition],
+  );
+
+  const alignNodesInTree = useCallback(() => {
+    // Implement logic to align nodes in a tree view
+    // This function can use an algorithm like Reingold-Tilford to position nodes
+  }, [nodes, setNodes]);
+
   return (
     <Box
       ref={dropRef}
@@ -109,16 +123,16 @@ export const FlowPage = ({ watermarks, getNodeRendererByType }: FlowPageProps) =
       >
         {watermarks}
       </Box>
+      <Connection connection={connection} />
       {Object.values(nodes).map((node) => (
         <NodeRenderer
           key={node.id}
           getNodeRendererById={getNodeRendererByType}
           node={node}
-          updateNodePosition={updateNodePosition}
+          updateNodePosition={updateNodeAndEdgesPosition}
         />
       ))}
-      <Connection connection={connection} />
-      <Edges edges={edges} />
+      <Edges containerPosition={resizeObserverRect} edges={edges} nodes={nodes} />
     </Box>
   );
 };
