@@ -85,7 +85,10 @@ export const NodeRenderer = ({ node, updateNodePosition, getNodeRendererById }: 
         onClick={(e) => {
           e.stopPropagation();
         }}
-        onMouseDown={onMouseDown}
+        onMouseDown={(e) => {
+          e.stopPropagation();
+          onMouseDown(e);
+        }}
       />
       <div
         className={styles.handlerRight}
@@ -96,7 +99,10 @@ export const NodeRenderer = ({ node, updateNodePosition, getNodeRendererById }: 
         onClick={(e) => {
           e.stopPropagation();
         }}
-        onMouseDown={onMouseDown}
+        onMouseDown={(e) => {
+          e.stopPropagation();
+          onMouseDown(e);
+        }}
       />
       <NodeComponent node={node} />
     </div>
