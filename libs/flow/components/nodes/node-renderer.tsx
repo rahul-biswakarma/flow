@@ -17,9 +17,11 @@ type NodeRendererProps = {
 };
 
 export const NodeRenderer = ({ node, updateNodePosition, getNodeRendererById }: NodeRendererProps) => {
+  const initialPosition = node.position || { x: 0, y: 0 };
+
   const [dragging, setDragging] = useState(false);
   const [startPos, setStartPos] = useState({ x: 0, y: 0 });
-  const [position, setPosition] = useState({ x: node.position.x, y: node.position.y });
+  const [position, setPosition] = useState(initialPosition);
 
   const NodeComponent = getNodeRendererById(node.type);
 
@@ -76,6 +78,7 @@ export const NodeRenderer = ({ node, updateNodePosition, getNodeRendererById }: 
     >
       <div
         className={styles.handlerLeft}
+        id={node.id + 'left-slot'}
         style={{
           cursor: dragging ? 'grabbing' : 'grab',
         }}
@@ -86,6 +89,7 @@ export const NodeRenderer = ({ node, updateNodePosition, getNodeRendererById }: 
       />
       <div
         className={styles.handlerRight}
+        id={node.id + 'right-slot'}
         style={{
           cursor: dragging ? 'grabbing' : 'grab',
         }}
