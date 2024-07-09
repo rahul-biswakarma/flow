@@ -1,10 +1,11 @@
 'use client';
 
 import React, { FC, ReactNode } from 'react';
-import { Box } from '@radix-ui/themes';
+import { Box, Theme } from '@radix-ui/themes';
 
 import { EdgeType, NodeType, useFlowContext } from '@/libs/flow';
 import { WebNodeToPreview } from '@/libs/types';
+import { useProjectContext } from '@/libs/context';
 
 type PreviewNodeType = NodeType & { children: PreviewNodeType[] };
 
@@ -65,13 +66,23 @@ const renderTree = (node: PreviewNodeType): JSX.Element => {
 };
 
 export const Preview: FC = () => {
+  const { projectConfig, defaultProjectConfig } = useProjectContext();
   const { nodes, edges } = useFlowContext();
 
   const rootNodes = buildTree(nodes, edges);
 
   return (
-    <Box style={{ position: 'relative', width: '100%', height: '100%' }}>
-      {rootNodes.map((rootNode) => renderTree(rootNode))}
-    </Box>
+    <Theme
+      accentColor={projectConfig.accentColor ?? defaultProjectConfig.accentColor}
+      appearance={projectConfig.appearance ?? defaultProjectConfig.appearance}
+      grayColor={projectConfig.gray ?? defaultProjectConfig.gray}
+      panelBackground={projectConfig.panelBackground ?? defaultProjectConfig.panelBackground}
+      radius={projectConfig.radius ?? defaultProjectConfig.radius}
+      scaling={projectConfig.scale ?? defaultProjectConfig.scale}
+    >
+      <Box style={{ position: 'relative', width: '100%', height: '100%' }}>
+        {rootNodes.map((rootNode) => renderTree(rootNode))}
+      </Box>
+    </Theme>
   );
 };

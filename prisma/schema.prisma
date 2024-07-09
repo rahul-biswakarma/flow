@@ -30,6 +30,7 @@ model Project {
   name           String
   description    String?
   slug           String              @unique
+  config         String              @default("{}")
   roles          Role[]
   projectMembers ProjectMembership[]
   pages          Page[]

@@ -1,5 +1,6 @@
 'use server';
 
+import { defaultProjectConfig } from '../constants';
 import { auth } from '../utils/auth';
 import { prisma } from '../utils/db';
 
@@ -21,7 +22,7 @@ export const createProject = async (prevState: any, formData: FormData) => {
       pages: {
         create: {
           name: 'home',
-          config: '{}',
+          config: JSON.stringify(defaultProjectConfig),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
