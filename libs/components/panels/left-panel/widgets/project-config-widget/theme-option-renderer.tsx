@@ -1,17 +1,31 @@
 import { Flex, Grid, RadioCards, Text, Tooltip } from '@radix-ui/themes';
 import { themePropDefs } from '@radix-ui/themes/dist/cjs/components/theme.props';
 import { IconCircle, IconCircleFilled, IconMoonStars, IconSun } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from '../../styles/project-config-widget.module.css';
 import { RadioCardItemWrapper } from '../../common/radio-card-wrapper';
 
+import { useProjectContext } from '@/libs/context';
+
 export const ThemeOptionRenderer = () => {
+  const { setProjectConfig } = useProjectContext();
+
   const [accentColor, setAccentColor] = useState('blue' as string);
   const [grayColor, setGrayColor] = useState('auto' as string);
   const [appearance, setAppearance] = useState('dark' as string);
   const [panelBackground, setPanelBackground] = useState('translucent' as string);
   const [scale, setScale] = useState('100%' as string);
+
+  useEffect(() => {
+    setProjectConfig({
+      accentColor,
+      gray: grayColor,
+      appearance,
+      panelBackground,
+      scale,
+    });
+  }, [accentColor, grayColor, appearance, panelBackground, scale]);
 
   return (
     <Flex direction="column" gap="4">

@@ -79,6 +79,11 @@ export const Preview: FC = () => {
       panelBackground={projectConfig.panelBackground ?? defaultProjectConfig.panelBackground}
       radius={projectConfig.radius ?? defaultProjectConfig.radius}
       scaling={projectConfig.scale ?? defaultProjectConfig.scale}
+      style={{
+        width: '100%',
+        height: '100%',
+        overflow: 'auto',
+      }}
     >
       <Box style={{ position: 'relative', width: '100%', height: '100%' }}>
         {rootNodes.map((rootNode) => renderTree(rootNode))}
