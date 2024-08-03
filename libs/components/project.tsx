@@ -15,6 +15,9 @@ import { HotKeys } from '../utils/hotkeys';
 
 import { CollapsedLeftPanel } from './panels/left-panel/collapsed-left-panel';
 import { FloatingWidget, LeftPanel } from './panels';
+import { PreviewPanel } from './preview-page/preview-panel';
+
+const PANEL_MARGIN = 10;
 
 export const Product = () => {
   const { currentPage, project } = useProjectContext();
@@ -68,11 +71,20 @@ export const Product = () => {
                   width: '100%',
                   height: '100%',
                   isolation: 'isolate',
-                  zIndex: 10,
+                  zIndex: 5,
                 }}
               >
                 {flowPage}
               </div>
+
+              <PreviewPanel
+                panelMargin={PANEL_MARGIN}
+                style={{
+                  isolation: 'isolate',
+                  zIndex: 10,
+                }}
+              />
+
               <div
                 style={{
                   isolation: 'isolate',

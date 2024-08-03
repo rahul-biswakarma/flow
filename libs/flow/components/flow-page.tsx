@@ -182,7 +182,6 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
     <Box
       ref={containerRef}
       style={{
-        padding: '40px',
         height: '100vh',
         width: '100%',
         position: 'relative',
