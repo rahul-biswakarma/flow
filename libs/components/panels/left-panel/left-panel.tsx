@@ -15,11 +15,14 @@ export const LeftPanel = ({ setIsLeftPanelCollapsed }: { setIsLeftPanelCollapsed
       gap="2"
       rows={isConfigPanelCollapsed ? '1fr max-content max-content' : '1fr minmax(auto, 40vh) max-content'}
       style={{
+        backgroundColor: 'transparent',
         padding: '10px',
         paddingRight: '0px',
-        position: 'relative',
+        position: 'absolute',
+        top: '0',
+        left: '0',
         width: '370px',
-        maxHeight: '100vh',
+        height: '100vh',
       }}
     >
       <AnimatePresence>

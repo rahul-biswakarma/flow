@@ -27,7 +27,11 @@ export const Canvas = () => {
   const previewPage = <PreviewPage />;
 
   return (
-    <div>
+    <div
+      style={{
+        zIndex: 3,
+      }}
+    >
       {viewMode === 'node' && flowPage}
       {viewMode === 'preview' && previewPage}
       {viewMode === 'both' && (
