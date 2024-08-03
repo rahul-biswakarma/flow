@@ -51,6 +51,7 @@ export const Product = () => {
         <Box
           style={{
             height: '100vh',
+            overflow: 'hidden',
           }}
         >
           <DndProvider backend={HTML5Backend}>
@@ -59,6 +60,7 @@ export const Product = () => {
                 height: '100%',
                 isolation: 'isolate',
                 zIndex: 'auto',
+                overflow: 'hidden',
               }}
             >
               <div

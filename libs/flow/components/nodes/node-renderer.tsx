@@ -4,7 +4,7 @@ import { NodeType } from '../../types';
 
 import styles from '@/libs/styles/framework.module.css';
 
-type NodeRendererProps = {
+interface NodeRendererProps {
   node: NodeType;
   getNodeRendererById: (nodeId: string) => React.FC<{ node: NodeType }> | undefined;
   updateNodePosition: (
@@ -14,97 +14,80 @@ type NodeRendererProps = {
       y: number;
     },
   ) => void;
-};
+  scale: number;
+}
 
-export const NodeRenderer = ({ node, updateNodePosition, getNodeRendererById }: NodeRendererProps) => {
-  const initialPosition = node.position || { x: 0, y: 0 };
+export const NodeRenderer: React.FC<NodeRendererProps> = React.memo(
+  ({ node, updateNodePosition, getNodeRendererById, scale }) => {
+    const [dragging, setDragging] = useState(false);
+    const [startPos, setStartPos] = useState({ x: 0, y: 0 });
+    const [position, setPosition] = useState(node.position || { x: 0, y: 0 });
 
-  const [dragging, setDragging] = useState(false);
-  const [startPos, setStartPos] = useState({ x: 0, y: 0 });
-  const [position, setPosition] = useState(initialPosition);
+    const NodeComponent = getNodeRendererById(node.type);
 
-  const NodeComponent = getNodeRendererById(node.type);
+    const onMouseDown = useCallback(
+      (e: React.MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation();
+        setDragging(true);
+        setStartPos({
+          x: e.clientX / scale - position.x,
+          y: e.clientY / scale - position.y,
+        });
+      },
+      [scale, position.x, position.y],
+    );
 
-  const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    setDragging(true);
-    setStartPos({
-      x: e.clientX - position.x,
-      y: e.clientY - position.y,
-    });
-  };
+    const onMouseMove = useCallback(
+      (e: MouseEvent) => {
+        e.stopPropagation();
+        if (!dragging) return;
+        const newX = e.clientX / scale - startPos.x;
+        const newY = e.clientY / scale - startPos.y;
 
-  const onMouseMove = useCallback(
-    (e: MouseEvent) => {
-      if (!dragging) return;
-      const newX = e.clientX - startPos.x;
-      const newY = e.clientY - startPos.y;
+        setPosition({ x: newX, y: newY });
+        updateNodePosition(node.id, { x: newX, y: newY });
+      },
+      [dragging, startPos.x, startPos.y, node.id, updateNodePosition, scale],
+    );
 
-      setPosition({ x: newX, y: newY });
-      updateNodePosition(node.id, { x: newX, y: newY });
-    },
-    [dragging, startPos.x, startPos.y, node.id, updateNodePosition],
-  );
+    const onMouseUp = useCallback(() => {
+      setDragging(false);
+    }, []);
 
-  const onMouseUp = useCallback(() => {
-    setDragging(false);
-  }, []);
+    useEffect(() => {
+      if (dragging) {
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
+      } else {
+        window.removeEventListener('mousemove', onMouseMove);
+        window.removeEventListener('mouseup', onMouseUp);
+      }
 
-  useEffect(() => {
-    if (dragging) {
-      window.addEventListener('mousemove', onMouseMove);
-      window.addEventListener('mouseup', onMouseUp);
-    } else {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
+      return () => {
+        window.removeEventListener('mousemove', onMouseMove);
+        window.removeEventListener('mouseup', onMouseUp);
+      };
+    }, [dragging, onMouseMove, onMouseUp]);
+
+    if (!NodeComponent) {
+      return null;
     }
 
-    return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
-    };
-  }, [dragging, onMouseMove, onMouseUp]);
-
-  if (!NodeComponent) {
-    return null;
-  }
-
-  return (
-    <div
-      className={styles.nodeRenderer}
-      style={{
-        left: position.x,
-        top: position.y,
-      }}
-    >
+    return (
       <div
-        className={styles.handlerLeft}
-        id={node.id + 'left-slot'}
+        className={styles.nodeRenderer}
         style={{
+          transform: `translate(${position.x}px, ${position.y}px)`,
+          position: 'absolute',
           cursor: dragging ? 'grabbing' : 'grab',
         }}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        onMouseDown={(e) => {
-          e.stopPropagation();
-          onMouseDown(e);
-        }}
-      />
-      <div
-        className={styles.handlerRight}
-        id={node.id + 'right-slot'}
-        style={{
-          cursor: dragging ? 'grabbing' : 'grab',
-        }}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        onMouseDown={(e) => {
-          e.stopPropagation();
-          onMouseDown(e);
-        }}
-      />
-      <NodeComponent node={node} />
-    </div>
-  );
-};
+      >
+        <div className={styles.handlerLeft} id={node.id + 'left-slot'} onMouseDown={onMouseDown} />
+        <div className={styles.handlerRight} id={node.id + 'right-slot'} onMouseDown={onMouseDown} />
+        <NodeComponent node={node} />
+      </div>
+    );
+  },
+);
+
+NodeRenderer.displayName = 'NodeRenderer';

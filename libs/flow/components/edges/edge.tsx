@@ -9,9 +9,10 @@ interface EdgeProps {
   toX: number;
   toY: number;
   className?: string;
+  scale: number;
 }
 
-export const Edge: React.FC<EdgeProps> = ({ fromX, fromY, toX, toY, className }) => {
+export const Edge: React.FC<EdgeProps> = React.memo(({ fromX, fromY, toX, toY, className, scale }) => {
   const controlPointX1 = fromX;
   const controlPointY1 = fromY + (toY - fromY) / 2;
   const controlPointX2 = toX;
@@ -25,6 +26,7 @@ export const Edge: React.FC<EdgeProps> = ({ fromX, fromY, toX, toY, className })
         left: 0,
         width: '100%',
         height: '100%',
+        pointerEvents: 'none',
       }}
     >
       <path
@@ -34,8 +36,10 @@ export const Edge: React.FC<EdgeProps> = ({ fromX, fromY, toX, toY, className })
              ${controlPointX2} ${controlPointY2},
              ${toX} ${toY}`}
         fill="none"
-        strokeWidth="2"
+        strokeWidth={2 / scale}
       />
     </svg>
   );
-};
+});
+
+Edge.displayName = 'Edge';

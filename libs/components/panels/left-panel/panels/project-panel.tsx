@@ -7,7 +7,7 @@ import { PagesWidget, ComponentsWidget } from '../widgets';
 import { LeftPanelProjectView } from '@/libs/types';
 
 export const ProjectPanel = () => {
-  const [view, setView] = useState<LeftPanelProjectView>('pages');
+  const [view, setView] = useState<LeftPanelProjectView>('components');
 
   return (
     <Flex direction="column">

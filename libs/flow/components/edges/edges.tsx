@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useMemo } from 'react';
 
 import { EdgeType, NodeType } from '../../types';
 import { getHandlerElement } from '../../utils';
@@ -9,20 +9,20 @@ interface EdgesProps {
   edges: EdgeType[];
   nodes: Record<string, NodeType>;
   containerPosition: { left: number; top: number } | null;
+  scale: number;
+  translate: { x: number; y: number };
 }
 
-export const Edges: React.FC<EdgesProps> = ({ edges, nodes, containerPosition }) => {
-  useEffect(() => {
-    // Recalculate positions when nodes or container position changes
-  }, [edges, nodes, containerPosition]);
+export const Edges: React.FC<EdgesProps> = React.memo(({ edges, nodes, containerPosition, scale, translate }) => {
+  const scaledEdges = useMemo(() => {
+    if (!containerPosition) return [];
 
-  return (
-    <>
-      {edges.map((edge) => {
+    return edges
+      .map((edge) => {
         const sourceNode = nodes[edge.source.nodeId];
         const targetNode = nodes[edge.target.nodeId];
 
-        if (!sourceNode || !targetNode || !containerPosition) {
+        if (!sourceNode || !targetNode) {
           return null;
         }
 
@@ -37,25 +37,40 @@ export const Edges: React.FC<EdgesProps> = ({ edges, nodes, containerPosition })
         const targetRect = targetHandler.getBoundingClientRect();
 
         const sourcePosition = {
-          x: sourceRect.left + sourceRect.width / 2 - containerPosition.left,
-          y: sourceRect.top + sourceRect.height / 2 - containerPosition.top,
+          x: (sourceRect.left + sourceRect.width / 2 - containerPosition.left - translate.x) / scale,
+          y: (sourceRect.top + sourceRect.height / 2 - containerPosition.top - translate.y) / scale,
         };
 
         const targetPosition = {
-          x: targetRect.left + targetRect.width / 2 - containerPosition.left,
-          y: targetRect.top + targetRect.height / 2 - containerPosition.top,
+          x: (targetRect.left + targetRect.width / 2 - containerPosition.left - translate.x) / scale,
+          y: (targetRect.top + targetRect.height / 2 - containerPosition.top - translate.y) / scale,
         };
 
-        return (
+        return {
+          ...edge,
+          sourcePosition,
+          targetPosition,
+        };
+      })
+      .filter(Boolean);
+  }, [edges, nodes, containerPosition, scale, translate]);
+
+  return (
+    <>
+      {scaledEdges
+        .filter((edge) => edge !== null)
+        .map((edge) => (
           <Edge
             key={edge.id}
-            fromX={sourcePosition.x}
-            fromY={sourcePosition.y}
-            toX={targetPosition.x}
-            toY={targetPosition.y}
+            fromX={edge.sourcePosition.x}
+            fromY={edge.sourcePosition.y}
+            scale={scale}
+            toX={edge.targetPosition.x}
+            toY={edge.targetPosition.y}
           />
-        );
-      })}
+        ))}
     </>
   );
-};
+});
+
+Edges.displayName = 'Edges';
