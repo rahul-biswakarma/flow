@@ -101,17 +101,24 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
   const handleWheel = useCallback(
     (event: React.WheelEvent) => {
       event.preventDefault();
+      event.stopPropagation();
+
       const zoomSensitivity = 0.001;
-      const newScale = Math.max(0.1, Math.min(2, scale - event.deltaY * zoomSensitivity));
+      const zoomFactor = event.deltaY;
+      const newScale = Math.max(0.1, Math.min(2, scale - zoomFactor * zoomSensitivity));
 
-      // Zoom towards cursor position
       if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        const mouseX = event.clientX - rect.left;
-        const mouseY = event.clientY - rect.top;
+        const containerRect = containerRef.current.getBoundingClientRect();
+        const centerX = containerRect.width / 2;
+        const centerY = containerRect.height / 2;
 
-        const newTranslateX = mouseX - (mouseX - translate.x) * (newScale / scale);
-        const newTranslateY = mouseY - (mouseY - translate.y) * (newScale / scale);
+        const mouseX = event.clientX - containerRect.left;
+        const mouseY = event.clientY - containerRect.top;
+
+        const scaleChange = newScale - scale;
+
+        const newTranslateX = translate.x - ((mouseX - translate.x) / scale) * scaleChange;
+        const newTranslateY = translate.y - ((mouseY - translate.y) / scale) * scaleChange;
 
         setScale(newScale);
         setTranslate({ x: newTranslateX, y: newTranslateY });
@@ -121,10 +128,13 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
   );
 
   const handleMouseDown = useCallback((event: React.MouseEvent) => {
-    if (event.button === 1 || event.button === 0) {
-      // Middle mouse button or left mouse button
+    if (event.button === 0) {
       setIsPanning(true);
       lastMousePos.current = { x: event.clientX, y: event.clientY };
+
+      if (containerRef.current) {
+        containerRef.current.style.cursor = 'grabbing';
+      }
     }
   }, []);
 
@@ -144,7 +154,23 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
   const handleMouseUp = useCallback(() => {
     setIsPanning(false);
     setConnection(null);
+
+    if (containerRef.current) {
+      containerRef.current.style.cursor = 'grab';
+    }
   }, [setConnection]);
+
+  useEffect(() => {
+    const preventDefault = (e: Event) => e.preventDefault();
+
+    containerRef.current?.addEventListener('wheel', preventDefault, { passive: false });
+    document.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      containerRef.current?.removeEventListener('wheel', preventDefault);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [handleMouseUp]);
 
   return (
     <Box
@@ -156,12 +182,11 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
         position: 'relative',
         background: isOver ? 'rgba(0, 0, 0, 0.1)' : 'transparent',
         overflow: 'hidden',
-        cursor: isPanning ? 'grabbing' : 'grab',
+        cursor: 'grab',
       }}
       onMouseDown={handleMouseDown}
       onMouseLeave={handleMouseUp}
       onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
       onWheel={handleWheel}
     >
       <Box
