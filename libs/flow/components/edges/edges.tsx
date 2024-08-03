@@ -6,7 +6,7 @@ import { getHandlerElement } from '../../utils';
 import { Edge } from './edge';
 
 interface EdgesProps {
-  edges: EdgeType[];
+  edges: Record<string, EdgeType>;
   nodes: Record<string, NodeType>;
   containerPosition: { left: number; top: number } | null;
   scale: number;
@@ -17,7 +17,9 @@ export const Edges: React.FC<EdgesProps> = React.memo(({ edges, nodes, container
   const scaledEdges = useMemo(() => {
     if (!containerPosition) return [];
 
-    return edges
+    const edgesArray = Object.values(edges);
+
+    return edgesArray
       .map((edge) => {
         const sourceNode = nodes[edge.source.nodeId];
         const targetNode = nodes[edge.target.nodeId];

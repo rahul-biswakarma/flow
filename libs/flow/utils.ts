@@ -1,11 +1,11 @@
-import { NodeHandlerType } from './types';
+import { EdgeType, NodeHandlerType } from './types';
 
 export const generateHandlerId = (data: NodeHandlerType) => {
   return `flow-handler-${data.nodeId}-${data.handlerType}-${data.handlerKey}`;
 };
 
-export const generateEdgeId = (data: NodeHandlerType) => {
-  return `flow-edge-${data.nodeId}-${data.handlerType}-${data.handlerKey}`;
+export const generateEdgeId = (fromData: NodeHandlerType, toData: NodeHandlerType) => {
+  return `flow-edge-${fromData.nodeId}-${fromData.handlerType}-${fromData.handlerKey}_${toData.nodeId}-${toData.handlerType}-${toData.handlerKey}`;
 };
 
 export const getHandlerElement = (data: NodeHandlerType) => {
@@ -25,3 +25,17 @@ export function validateConnection(from: NodeHandlerType, to: NodeHandlerType) {
 
   return true;
 }
+
+export const getAffectedEdges = (edges: Record<string, EdgeType>, nodeId: string): string[] => {
+  return Object.keys(edges)
+    .map((edgeId) => {
+      const edge = edges[edgeId];
+
+      if (edge.source.nodeId === nodeId || edge.target.nodeId === nodeId) {
+        return edgeId;
+      }
+
+      return null;
+    })
+    .filter((edgeId) => edgeId !== null) as string[];
+};

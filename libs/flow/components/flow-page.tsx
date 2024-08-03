@@ -22,16 +22,24 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
     useFlowContext();
 
   const [scale, setScale] = useState(1);
-  const [translate, setTranslate] = useState({ x: 0, y: 0 });
   const [isPanning, setIsPanning] = useState(false);
+  const [translate, setTranslate] = useState({ x: 0, y: 0 });
+
   const lastMousePos = useRef({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const edgeContainerRef = useRef<string>(nanoid());
 
   const resizeObserverRect = useResizeObserver(dropRef);
 
   useEffect(() => {
     if (resizeObserverRect) {
-      updateContainerPosition(resizeObserverRect.left, resizeObserverRect.top);
+      updateContainerPosition(
+        resizeObserverRect.left,
+        resizeObserverRect.top,
+        resizeObserverRect.right,
+        resizeObserverRect.bottom,
+      );
+      edgeContainerRef.current = nanoid();
     }
   }, [resizeObserverRect, updateContainerPosition]);
 
@@ -109,8 +117,6 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
 
       if (containerRef.current) {
         const containerRect = containerRef.current.getBoundingClientRect();
-        const centerX = containerRect.width / 2;
-        const centerY = containerRect.height / 2;
 
         const mouseX = event.clientX - containerRect.left;
         const mouseY = event.clientY - containerRect.top;
@@ -211,7 +217,12 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
           height: '100%',
         }}
       >
-        <Connection connection={connection} scale={scale} translate={translate} />
+        <Connection
+          key={`connection-${edgeContainerRef.current}`}
+          connection={connection}
+          scale={scale}
+          translate={translate}
+        />
         {Object.values(nodes).map((node) => (
           <NodeRenderer
             key={node.id}
@@ -221,7 +232,14 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
             updateNodePosition={updateNodeAndEdgesPosition}
           />
         ))}
-        <Edges containerPosition={resizeObserverRect} edges={edges} nodes={nodes} scale={scale} translate={translate} />
+        <Edges
+          key={`edge-${edgeContainerRef.current}`}
+          containerPosition={resizeObserverRect}
+          edges={edges}
+          nodes={nodes}
+          scale={scale}
+          translate={translate}
+        />
       </div>
     </Box>
   );

@@ -3,11 +3,13 @@
 import React, { createContext, useContext, useState, useCallback, useRef } from 'react';
 
 import { NodeType, EdgeType, ConnectionType, NodeHandlerType } from '../types';
-import { generateEdgeId } from '../utils';
+import { generateEdgeId, getAffectedEdges } from '../utils';
 
 interface ContainerPosition {
   left: number;
   top: number;
+  right: number;
+  bottom: number;
 }
 
 interface FlowContextType {
@@ -16,8 +18,8 @@ interface FlowContextType {
   nodes: Record<string, NodeType>;
   setNodes: React.Dispatch<React.SetStateAction<Record<string, NodeType>>>;
 
-  edges: EdgeType[];
-  setEdges: React.Dispatch<React.SetStateAction<EdgeType[]>>;
+  edges: Record<string, EdgeType>;
+  setEdges: React.Dispatch<React.SetStateAction<Record<string, EdgeType>>>;
 
   connection: ConnectionType | null;
   setConnection: React.Dispatch<React.SetStateAction<ConnectionType | null>>;
@@ -27,7 +29,7 @@ interface FlowContextType {
   updateNodePosition: (nodeId: string, position: { x: number; y: number }) => void;
 
   containerPosition: ContainerPosition | null;
-  updateContainerPosition: (left: number, top: number) => void;
+  updateContainerPosition: (left: number, top: number, right: number, bottom: number) => void;
 }
 
 const FlowContext = createContext<FlowContextType | undefined>(undefined);
@@ -35,32 +37,32 @@ const FlowContext = createContext<FlowContextType | undefined>(undefined);
 export const FlowContextProvider: React.FC<{
   children: React.ReactNode;
   nodes?: Record<string, NodeType>;
-  edges?: EdgeType[];
+  edges?: Record<string, EdgeType>;
 }> = ({ children, nodes: initialNodes, edges: initialEdges }) => {
   const [nodes, setNodes] = useState<Record<string, NodeType>>(initialNodes ?? {});
-  const [edges, setEdges] = useState<EdgeType[]>(initialEdges ?? []);
+  const [edges, setEdges] = useState<Record<string, EdgeType>>(initialEdges ?? {});
   const [connection, setConnection] = useState<ConnectionType | null>(null);
 
   const dropRef = useRef<HTMLDivElement>(null);
 
   const [containerPosition, setContainerPosition] = useState<ContainerPosition | null>(null);
 
-  const updateContainerPosition = useCallback((left: number, top: number) => {
-    setContainerPosition({ left, top });
+  const updateContainerPosition = useCallback((left: number, top: number, right: number, bottom: number) => {
+    setContainerPosition({ left, top, right, bottom });
   }, []);
 
   const createEdge = useCallback(
     (from: NodeHandlerType, to: NodeHandlerType) => {
-      setEdges((prevEdges) => {
-        return [
-          ...prevEdges,
-          {
-            id: `${generateEdgeId(from)}-${generateEdgeId(to)}`,
-            source: from,
-            target: to,
-          },
-        ];
-      });
+      const newEdgeId = generateEdgeId(from, to);
+
+      setEdges((prevEdges) => ({
+        ...prevEdges,
+        [newEdgeId]: {
+          id: newEdgeId,
+          source: from,
+          target: to,
+        },
+      }));
     },
     [setEdges],
   );
@@ -75,18 +77,23 @@ export const FlowContextProvider: React.FC<{
         },
       }));
 
-      setEdges((prevEdges) => {
-        return prevEdges.map((edge) => {
-          if (edge.source.nodeId === nodeId || edge.target.nodeId === nodeId) {
-            return {
-              ...edge,
-              source: edge.source.nodeId === nodeId ? { ...edge.source, position } : edge.source,
-              target: edge.target.nodeId === nodeId ? { ...edge.target, position } : edge.target,
-            };
-          }
+      const affectedEdges = getAffectedEdges(edges, nodeId);
 
-          return edge;
-        });
+      affectedEdges.forEach((edgeId) => {
+        if (edgeId) {
+          const currentEdge = edges[edgeId];
+
+          setEdges((prevEdges) => {
+            return {
+              ...prevEdges,
+              [edgeId]: {
+                ...currentEdge,
+                source: currentEdge.source.nodeId === nodeId ? { ...currentEdge.source, position } : currentEdge.source,
+                target: currentEdge.target.nodeId === nodeId ? { ...currentEdge.target, position } : currentEdge.target,
+              },
+            };
+          });
+        }
       });
     },
     [setNodes, setEdges],
@@ -102,8 +109,18 @@ export const FlowContextProvider: React.FC<{
         return newNodes;
       });
 
-      setEdges((prevEdges) => {
-        return prevEdges.filter((edge) => edge.source.nodeId !== nodeId && edge.target.nodeId !== nodeId);
+      const affectedEdges = getAffectedEdges(edges, nodeId);
+
+      affectedEdges.forEach((edgeId) => {
+        if (edgeId) {
+          setEdges((prevEdges) => {
+            const newEdges = { ...prevEdges };
+
+            delete newEdges[edgeId];
+
+            return newEdges;
+          });
+        }
       });
     },
     [setNodes, setEdges],

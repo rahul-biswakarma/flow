@@ -3,6 +3,8 @@ import { useEffect, useState, RefObject } from 'react';
 type Rect = {
   left: number;
   top: number;
+  right: number;
+  bottom: number;
 };
 
 export const useResizeObserver = (ref: RefObject<HTMLElement>) => {
@@ -17,6 +19,8 @@ export const useResizeObserver = (ref: RefObject<HTMLElement>) => {
           setRect({
             left: containerRect.left,
             top: containerRect.top,
+            right: containerRect.left + containerRect.width,
+            bottom: containerRect.top + containerRect.height,
           });
       }
     };

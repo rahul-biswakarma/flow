@@ -20,6 +20,10 @@ export const NodeHandler = (props: NodeHandlerType) => {
   const handleMouseOver = ({ nodeId, handlerType, handlerKey }: NodeHandlerType) => {
     if (connection?.from) {
       const valid = validateConnection(connection.from, { nodeId, handlerType, handlerKey });
+      const isDuplicate =
+        connection.from.nodeId === nodeId &&
+        connection.from.handlerType === handlerType &&
+        connection.from.handlerKey === handlerKey;
 
       setIsValidConnection(valid);
     }

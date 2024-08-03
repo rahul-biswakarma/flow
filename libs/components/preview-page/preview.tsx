@@ -69,7 +69,9 @@ export const Preview: FC = () => {
   const { projectConfig, defaultProjectConfig } = useProjectContext();
   const { nodes, edges } = useFlowContext();
 
-  const rootNodes = buildTree(nodes, edges);
+  const edgesValues = Object.values(edges);
+
+  const rootNodes = buildTree(nodes, edgesValues);
 
   return (
     <Theme
