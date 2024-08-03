@@ -81,6 +81,7 @@ export const NodeRenderer: React.FC<NodeRendererProps> = React.memo(
           position: 'absolute',
           cursor: dragging ? 'grabbing' : 'grab',
         }}
+        onMouseDown={(e) => e.stopPropagation()}
       >
         <div className={styles.handlerLeft} id={node.id + 'left-slot'} onMouseDown={onMouseDown} />
         <div className={styles.handlerRight} id={node.id + 'right-slot'} onMouseDown={onMouseDown} />

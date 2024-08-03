@@ -217,12 +217,7 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
           height: '100%',
         }}
       >
-        <Connection
-          key={`connection-${edgeContainerRef.current}`}
-          connection={connection}
-          scale={scale}
-          translate={translate}
-        />
+        <Connection connection={connection} scale={scale} translate={translate} />
         {Object.values(nodes).map((node) => (
           <NodeRenderer
             key={node.id}
@@ -232,14 +227,7 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
             updateNodePosition={updateNodeAndEdgesPosition}
           />
         ))}
-        <Edges
-          key={`edge-${edgeContainerRef.current}`}
-          containerPosition={resizeObserverRect}
-          edges={edges}
-          nodes={nodes}
-          scale={scale}
-          translate={translate}
-        />
+        <Edges containerPosition={resizeObserverRect} edges={edges} nodes={nodes} scale={scale} translate={translate} />
       </div>
     </Box>
   );
