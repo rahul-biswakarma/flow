@@ -1,0 +1,90 @@
+:root {
+  --handler-width: 15px;
+}
+
+.react-resizable-handle {
+  position: absolute;
+  margin: 0px !important;
+  padding: 0px;
+  background-image: none;
+  background-color: var(--gray-2);
+}
+
+.react-resizable-handle:hover {
+  background-color: var(--gray-5);
+}
+
+.react-resizable-handle-w {
+  top: 0;
+  left: 0;
+  width: var(--handler-width);
+  height: 100%;
+  cursor: ew-resize;
+  transform: rotate(0deg);
+}
+
+.react-resizable-handle:before .react-resizable-handle-w {
+  transform: rotate(90deg);
+}
+
+.react-resizable-handle-e {
+  top: 0;
+  right: 0;
+  width: var(--handler-width);
+  height: 100%;
+  cursor: ew-resize;
+  transform: rotate(0deg);
+}
+
+.react-resizable-handle-s {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--handler-width);
+  cursor: ns-resize;
+  transform: rotate(0deg);
+}
+
+.react-resizable-handle-n {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--handler-width);
+  cursor: ns-resize;
+  transform: rotate(0deg);
+}
+
+.react-resizable-handle-sw {
+  bottom: 0;
+  left: 0;
+  width: var(--handler-width);
+  height: var(--handler-width);
+  cursor: sw-resize;
+  transform: rotate(0deg);
+}
+
+.react-resizable-handle-s,
+.react-resizable-handle-n {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%237d7d7d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-grip-horizontal"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 9m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M5 15m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 9m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 15m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 9m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 15m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>');
+}
+
+.react-resizable-handle-e,
+.react-resizable-handle-w {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%237d7d7d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-grip-vertical"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>');
+}
+
+.react-resizable-handle-sw,
+.react-resizable-handle-se,
+.react-resizable-handle-nw,
+.react-resizable-handle-ne {
+  /* background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%237d7d7d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-grid-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M5 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>'); */
+}

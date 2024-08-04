@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { ResizableBox, ResizeCallbackData } from 'react-resizable';
 import { Box, Text } from '@radix-ui/themes';
 
+import './resizeable-handle.css';
+
 import { Preview } from './preview';
 
 const MIN_WIDTH = 300;
@@ -12,19 +14,21 @@ export const PreviewPanel = ({ style, panelMargin }: { style?: React.CSSProperti
   const [screenWidth, setScreenWidth] = useState(window?.innerWidth ?? 500);
   const [screenHeight, setScreenHeight] = useState(window?.innerHeight ?? 500);
 
-  const maxHeight = screenHeight - 2 * panelMargin;
   const maxWidth = screenWidth - 2 * panelMargin;
+  const maxHeight = screenHeight - 2 * panelMargin;
+
+  console.log('screenWidth', screenWidth, maxWidth);
 
   const [size, setSize] = useState({ width: (maxWidth * 40) / 100, height: maxHeight });
 
   // Load the size and position from localStorage
-  //   useEffect(() => {
-  //     const storedSize = localStorage.getItem(LOCAL_STORAGE_KEY);
+  useEffect(() => {
+    const storedSize = localStorage.getItem(LOCAL_STORAGE_KEY);
 
-  //     if (storedSize) {
-  //       setSize(JSON.parse(storedSize));
-  //     }
-  //   }, []);
+    if (storedSize) {
+      setSize(JSON.parse(storedSize));
+    }
+  }, []);
 
   // Update size when window is resized
   useEffect(() => {
@@ -43,10 +47,10 @@ export const PreviewPanel = ({ style, panelMargin }: { style?: React.CSSProperti
       }
 
       if (size.height > newScreenHeight - 2 * panelMargin) {
-        const newSize = { width: screenWidth, height: newScreenHeight - 2 * panelMargin };
+        const newSize = { width: size.width, height: newScreenHeight - 2 * panelMargin };
 
         setSize(newSize);
-        // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newSize));
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newSize));
       }
     };
 
@@ -59,7 +63,7 @@ export const PreviewPanel = ({ style, panelMargin }: { style?: React.CSSProperti
     const newSize = { width: data.size.width, height: data.size.height };
 
     setSize(newSize);
-    // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newSize));
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newSize));
   };
 
   return (
@@ -67,19 +71,21 @@ export const PreviewPanel = ({ style, panelMargin }: { style?: React.CSSProperti
       height={size.height}
       maxConstraints={[maxWidth, maxHeight]}
       minConstraints={[MIN_WIDTH, MIN_HEIGHT]}
-      resizeHandles={['s', 'w']}
+      resizeHandles={['s', 'w', 'sw']}
       style={{
         position: 'absolute',
         display: 'flex',
         flexDirection: 'column',
+
         right: panelMargin + 'px',
         top: panelMargin + 'px',
         border: '1px solid var(--gray-4)',
         borderRadius: 'var(--radius-4)',
         backgroundColor: 'var(--gray-surface)',
-        paddingBottom: '1px',
         overflow: 'hidden',
         backdropFilter: 'blur(8px)',
+        isolation: 'isolate',
+        zIndex: 'auto',
         ...style,
       }}
       width={size.width}
@@ -90,6 +96,7 @@ export const PreviewPanel = ({ style, panelMargin }: { style?: React.CSSProperti
           padding: '8px 16px',
           borderBottom: '1px solid var(--gray-4)',
           backgroundColor: 'var(--gray-3)',
+          zIndex: '20',
         }}
       >
         <Text>Preview</Text>
@@ -99,6 +106,8 @@ export const PreviewPanel = ({ style, panelMargin }: { style?: React.CSSProperti
           width: '100%',
           height: '100%',
           overflow: 'auto',
+          paddingLeft: 'var(--handler-width)',
+          paddingBottom: 'var(--handler-width)',
         }}
       >
         <Preview />
