@@ -20,13 +20,13 @@ export const PreviewPanel = ({ style, panelMargin }: { style?: React.CSSProperti
   const [size, setSize] = useState({ width: (maxWidth * 40) / 100, height: maxHeight });
 
   // Load the size and position from localStorage
-  useEffect(() => {
-    const storedSize = localStorage.getItem(LOCAL_STORAGE_KEY);
+  //   useEffect(() => {
+  //     const storedSize = localStorage.getItem(LOCAL_STORAGE_KEY);
 
-    if (storedSize) {
-      setSize(JSON.parse(storedSize));
-    }
-  }, []);
+  //     if (storedSize) {
+  //       setSize(JSON.parse(storedSize));
+  //     }
+  //   }, []);
 
   // Update size when window is resized
   useEffect(() => {
@@ -41,14 +41,14 @@ export const PreviewPanel = ({ style, panelMargin }: { style?: React.CSSProperti
         const newSize = { width: newScreenWidth - 2 * panelMargin, height: screenHeight };
 
         setSize(newSize);
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newSize));
+        // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newSize));
       }
 
       if (size.height > newScreenHeight - 2 * panelMargin) {
         const newSize = { width: size.width, height: newScreenHeight - 2 * panelMargin };
 
         setSize(newSize);
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newSize));
+        // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newSize));
       }
     };
 
@@ -61,7 +61,7 @@ export const PreviewPanel = ({ style, panelMargin }: { style?: React.CSSProperti
     const newSize = { width: data.size.width, height: data.size.height };
 
     setSize(newSize);
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newSize));
+    // localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newSize));
   };
 
   return (
