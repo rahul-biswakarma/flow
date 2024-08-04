@@ -17,8 +17,6 @@ export const PreviewPanel = ({ style, panelMargin }: { style?: React.CSSProperti
   const maxWidth = screenWidth - 2 * panelMargin;
   const maxHeight = screenHeight - 2 * panelMargin;
 
-  console.log('screenWidth', screenWidth, maxWidth);
-
   const [size, setSize] = useState({ width: (maxWidth * 40) / 100, height: maxHeight });
 
   // Load the size and position from localStorage
