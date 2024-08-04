@@ -11,7 +11,7 @@ interface StringRendererProps {
 
 export const StringRenderer: React.FC<StringRendererProps> = ({ label, value, onChange }) => {
   const handleValueChange = (newValue: string) => {
-    	onChange(newValue);
+    onChange(newValue);
   };
 
   return (

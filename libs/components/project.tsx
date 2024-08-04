@@ -14,8 +14,7 @@ import { getWebNodeRendererByType } from '../types';
 import { HotKeys } from '../utils/hotkeys';
 
 import { CollapsedLeftPanel } from './panels/left-panel/collapsed-left-panel';
-import { FloatingWidget, LeftPanel } from './panels';
-import { PreviewPanel } from './preview-page/preview-panel';
+import { FloatingWidget, LeftPanel, PreviewPanel } from './panels';
 
 const PANEL_MARGIN = 10;
 
