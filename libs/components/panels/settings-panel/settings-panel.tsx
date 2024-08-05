@@ -1,11 +1,13 @@
 import { ChevronDownIcon, Flex, Text } from '@radix-ui/themes';
 import * as Accordion from '@radix-ui/react-accordion';
+import { Separator } from '@radix-ui/themes/dist/cjs/components/context-menu';
 
 import { StyleFields } from './fields/style-fields';
 import { AttributeFields } from './fields/attribute-fields';
 
 import styles from '@/libs/styles/setting.module.css';
 import { useFlowContext } from '@/libs/flow';
+import { webNodeAttribute } from '@/libs/schemas';
 
 const AccordionHeader = ({ label }: { label: string }) => {
   return (
@@ -64,19 +66,27 @@ export const SettingsPanel = ({ nodeId }: { nodeId: string }) => {
     }));
   };
 
+  const areAttributesPresent = webNodeAttribute[nodeData.type]?.length > 0;
+
   return (
     <Flex direction="column" gap="3">
-      <Accordion.Root collapsible defaultValue="attributes" type="single">
-        <Accordion.Item value="attributes">
-          <AccordionHeader label="Attributes" />
-          <Accordion.Content className={styles.settingFieldContainer}>
-            <AttributeFields
-              getAttributeValue={getAttributeValue}
-              updateAttributeConfig={updateAttributeConfig}
-              webNodeType={nodeData.type}
-            />
-          </Accordion.Content>
-        </Accordion.Item>
+      <Accordion.Root defaultValue={['attributes', 'style']} type="multiple">
+        {areAttributesPresent && (
+          <>
+            <Accordion.Item value="attributes">
+              <AccordionHeader label="Attributes" />
+              <Accordion.Content className={styles.settingFieldContainer}>
+                <AttributeFields
+                  getAttributeValue={getAttributeValue}
+                  updateAttributeConfig={updateAttributeConfig}
+                  webNodeType={nodeData.type}
+                />
+              </Accordion.Content>
+            </Accordion.Item>
+            <Separator />
+          </>
+        )}
+
         <Accordion.Item value="style">
           <AccordionHeader label="Style" />
           <Accordion.Content className={styles.settingFieldContainer}>

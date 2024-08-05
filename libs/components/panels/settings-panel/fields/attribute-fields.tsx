@@ -25,7 +25,7 @@ export const AttributeFields = ({ webNodeType, getAttributeValue, updateAttribut
       }
     }) ?? (
       <Flex
-        height="50px"
+        height="20px"
         justify="center"
         style={{
           color: 'var(--gray-8)',

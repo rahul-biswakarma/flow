@@ -11,10 +11,10 @@ import { getScaleValue } from '@/libs/utils';
 type PreviewNodeType = NodeType & { children: PreviewNodeType[] };
 
 const applyStyles = (styles: Record<string, any>) => {
-  const styleObj: React.CSSProperties = {};
+  const styleObj: Record<string, any> = {};
 
   for (const [key, value] of Object.entries(styles)) {
-    styleObj[key as keyof React.CSSProperties] = value;
+    styleObj[key] = value['unit'] ? `${value['value']}${value['unit']}` : value;
   }
 
   return styleObj;

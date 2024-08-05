@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ResizeCallbackData } from 'react-resizable';
 
-export const useResizeableBox = ({
+export const useResizableBox = ({
   storageKey,
   panelMargin,
   isPreserveEnabled = false,

@@ -91,6 +91,11 @@ export const webNodeStyles: Style[] = [
     type: 'enum',
     options: ['stretch', 'flex-start', 'flex-end', 'center', 'baseline'],
   },
+  {
+    label: 'Gap',
+    name: 'gap',
+    type: 'stringWithUnit',
+  },
   //   {
   //     label: 'Background Image',
   //     name: 'background-image',

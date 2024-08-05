@@ -2,13 +2,13 @@ import React from 'react';
 import { ResizableBox } from 'react-resizable';
 import { Box } from '@radix-ui/themes';
 
-import '@/libs/styles/resizeable-handle.css';
+import '@/libs/styles/resizable-handle.css';
 
 import { Preview } from '../../preview-page/preview';
 
 import { PreviewHeader } from './preview-header';
 
-import { useResizeableBox } from '@/libs/hooks';
+import { useResizableBox } from '@/libs/hooks';
 import { usePreviewContext } from '@/libs/context';
 
 const MIN_WIDTH = 300;
@@ -18,7 +18,7 @@ const LOCAL_STORAGE_KEY = 'preview_panel_size';
 export const PreviewPanel = ({ style, panelMargin }: { style?: React.CSSProperties; panelMargin: number }) => {
   const { previewScale, previewPanelType, togglePreviewPanel, setPreviewScale } = usePreviewContext();
 
-  const { size, handleResizeStop, maxHeight, maxWidth } = useResizeableBox({
+  const { size, handleResizeStop, maxHeight, maxWidth } = useResizableBox({
     panelMargin,
     isPreserveEnabled: false,
     storageKey: LOCAL_STORAGE_KEY,

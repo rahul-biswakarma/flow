@@ -16,7 +16,9 @@ export const StyleFields = ({ getStyleValue, updateStyleConfig }: StyleFieldType
         const commonProps = {
           label: style.label,
           value: getStyleValue(style.name),
-          onChange: (value: any) => updateStyleConfig(style.name, value),
+          onChange: (value: any) => {
+            updateStyleConfig(style.name, value);
+          },
         };
 
         switch (style.type) {
