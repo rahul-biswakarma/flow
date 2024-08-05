@@ -5,16 +5,17 @@ import React from 'react';
 import ResponsiveDropdown from '../../ui/responsive-dropdown';
 
 import { PreviewScaleType } from '@/libs/types';
+import { PreviewType } from '@/libs/context';
 
 const previewScaleOptions: PreviewScaleType[] = ['25%', '50%', '75%', '100%', '150%', '200%', '300%'];
 
-export const PreviewHeader = ({
-  previewScale,
-  setPreviewScale,
-}: {
+type PreviewHeaderProps = {
   previewScale: PreviewScaleType;
+  togglePreviewPanel: (value: PreviewType) => void;
   setPreviewScale: (value: PreviewScaleType) => void;
-}) => {
+};
+
+export const PreviewHeader = ({ previewScale, setPreviewScale, togglePreviewPanel }: PreviewHeaderProps) => {
   return (
     <Flex
       align="center"
@@ -36,7 +37,7 @@ export const PreviewHeader = ({
           triggerContent={previewScale ?? '-'}
           onChange={setPreviewScale}
         />
-        <IconButton color="gray" size="1" variant="ghost">
+        <IconButton color="gray" size="1" variant="ghost" onClick={() => togglePreviewPanel('hide')}>
           <IconX size="16" />
         </IconButton>
       </Flex>

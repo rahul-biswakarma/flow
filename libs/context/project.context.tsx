@@ -3,7 +3,6 @@
 import { createContext, useContext, useState } from 'react';
 import { Page, Project } from '@prisma/client';
 
-import { CanvasViewMode } from '../types';
 import { FlowContextProvider } from '../flow';
 import { defaultProjectConfig } from '../constants';
 
@@ -23,9 +22,6 @@ type ProjectContextType = {
   setCurrentPageId: React.Dispatch<React.SetStateAction<string>>;
 
   currentPage: Page | undefined;
-
-  viewMode: CanvasViewMode;
-  setViewMode: React.Dispatch<React.SetStateAction<CanvasViewMode>>;
 };
 
 const ProjectContext = createContext<ProjectContextType | null>(null);
@@ -42,7 +38,6 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
   const [projectConfig, setProjectConfig] = useState<any>(
     isProjectConfigEmpty ? JSON.parse(projectWithPages.config) : defaultProjectConfig,
   );
-  const [viewMode, setViewMode] = useState<CanvasViewMode>('both');
   const [currentPageId, setCurrentPageId] = useState<string>(project?.pages[0]?.id ?? '');
 
   const currentPage = project.pages.find((page) => page.id === currentPageId);
@@ -59,8 +54,6 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
         setCurrentPageId,
         projectConfig,
         setProjectConfig,
-        viewMode,
-        setViewMode,
         currentPage,
       }}
     >

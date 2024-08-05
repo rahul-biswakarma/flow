@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ResizableBox } from 'react-resizable';
 import { Box } from '@radix-ui/themes';
 
@@ -9,20 +9,22 @@ import { Preview } from '../../preview-page/preview';
 import { PreviewHeader } from './preview-header';
 
 import { useResizeableBox } from '@/libs/hooks';
-import { PreviewScaleType } from '@/libs/types';
+import { usePreviewContext } from '@/libs/context';
 
 const MIN_WIDTH = 300;
 const MIN_HEIGHT = 300;
 const LOCAL_STORAGE_KEY = 'preview_panel_size';
 
 export const PreviewPanel = ({ style, panelMargin }: { style?: React.CSSProperties; panelMargin: number }) => {
-  const [previewScale, setPreviewScale] = useState<PreviewScaleType>('100%');
+  const { previewScale, previewPanelType, togglePreviewPanel, setPreviewScale } = usePreviewContext();
 
   const { size, handleResizeStop, maxHeight, maxWidth } = useResizeableBox({
     panelMargin,
     isPreserveEnabled: false,
     storageKey: LOCAL_STORAGE_KEY,
   });
+
+  if (previewPanelType !== 'same_tab') return null;
 
   return (
     <ResizableBox
@@ -48,7 +50,7 @@ export const PreviewPanel = ({ style, panelMargin }: { style?: React.CSSProperti
       width={size.width}
       onResizeStop={handleResizeStop}
     >
-      <PreviewHeader {...{ previewScale, setPreviewScale }} />
+      <PreviewHeader {...{ previewScale, setPreviewScale, togglePreviewPanel }} />
       <Box
         style={{
           width: '100%',
@@ -58,7 +60,7 @@ export const PreviewPanel = ({ style, panelMargin }: { style?: React.CSSProperti
           paddingBottom: 'var(--handler-width)',
         }}
       >
-        <Preview />
+        <Preview scale={previewScale} />
       </Box>
     </ResizableBox>
   );

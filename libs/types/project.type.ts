@@ -6,4 +6,3 @@ export type ProjectConfig = {
 
 export type LeftPanelProjectView = 'pages' | 'components';
 export type LeftPanelConfigView = 'config' | 'setting';
-export type CanvasViewMode = 'node' | 'preview' | 'both';

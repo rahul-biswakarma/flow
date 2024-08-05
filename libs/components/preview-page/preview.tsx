@@ -4,8 +4,9 @@ import React, { FC, ReactNode } from 'react';
 import { Box, Theme } from '@radix-ui/themes';
 
 import { EdgeType, NodeType, useFlowContext } from '@/libs/flow';
-import { WebNodeToPreview } from '@/libs/types';
+import { PreviewScaleType, WebNodeToPreview } from '@/libs/types';
 import { useProjectContext } from '@/libs/context';
+import { getScaleValue } from '@/libs/utils';
 
 type PreviewNodeType = NodeType & { children: PreviewNodeType[] };
 
@@ -65,7 +66,7 @@ const renderTree = (node: PreviewNodeType): JSX.Element => {
   return <NodePreview node={node}>{node.children.map((childNode) => renderTree(childNode))}</NodePreview>;
 };
 
-export const Preview: FC = () => {
+export const Preview = ({ scale }: { scale: PreviewScaleType }) => {
   const { projectConfig, defaultProjectConfig } = useProjectContext();
   const { nodes, edges } = useFlowContext();
 
@@ -87,7 +88,7 @@ export const Preview: FC = () => {
         overflow: 'auto',
       }}
     >
-      <Box style={{ position: 'relative', width: '100%', height: '100%' }}>
+      <Box style={{ transform: `scale(${getScaleValue(scale)})`, position: 'relative', width: '100%', height: '100%' }}>
         {rootNodes.map((rootNode) => renderTree(rootNode))}
       </Box>
     </Theme>

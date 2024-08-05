@@ -1,6 +1,6 @@
 import { Product } from '@/libs/components';
 import { Onboarding } from '@/libs/components/onboarding/onboarding';
-import { ProjectContextProvider } from '@/libs/context';
+import { PreviewContextProvider, ProjectContextProvider } from '@/libs/context';
 import { auth } from '@/libs/utils/auth';
 import { prisma } from '@/libs/utils/db';
 import { LoginRedirect } from '@/libs/utils/redirects';
@@ -33,7 +33,9 @@ export default async function Project({ params }: { params: { projectSlug: strin
 
   return (
     <ProjectContextProvider projectWithPages={project}>
-      <Product />
+      <PreviewContextProvider>
+        <Product />
+      </PreviewContextProvider>
     </ProjectContextProvider>
   );
 }
