@@ -1,17 +1,11 @@
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import {
-  IconAdjustmentsAlt,
-  IconBox,
-  IconFiles,
-  IconLayoutSidebarRightCollapse,
-  IconSettings,
-} from '@tabler/icons-react';
+import { IconBox, IconBrush, IconFiles, IconLayoutSidebarRightCollapse, IconSettings } from '@tabler/icons-react';
 import { Avatar, Box, Flex, Separator } from '@radix-ui/themes';
 import { ReactNode } from 'react';
 import { useSession } from 'next-auth/react';
 
 import styles from './styles/collapsed-left-panel.module.css';
-import { ComponentsWidget, PagesWidget, ProjectConfigWidget } from './widgets';
+import { ComponentsWidget, PagesWidget, ThemeOptionRenderer } from './widgets';
 import { ProjectSettingsWidget } from './widgets/project-settings-widget';
 
 export const CollapsedLeftPanel = ({
@@ -67,12 +61,12 @@ export const CollapsedLeftPanel = ({
 
           <NavigationMenu.Item>
             <NavigationMenu.Trigger className={styles.NavigationMenuTrigger}>
-              <IconAdjustmentsAlt size="22px" />
+              <IconBrush size="22px" />
             </NavigationMenu.Trigger>
             <NavigationMenu.Content className={styles.NavigationMenuContent}>
               <ContentWrapper>
                 <Flex direction="column" gap="10px" p="10px">
-                  <ProjectConfigWidget />
+                  <ThemeOptionRenderer />
                 </Flex>
               </ContentWrapper>
             </NavigationMenu.Content>

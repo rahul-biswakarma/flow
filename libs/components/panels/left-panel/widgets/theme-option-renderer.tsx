@@ -3,8 +3,8 @@ import { themePropDefs } from '@radix-ui/themes/dist/cjs/components/theme.props'
 import { IconCircle, IconCircleFilled, IconMoonStars, IconSun } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 
-import styles from '../../styles/project-config-widget.module.css';
-import { RadioCardItemWrapper } from '../../common/radio-card-wrapper';
+import styles from '../styles/project-config-widget.module.css';
+import { RadioCardItemWrapper } from '../common/radio-card-wrapper';
 
 import { useProjectContext } from '@/libs/context';
 

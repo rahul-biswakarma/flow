@@ -3,7 +3,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { IconChevronDown, IconChevronUp, IconSettings } from '@tabler/icons-react';
 
-import { ProjectConfigWidget } from '../widgets';
+import { ThemeOptionRenderer } from '../widgets';
 import { ProjectSettingsWidget } from '../widgets/project-settings-widget';
 
 import { LeftPanelConfigView } from '@/libs/types';
@@ -16,7 +16,7 @@ export const ConfigPanel = ({
   isCollapsed: boolean;
   setIsCollapsed: (value: boolean) => void;
 }) => {
-  const [view, setView] = useState<LeftPanelConfigView>('config');
+  const [view, setView] = useState<LeftPanelConfigView>('theme');
 
   if (isCollapsed) return <CollapsedConfigPanel {...{ setIsCollapsed }} />;
 
@@ -34,8 +34,8 @@ export const ConfigPanel = ({
             value={view}
             onValueChange={(view: LeftPanelConfigView) => setView(view)}
           >
-            <SegmentedControl.Item value="config">Config</SegmentedControl.Item>
-            <SegmentedControl.Item value="setting">Setting</SegmentedControl.Item>
+            <SegmentedControl.Item value="theme">Theme Control</SegmentedControl.Item>
+            <SegmentedControl.Item value="setting">Settings</SegmentedControl.Item>
           </SegmentedControl.Root>
         </Box>
 
@@ -43,10 +43,10 @@ export const ConfigPanel = ({
           <Box p="3" style={{ flex: 1, overflow: 'auto' }}>
             <Box
               style={{
-                display: view === 'config' ? 'block' : 'none',
+                display: view === 'theme' ? 'block' : 'none',
               }}
             >
-              <ProjectConfigWidget />
+              <ThemeOptionRenderer />
             </Box>
             <Box
               style={{

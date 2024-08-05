@@ -16,4 +16,12 @@ export const webNodeAttribute: Record<string, Attribute[]> = {
       required: true,
     },
   ],
+  ['system-button-node']: [
+    {
+      label: 'Content',
+      name: 'children',
+      type: 'string',
+      required: true,
+    },
+  ],
 };
