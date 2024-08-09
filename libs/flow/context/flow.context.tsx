@@ -13,7 +13,7 @@ interface ContainerPosition {
 }
 
 interface FlowContextType {
-  dropRef: React.RefObject<HTMLDivElement>;
+  containerRef: React.RefObject<HTMLDivElement>;
 
   nodes: Record<string, NodeType>;
   setNodes: React.Dispatch<React.SetStateAction<Record<string, NodeType>>>;
@@ -43,7 +43,7 @@ export const FlowContextProvider: React.FC<{
   const [edges, setEdges] = useState<Record<string, EdgeType>>(initialEdges ?? {});
   const [connection, setConnection] = useState<ConnectionType | null>(null);
 
-  const dropRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const [containerPosition, setContainerPosition] = useState<ContainerPosition | null>(null);
 
@@ -129,15 +129,15 @@ export const FlowContextProvider: React.FC<{
   return (
     <FlowContext.Provider
       value={{
-        dropRef,
         nodes,
         setNodes,
         edges,
         setEdges,
         deleteNode,
         connection,
-        setConnection,
         createEdge,
+        containerRef,
+        setConnection,
         updateNodePosition,
         containerPosition,
         updateContainerPosition,

@@ -1,3 +1,5 @@
+import { nanoid } from 'nanoid';
+
 import { EdgeType, NodeHandlerType } from './types';
 
 export const generateHandlerId = (data: NodeHandlerType) => {
@@ -38,4 +40,19 @@ export const getAffectedEdges = (edges: Record<string, EdgeType>, nodeId: string
       return null;
     })
     .filter((edgeId) => edgeId !== null) as string[];
+};
+
+export const generateMainNodeData = ({ containerRef }: { containerRef: React.RefObject<HTMLDivElement> }) => {
+  const mainNodeId = nanoid();
+  const containerXCenter = (containerRef.current?.clientWidth ?? 1) / 2;
+
+  return {
+    [mainNodeId]: {
+      id: mainNodeId,
+      type: 'system-main-node',
+      name: 'Main',
+      position: { x: containerXCenter, y: 100 },
+      config: {},
+    },
+  };
 };

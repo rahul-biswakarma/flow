@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 
 import { NodeType } from '../../types';
 
@@ -6,6 +6,7 @@ import styles from '@/libs/styles/framework.module.css';
 
 interface NodeRendererProps {
   node: NodeType;
+  panTranslate: { x: number; y: number };
   getNodeRendererById: (nodeId: string) => React.FC<{ node: NodeType }> | undefined;
   updateNodePosition: (
     nodeId: string,
@@ -15,10 +16,13 @@ interface NodeRendererProps {
     },
   ) => void;
   scale: number;
+  containerRef: React.RefObject<HTMLDivElement>;
 }
 
 export const NodeRenderer: React.FC<NodeRendererProps> = React.memo(
-  ({ node, updateNodePosition, getNodeRendererById, scale }) => {
+  ({ node, updateNodePosition, getNodeRendererById, scale, panTranslate, containerRef }) => {
+    const nodeRef = useRef<HTMLDivElement>(null);
+
     const [dragging, setDragging] = useState(false);
     const [startPos, setStartPos] = useState({ x: 0, y: 0 });
     const [position, setPosition] = useState(node.position || { x: 0, y: 0 });
@@ -30,24 +34,24 @@ export const NodeRenderer: React.FC<NodeRendererProps> = React.memo(
         e.stopPropagation();
         setDragging(true);
         setStartPos({
-          x: e.clientX / scale - position.x,
-          y: e.clientY / scale - position.y,
+          x: e.clientX - position.x,
+          y: e.clientY - position.y,
         });
       },
-      [scale, position.x, position.y],
+      [position.x, position.y],
     );
 
     const onMouseMove = useCallback(
       (e: MouseEvent) => {
         e.stopPropagation();
         if (!dragging) return;
-        const newX = e.clientX / scale - startPos.x;
-        const newY = e.clientY / scale - startPos.y;
+        const newX = e.clientX - startPos.x;
+        const newY = e.clientY - startPos.y;
 
         setPosition({ x: newX, y: newY });
         updateNodePosition(node.id, { x: newX, y: newY });
       },
-      [dragging, startPos.x, startPos.y, node.id, updateNodePosition, scale],
+      [dragging, startPos.x, startPos.y, node.id, updateNodePosition],
     );
 
     const onMouseUp = useCallback(() => {
@@ -75,9 +79,10 @@ export const NodeRenderer: React.FC<NodeRendererProps> = React.memo(
 
     return (
       <div
+        ref={nodeRef}
         className={styles.nodeRenderer}
         style={{
-          transform: `translate(${position.x}px, ${position.y}px)`,
+          transform: `translate(${position.x + panTranslate.x}px, ${position.y + panTranslate.y}px)`,
           position: 'absolute',
           cursor: dragging ? 'grabbing' : 'grab',
         }}
