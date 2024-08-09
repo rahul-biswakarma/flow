@@ -25,9 +25,21 @@ export const NodeRenderer: React.FC<NodeRendererProps> = React.memo(
 
     const [dragging, setDragging] = useState(false);
     const [startPos, setStartPos] = useState({ x: 0, y: 0 });
-    const [position, setPosition] = useState(node.position || { x: 0, y: 0 });
 
     const NodeComponent = getNodeRendererById(node.type);
+
+    const calculatePosition = useCallback(() => {
+      return {
+        x: node.position.x * scale + panTranslate.x,
+        y: node.position.y * scale + panTranslate.y,
+      };
+    }, [node.position, scale, panTranslate]);
+
+    const [position, setPosition] = useState(calculatePosition());
+
+    useEffect(() => {
+      setPosition(calculatePosition());
+    }, [calculatePosition]);
 
     const onMouseDown = useCallback(
       (e: React.MouseEvent<HTMLDivElement>) => {
@@ -45,13 +57,13 @@ export const NodeRenderer: React.FC<NodeRendererProps> = React.memo(
       (e: MouseEvent) => {
         e.stopPropagation();
         if (!dragging) return;
-        const newX = e.clientX - startPos.x;
-        const newY = e.clientY - startPos.y;
+        const newX = (e.clientX - startPos.x - panTranslate.x) / scale;
+        const newY = (e.clientY - startPos.y - panTranslate.y) / scale;
 
-        setPosition({ x: newX, y: newY });
+        setPosition({ x: newX * scale + panTranslate.x, y: newY * scale + panTranslate.y });
         updateNodePosition(node.id, { x: newX, y: newY });
       },
-      [dragging, startPos.x, startPos.y, node.id, updateNodePosition],
+      [dragging, startPos.x, startPos.y, node.id, updateNodePosition, scale, panTranslate],
     );
 
     const onMouseUp = useCallback(() => {
@@ -82,9 +94,10 @@ export const NodeRenderer: React.FC<NodeRendererProps> = React.memo(
         ref={nodeRef}
         className={styles.nodeRenderer}
         style={{
-          transform: `translate(${position.x + panTranslate.x}px, ${position.y + panTranslate.y}px)`,
+          transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
           position: 'absolute',
           cursor: dragging ? 'grabbing' : 'grab',
+          transformOrigin: 'top left',
         }}
         onMouseDown={(e) => e.stopPropagation()}
       >

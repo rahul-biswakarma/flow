@@ -39,7 +39,6 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
 
   const resizeObserverRect = useResizeObserver(containerRef);
 
-  // if no node is present, generate main node
   useEffect(() => {
     if (Object.keys(nodes).length === 0) {
       setNodes(generateMainNodeData({ containerRef }));
@@ -53,8 +52,8 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
 
       if (clientOffset && dropTargetRect) {
         const position = {
-          x: clientOffset.x - dropTargetRect.left,
-          y: clientOffset.y - dropTargetRect.top,
+          x: (clientOffset.x - dropTargetRect.left - translate.x) / scale,
+          y: (clientOffset.y - dropTargetRect.top - translate.y) / scale,
         };
 
         const newNodeId = nanoid();
@@ -101,9 +100,27 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
       const zoomFactor = event.deltaY;
       const newScale = Math.max(0.1, Math.min(2, scale - zoomFactor * zoomSensitivity));
 
+      const containerRect = containerRef.current?.getBoundingClientRect();
+
+      if (containerRect) {
+        const mouseX = event.clientX - containerRect.left;
+        const mouseY = event.clientY - containerRect.top;
+
+        const centerX = containerRect.width / 2;
+        const centerY = containerRect.height / 2;
+
+        const dx = (mouseX - centerX) / scale;
+        const dy = (mouseY - centerY) / scale;
+
+        const newTranslateX = translate.x - dx * (newScale - scale);
+        const newTranslateY = translate.y - dy * (newScale - scale);
+
+        setTranslate({ x: newTranslateX, y: newTranslateY });
+      }
+
       setScale(newScale);
     },
-    [scale, translate],
+    [scale, translate, containerRef],
   );
 
   const handleMouseDown = useCallback((event: React.MouseEvent) => {
@@ -168,25 +185,19 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
       onWheel={handleWheel}
     >
       <WaterMark watermarks={watermarks} />
-      <div
-        style={{
-          transform: `scale(${scale})`,
-        }}
-      >
-        <Connection connection={connection} scale={scale} translate={translate} />
-        {Object.values(nodes).map((node) => (
-          <NodeRenderer
-            key={node.id}
-            containerRef={containerRef}
-            getNodeRendererById={getNodeRendererByType}
-            node={node}
-            panTranslate={translate}
-            scale={scale}
-            updateNodePosition={updateNodeAndEdgesPosition}
-          />
-        ))}
-        <Edges containerPosition={resizeObserverRect} edges={edges} nodes={nodes} scale={scale} translate={translate} />
-      </div>
+      <Connection connection={connection} scale={scale} translate={translate} />
+      {Object.values(nodes).map((node) => (
+        <NodeRenderer
+          key={node.id}
+          containerRef={containerRef}
+          getNodeRendererById={getNodeRendererByType}
+          node={node}
+          panTranslate={translate}
+          scale={scale}
+          updateNodePosition={updateNodeAndEdgesPosition}
+        />
+      ))}
+      <Edges containerPosition={resizeObserverRect} edges={edges} nodes={nodes} scale={scale} translate={translate} />
     </Box>
   );
 });
