@@ -37,7 +37,17 @@ export const Product = () => {
   const flowPage = (
     <FlowPage
       getNodeRendererByType={getWebNodeRendererByType}
-      watermarks={`${project.name} / ${currentPage?.name}.tsx`}
+      watermarks={
+        <span
+          style={{
+            color: 'var(--indigo-10)',
+            textTransform: 'lowercase',
+            fontSize: '13px',
+          }}
+        >
+          {currentPage?.name}.tsx
+        </span>
+      }
     />
   );
 

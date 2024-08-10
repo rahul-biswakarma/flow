@@ -179,8 +179,35 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
       onMouseMove={handleMouseMove}
       onWheel={handleWheel}
     >
-      <WaterMark watermarks={watermarks} />
-      <Connection connection={connection} scale={scale} translate={translate} />
+      <WaterMark
+        watermarks={
+          <span
+            style={{
+              fontFamily: 'monospace',
+              fontSize: '13px',
+            }}
+          >
+            zoom:{' '}
+            <span
+              style={{
+                color: 'var(--purple-10)',
+                fontSize: '13px',
+              }}
+            >
+              {scale.toFixed(1)}
+            </span>{' '}
+            <span
+              style={{
+                fontSize: '16px',
+              }}
+            >
+              |
+            </span>{' '}
+            {watermarks}
+          </span>
+        }
+      />
+      <Connection key={nanoid()} connection={connection} scale={scale} translate={translate} />
       {Object.values(nodes).map((node) => (
         <NodeRenderer
           key={node.id}
@@ -192,7 +219,14 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
           updateNodePosition={updateNodeAndEdgesPosition}
         />
       ))}
-      <Edges containerPosition={resizeObserverRect} edges={edges} nodes={nodes} scale={scale} translate={translate} />
+      <Edges
+        key={nanoid()}
+        containerPosition={resizeObserverRect}
+        edges={edges}
+        nodes={nodes}
+        scale={scale}
+        translate={translate}
+      />
     </Box>
   );
 });
