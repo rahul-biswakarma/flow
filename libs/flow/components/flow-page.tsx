@@ -20,16 +20,8 @@ interface FlowPageProps {
 }
 
 export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNodeRendererByType }) => {
-  const {
-    updateContainerPosition,
-    containerRef,
-    nodes,
-    setNodes,
-    edges,
-    connection,
-    setConnection,
-    updateNodePosition,
-  } = useFlowContext();
+  const { containerRef, nodes, setNodes, edges, connection, setConnection, updateNodePosition, updateNodeData } =
+    useFlowContext();
 
   const [scale, setScale] = useState(1);
   const [isPanning, setIsPanning] = useState(false);
@@ -48,30 +40,35 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
   const handleDrop = useCallback(
     (item: DropItemType, monitor: DropTargetMonitor) => {
       const clientOffset = monitor.getClientOffset();
-      const dropTargetRect = containerRef.current?.getBoundingClientRect();
+      const containerRect = containerRef.current?.getBoundingClientRect();
 
-      if (clientOffset && dropTargetRect) {
-        const position = {
-          x: (clientOffset.x - dropTargetRect.left - translate.x) / scale,
-          y: (clientOffset.y - dropTargetRect.top - translate.y) / scale,
+      if (clientOffset && containerRect) {
+        const dropPosition = {
+          x: clientOffset.x - containerRect.left,
+          y: clientOffset.y - containerRect.top,
         };
 
-        const newNodeId = nanoid();
-        const newNodeData = {
-          id: newNodeId,
-          type: item.type,
-          name: item.name,
-          position,
-          config: {},
-        };
+        setNodes((prevNodes) => {
+          const newNodeId = nanoid();
+          const newNodeData = {
+            id: newNodeId,
+            type: item.type,
+            name: item.name,
+            position: dropPosition,
+            config: {},
+            context: {
+              applyTranslate: false,
+            },
+          };
 
-        setNodes((prevNodes) => ({
-          ...prevNodes,
-          [newNodeId]: newNodeData,
-        }));
+          return {
+            ...prevNodes,
+            [newNodeId]: newNodeData,
+          };
+        });
       }
     },
-    [containerRef, scale, translate, setNodes],
+    [containerRef, setNodes, scale, translate],
   );
 
   const [{ isOver }, drop] = useDrop(() => ({
@@ -106,14 +103,10 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
         const mouseX = event.clientX - containerRect.left;
         const mouseY = event.clientY - containerRect.top;
 
-        const centerX = containerRect.width / 2;
-        const centerY = containerRect.height / 2;
+        const scaleChange = newScale - scale;
 
-        const dx = (mouseX - centerX) / scale;
-        const dy = (mouseY - centerY) / scale;
-
-        const newTranslateX = translate.x - dx * (newScale - scale);
-        const newTranslateY = translate.y - dy * (newScale - scale);
+        const newTranslateX = translate.x - ((mouseX - translate.x) / scale) * scaleChange;
+        const newTranslateY = translate.y - ((mouseY - translate.y) / scale) * scaleChange;
 
         setTranslate({ x: newTranslateX, y: newTranslateY });
       }
@@ -194,6 +187,7 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
           node={node}
           panTranslate={translate}
           scale={scale}
+          updateNodeData={updateNodeData}
           updateNodePosition={updateNodeAndEdgesPosition}
         />
       ))}

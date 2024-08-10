@@ -26,6 +26,7 @@ interface FlowContextType {
 
   deleteNode: (nodeId: string) => void;
   createEdge: (from: NodeHandlerType, to: NodeHandlerType) => void;
+  updateNodeData: (nodeId: string, data: Partial<NodeType>) => void;
   updateNodePosition: (nodeId: string, position: { x: number; y: number }) => void;
 
   containerPosition: ContainerPosition | null;
@@ -65,6 +66,19 @@ export const FlowContextProvider: React.FC<{
       }));
     },
     [setEdges],
+  );
+
+  const updateNodeData = useCallback(
+    (nodeId: string, data: Partial<NodeType>) => {
+      setNodes((prevNodes) => ({
+        ...prevNodes,
+        [nodeId]: {
+          ...prevNodes[nodeId],
+          ...data,
+        },
+      }));
+    },
+    [setNodes],
   );
 
   const updateNodePosition = useCallback(
@@ -138,6 +152,7 @@ export const FlowContextProvider: React.FC<{
         createEdge,
         containerRef,
         setConnection,
+        updateNodeData,
         updateNodePosition,
         containerPosition,
         updateContainerPosition,

@@ -17,10 +17,11 @@ interface NodeRendererProps {
   ) => void;
   scale: number;
   containerRef: React.RefObject<HTMLDivElement>;
+  updateNodeData: (nodeId: string, data: Partial<NodeType>) => void;
 }
 
 export const NodeRenderer: React.FC<NodeRendererProps> = React.memo(
-  ({ node, updateNodePosition, getNodeRendererById, scale, panTranslate, containerRef }) => {
+  ({ node, updateNodePosition, getNodeRendererById, scale, panTranslate }) => {
     const nodeRef = useRef<HTMLDivElement>(null);
 
     const [dragging, setDragging] = useState(false);
@@ -29,10 +30,11 @@ export const NodeRenderer: React.FC<NodeRendererProps> = React.memo(
     const NodeComponent = getNodeRendererById(node.type);
 
     const calculatePosition = useCallback(() => {
-      return {
-        x: node.position.x * scale + panTranslate.x,
-        y: node.position.y * scale + panTranslate.y,
-      };
+      if (node.position)
+        return {
+          x: node.position.x * scale + panTranslate.x,
+          y: node.position.y * scale + panTranslate.y,
+        };
     }, [node.position, scale, panTranslate]);
 
     const [position, setPosition] = useState(calculatePosition());
@@ -44,13 +46,15 @@ export const NodeRenderer: React.FC<NodeRendererProps> = React.memo(
     const onMouseDown = useCallback(
       (e: React.MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
-        setDragging(true);
-        setStartPos({
-          x: e.clientX - position.x,
-          y: e.clientY - position.y,
-        });
+        if (position) {
+          setDragging(true);
+          setStartPos({
+            x: e.clientX - position.x,
+            y: e.clientY - position.y,
+          });
+        }
       },
-      [position.x, position.y],
+      [position],
     );
 
     const onMouseMove = useCallback(

@@ -6,6 +6,7 @@ export type NodeType = {
   name: string;
   position?: { x: number; y: number };
   config?: NodeConfigType;
+  context?: Record<string, any>;
 };
 
 export type EdgeType = {
