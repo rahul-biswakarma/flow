@@ -20,8 +20,8 @@ export const Connection: React.FC<ConnectionProps> = React.memo(({ connection, s
     const handleMouseMove = (event: MouseEvent) => {
       if (connection?.from) {
         setMousePosition({
-          x: (event.clientX - translate.x) / scale,
-          y: (event.clientY - translate.y) / scale,
+          x: event.clientX,
+          y: event.clientY,
         });
       }
     };
@@ -44,8 +44,8 @@ export const Connection: React.FC<ConnectionProps> = React.memo(({ connection, s
   if (!fromHandlerElement) return null;
 
   const fromPosition = fromHandlerElement.getBoundingClientRect();
-  const fromX = (fromPosition.left + fromPosition.width / 2 - translate.x) / scale;
-  const fromY = (fromPosition.top + fromPosition.height / 2 - translate.y) / scale;
+  const fromX = fromPosition.left + fromPosition.width / 2;
+  const fromY = fromPosition.top + fromPosition.height / 2;
 
   return (
     <Edge
