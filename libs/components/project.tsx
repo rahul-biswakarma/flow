@@ -7,14 +7,14 @@ import { AnimatePresence } from 'framer-motion';
 import { DndProvider } from 'react-dnd';
 import { useHotkeys } from 'react-hotkeys-hook';
 
-import { FloatingWidgetProvider, useProjectContext } from '../context';
+import { AttributeProvider, useProjectContext } from '../context';
 import { FlowPage } from '../flow';
 import { useOnSave } from '../hooks/use-on-save';
 import { getWebNodeRendererByType } from '../types';
 import { HotKeys } from '../utils/hotkeys';
 
 import { CollapsedLeftPanel } from './panels/left-panel/collapsed-left-panel';
-import { FloatingWidget, LeftPanel, PreviewPanel } from './panels';
+import { Attribute, LeftPanel, PreviewPanel } from './panels';
 
 const PANEL_MARGIN = 10;
 
@@ -58,7 +58,7 @@ export const Product = () => {
   }
 
   return (
-    <FloatingWidgetProvider>
+    <AttributeProvider>
       <AnimatePresence>
         <Box
           style={{
@@ -106,7 +106,7 @@ export const Product = () => {
           </DndProvider>
         </Box>
       </AnimatePresence>
-      <FloatingWidget />
-    </FloatingWidgetProvider>
+      <Attribute />
+    </AttributeProvider>
   );
 };

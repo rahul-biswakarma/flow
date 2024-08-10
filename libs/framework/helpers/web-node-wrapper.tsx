@@ -2,7 +2,7 @@
 import { ContextMenu } from '@radix-ui/themes';
 import { ReactNode } from 'react';
 
-import { useFloatingWidget } from '@/libs/context';
+import { useAttribute } from '@/libs/context';
 import { NodeType, useFlowContext } from '@/libs/flow';
 
 type WebNodeWrapperProps = {
@@ -12,7 +12,7 @@ type WebNodeWrapperProps = {
 };
 
 export const WebNodeWrapper = ({ node, children, disableDelete }: WebNodeWrapperProps) => {
-  const { openPanel, closePanel } = useFloatingWidget();
+  const { openPanel, closePanel } = useAttribute();
   const { deleteNode } = useFlowContext();
 
   return (

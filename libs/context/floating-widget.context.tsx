@@ -2,26 +2,26 @@
 
 import React, { createContext, useContext, useState } from 'react';
 
-export type FloatingWidgetMode = 'settings' | null;
+export type AttributeMode = 'settings' | null;
 export type FloatWidgetData = Record<string, any> | null;
 
-interface FloatingWidgetContextType {
+interface AttributeContextType {
   isOpen: boolean;
-  mode: FloatingWidgetMode;
-  setMode: (mode: FloatingWidgetMode) => void;
+  mode: AttributeMode;
+  setMode: (mode: AttributeMode) => void;
   data: FloatWidgetData;
-  openPanel: (panelData: FloatWidgetData, mode: FloatingWidgetMode) => void;
+  openPanel: (panelData: FloatWidgetData, mode: AttributeMode) => void;
   closePanel: () => void;
 }
 
-const FloatingWidgetContext = createContext<FloatingWidgetContextType | undefined>(undefined);
+const AttributeContext = createContext<AttributeContextType | undefined>(undefined);
 
-export const FloatingWidgetProvider = ({ children }: { children: React.ReactNode }) => {
+export const AttributeProvider = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [mode, setMode] = useState<FloatingWidgetMode>(null);
+  const [mode, setMode] = useState<AttributeMode>(null);
   const [data, setData] = useState<FloatWidgetData>(null);
 
-  const openPanel = (panelData: FloatWidgetData, mode: FloatingWidgetMode) => {
+  const openPanel = (panelData: FloatWidgetData, mode: AttributeMode) => {
     setMode(mode);
     setData(panelData);
     setIsOpen(true);
@@ -33,17 +33,17 @@ export const FloatingWidgetProvider = ({ children }: { children: React.ReactNode
   };
 
   return (
-    <FloatingWidgetContext.Provider value={{ isOpen, data, openPanel, closePanel, setMode, mode }}>
+    <AttributeContext.Provider value={{ isOpen, data, openPanel, closePanel, setMode, mode }}>
       {children}
-    </FloatingWidgetContext.Provider>
+    </AttributeContext.Provider>
   );
 };
 
-export const useFloatingWidget = () => {
-  const context = useContext(FloatingWidgetContext);
+export const useAttribute = () => {
+  const context = useContext(AttributeContext);
 
   if (context === undefined) {
-    throw new Error('useFloatingWidget must be used within a FloatingWidgetProvider');
+    throw new Error('useAttribute must be used within a AttributeProvider');
   }
 
   return context;

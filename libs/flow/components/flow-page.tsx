@@ -190,7 +190,7 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
             zoom:{' '}
             <span
               style={{
-                color: 'var(--purple-10)',
+                color: 'var(--amber-8)',
                 fontSize: '13px',
               }}
             >
