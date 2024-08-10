@@ -36,7 +36,7 @@ export const Edge: React.FC<EdgeProps> = React.memo(({ fromX, fromY, toX, toY, c
              ${controlPointX2} ${controlPointY2},
              ${toX} ${toY}`}
         fill="none"
-        strokeWidth={2 / scale}
+        strokeWidth={2.5 * scale}
       />
     </svg>
   );

@@ -39,13 +39,13 @@ export const Edges: React.FC<EdgesProps> = React.memo(({ edges, nodes, container
         const targetRect = targetHandler.getBoundingClientRect();
 
         const sourcePosition = {
-          x: (sourceRect.left + sourceRect.width / 2 - containerPosition.left - translate.x) / scale,
-          y: (sourceRect.top + sourceRect.height / 2 - containerPosition.top - translate.y) / scale,
+          x: sourceRect.left + sourceRect.width / 2 - containerPosition.left,
+          y: sourceRect.top + sourceRect.height / 2 - containerPosition.top,
         };
 
         const targetPosition = {
-          x: (targetRect.left + targetRect.width / 2 - containerPosition.left - translate.x) / scale,
-          y: (targetRect.top + targetRect.height / 2 - containerPosition.top - translate.y) / scale,
+          x: targetRect.left + targetRect.width / 2 - containerPosition.left,
+          y: targetRect.top + targetRect.height / 2 - containerPosition.top,
         };
 
         return {
