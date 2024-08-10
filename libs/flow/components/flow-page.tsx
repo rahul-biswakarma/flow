@@ -20,8 +20,7 @@ interface FlowPageProps {
 }
 
 export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNodeRendererByType }) => {
-  const { containerRef, nodes, setNodes, edges, connection, setConnection, updateNodePosition, updateNodeData } =
-    useFlowContext();
+  const { containerRef, nodes, setNodes, edges, connection, setConnection, updateNodePosition } = useFlowContext();
 
   const [scale, setScale] = useState(1);
   const [isPanning, setIsPanning] = useState(false);
@@ -43,12 +42,12 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
       const containerRect = containerRef.current?.getBoundingClientRect();
 
       if (clientOffset && containerRect) {
-        const dropPosition = {
-          x: clientOffset.x - containerRect.left,
-          y: clientOffset.y - containerRect.top,
-        };
-
         setNodes((prevNodes) => {
+          const dropPosition = {
+            x: (clientOffset.x - containerRect.left - translate.x) / scale,
+            y: (clientOffset.y - containerRect.top - translate.y) / scale,
+          };
+
           const newNodeId = nanoid();
           const newNodeData = {
             id: newNodeId,
@@ -71,13 +70,16 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
     [containerRef, setNodes, scale, translate],
   );
 
-  const [{ isOver }, drop] = useDrop(() => ({
-    accept: DragDropItemType,
-    drop: handleDrop,
-    collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
+  const [{ isOver }, drop] = useDrop(
+    () => ({
+      accept: DragDropItemType,
+      drop: handleDrop,
+      collect: (monitor) => ({
+        isOver: !!monitor.isOver(),
+      }),
     }),
-  }));
+    [handleDrop, scale, translate],
+  );
 
   drop(containerRef);
 
@@ -187,7 +189,6 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
           node={node}
           panTranslate={translate}
           scale={scale}
-          updateNodeData={updateNodeData}
           updateNodePosition={updateNodeAndEdgesPosition}
         />
       ))}

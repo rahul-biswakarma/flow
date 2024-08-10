@@ -17,7 +17,6 @@ interface NodeRendererProps {
   ) => void;
   scale: number;
   containerRef: React.RefObject<HTMLDivElement>;
-  updateNodeData: (nodeId: string, data: Partial<NodeType>) => void;
 }
 
 export const NodeRenderer: React.FC<NodeRendererProps> = React.memo(
@@ -30,11 +29,12 @@ export const NodeRenderer: React.FC<NodeRendererProps> = React.memo(
     const NodeComponent = getNodeRendererById(node.type);
 
     const calculatePosition = useCallback(() => {
-      if (node.position)
+      if (node.position) {
         return {
           x: node.position.x * scale + panTranslate.x,
           y: node.position.y * scale + panTranslate.y,
         };
+      }
     }, [node.position, scale, panTranslate]);
 
     const [position, setPosition] = useState(calculatePosition());
