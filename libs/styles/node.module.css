@@ -19,6 +19,27 @@
   align-items: center;
   padding: 20px 30px;
   z-index: 3;
+  gap: 6px;
+}
+
+.contentContainerWithData {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding: 23px 30px;
+  z-index: 3;
+  gap: 2px;
+}
+
+.contentData {
+  padding-left: 3px;
+  display: -webkit-box;
+  font-size: 13px;
+  color: var(--gray-7);
+  max-width: 200px;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .topHandlerContainer {

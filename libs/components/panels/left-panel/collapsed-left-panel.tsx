@@ -8,6 +8,8 @@ import styles from './styles/collapsed-left-panel.module.css';
 import { ComponentsWidget, PagesWidget, ThemeOptionRenderer } from './widgets';
 import { ProjectSettingsWidget } from './widgets/project-settings-widget';
 
+import { SCREEN_PADDING } from '@/libs/constants';
+
 export const CollapsedLeftPanel = ({
   setIsLeftPanelCollapsed,
 }: {
@@ -20,7 +22,7 @@ export const CollapsedLeftPanel = ({
 
   return (
     <Box
-      p="10px"
+      p={SCREEN_PADDING + 'px'}
       style={{
         position: 'absolute',
         top: '5px',

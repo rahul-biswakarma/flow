@@ -1,3 +1,5 @@
+import { WebNodeTypes } from '@/libs/types';
+
 interface Attribute {
   label: string;
   name: string;
@@ -8,7 +10,7 @@ interface Attribute {
 type AttributeType = 'string' | 'number' | 'boolean' | 'object' | 'array';
 
 export const webNodeAttribute: Record<string, Attribute[]> = {
-  ['system-text-node']: [
+  [WebNodeTypes.Text]: [
     {
       label: 'Content',
       name: 'children',
@@ -16,7 +18,7 @@ export const webNodeAttribute: Record<string, Attribute[]> = {
       required: true,
     },
   ],
-  ['system-button-node']: [
+  [WebNodeTypes.Button]: [
     {
       label: 'Content',
       name: 'children',

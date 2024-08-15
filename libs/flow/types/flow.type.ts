@@ -1,8 +1,10 @@
 import { FC } from 'react';
 
+import { WebNodeTypes } from '@/libs/types';
+
 export type NodeType = {
   id: string;
-  type: string;
+  type: WebNodeTypes;
   name: string;
   position?: { x: number; y: number };
   config?: NodeConfigType;

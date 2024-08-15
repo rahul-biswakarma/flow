@@ -7,6 +7,8 @@ import { AnimatePresence } from 'framer-motion';
 import { SessionPanel, ProjectPanel, ConfigPanel } from './panels';
 import { PanelWrapper } from './common/panel-wrapper';
 
+import { SCREEN_PADDING } from '@/libs/constants';
+
 export const LeftPanel = ({ setIsLeftPanelCollapsed }: { setIsLeftPanelCollapsed: (value: boolean) => void }) => {
   const [isConfigPanelCollapsed, setIsConfigPanelCollapsed] = useState(false);
 
@@ -16,7 +18,7 @@ export const LeftPanel = ({ setIsLeftPanelCollapsed }: { setIsLeftPanelCollapsed
       rows={isConfigPanelCollapsed ? '1fr max-content max-content' : '1fr minmax(auto, 40vh) max-content'}
       style={{
         backgroundColor: 'transparent',
-        padding: '10px',
+        padding: SCREEN_PADDING + 'px',
         paddingRight: '0px',
         position: 'absolute',
         top: '0',

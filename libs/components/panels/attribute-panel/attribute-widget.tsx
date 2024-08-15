@@ -12,8 +12,8 @@ import { AttributeContent } from './attribute-panel-widgets';
 import styles from './attribute-widget.module.css';
 
 import { useAttribute } from '@/libs/context';
+import { SCREEN_PADDING } from '@/libs/constants';
 
-const SCREEN_PADDING = 10;
 const MAX_WIDTH = 370;
 
 export const Attribute = () => {

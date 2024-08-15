@@ -7,3 +7,5 @@ export const defaultProjectConfig = {
   gray: 'mauve',
   radius: 'medium',
 };
+
+export const SCREEN_PADDING = 10;

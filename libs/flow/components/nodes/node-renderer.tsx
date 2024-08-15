@@ -98,7 +98,7 @@ export const NodeRenderer: React.FC<NodeRendererProps> = React.memo(
         ref={nodeRef}
         className={styles.nodeRenderer}
         style={{
-          transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
+          transform: `translate(${position?.x ?? 0}px, ${position?.y ?? 0}px) scale(${scale})`,
           position: 'absolute',
           cursor: dragging ? 'grabbing' : 'grab',
           transformOrigin: 'top left',
