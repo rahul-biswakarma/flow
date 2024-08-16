@@ -1,5 +1,7 @@
 import { nanoid } from 'nanoid';
 
+import { WebNodeTypes } from '../types';
+
 import { EdgeType, NodeHandlerType } from './types';
 
 export const generateHandlerId = (data: NodeHandlerType) => {
@@ -49,7 +51,7 @@ export const generateMainNodeData = ({ containerRef }: { containerRef: React.Ref
   return {
     [mainNodeId]: {
       id: mainNodeId,
-      type: 'system-main-node',
+      type: WebNodeTypes.Main,
       name: 'Main',
       position: { x: containerXCenter, y: 100 },
       config: {},

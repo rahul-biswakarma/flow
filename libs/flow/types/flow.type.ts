@@ -18,7 +18,7 @@ export type EdgeType = {
 };
 
 export type DropItemType = {
-  type: string;
+  type: WebNodeTypes;
   name: string;
 };
 
