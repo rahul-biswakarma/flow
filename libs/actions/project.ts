@@ -23,6 +23,7 @@ export const createProject = async (prevState: any, formData: FormData) => {
         create: {
           name: 'home',
           config: JSON.stringify(defaultProjectConfig),
+          path: '/',
           createdAt: new Date(),
           updatedAt: new Date(),
         },

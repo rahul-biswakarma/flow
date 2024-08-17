@@ -1,13 +1,13 @@
 'use client';
 
 import { createContext, useContext, useState } from 'react';
-import { Page, Project } from '@prisma/client';
+import { Page, Project, SeoModel } from '@prisma/client';
 
 import { FlowContextProvider } from '../flow';
 import { defaultProjectConfig } from '../constants';
 
 type ProjectWithPages = Project & {
-  pages: Page[];
+  pages: (Page & { seo: SeoModel })[];
 };
 
 type ProjectContextType = {

@@ -23,7 +23,11 @@ export default async function Project({ params }: { params: { projectSlug: strin
       },
     },
     include: {
-      pages: true,
+      pages: {
+        include: {
+          seo: true,
+        },
+      },
     },
   });
 
