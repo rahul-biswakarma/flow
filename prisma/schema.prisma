@@ -79,15 +79,31 @@ model ProjectMembership {
 }
 
 model Page {
-  id        String   @id @default(cuid())
-  name      String
-  config    Json
-  projectId String
-  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String    @id @default(cuid())
+  name        String
+  config      Json
+  projectId   String
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  path        String
+  description String?
+  title       String?
+  seo         SeoModel? @relation(fields: [seoModelId], references: [id])
+  seoModelId  String?
 
   @@index([projectId])
+  @@index([seoModelId])
+}
+
+model SeoModel {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  Page        Page[]
 }
 
 model Component {
