@@ -74,7 +74,6 @@ model ProjectMembership {
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
   @@id([userId, projectId])
-  @@index([userId])
   @@index([projectId])
 }
 
