@@ -20,7 +20,7 @@ export const StringRenderer: React.FC<StringRendererProps> = ({ label, value, on
       <TextField.Root
         className={styles.settingTypeInputContainer}
         color="gray"
-        data-hasValue={value ? 'true' : 'false'}
+        data-hasvalue={value ? 'true' : 'false'}
         placeholder="-"
         radius="small"
         size="2"

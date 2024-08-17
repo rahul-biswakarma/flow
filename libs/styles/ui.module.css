@@ -8,11 +8,11 @@
   cursor: pointer;
 }
 
-.responseDropdownTriggerContainer[data-hasValue='true'] {
+.responseDropdownTriggerContainer[data-hasvalue='true'] {
   background-color: var(--gray-4);
 }
 
-.responseDropdownTriggerContainer[data-hasValue='false'] {
+.responseDropdownTriggerContainer[data-hasvalue='false'] {
   color: vaR(--gray-11);
 }
 

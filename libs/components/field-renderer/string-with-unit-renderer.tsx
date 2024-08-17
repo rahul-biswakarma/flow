@@ -32,7 +32,7 @@ export const StringWithUnitRenderer: React.FC<StringRendererProps> = ({ label, v
         <TextField.Root
           className={styles.settingTypeInputContainer}
           color="gray"
-          data-hasValue={value?.value ? 'true' : 'false'}
+          data-hasvalue={value?.value ? 'true' : 'false'}
           placeholder="-"
           radius="medium"
           size="2"

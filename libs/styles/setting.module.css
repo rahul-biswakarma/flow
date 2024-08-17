@@ -41,7 +41,7 @@
   background-color: transparent;
 }
 
-.settingTypeInputContainer input[data-hasValue='true'],
+.settingTypeInputContainer input[data-hasvalue='true'],
 .settingTypeInputContainer:hover {
   background-color: var(--gray-4);
 }

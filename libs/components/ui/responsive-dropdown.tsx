@@ -46,7 +46,7 @@ const ResponsiveDropdown = <T extends string>({
           ref={triggerRef}
           align="center"
           className={styles.responseDropdownTriggerContainer}
-          data-hasValue={hasValue}
+          data-hasvalue={hasValue}
           justify="between"
           style={{ textTransform }}
         >
