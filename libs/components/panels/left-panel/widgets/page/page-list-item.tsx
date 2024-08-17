@@ -7,6 +7,7 @@ import { PageForm } from './page-form';
 
 import styles from '@/libs/styles/left-panel.module.css';
 import { deletePage } from '@/libs/actions/page';
+import { useProjectContext } from '@/libs/context';
 
 type PageListItemProps = {
   page: Page & { seo: SeoModel };
@@ -17,6 +18,8 @@ type PageListItemProps = {
 
 export const PageListItem = ({ page, isActive, projectId, onClickHandler }: PageListItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { setCurrentPageId } = useProjectContext();
+
   const pageData = {
     id: page.id,
     name: page.name,
@@ -36,6 +39,7 @@ export const PageListItem = ({ page, isActive, projectId, onClickHandler }: Page
             style={{
               cursor: 'pointer',
             }}
+            onClick={() => setCurrentPageId(page.id)}
           >
             <Box
               style={{

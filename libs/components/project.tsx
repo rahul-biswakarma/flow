@@ -19,7 +19,7 @@ import { Attribute, LeftPanel, PreviewPanel } from './panels';
 const PANEL_MARGIN = 10;
 
 export const Product = () => {
-  const { currentPage, project } = useProjectContext();
+  const { currentPage } = useProjectContext();
   const [isLeftPanelCollapsed, setIsLeftPanelCollapsed] = useState(
     localStorage.getItem('isLeftPanelCollapsed') === 'true' ? true : false,
   );
