@@ -12,8 +12,10 @@ export const generateEdgeId = (fromData: NodeHandlerType, toData: NodeHandlerTyp
   return `flow-edge-${fromData.nodeId}-${fromData.handlerType}-${fromData.handlerKey}_${toData.nodeId}-${toData.handlerType}-${toData.handlerKey}`;
 };
 
-export const getHandlerElement = (data: NodeHandlerType) => {
-  return document.querySelector(`[data-handler-id="${generateHandlerId(data)}"]`);
+export const getHandlerElement = (data: NodeHandlerType): Element | null => {
+  const handlerId = generateHandlerId(data);
+
+  return document.querySelector(`[data-handler-id="${handlerId}"]`);
 };
 
 export function validateConnection(from: NodeHandlerType, to: NodeHandlerType) {

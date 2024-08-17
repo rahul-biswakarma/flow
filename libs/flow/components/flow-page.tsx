@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useCallback, useState, useRef, useMemo } from 'react';
+import React, { ReactNode, useEffect, useCallback, useState, useRef } from 'react';
 import { Box } from '@radix-ui/themes';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
 import { nanoid } from 'nanoid';
@@ -13,7 +13,6 @@ import { Connection, Edges } from './edges';
 import { WaterMark } from './watermark';
 
 import { useResizeObserver } from '@/libs/hooks';
-import { useProjectContext } from '@/libs/context';
 
 interface FlowPageProps {
   watermarks?: ReactNode;
@@ -22,7 +21,6 @@ interface FlowPageProps {
 
 export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNodeRendererByType }) => {
   const { containerRef, nodes, setNodes, edges, connection, setConnection, updateNodePosition } = useFlowContext();
-  const { currentPageConfig } = useProjectContext();
 
   const [scale, setScale] = useState(1);
   const [isPanning, setIsPanning] = useState(false);
@@ -33,12 +31,10 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
   const resizeObserverRect = useResizeObserver(containerRef);
 
   useEffect(() => {
-    if (Object.keys(nodes).length === 0 && currentPageConfig.nodes) {
-      setNodes(currentPageConfig.nodes);
-    } else if (Object.keys(nodes).length === 0) {
+    if (Object.keys(nodes).length === 0) {
       setNodes(generateMainNodeData({ containerRef }));
     }
-  }, [containerRef, setNodes, nodes, currentPageConfig]);
+  }, [containerRef, setNodes, nodes]);
 
   const handleDrop = useCallback(
     (item: DropItemType, monitor: DropTargetMonitor) => {
@@ -165,22 +161,6 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
     };
   }, [handleMouseUp]);
 
-  const memoizedNodes = useMemo(
-    () =>
-      Object.values(nodes).map((node) => (
-        <NodeRenderer
-          key={node.id}
-          containerRef={containerRef}
-          getNodeRendererById={getNodeRendererByType}
-          node={node}
-          panTranslate={translate}
-          scale={scale}
-          updateNodePosition={updateNodeAndEdgesPosition}
-        />
-      )),
-    [nodes, containerRef, getNodeRendererByType, translate, scale, updateNodeAndEdgesPosition],
-  );
-
   return (
     <Box
       ref={containerRef}
@@ -205,16 +185,19 @@ export const FlowPage: React.FC<FlowPageProps> = React.memo(({ watermarks, getNo
           </span>
         }
       />
-      <Connection key={nanoid()} connection={connection} scale={scale} translate={translate} />
-      {memoizedNodes}
-      <Edges
-        key={nanoid()}
-        containerPosition={resizeObserverRect}
-        edges={currentPageConfig.edges || {}}
-        nodes={nodes}
-        scale={scale}
-        translate={translate}
-      />
+      <Connection connection={connection} scale={scale} translate={translate} />
+      {Object.values(nodes).map((node) => (
+        <NodeRenderer
+          key={node.id}
+          containerRef={containerRef}
+          getNodeRendererById={getNodeRendererByType}
+          node={node}
+          panTranslate={translate}
+          scale={scale}
+          updateNodePosition={updateNodeAndEdgesPosition}
+        />
+      ))}
+      <Edges containerPosition={resizeObserverRect} edges={edges} nodes={nodes} scale={scale} translate={translate} />
     </Box>
   );
 });

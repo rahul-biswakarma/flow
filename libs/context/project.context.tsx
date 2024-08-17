@@ -53,7 +53,7 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
     }
 
     return {};
-  }, [currentPage]);
+  }, [currentPage, currentPageId]);
 
   const contextValue = useMemo(
     () => ({
@@ -72,7 +72,7 @@ export const ProjectContextProvider = ({ children, projectWithPages }: ProjectCo
 
   return (
     <ProjectContext.Provider value={contextValue}>
-      <FlowContextProvider edges={currentPageConfig.edges} nodes={currentPageConfig.nodes}>
+      <FlowContextProvider edges={currentPageConfig.edges ?? undefined} nodes={currentPageConfig.nodes ?? undefined}>
         {children}
       </FlowContextProvider>
     </ProjectContext.Provider>

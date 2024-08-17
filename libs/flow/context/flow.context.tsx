@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useCallback, useMemo, useRef } from 'react';
+import React, { createContext, useContext, useState, useCallback, useMemo, useRef, useEffect } from 'react';
 
 import { NodeType, EdgeType, ConnectionType } from '../types';
 
@@ -30,10 +30,15 @@ export const FlowContextProvider: React.FC<FlowContextProviderProps> = ({
   edges: initialEdges,
   nodes: initialNodes,
 }) => {
-  const [nodes, setNodes] = useState<Record<string, NodeType>>(initialNodes || {});
-  const [edges, setEdges] = useState<Record<string, EdgeType>>(initialEdges || {});
+  const [nodes, setNodes] = useState<Record<string, NodeType>>({});
+  const [edges, setEdges] = useState<Record<string, EdgeType>>({});
   const [connection, setConnection] = useState<ConnectionType | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setNodes(initialNodes || {});
+    setEdges(initialEdges || {});
+  }, [initialNodes, initialEdges]);
 
   const updateNodePosition = useCallback((nodeId: string, position: { x: number; y: number }) => {
     setNodes((prevNodes) => ({
