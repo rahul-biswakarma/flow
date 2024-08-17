@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useMemo } from 'react';
 import { Page, Project, SeoModel } from '@prisma/client';
 
 import { FlowContextProvider } from '../flow';
@@ -13,15 +13,13 @@ type ProjectWithPages = Project & {
 type ProjectContextType = {
   project: ProjectWithPages;
   setProject: React.Dispatch<React.SetStateAction<ProjectWithPages>>;
-
   projectConfig: any;
   setProjectConfig: React.Dispatch<React.SetStateAction<any>>;
   defaultProjectConfig: any;
-
   currentPageId: string;
   setCurrentPageId: React.Dispatch<React.SetStateAction<string>>;
-
   currentPage: Page | undefined;
+  currentPageConfig: any;
 };
 
 const ProjectContext = createContext<ProjectContextType | null>(null);
@@ -32,32 +30,49 @@ type ProjectContextProviderProps = {
 };
 
 export const ProjectContextProvider = ({ children, projectWithPages }: ProjectContextProviderProps) => {
-  const isProjectConfigEmpty = projectWithPages.config && Object.keys(projectWithPages.config).length === 0;
-
   const [project, setProject] = useState<ProjectWithPages>(projectWithPages);
-  const [projectConfig, setProjectConfig] = useState<any>(
-    isProjectConfigEmpty ? JSON.parse(projectWithPages.config) : defaultProjectConfig,
-  );
-  const [currentPageId, setCurrentPageId] = useState<string>(project?.pages[0]?.id ?? '');
+  const [projectConfig, setProjectConfig] = useState<any>(() => {
+    const isProjectConfigEmpty = projectWithPages.config && Object.keys(projectWithPages.config).length === 0;
 
-  const currentPage = project.pages.find((page) => page.id === currentPageId);
-  const currentPagesConfig = currentPage?.config as string;
-  const currentPagesConfigParsed = currentPagesConfig ? JSON.parse(currentPagesConfig) : {};
+    return isProjectConfigEmpty ? JSON.parse(projectWithPages.config) : defaultProjectConfig;
+  });
+  const [currentPageId, setCurrentPageId] = useState<string>(() => project?.pages[0]?.id ?? '');
+
+  const currentPage = useMemo(
+    () => project.pages.find((page) => page.id === currentPageId),
+    [project.pages, currentPageId],
+  );
+
+  const currentPageConfig = useMemo(() => {
+    if (currentPage?.config) {
+      try {
+        return JSON.parse(currentPage.config as string);
+      } catch (error) {
+        return {};
+      }
+    }
+
+    return {};
+  }, [currentPage]);
+
+  const contextValue = useMemo(
+    () => ({
+      project,
+      setProject,
+      projectConfig,
+      setProjectConfig,
+      defaultProjectConfig,
+      currentPageId,
+      setCurrentPageId,
+      currentPage,
+      currentPageConfig,
+    }),
+    [project, projectConfig, currentPageId, currentPage, currentPageConfig],
+  );
 
   return (
-    <ProjectContext.Provider
-      value={{
-        project,
-        defaultProjectConfig,
-        setProject,
-        currentPageId,
-        setCurrentPageId,
-        projectConfig,
-        setProjectConfig,
-        currentPage,
-      }}
-    >
-      <FlowContextProvider edges={currentPagesConfigParsed.edges} nodes={currentPagesConfigParsed?.nodes}>
+    <ProjectContext.Provider value={contextValue}>
+      <FlowContextProvider edges={currentPageConfig.edges} nodes={currentPageConfig.nodes}>
         {children}
       </FlowContextProvider>
     </ProjectContext.Provider>

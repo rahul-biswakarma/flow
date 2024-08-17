@@ -61,16 +61,20 @@ export const Edges: React.FC<EdgesProps> = React.memo(({ edges, nodes, container
     <>
       {scaledEdges
         .filter((edge) => edge !== null)
-        .map((edge) => (
-          <Edge
-            key={edge.id}
-            fromX={edge.sourcePosition.x}
-            fromY={edge.sourcePosition.y}
-            scale={scale}
-            toX={edge.targetPosition.x}
-            toY={edge.targetPosition.y}
-          />
-        ))}
+        .map((edge) => {
+          if (!edge) return null;
+
+          return (
+            <Edge
+              key={edge.id}
+              fromX={edge.sourcePosition.x}
+              fromY={edge.sourcePosition.y}
+              scale={scale}
+              toX={edge.targetPosition.x}
+              toY={edge.targetPosition.y}
+            />
+          );
+        })}
     </>
   );
 });

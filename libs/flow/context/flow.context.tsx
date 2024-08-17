@@ -1,169 +1,87 @@
 'use client';
 
-import React, { createContext, useContext, useState, useCallback, useRef } from 'react';
+import React, { createContext, useContext, useState, useCallback, useMemo, useRef } from 'react';
 
-import { NodeType, EdgeType, ConnectionType, NodeHandlerType } from '../types';
-import { generateEdgeId, getAffectedEdges } from '../utils';
+import { NodeType, EdgeType, ConnectionType } from '../types';
 
-interface ContainerPosition {
-  left: number;
-  top: number;
-  right: number;
-  bottom: number;
-}
-
-interface FlowContextType {
-  containerRef: React.RefObject<HTMLDivElement>;
-
+type FlowContextType = {
   nodes: Record<string, NodeType>;
   setNodes: React.Dispatch<React.SetStateAction<Record<string, NodeType>>>;
-
   edges: Record<string, EdgeType>;
   setEdges: React.Dispatch<React.SetStateAction<Record<string, EdgeType>>>;
-
   connection: ConnectionType | null;
   setConnection: React.Dispatch<React.SetStateAction<ConnectionType | null>>;
-
-  deleteNode: (nodeId: string) => void;
-  createEdge: (from: NodeHandlerType, to: NodeHandlerType) => void;
-  updateNodeData: (nodeId: string, data: Partial<NodeType>) => void;
   updateNodePosition: (nodeId: string, position: { x: number; y: number }) => void;
-
-  containerPosition: ContainerPosition | null;
-  updateContainerPosition: (left: number, top: number, right: number, bottom: number) => void;
-}
-
-const FlowContext = createContext<FlowContextType | undefined>(undefined);
-
-export const FlowContextProvider: React.FC<{
-  children: React.ReactNode;
-  nodes?: Record<string, NodeType>;
-  edges?: Record<string, EdgeType>;
-}> = ({ children, nodes: initialNodes, edges: initialEdges }) => {
-  const [nodes, setNodes] = useState<Record<string, NodeType>>(initialNodes ?? {});
-  const [edges, setEdges] = useState<Record<string, EdgeType>>(initialEdges ?? {});
-  const [connection, setConnection] = useState<ConnectionType | null>(null);
-
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const [containerPosition, setContainerPosition] = useState<ContainerPosition | null>(null);
-
-  const updateContainerPosition = useCallback((left: number, top: number, right: number, bottom: number) => {
-    setContainerPosition({ left, top, right, bottom });
-  }, []);
-
-  const createEdge = useCallback(
-    (from: NodeHandlerType, to: NodeHandlerType) => {
-      const newEdgeId = generateEdgeId(from, to);
-
-      setEdges((prevEdges) => ({
-        ...prevEdges,
-        [newEdgeId]: {
-          id: newEdgeId,
-          source: from,
-          target: to,
-        },
-      }));
-    },
-    [setEdges],
-  );
-
-  const updateNodeData = useCallback(
-    (nodeId: string, data: Partial<NodeType>) => {
-      setNodes((prevNodes) => ({
-        ...prevNodes,
-        [nodeId]: {
-          ...prevNodes[nodeId],
-          ...data,
-        },
-      }));
-    },
-    [setNodes],
-  );
-
-  const updateNodePosition = useCallback(
-    (nodeId: string, position: { x: number; y: number }) => {
-      setNodes((prevNodes) => ({
-        ...prevNodes,
-        [nodeId]: {
-          ...prevNodes[nodeId],
-          position,
-        },
-      }));
-
-      const affectedEdges = getAffectedEdges(edges, nodeId);
-
-      affectedEdges.forEach((edgeId) => {
-        if (edgeId) {
-          const currentEdge = edges[edgeId];
-
-          setEdges((prevEdges) => {
-            return {
-              ...prevEdges,
-              [edgeId]: {
-                ...currentEdge,
-                source: currentEdge.source.nodeId === nodeId ? { ...currentEdge.source, position } : currentEdge.source,
-                target: currentEdge.target.nodeId === nodeId ? { ...currentEdge.target, position } : currentEdge.target,
-              },
-            };
-          });
-        }
-      });
-    },
-    [setNodes, setEdges],
-  );
-
-  const deleteNode = useCallback(
-    (nodeId: string) => {
-      setNodes((prevNodes) => {
-        const newNodes = { ...prevNodes };
-
-        delete newNodes[nodeId];
-
-        return newNodes;
-      });
-
-      const affectedEdges = getAffectedEdges(edges, nodeId);
-
-      affectedEdges.forEach((edgeId) => {
-        if (edgeId) {
-          setEdges((prevEdges) => {
-            const newEdges = { ...prevEdges };
-
-            delete newEdges[edgeId];
-
-            return newEdges;
-          });
-        }
-      });
-    },
-    [setNodes, setEdges],
-  );
-
-  return (
-    <FlowContext.Provider
-      value={{
-        nodes,
-        setNodes,
-        edges,
-        setEdges,
-        deleteNode,
-        connection,
-        createEdge,
-        containerRef,
-        setConnection,
-        updateNodeData,
-        updateNodePosition,
-        containerPosition,
-        updateContainerPosition,
-      }}
-    >
-      {children}
-    </FlowContext.Provider>
-  );
+  addEdge: (edge: EdgeType) => void;
+  removeEdge: (edgeId: string) => void;
+  containerRef: React.RefObject<HTMLDivElement>;
 };
 
-export const useFlowContext = (): FlowContextType => {
+const FlowContext = createContext<FlowContextType | null>(null);
+
+type FlowContextProviderProps = {
+  children: React.ReactNode;
+  edges?: Record<string, EdgeType>;
+  nodes?: Record<string, NodeType>;
+};
+
+export const FlowContextProvider: React.FC<FlowContextProviderProps> = ({
+  children,
+  edges: initialEdges,
+  nodes: initialNodes,
+}) => {
+  const [nodes, setNodes] = useState<Record<string, NodeType>>(initialNodes || {});
+  const [edges, setEdges] = useState<Record<string, EdgeType>>(initialEdges || {});
+  const [connection, setConnection] = useState<ConnectionType | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const updateNodePosition = useCallback((nodeId: string, position: { x: number; y: number }) => {
+    setNodes((prevNodes) => ({
+      ...prevNodes,
+      [nodeId]: {
+        ...prevNodes[nodeId],
+        position,
+      },
+    }));
+  }, []);
+
+  const addEdge = useCallback((edge: EdgeType) => {
+    setEdges((prevEdges) => ({
+      ...prevEdges,
+      [edge.id]: edge,
+    }));
+  }, []);
+
+  const removeEdge = useCallback((edgeId: string) => {
+    setEdges((prevEdges) => {
+      const newEdges = { ...prevEdges };
+
+      delete newEdges[edgeId];
+
+      return newEdges;
+    });
+  }, []);
+
+  const contextValue = useMemo(
+    () => ({
+      nodes,
+      setNodes,
+      edges,
+      setEdges,
+      connection,
+      setConnection,
+      updateNodePosition,
+      addEdge,
+      removeEdge,
+      containerRef,
+    }),
+    [nodes, edges, connection, updateNodePosition, addEdge, removeEdge],
+  );
+
+  return <FlowContext.Provider value={contextValue}>{children}</FlowContext.Provider>;
+};
+
+export const useFlowContext = () => {
   const context = useContext(FlowContext);
 
   if (!context) {
