@@ -1,8 +1,9 @@
 'use client';
 
 import { useActionState } from 'react';
-import { Button, Card, Flex, Heading, Text, TextField } from '@radix-ui/themes';
+import { Button, Card, Flex, Heading, Spinner, Text, TextField } from '@radix-ui/themes';
 import * as Form from '@radix-ui/react-form';
+import { useFormStatus } from 'react-dom';
 
 import { createProject } from '@/libs/actions';
 import { ProjectRedirect } from '@/libs/utils/redirects';
@@ -10,6 +11,16 @@ import { ProjectSections } from '@/libs/types';
 
 type CreateProjectProps = {
   changeSection: (section: ProjectSections) => void;
+};
+
+const SubmitButton = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button disabled={pending} type="submit">
+      {pending ? <Spinner /> : 'Create Project'}
+    </Button>
+  );
 };
 
 export const CreateProject = ({ changeSection }: CreateProjectProps) => {
@@ -90,7 +101,7 @@ export const CreateProject = ({ changeSection }: CreateProjectProps) => {
                 Cancel
               </Button>
               <Form.Submit asChild>
-                <Button type="submit">Create Project</Button>
+                <SubmitButton />
               </Form.Submit>
             </Flex>
           </Flex>
