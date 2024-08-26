@@ -2,7 +2,8 @@
 
 import React, { createContext, useContext, useState, useCallback, useMemo, useRef, useEffect } from 'react';
 
-import { NodeType, EdgeType, ConnectionType } from '../types';
+import { NodeType, EdgeType, ConnectionType, NodeHandlerType } from '../types';
+import { generateEdgeId } from '../utils';
 
 type FlowContextType = {
   nodes: Record<string, NodeType>;
@@ -12,7 +13,7 @@ type FlowContextType = {
   connection: ConnectionType | null;
   setConnection: React.Dispatch<React.SetStateAction<ConnectionType | null>>;
   updateNodePosition: (nodeId: string, position: { x: number; y: number }) => void;
-  addEdge: (edge: EdgeType) => void;
+  addEdge: (from: NodeHandlerType, to: NodeHandlerType) => void;
   removeEdge: (edgeId: string) => void;
   containerRef: React.RefObject<HTMLDivElement>;
 };
@@ -50,10 +51,16 @@ export const FlowContextProvider: React.FC<FlowContextProviderProps> = ({
     }));
   }, []);
 
-  const addEdge = useCallback((edge: EdgeType) => {
+  const addEdge = useCallback((from: NodeHandlerType, to: NodeHandlerType) => {
+    const newEdgeId = generateEdgeId(from, to);
+
     setEdges((prevEdges) => ({
       ...prevEdges,
-      [edge.id]: edge,
+      [newEdgeId]: {
+        id: newEdgeId,
+        source: from,
+        target: to,
+      },
     }));
   }, []);
 

@@ -4,7 +4,7 @@ import { NodeHandlerType, useFlowContext, validateConnection, generateHandlerId 
 import styles from '@/libs/styles/node.module.css';
 
 export const NodeHandler = (props: NodeHandlerType) => {
-  const { connection, setConnection, createEdge } = useFlowContext();
+  const { connection, setConnection, addEdge } = useFlowContext();
   const [isValidConnection, setIsValidConnection] = useState<boolean | null>(null);
 
   const handleStartConnection = ({ nodeId, handlerType, handlerKey }: NodeHandlerType) => {
@@ -38,7 +38,7 @@ export const NodeHandler = (props: NodeHandlerType) => {
       const valid = validateConnection(connection.from, { nodeId, handlerType, handlerKey });
 
       if (valid) {
-        createEdge(connection.from, { nodeId, handlerType, handlerKey });
+        addEdge(connection.from, { nodeId, handlerType, handlerKey });
       }
     }
     setConnection(null);
