@@ -8,6 +8,7 @@ import { generateEdgeId } from '../utils';
 type FlowContextType = {
   nodes: Record<string, NodeType>;
   setNodes: React.Dispatch<React.SetStateAction<Record<string, NodeType>>>;
+  deleteNode: (nodeId: string) => void;
   edges: Record<string, EdgeType>;
   setEdges: React.Dispatch<React.SetStateAction<Record<string, EdgeType>>>;
   connection: ConnectionType | null;
@@ -40,6 +41,16 @@ export const FlowContextProvider: React.FC<FlowContextProviderProps> = ({
     setNodes(initialNodes || {});
     setEdges(initialEdges || {});
   }, [initialNodes, initialEdges]);
+
+  const deleteNode = (nodeId: string) => {
+    setNodes((prevNodes) => {
+      const newNodes = { ...prevNodes };
+
+      delete newNodes[nodeId];
+
+      return newNodes;
+    });
+  };
 
   const updateNodePosition = useCallback((nodeId: string, position: { x: number; y: number }) => {
     setNodes((prevNodes) => ({
@@ -79,6 +90,7 @@ export const FlowContextProvider: React.FC<FlowContextProviderProps> = ({
       nodes,
       setNodes,
       edges,
+      deleteNode,
       setEdges,
       connection,
       setConnection,
