@@ -22,6 +22,15 @@ export const AttributeFields = ({ webNodeType, getAttributeValue, updateAttribut
               onChange={(value) => updateAttributeConfig(attribute.name, value)}
             />
           );
+
+        case 'text':
+          return (
+            <StringRenderer
+              label={attribute.label}
+              value={getAttributeValue(attribute.name)}
+              onChange={(value) => updateAttributeConfig(attribute.name, value)}
+            />
+          );
       }
     }) ?? (
       <Flex

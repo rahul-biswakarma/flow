@@ -7,14 +7,14 @@ interface Attribute {
   required: boolean;
 }
 
-type AttributeType = 'string' | 'number' | 'boolean' | 'object' | 'array';
+type AttributeType = 'string' | 'text' | 'number' | 'boolean' | 'object' | 'array';
 
 export const webNodeAttribute: Record<string, Attribute[]> = {
   [WebNodeTypes.Text]: [
     {
       label: 'Content',
       name: 'children',
-      type: 'string',
+      type: 'text',
       required: true,
     },
   ],
@@ -22,7 +22,7 @@ export const webNodeAttribute: Record<string, Attribute[]> = {
     {
       label: 'Content',
       name: 'children',
-      type: 'string',
+      type: 'text',
       required: true,
     },
   ],
