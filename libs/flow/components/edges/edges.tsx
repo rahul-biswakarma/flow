@@ -5,6 +5,8 @@ import { getHandlerElement } from '../../utils';
 
 import { Edge } from './edge';
 
+import { useFlowContext } from '@/libs/flow';
+
 interface EdgesProps {
   edges: Record<string, EdgeType>;
   nodes: Record<string, NodeType>;
@@ -15,6 +17,7 @@ interface EdgesProps {
 
 export const Edges: React.FC<EdgesProps> = React.memo(({ edges, nodes, containerPosition, scale, translate }) => {
   const [renderedEdges, setRenderedEdges] = useState<JSX.Element[]>([]);
+  const { deleteEdge } = useFlowContext();
 
   const edgesArray = useMemo(() => Object.values(edges), [edges]);
 
@@ -22,7 +25,7 @@ export const Edges: React.FC<EdgesProps> = React.memo(({ edges, nodes, container
     if (!containerPosition) return;
 
     const renderEdges = () => {
-      const newRenderedEdges = edgesArray
+      const newRenderedEdges: JSX.Element[] = edgesArray
         .map((edge) => {
           const sourceNode = nodes[edge.source.nodeId];
           const targetNode = nodes[edge.target.nodeId];
@@ -53,7 +56,7 @@ export const Edges: React.FC<EdgesProps> = React.memo(({ edges, nodes, container
 
           return (
             <Edge
-              key={edge.id}
+              key={`edge-${edge.id}`}
               fromX={sourcePosition.x}
               fromY={sourcePosition.y}
               scale={scale}
@@ -62,7 +65,7 @@ export const Edges: React.FC<EdgesProps> = React.memo(({ edges, nodes, container
             />
           );
         })
-        .filter(Boolean);
+        .filter((edge): edge is JSX.Element => edge !== null);
 
       setRenderedEdges(newRenderedEdges);
     };
@@ -77,7 +80,7 @@ export const Edges: React.FC<EdgesProps> = React.memo(({ edges, nodes, container
 
     // Clean up the observer when the component unmounts
     return () => observer.disconnect();
-  }, [edgesArray, nodes, containerPosition, scale, translate]);
+  }, [edgesArray, nodes, containerPosition, scale, translate, deleteEdge]);
 
   return <>{renderedEdges}</>;
 });

@@ -16,6 +16,7 @@ type FlowContextType = {
   updateNodePosition: (nodeId: string, position: { x: number; y: number }) => void;
   addEdge: (from: NodeHandlerType, to: NodeHandlerType) => void;
   removeEdge: (edgeId: string) => void;
+  deleteEdge: (edgeId: string) => void;
   containerRef: React.RefObject<HTMLDivElement>;
 };
 
@@ -42,7 +43,7 @@ export const FlowContextProvider: React.FC<FlowContextProviderProps> = ({
     setEdges(initialEdges || {});
   }, [initialNodes, initialEdges]);
 
-  const deleteNode = (nodeId: string) => {
+  const deleteNode = useCallback((nodeId: string) => {
     setNodes((prevNodes) => {
       const newNodes = { ...prevNodes };
 
@@ -50,7 +51,20 @@ export const FlowContextProvider: React.FC<FlowContextProviderProps> = ({
 
       return newNodes;
     });
-  };
+
+    // Also remove any edges connected to this node
+    setEdges((prevEdges) => {
+      const newEdges = { ...prevEdges };
+
+      Object.keys(newEdges).forEach((edgeId) => {
+        if (newEdges[edgeId].source.nodeId === nodeId || newEdges[edgeId].target.nodeId === nodeId) {
+          delete newEdges[edgeId];
+        }
+      });
+
+      return newEdges;
+    });
+  }, []);
 
   const updateNodePosition = useCallback((nodeId: string, position: { x: number; y: number }) => {
     setNodes((prevNodes) => ({
@@ -85,6 +99,16 @@ export const FlowContextProvider: React.FC<FlowContextProviderProps> = ({
     });
   }, []);
 
+  const deleteEdge = useCallback((edgeId: string) => {
+    setEdges((prevEdges) => {
+      const newEdges = { ...prevEdges };
+
+      delete newEdges[edgeId];
+
+      return newEdges;
+    });
+  }, []);
+
   const contextValue = useMemo(
     () => ({
       nodes,
@@ -97,9 +121,10 @@ export const FlowContextProvider: React.FC<FlowContextProviderProps> = ({
       updateNodePosition,
       addEdge,
       removeEdge,
+      deleteEdge,
       containerRef,
     }),
-    [nodes, edges, connection, updateNodePosition, addEdge, removeEdge],
+    [nodes, edges, connection, updateNodePosition, addEdge, removeEdge, deleteEdge, deleteNode],
   );
 
   return <FlowContext.Provider value={contextValue}>{children}</FlowContext.Provider>;

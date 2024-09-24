@@ -14,7 +14,18 @@ type WebNodeWrapperProps = {
 
 export const WebNodeWrapper = ({ node, children, disableDelete }: WebNodeWrapperProps) => {
   const { openPanel, closePanel } = useAttribute();
-  const { deleteNode } = useFlowContext();
+  const { deleteNode, edges, removeEdge } = useFlowContext();
+
+  const handleDeleteParentConnection = () => {
+    // Find the edge where this node is the target
+    const parentEdge = Object.values(edges).find((edge) => edge.source.nodeId === node.id);
+
+    if (parentEdge) {
+      removeEdge(parentEdge.id);
+    }
+  };
+
+  const hasParentConnection = Object.values(edges).some((edge) => edge.source.nodeId === node.id);
 
   return (
     <ContextMenu.Root>
@@ -38,10 +49,21 @@ export const WebNodeWrapper = ({ node, children, disableDelete }: WebNodeWrapper
       </ContextMenu.Trigger>
       <ContextMenu.Content
         style={{
-          width: '150px',
+          width: '200px',
         }}
         variant="soft"
       >
+        {hasParentConnection && (
+          <ContextMenu.Item
+            color="orange"
+            onClick={() => {
+              closePanel?.();
+              handleDeleteParentConnection();
+            }}
+          >
+            Delete Source Edge
+          </ContextMenu.Item>
+        )}
         <ContextMenu.Item
           color="red"
           disabled={disableDelete}
@@ -50,7 +72,7 @@ export const WebNodeWrapper = ({ node, children, disableDelete }: WebNodeWrapper
             deleteNode(node.id);
           }}
         >
-          Delete
+          Delete Node
         </ContextMenu.Item>
       </ContextMenu.Content>
     </ContextMenu.Root>
