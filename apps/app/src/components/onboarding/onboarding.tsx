@@ -11,11 +11,11 @@ import type { OnboardingViews } from "./type";
 import { OnboardingUserCard } from "./user-card";
 
 const pageVariants = {
-  enter: (direction: number) => ({
+  initial: (direction: number) => ({
     x: direction > 0 ? "100%" : "-100%",
     opacity: 0,
   }),
-  center: {
+  animate: {
     x: 0,
     opacity: 1,
   },
@@ -31,13 +31,13 @@ const pageTransition = {
   duration: 0.3,
 };
 
-export const OnboardingPage = ({
+export function OnboardingPage({
   userData,
   projects,
 }: {
   userData: User;
   projects: Project[];
-}) => {
+}) {
   const t = useI18n();
   const [view, setView] = useState<OnboardingViews>("select_project");
   const [direction, setDirection] = useState(0);
@@ -62,7 +62,7 @@ export const OnboardingPage = ({
             </Button>
           )}
         </div>
-        {<OnboardingUserCard userData={userData} />}
+        <OnboardingUserCard userData={userData} />
       </div>
       <AnimatePresence initial={false} custom={direction} mode="wait">
         {view === "select_project" ? (
@@ -70,8 +70,8 @@ export const OnboardingPage = ({
             key="project-manager"
             custom={direction}
             variants={pageVariants}
-            initial="enter"
-            animate="center"
+            initial="initial"
+            animate="animate"
             exit="exit"
             transition={pageTransition}
           >
@@ -86,8 +86,8 @@ export const OnboardingPage = ({
             key="create-project"
             custom={direction}
             variants={pageVariants}
-            initial="enter"
-            animate="center"
+            initial="initial"
+            animate="animate"
             exit="exit"
             transition={pageTransition}
           >
@@ -99,4 +99,4 @@ export const OnboardingPage = ({
       </AnimatePresence>
     </div>
   );
-};
+}
