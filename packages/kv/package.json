@@ -14,8 +14,8 @@
     "./ratelimit": "./src/ratelimit.ts"
   },
   "dependencies": {
-    "@upstash/ratelimit": "^2.0.2",
-    "@upstash/redis": "^1.34.0",
+    "@upstash/ratelimit": "^2.0.3",
+    "@upstash/redis": "^1.34.3",
     "server-only": "^0.0.1"
   }
 }
