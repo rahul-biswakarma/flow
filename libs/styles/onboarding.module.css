@@ -1,7 +1,0 @@
-.onboardingProjectCard .projectCardIconButton {
-  visibility: hidden;
-}
-
-.onboardingProjectCard:hover .projectCardIconButton {
-  visibility: visible;
-}
