@@ -5,7 +5,7 @@ import type { Database } from "../types/db";
 type Tables = Database["public"]["Tables"];
 
 export async function getUser() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   try {
     const result = await supabase.auth.getUser();
@@ -19,7 +19,7 @@ export async function getUser() {
 }
 
 export async function getUserDetails(userId: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("users")
@@ -36,7 +36,7 @@ export async function getUserDetails(userId: string) {
 }
 
 export async function getProjects(userId: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const { data: projectIds, error: projectMemberShipError } = await supabase
       .from("project_memberships")
@@ -66,7 +66,7 @@ export async function getProjects(userId: string) {
 }
 
 export async function getProject(projectId: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("projects")
@@ -83,7 +83,7 @@ export async function getProject(projectId: string) {
 }
 
 export async function createProject(project: Tables["projects"]["Insert"]) {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("projects")
@@ -100,7 +100,7 @@ export async function createProject(project: Tables["projects"]["Insert"]) {
 }
 
 export async function getRolesForProject(projectId: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("roles")
@@ -116,7 +116,7 @@ export async function getRolesForProject(projectId: string) {
 }
 
 export async function createRole(role: Tables["roles"]["Insert"]) {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("roles")
@@ -133,7 +133,7 @@ export async function createRole(role: Tables["roles"]["Insert"]) {
 }
 
 export async function getUserRoles(userId: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("user_roles")
@@ -149,7 +149,7 @@ export async function getUserRoles(userId: string) {
 }
 
 export async function assignUserRole(userRole: Tables["user_roles"]["Insert"]) {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("user_roles")
@@ -166,7 +166,7 @@ export async function assignUserRole(userRole: Tables["user_roles"]["Insert"]) {
 }
 
 export async function getProjectMembers(projectId: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("project_memberships")
@@ -184,7 +184,7 @@ export async function getProjectMembers(projectId: string) {
 export async function addProjectMember(
   membership: Tables["project_memberships"]["Insert"],
 ) {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("project_memberships")
@@ -201,7 +201,7 @@ export async function addProjectMember(
 }
 
 export async function getProjectPages(projectId: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("pages")
@@ -217,7 +217,7 @@ export async function getProjectPages(projectId: string) {
 }
 
 export async function createPage(page: Tables["pages"]["Insert"]) {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("pages")
@@ -234,7 +234,7 @@ export async function createPage(page: Tables["pages"]["Insert"]) {
 }
 
 export async function getProjectCustomNodes(projectId: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("custom_nodes")
@@ -252,7 +252,7 @@ export async function getProjectCustomNodes(projectId: string) {
 export async function createCustomNodes(
   component: Tables["custom_nodes"]["Insert"],
 ) {
-  const supabase = createClient();
+  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("custom_nodes")

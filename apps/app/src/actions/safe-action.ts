@@ -77,7 +77,7 @@ export const authActionClient = actionClientWithMeta
     const {
       data: { user },
     } = await getUser();
-    const supabase = createClient();
+    const supabase = await createClient();
 
     if (!user) {
       throw new Error("Unauthorized");
