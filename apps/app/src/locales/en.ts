@@ -22,4 +22,12 @@ export default {
     "Project is a place where you and your team can work together to plan your idea and manage the execution",
   "onboarding.project_created": "Project created successfully. Redirecting...",
   "onboarding.project_create_error": "Error creating project: {error}",
+
+  "setup.get_started": "Get started",
+  "setup.welcome": "Welcome to {projectName}",
+  "setup.welcome_description":
+    "Let's set up your project. We'll guide you through a few quick steps to get you started.",
+  "setup.choose_template": "Pick Your Starting Point",
+  "setup.choose_template_description":
+    "Browse our templates and choose one that fits your vision. Don't worry, you can customize everything later.",
 } as const;

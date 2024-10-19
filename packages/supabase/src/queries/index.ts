@@ -65,19 +65,36 @@ export async function getProjects(userId: string) {
   }
 }
 
-export async function getProject(projectId: string) {
+export async function getProject(projectSlug: string) {
   const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("projects")
       .select("*")
-      .eq("id", projectId)
+      .eq("slug", projectSlug)
       .single();
 
     if (error) throw error;
     return data;
   } catch (error) {
     logger.error("Error fetching project:", error);
+    throw error;
+  }
+}
+
+export async function getProjectWithPages(projectSlug: string) {
+  const supabase = await createClient();
+  try {
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*, pages(*)")
+      .eq("slug", projectSlug)
+      .single();
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    logger.error("Error fetching project with pages:", error);
     throw error;
   }
 }
@@ -221,7 +238,7 @@ export async function getProjectPages(projectId: string) {
   try {
     const { data, error } = await supabase
       .from("pages")
-      .select("*, seo_models(*)")
+      .select("*")
       .eq("project_id", projectId);
 
     if (error) throw error;

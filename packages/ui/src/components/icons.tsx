@@ -1,12 +1,17 @@
 import {
+  ArrowLeft,
   ArrowRight,
   Check,
   ChevronLeft,
   Copy,
+  Handshake,
+  Heart,
   Loader2,
   LogOut,
   MoveRight,
+  MoveUpRight,
   Plus,
+  Puzzle,
 } from "lucide-react";
 
 export const Icons = {
@@ -18,4 +23,9 @@ export const Icons = {
   ChevronLeft,
   MoveRight,
   ArrowRight,
+  Handshake,
+  Puzzle,
+  ArrowLeft,
+  MoveUpRight,
+  Heart,
 };
