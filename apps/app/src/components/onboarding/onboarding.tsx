@@ -26,6 +26,21 @@ const pageVariants = {
   }),
 };
 
+const buttonVariants = {
+  initial: {
+    x: "-100%",
+    opacity: 0,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: {
+    x: "-100%",
+    opacity: 0,
+  },
+};
+
 const pageTransition = {
   type: "tween",
   ease: "anticipate",
@@ -52,16 +67,28 @@ export function OnboardingPage({
     <div className="relative h-screen w-screen flex flex-col items-center justify-center overflow-hidden">
       <div className="w-full flex justify-between gap-2 absolute top-0 left-0 px-4 py-2">
         <div>
-          {view === "create_project" && (
-            <Button
-              onClick={() => changeView("select_project")}
-              variant="ghost"
-              className="space-x-3"
-            >
-              <Icons.ChevronLeft />
-              {t("onboarding.back_to_selection")}
-            </Button>
-          )}
+          <AnimatePresence>
+            {view === "create_project" && (
+              <motion.div
+                key="onboarding-back-button"
+                variants={buttonVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={pageTransition}
+                layout
+              >
+                <Button
+                  onClick={() => changeView("select_project")}
+                  variant="ghost"
+                  className="space-x-3"
+                >
+                  <Icons.ChevronLeft />
+                  {t("onboarding.back_to_selection")}
+                </Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
         <OnboardingUserCard userData={userData} />
       </div>
