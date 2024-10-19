@@ -2,23 +2,30 @@ import { useScopedI18n } from "@/locales/client";
 import { Heading } from "@v1/ui/heading";
 import { ScrollArea } from "@v1/ui/scroll-area";
 import { Text } from "@v1/ui/text";
-import { useState } from "react";
+import type { TemplateType } from "../types";
 import { templateDemoData } from "./demo-data";
+import { EmptyTemplateSlide } from "./empty-template";
+import { ExploreMoreButton } from "./explore-more";
 import { TemplateSlide } from "./template-slide";
-import type { TemplateType } from "./types";
+
+type TemplatePageProps = {
+  onPrev: () => void;
+  onNext: () => void;
+  selectedTemplate: TemplateType | null;
+  setSelectedTemplate: (template: TemplateType | null) => void;
+};
 
 export const TemplatePage = ({
   onPrev,
   onNext,
-}: {
-  onPrev: () => void;
-  onNext: () => void;
-}) => {
+  selectedTemplate,
+  setSelectedTemplate,
+}: TemplatePageProps) => {
   const scopedT = useScopedI18n("setup");
 
-  const [selectedTemplate, setSelectedTemplate] = useState<TemplateType | null>(
-    null,
-  );
+  const handleExploreMore = () => {
+    console.log("Explore more");
+  };
 
   return (
     <div className="w-full h-full flex flex-col justify-start items-center">
@@ -40,14 +47,22 @@ export const TemplatePage = ({
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6"
           style={{ maxWidth: "70vw", margin: "0 auto" }}
         >
+          <EmptyTemplateSlide
+            selected={selectedTemplate === "empty"}
+            onClick={() => setSelectedTemplate("empty")}
+          />
           {templateDemoData.map((template) => (
             <TemplateSlide
               key={template.id}
               template={template}
-              selected={selectedTemplate?.id === template.id}
+              selected={
+                selectedTemplate !== "empty" &&
+                selectedTemplate?.id === template.id
+              }
               onClick={() => setSelectedTemplate(template)}
             />
           ))}
+          <ExploreMoreButton onClick={handleExploreMore} />
         </div>
       </ScrollArea>
     </div>

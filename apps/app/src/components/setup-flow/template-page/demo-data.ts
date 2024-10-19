@@ -40,16 +40,6 @@ export const templateDemoData = [
     likes: 1456,
   },
   {
-    id: "t006",
-    title: "Corporate Elegance",
-    screenshot:
-      "https://cdn.dribbble.com/userupload/4491282/file/original-60585142e48679459378304083fc4056.png?resize=1024x768",
-    demoUrl: "https://demo.corporateelegance.com",
-    views: 14567,
-    keywords: "corporate, professional, elegant, business",
-    likes: 2345,
-  },
-  {
     id: "t007",
     title: "Creative Canvas",
     screenshot:

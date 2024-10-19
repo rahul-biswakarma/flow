@@ -12,6 +12,8 @@ import {
   MoveUpRight,
   Plus,
   Puzzle,
+  Search,
+  Sparkles,
 } from "lucide-react";
 
 export const Icons = {
@@ -28,4 +30,6 @@ export const Icons = {
   ArrowLeft,
   MoveUpRight,
   Heart,
+  Sparkles,
+  Search,
 };

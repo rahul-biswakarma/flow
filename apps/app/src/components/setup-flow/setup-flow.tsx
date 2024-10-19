@@ -3,6 +3,7 @@ import { IconButton } from "@v1/ui/icon-button";
 import { Icons } from "@v1/ui/icons";
 import { useState } from "react";
 import { TemplatePage } from "./template-page";
+import type { TemplateType } from "./types";
 import { WelcomePage } from "./welcome-page";
 
 type View = "1" | "2" | "3" | "4" | "5" | "6";
@@ -28,6 +29,9 @@ const Dot = () => <div className="w-2.5 h-2.5 bg-gray-a3 rounded-full" />;
 
 export const SetupFlow = () => {
   const [view, setView] = useState<View>("1");
+  const [selectedTemplate, setSelectedTemplate] = useState<TemplateType | null>(
+    null,
+  );
 
   const handleViewChange = (newView: View) => {
     setView(newView);
@@ -37,7 +41,11 @@ export const SetupFlow = () => {
     <div className="relative w-screen h-screen overflow-hidden flex flex-col">
       {view === "1" && <WelcomePage onNext={() => setView("2")} />}
       {view === "2" && (
-        <TemplatePage onPrev={() => setView("1")} onNext={() => setView("2")} />
+        <TemplatePage
+          {...{ selectedTemplate, setSelectedTemplate }}
+          onPrev={() => setView("1")}
+          onNext={() => setView("2")}
+        />
       )}
       <div className="absolute w-full bottom-[25px] flex justify-center items-center text-gray-a9">
         <div className="px-5 py-3 rounded-3xl flex justify-center items-center gap-4 backdrop-blur">

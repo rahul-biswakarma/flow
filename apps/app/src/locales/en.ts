@@ -30,4 +30,6 @@ export default {
   "setup.choose_template": "Pick Your Starting Point",
   "setup.choose_template_description":
     "Browse our templates and choose one that fits your vision. Don't worry, you can customize everything later.",
+  "setup.start_from_scratch": "Start from Scratch",
+  "setup.explore_more_templates": "Explore More Templates",
 } as const;
