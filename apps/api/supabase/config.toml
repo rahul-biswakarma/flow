@@ -3,9 +3,13 @@ project_id = "flow"
 [api]
 enabled = true
 port = 54321
-schemas = ["public", "storage"]
-extra_search_path = ["public"]
-max_rows = 100
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+external_url = "http://127.0.0.1:54321"
+
+[api.tls]
+enabled = false
 
 [auth]
 site_url = "http://localhost:3000"
