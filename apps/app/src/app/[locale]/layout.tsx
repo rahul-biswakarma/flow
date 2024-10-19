@@ -1,6 +1,5 @@
 import "@v1/ui/globals.css";
 import { cn } from "@v1/ui/cn";
-import { Noise } from "@v1/ui/noise";
 import { ThemeProvider } from "@v1/ui/theme-provider";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
@@ -32,18 +31,19 @@ export default function RootLayout({
         "antialiased",
       )}
     >
-      <body className="relative">
-        <Noise className="z-[10000] opacity-[0.03]" />
-        <ThemeProvider
-          accentColor="indigo"
-          appearance="dark"
-          grayColor="slate"
-          panelBackground="translucent"
-          radius="medium"
-          scaling="100%"
-        >
-          {children}
-        </ThemeProvider>
+      <body>
+        <main className="relative before:absolute before:top-0 before:left-0 before:w-full before:h-full before:content-[''] before:opacity-[0.02] before:z-[100] before:pointer-events-none before:bg-noise">
+          <ThemeProvider
+            accentColor="indigo"
+            appearance="dark"
+            grayColor="slate"
+            panelBackground="translucent"
+            radius="medium"
+            scaling="100%"
+          >
+            {children}
+          </ThemeProvider>
+        </main>
       </body>
     </html>
   );

@@ -1,5 +1,4 @@
 import { useScopedI18n } from "@/locales/client";
-import type { User } from "@/types";
 import { Button } from "@v1/ui/button";
 import { Heading } from "@v1/ui/heading";
 import { Icons } from "@v1/ui/icons";
@@ -8,22 +7,26 @@ import { TextField } from "@v1/ui/text-field";
 import axios from "axios";
 import { useState } from "react";
 
-export const CreateProject = ({ userData }: { userData: User }) => {
+export const CreateProject = ({
+  showProjectManger,
+}: { showProjectManger: () => void }) => {
   const scopedT = useScopedI18n("onboarding");
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleProjectRedirect = (slug: string) => {};
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     try {
       const response = await axios.post("/api/project.create", { name, slug });
-      console.log("Project created:", response.data);
-      // Handle successful creation (e.g., redirect to new project page)
+      if (response.data.slug) {
+        handleProjectRedirect(response.data.slug);
+      }
     } catch (error) {
       console.error("Error creating project:", error);
-      // Handle error (e.g., show error message to user)
     } finally {
       setIsLoading(false);
     }
@@ -65,6 +68,7 @@ export const CreateProject = ({ userData }: { userData: User }) => {
             color="gray"
             variant="soft"
             type="button"
+            onClick={showProjectManger}
           >
             {scopedT("cancel")}
           </Button>
@@ -72,7 +76,7 @@ export const CreateProject = ({ userData }: { userData: User }) => {
             loading={isLoading}
             variant="solid"
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || !name || !slug}
           >
             <Icons.Plus />
             {scopedT("create_project")}
