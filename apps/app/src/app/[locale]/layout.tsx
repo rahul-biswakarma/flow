@@ -1,5 +1,6 @@
 import "@v1/ui/globals.css";
 import { cn } from "@v1/ui/cn";
+import { Noise } from "@v1/ui/noise";
 import { ThemeProvider } from "@v1/ui/theme-provider";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
@@ -31,7 +32,8 @@ export default function RootLayout({
         "antialiased",
       )}
     >
-      <body>
+      <body className="relative">
+        <Noise className="z-[10000] opacity-[0.03]" />
         <ThemeProvider
           accentColor="indigo"
           appearance="dark"

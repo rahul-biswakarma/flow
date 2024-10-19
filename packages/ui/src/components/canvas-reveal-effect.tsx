@@ -1,14 +1,10 @@
 "use client";
 
+import { cn } from "@/utils";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { type ClassValue, clsx } from "clsx";
+import {} from "clsx";
 import React, { useMemo, useRef } from "react";
-import { twMerge } from "tailwind-merge";
 import * as THREE from "three";
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 
 export const CanvasRevealEffect = ({
   animationSpeed = 0.4,

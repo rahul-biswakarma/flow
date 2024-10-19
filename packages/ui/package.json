@@ -28,6 +28,7 @@
     "./button": "./src/components/button.tsx",
     "./text": "./src/components/text.tsx",
     "./tooltip": "./src/components/tooltip.tsx",
+    "./noise": "./src/components/noise.tsx",
     "./dialog": "./src/components/dialog.tsx",
     "./text-field": "./src/components/text-field.tsx",
     "./icons": "./src/components/icons.tsx",
