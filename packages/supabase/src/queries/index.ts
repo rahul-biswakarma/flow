@@ -99,6 +99,22 @@ export async function createProject(project: Tables["projects"]["Insert"]) {
   }
 }
 
+export const getProjectBySlug = async (slug: string) => {
+  const supabase = await createClient();
+  try {
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*")
+      .eq("slug", slug);
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    logger.error("Error fetching project by slug:", error);
+    throw error;
+  }
+};
+
 export async function getRolesForProject(projectId: string) {
   const supabase = await createClient();
   try {

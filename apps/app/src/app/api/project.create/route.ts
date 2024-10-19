@@ -1,5 +1,10 @@
 import { logger } from "@v1/logger";
-import { addProjectMember, createProject, getUser } from "@v1/supabase/queries";
+import {
+  addProjectMember,
+  createProject,
+  getProjectBySlug,
+  getUser,
+} from "@v1/supabase/queries";
 import type {} from "next";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -28,6 +33,15 @@ export async function POST(request: Request) {
       created_by: user.id,
       admins: [user.id],
     };
+
+    const projectsWithSameSlug = await getProjectBySlug(projectData.slug);
+
+    if (projectsWithSameSlug.length > 0) {
+      return NextResponse.json(
+        { error: "Slug already taken" },
+        { status: 400 },
+      );
+    }
 
     const project = await createProject(projectData);
 

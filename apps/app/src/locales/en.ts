@@ -20,4 +20,6 @@ export default {
   "onboarding.cancel": "Cancel",
   "onboarding.create_new_project_description":
     "Project is a place where you and your team can work together to plan your idea and manage the execution",
+  "onboarding.project_created": "Project created successfully. Redirecting...",
+  "onboarding.project_create_error": "Error creating project: {error}",
 } as const;

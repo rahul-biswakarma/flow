@@ -1,10 +1,13 @@
+import apiClient from "@/lib/api-client";
 import { useScopedI18n } from "@/locales/client";
+import type { Project } from "@/types";
 import { Button } from "@v1/ui/button";
 import { Heading } from "@v1/ui/heading";
 import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
 import { TextField } from "@v1/ui/text-field";
-import axios from "axios";
+import { toast } from "@v1/ui/toast";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 
 export const CreateProject = ({
@@ -15,18 +18,30 @@ export const CreateProject = ({
   const [slug, setSlug] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleProjectRedirect = (slug: string) => {};
+  const handleProjectRedirect = (slug: string) => {
+    setName("");
+    setSlug("");
+    setTimeout(() => {
+      redirect(`/${slug}`);
+    }, 100);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const response = await axios.post("/api/project.create", { name, slug });
-      if (response.data.slug) {
-        handleProjectRedirect(response.data.slug);
+      const { data, error } = await apiClient.post<Project>("/project.create", {
+        name,
+        slug,
+      });
+      if (error) {
+        toast.error(scopedT("project_create_error", { error }));
+      } else if (data.slug) {
+        toast.success(scopedT("project_created"));
+        handleProjectRedirect(data.slug);
       }
-    } catch (error) {
-      console.error("Error creating project:", error);
+    } catch (e) {
+      toast.error(scopedT("project_create_error", { error: e as string }));
     } finally {
       setIsLoading(false);
     }

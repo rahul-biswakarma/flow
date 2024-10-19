@@ -3,6 +3,7 @@ import { useI18n } from "@/locales/client";
 import type { Project, User } from "@/types";
 import { Button } from "@v1/ui/button";
 import { Icons } from "@v1/ui/icons";
+import { Toaster } from "@v1/ui/toast";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { CreateProject } from "./create-project";
@@ -99,6 +100,7 @@ export function OnboardingPage({
           </motion.div>
         )}
       </AnimatePresence>
+      <Toaster richColors position="top-center" />
     </div>
   );
 }
