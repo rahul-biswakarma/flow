@@ -74,6 +74,7 @@ export function OnboardingPage({
             animate="animate"
             exit="exit"
             transition={pageTransition}
+            layout
           >
             <ProjectManager
               showCreateView={() => changeView("create_project")}
@@ -90,6 +91,7 @@ export function OnboardingPage({
             animate="animate"
             exit="exit"
             transition={pageTransition}
+            layout
           >
             <CreateProject
               showProjectManger={() => changeView("select_project")}
