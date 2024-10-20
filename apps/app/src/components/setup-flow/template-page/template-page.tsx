@@ -1,7 +1,10 @@
 import { useScopedI18n } from "@/locales/client";
+import { Button } from "@v1/ui/button";
 import { Heading } from "@v1/ui/heading";
+import { Icons } from "@v1/ui/icons";
 import { ScrollArea } from "@v1/ui/scroll-area";
 import { Text } from "@v1/ui/text";
+import { AnimatePresence, motion } from "framer-motion";
 import type { TemplateType } from "../types";
 import { templateDemoData } from "./demo-data";
 import { EmptyTemplateSlide } from "./empty-template";
@@ -28,14 +31,14 @@ export const TemplatePage = ({
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-start items-center">
+    <div className="relative w-full h-full flex flex-col justify-start items-center">
       <Heading size="9" className="pt-[10vh] pb-4">
         {scopedT("choose_template")}
       </Heading>
-      <Text className="text-gray-10 mb-6" size="3">
+      <Text className="text-gray-10 mb-2" size="3">
         {scopedT("choose_template_description")}
       </Text>
-      <ScrollArea className="relative w-full flex-grow pb-[100px]">
+      <ScrollArea className="relative w-full flex-grow">
         <div
           style={{
             background:
@@ -64,7 +67,38 @@ export const TemplatePage = ({
           ))}
           <ExploreMoreButton onClick={handleExploreMore} />
         </div>
+        <AnimatePresence>
+          {selectedTemplate && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            >
+              <div className="flex w-full justify-center pt-7">
+                <Button
+                  onClick={onNext}
+                  size="3"
+                  className="w-full max-w-[300px]"
+                >
+                  {scopedT("template_selected")}
+                  <Icons.MoveRight />
+                </Button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <div>
+          <div className="h-[100px] w-full" />
+        </div>
       </ScrollArea>
+      <div
+        style={{
+          background:
+            "linear-gradient(to top, var(--color-background), transparent)",
+        }}
+        className="absolute bottom-0 left-0 w-full h-10 z-10"
+      />
     </div>
   );
 };

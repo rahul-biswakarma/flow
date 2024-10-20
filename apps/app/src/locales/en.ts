@@ -32,4 +32,5 @@ export default {
     "Browse our templates and choose one that fits your vision. Don't worry, you can customize everything later.",
   "setup.start_from_scratch": "Start from Scratch",
   "setup.explore_more_templates": "Explore More Templates",
+  "setup.template_selected": "Love It? Let's Go!",
 } as const;
