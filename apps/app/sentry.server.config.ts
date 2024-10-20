@@ -16,4 +16,5 @@ Sentry.init({
       errors: true,
     }),
   ],
+  sourceMaps: true,
 });

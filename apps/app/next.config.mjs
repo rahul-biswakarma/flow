@@ -13,7 +13,7 @@ export default withSentryConfig(nextConfig, {
   silent: !process.env.CI,
   telemetry: false,
   widenClientFileUpload: true,
-  hideSourceMaps: true,
+  hideSourceMaps: false,
   disableLogger: true,
   tunnelRoute: "/monitoring",
 });
