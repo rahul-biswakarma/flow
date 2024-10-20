@@ -17,7 +17,7 @@ export const EmptyTemplateSlide: React.FC<EmptyTemplateSlideProps> = ({
   return (
     <div
       className={clsx(
-        "relative w-[300px] rounded-lg p-2 border border-dashed border-outline-02 hover:bg-gray-a3 cursor-pointer group h-[240px]",
+        "relative w-[300px] rounded-lg p-2 border border-dashed border-outline-03 hover:bg-gray-a3 cursor-pointer group h-[240px]",
         {
           "border-green-10 bg-green-a3 hover:bg-green-a5": selected,
         },
