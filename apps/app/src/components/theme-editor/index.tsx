@@ -1,162 +1,118 @@
-import { Flex, Grid, RadioCards, Text, Tooltip } from "@radix-ui/themes";
-import { themePropDefs } from "@radix-ui/themes/dist/cjs/components/theme.props";
+import type { Theme } from "@/types";
+import { Button } from "@v1/ui/button";
+import { Text } from "@v1/ui/text";
+import {
+  themeAccentColors,
+  themeAppearance,
+  themeGrayColors,
+  themePanelBackground,
+  themeScaling,
+} from "@v1/ui/theme-data";
 
-import { useEffect, useState } from "react";
+import { Tooltip } from "@v1/ui/tooltip";
+import type React from "react";
+import type { Dispatch, SetStateAction } from "react";
 
-import { RadioCardItemWrapper } from "../common/radio-card-wrapper";
-import styles from "../styles/project-config-widget.module.css";
+type ThemeOptionRendererProps = {
+  theme: Theme;
+  setTheme: Dispatch<SetStateAction<Theme>>;
+};
 
-import { useProjectContext } from "@/libs/context";
-
-export const ThemeOptionRenderer = () => {
-  const { setProjectConfig } = useProjectContext();
-
-  const [accentColor, setAccentColor] = useState("blue" as string);
-  const [grayColor, setGrayColor] = useState("auto" as string);
-  const [appearance, setAppearance] = useState("dark" as string);
-  const [panelBackground, setPanelBackground] = useState(
-    "translucent" as string,
-  );
-  const [scale, setScale] = useState("100%" as string);
-
-  useEffect(() => {
-    setProjectConfig({
-      accentColor,
-      gray: grayColor,
-      appearance,
-      panelBackground,
-      scale,
-    });
-  }, [accentColor, grayColor, appearance, panelBackground, scale]);
-
+export const ThemeEditor: React.FC<ThemeOptionRendererProps> = ({
+  theme,
+  setTheme,
+}) => {
   return (
-    <Flex direction="column" gap="4">
+    <div className="flex flex-col gap-4">
       {/* Appearance */}
-      <Flex direction="column" gap="2">
-        <Text className={styles.sectionTitle}>Appearance</Text>
-        <RadioCards.Root
-          color="gray"
-          defaultValue={appearance}
-          gap="2"
-          onValueChange={(value) => setAppearance(value)}
-        >
-          <RadioCardItemWrapper icon={IconSun} value="light">
-            <Text size="1">Light</Text>
-          </RadioCardItemWrapper>
-          <RadioCardItemWrapper icon={IconMoonStars} value="dark">
-            <Text size="1">Dark</Text>
-          </RadioCardItemWrapper>
-        </RadioCards.Root>
-      </Flex>
-      {/* Panel Background */}
-      <Flex direction="column" gap="2">
-        <Text className={styles.sectionTitle}>Panel Background</Text>
-        <RadioCards.Root
-          color="gray"
-          defaultValue={panelBackground}
-          gap="2"
-          onValueChange={(value) => setPanelBackground(value)}
-        >
-          <RadioCardItemWrapper icon={IconCircleFilled} value="solid">
-            <Text size="1">Solid</Text>
-          </RadioCardItemWrapper>
-          <RadioCardItemWrapper icon={IconCircle} value="translucent">
-            <Text size="1">Translucent</Text>
-          </RadioCardItemWrapper>
-        </RadioCards.Root>
-      </Flex>
-      {/* Scale */}
-      <Flex direction="column" gap="2">
-        <Text className={styles.sectionTitle}>Panel Background</Text>
-        <RadioCards.Root
-          color="gray"
-          columns="repeat(auto-fit, minmax(30px, 1fr))"
-          defaultValue={scale}
-          gap="2"
-          onValueChange={(value) => setScale(value)}
-        >
-          {themePropDefs.scaling.values.map((scale) => (
-            <RadioCardItemWrapper key={scale} value={scale}>
-              <Text size="1">{scale}</Text>
-            </RadioCardItemWrapper>
+      <div className="flex flex-col gap-2">
+        <Text className="text-lg font-semibold">Appearance</Text>
+        <div className="flex gap-2">
+          {themeAppearance.map((value) => (
+            <Button
+              key={value}
+              className="flex items-center gap-2 p-2 rounded"
+              onClick={() => setTheme({ appearance: value })}
+            >
+              <Text size="1">{value}</Text>
+            </Button>
           ))}
-        </RadioCards.Root>
-      </Flex>
+        </div>
+      </div>
+
+      {/* Panel Background */}
+      <div className="flex flex-col gap-2">
+        <Text className="text-lg font-semibold">Panel Background</Text>
+        <div className="flex gap-2">
+          {themePanelBackground.map((value) => (
+            <Button
+              key={value}
+              className="flex items-center gap-2 p-2 rounded"
+              onClick={() => setTheme({ panelBackground: value })}
+            >
+              <Text size="1">{value}</Text>
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      {/* Scale */}
+      <div className="flex flex-col gap-2">
+        <Text className="text-lg font-semibold">Scale</Text>
+        <div className="grid grid-cols-5 gap-2">
+          {themeScaling.map((scale) => (
+            <Button
+              key={scale}
+              className="p-2 rounded"
+              onClick={() => setTheme({ scale })}
+            >
+              <Text size="1">{scale}</Text>
+            </Button>
+          ))}
+        </div>
+      </div>
 
       {/* Accent Color */}
-      <Flex direction="column" gap="2">
-        <Text className={styles.sectionTitle}>Accent Color</Text>
-        <Grid
-          aria-labelledby="accent-color-title"
-          columns="10"
-          gap="2"
-          role="group"
-        >
-          {themePropDefs.accentColor.values.map((color) => (
-            <label
+      <div className="flex flex-col gap-2">
+        <Text className="text-lg font-semibold">Accent Color</Text>
+        <div className="flex flex-wrap gap-2">
+          {themeAccentColors.map((color) => (
+            <Tooltip
               key={color}
-              className="rt-ThemePanelSwatch"
-              style={{ backgroundColor: `var(--${color}-9)` }}
+              content={
+                <Text style={{ textTransform: "capitalize" }}>{color}</Text>
+              }
             >
-              <Tooltip
-                content={
-                  <Text style={{ textTransform: "capitalize" }}>{color}</Text>
-                }
-              >
-                <input
-                  checked={accentColor === color}
-                  className="rt-ThemePanelSwatchInput"
-                  name="accentColor"
-                  type="radio"
-                  value={color}
-                  onChange={(event) =>
-                    setAccentColor(event.target.value as typeof accentColor)
-                  }
-                />
-              </Tooltip>
-            </label>
+              <Button
+                className="w-6 h-6 rounded-full"
+                style={{ backgroundColor: `var(--${color}-9)` }}
+                onClick={() => setTheme({ accentColor: color })}
+              />
+            </Tooltip>
           ))}
-        </Grid>
-      </Flex>
+        </div>
+      </div>
 
       {/* Gray Color */}
-      <Flex direction="column" gap="2">
-        <Text className={styles.sectionTitle}>Gray Color</Text>
-        <Grid
-          aria-labelledby="gray-color-title"
-          columns="10"
-          gap="2"
-          role="group"
-        >
-          {themePropDefs.grayColor.values.map((gray) => (
-            <Flex key={gray} asChild align="center" justify="center">
-              <label
-                className="rt-ThemePanelSwatch"
-                style={{
-                  backgroundColor: `var(--${gray}-9)`,
-                }}
-              >
-                <Tooltip
-                  content={
-                    <Text style={{ textTransform: "capitalize" }}>{gray}</Text>
-                  }
-                >
-                  <input
-                    checked={grayColor === gray}
-                    className="rt-ThemePanelSwatchInput"
-                    name="grayColor"
-                    type="radio"
-                    value={gray}
-                    onChange={(event) =>
-                      setGrayColor(event.target.value as typeof grayColor)
-                    }
-                  />
-                </Tooltip>
-              </label>
-            </Flex>
+      <div className="flex flex-col gap-2">
+        <Text className="text-lg font-semibold">Gray Color</Text>
+        <div className="flex gap-2">
+          {themeGrayColors.map((gray) => (
+            <Tooltip
+              key={gray}
+              content={
+                <Text style={{ textTransform: "capitalize" }}>{gray}</Text>
+              }
+            >
+              <Button
+                className="w-6 h-6 rounded-full"
+                style={{ backgroundColor: `var(--${gray}-9)` }}
+                onClick={() => setTheme({ grayColor: gray })}
+              />
+            </Tooltip>
           ))}
-        </Grid>
-      </Flex>
-    </Flex>
+        </div>
+      </div>
+    </div>
   );
 };

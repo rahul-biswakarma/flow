@@ -1,4 +1,5 @@
 "use client";
+import type { Theme } from "@/types";
 import { IconButton } from "@v1/ui/icon-button";
 import { Icons } from "@v1/ui/icons";
 import { AnimatePresence, motion } from "framer-motion";
@@ -9,18 +10,15 @@ import type { TemplateType } from "./types";
 import { WelcomePage } from "./welcome-page";
 
 type View = "1" | "2" | "3" | "4" | "5" | "6";
-const totalViews = 6;
-
-const pages = [
-  { id: "1", component: WelcomePage, icon: <Icons.Handshake /> },
-  { id: "2", component: TemplatePage, icon: <Icons.Puzzle /> },
-  { id: "3", component: ThemePage, icon: <Icons.Brush /> },
-  // Add more pages here as needed
-];
 
 const Dot = () => (
   <div className="w-2.5 h-2.5 bg-gray-a3 rounded-full hover:bg-gray-a8" />
 );
+
+type BasePageProps = {
+  onNext: () => void;
+  onPrev: () => void;
+};
 
 export const SetupFlow = () => {
   const [view, setView] = useState<View>("1");
@@ -28,6 +26,38 @@ export const SetupFlow = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateType | null>(
     null,
   );
+  const [theme, setTheme] = useState<Theme>({
+    appearance: "dark",
+    panelBackground: "translucent",
+    scale: "100%",
+    accentColor: "indigo",
+    grayColor: "sage",
+  });
+
+  const pages = [
+    {
+      id: "1",
+      component: (props: BasePageProps) => <WelcomePage {...props} />,
+      icon: <Icons.Handshake />,
+    },
+    {
+      id: "2",
+      component: (props: BasePageProps) => (
+        <TemplatePage
+          {...props}
+          {...{ selectedTemplate, setSelectedTemplate }}
+        />
+      ),
+      icon: <Icons.Puzzle />,
+    },
+    {
+      id: "3",
+      component: (props: BasePageProps) => (
+        <ThemePage {...props} {...{ theme, setTheme }} />
+      ),
+      icon: <Icons.Brush />,
+    },
+  ];
 
   const handleViewChange = (newView: View) => {
     setDirection(
@@ -85,8 +115,6 @@ export const SetupFlow = () => {
                       (Number.parseInt(id) - 1).toString() as View,
                     )
                   }
-                  selectedTemplate={selectedTemplate}
-                  setSelectedTemplate={setSelectedTemplate}
                 />
               </motion.div>
             ),
