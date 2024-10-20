@@ -27,10 +27,14 @@ export default {
   "setup.welcome": "Welcome to {projectName}",
   "setup.welcome_description":
     "Let's set up your project. We'll guide you through a few quick steps to get you started.",
-  "setup.choose_template": "Pick Your Starting Point",
-  "setup.choose_template_description":
+  "setup.template_page_heading": "Pick Your Starting Point",
+  "setup.template_page_description":
     "Browse our templates and choose one that fits your vision. Don't worry, you can customize everything later.",
   "setup.start_from_scratch": "Start from Scratch",
   "setup.explore_more_templates": "Explore More Templates",
-  "setup.template_selected": "Love It? Let's Go!",
+  "setup.template_page_next_button": "Love It? Let's Go!",
+  "setup.theme_page_heading": "Make It Your Own",
+  "setup.theme_page_description":
+    "Customize the look and feel of your project. Choose colors, fonts, and styles that reflect your brand.",
+  "setup.theme_page_next_button": "Looking Good! Next Step",
 } as const;

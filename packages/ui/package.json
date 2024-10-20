@@ -21,6 +21,7 @@
   "exports": {
     "./globals.css": "./src/globals.css",
     "./cn": "./src/utils/cn.ts",
+    "./theme-data": "./src/utils/theme-data.ts",
     "./theme-provider": "./src/components/theme-provider.tsx",
     "./avatar": "./src/components/avatar.tsx",
     "./icon-button": "./src/components/icon-button.tsx",

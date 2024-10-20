@@ -33,10 +33,10 @@ export const TemplatePage = ({
   return (
     <div className="relative w-full h-full flex flex-col justify-start items-center">
       <Heading size="9" className="pt-[10vh] pb-4">
-        {scopedT("choose_template")}
+        {scopedT("template_page_heading")}
       </Heading>
       <Text className="text-gray-10 mb-2" size="3">
-        {scopedT("choose_template_description")}
+        {scopedT("template_page_description")}
       </Text>
       <ScrollArea className="relative w-full flex-grow">
         <div
@@ -81,7 +81,7 @@ export const TemplatePage = ({
                   size="3"
                   className="w-full max-w-[300px]"
                 >
-                  {scopedT("template_selected")}
+                  {scopedT("template_page_next_button")}
                   <Icons.MoveRight />
                 </Button>
               </div>

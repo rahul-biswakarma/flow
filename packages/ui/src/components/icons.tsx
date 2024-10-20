@@ -1,6 +1,7 @@
 import {
   ArrowLeft,
   ArrowRight,
+  Brush,
   Check,
   ChevronLeft,
   Copy,
@@ -17,6 +18,7 @@ import {
 } from "lucide-react";
 
 export const Icons = {
+  Brush,
   SignOut: LogOut,
   Copy,
   Check,
