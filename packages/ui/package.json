@@ -34,6 +34,7 @@
     "./dialog": "./src/components/dialog.tsx",
     "./text-field": "./src/components/text-field.tsx",
     "./dropdown": "./src/components/dropdown.tsx",
+    "./segmented-control": "./src/components/segmented-control.tsx",
     "./checkbox": "./src/components/checkbox.tsx",
     "./tabs": "./src/components/tabs.tsx",
     "./card": "./src/components/card.tsx",

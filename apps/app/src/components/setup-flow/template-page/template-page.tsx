@@ -28,22 +28,22 @@ export const TemplatePage = ({
   };
 
   return (
-    <div className="relative w-full h-full flex gap-7 flex-col justify-center items-center">
-      <Heading size="9">{scopedT("template_page_heading")}</Heading>
-      <Text className="text-gray-10 mb-2" size="3">
-        {scopedT("template_page_description")}
-      </Text>
-      <div
-        className="flex justify-center gap-6"
-        style={{ maxWidth: "70vw", margin: "0 auto" }}
-      >
-        <EmptyTemplateSlide
-          selected={selectedTemplate === "empty"}
-          onClick={() => setSelectedTemplate("empty")}
-        />
-        <ExploreMoreButton onClick={handleExploreMore} />
-      </div>
-      <AnimatePresence>
+    <AnimatePresence>
+      <div className="relative w-full h-full flex gap-7 flex-col justify-center items-center">
+        <Heading size="9">{scopedT("template_page_heading")}</Heading>
+        <Text className="text-gray-10 mb-2" size="3">
+          {scopedT("template_page_description")}
+        </Text>
+        <div
+          className="flex justify-center gap-6"
+          style={{ maxWidth: "70vw", margin: "0 auto" }}
+        >
+          <EmptyTemplateSlide
+            selected={selectedTemplate === "empty"}
+            onClick={() => setSelectedTemplate("empty")}
+          />
+          <ExploreMoreButton onClick={handleExploreMore} />
+        </div>
         {selectedTemplate && (
           <motion.div
             style={{
@@ -66,7 +66,7 @@ export const TemplatePage = ({
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
-    </div>
+      </div>
+    </AnimatePresence>
   );
 };

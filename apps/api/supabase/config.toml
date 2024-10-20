@@ -13,7 +13,7 @@ enabled = false
 
 [auth]
 site_url = "http://localhost:3000"
-additional_redirect_urls = ["https://localhost:3000", "http://localhost:54321/auth/v1/callback"]
+additional_redirect_urls = ["https://localhost:3000", "http://localhost:54321/auth/v1/callback", "https://*.app.github.dev/"]
 jwt_expiry = 36000
 
 [db]
