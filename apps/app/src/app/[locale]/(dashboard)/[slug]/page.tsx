@@ -1,4 +1,4 @@
-import { SetupFlow } from "@/components/setup-flow";
+import { SetupFlow } from "@/components/setup-flow/setup-flow";
 import { FlowContextProvider } from "@/context";
 import type { ProjectWithPages, User } from "@/types";
 import {

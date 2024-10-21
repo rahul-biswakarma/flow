@@ -5,7 +5,7 @@ import { Icons } from "@v1/ui/icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { TemplatePage } from "./template-page";
-import { ThemePage } from "./theme-page";
+import { ThemePage } from "./theme-page/theme-page";
 import type { TemplateType } from "./types";
 import { WelcomePage } from "./welcome-page";
 
@@ -43,19 +43,19 @@ export const SetupFlow = () => {
     {
       id: "2",
       component: (props: BasePageProps) => (
+        <ThemePage {...props} {...{ theme, setTheme }} />
+      ),
+      icon: <Icons.Brush />,
+    },
+    {
+      id: "3",
+      component: (props: BasePageProps) => (
         <TemplatePage
           {...props}
           {...{ selectedTemplate, setSelectedTemplate }}
         />
       ),
       icon: <Icons.Puzzle />,
-    },
-    {
-      id: "3",
-      component: (props: BasePageProps) => (
-        <ThemePage {...props} {...{ theme, setTheme }} />
-      ),
-      icon: <Icons.Brush />,
     },
   ];
 
