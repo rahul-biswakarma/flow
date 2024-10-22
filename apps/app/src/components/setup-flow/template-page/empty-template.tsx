@@ -29,7 +29,7 @@ export const EmptyTemplateSlide: React.FC<EmptyTemplateSlideProps> = ({
     >
       <div
         className={clsx(
-          "relative h-full w-full flex flex-col justify-center items-center rounded-md overflow-hidden bg-gray-a2 group-hover:bg-gray-a4 gap-1 text-gray-10",
+          "relative h-full w-full flex flex-col justify-center items-center rounded-md overflow-hidden bg-gray-a2 group-hover:bg-gray-a4 gap-1 text-gray-12",
           {
             "bg-green-a3 group-hover:bg-green-a5 text-green-9 hover:text-green-11":
               selected,

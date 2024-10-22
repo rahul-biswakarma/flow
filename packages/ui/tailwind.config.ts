@@ -109,8 +109,10 @@ const config: Config = {
       },
       borderColor: {
         "outline-00": "var(--gray-3)",
-        "outline-02": "var(--gray-4)",
-        "outline-03": "var(--gray-5)",
+        "outline-01": "var(--gray-4)",
+        "outline-02": "var(--gray-5)",
+        "outline-03": "var(--gray-6)",
+        "outline-04": "var(--gray-7)",
         surface: "var(--gray-surface)",
       },
     },

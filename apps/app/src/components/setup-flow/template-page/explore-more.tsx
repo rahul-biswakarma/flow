@@ -20,7 +20,7 @@ export const ExploreMoreButton: React.FC<ExploreMoreButtonProps> = ({
       role="button"
       tabIndex={0}
     >
-      <div className="relative h-full w-full flex flex-col justify-center items-center rounded-md overflow-hidden bg-gray-a2 group-hover:bg-gray-a4 gap-2 text-gray-10">
+      <div className="relative h-full w-full flex flex-col justify-center items-center rounded-md overflow-hidden bg-gray-a2 group-hover:bg-gray-a4 gap-2 text-gray-12">
         <BackgroundGradientAnimation containerClassName="!absolute !w-full !h-full" />
         <Icons.Search className="w-8 h-8 z-10" />
         <Text className="z-10" size="2">

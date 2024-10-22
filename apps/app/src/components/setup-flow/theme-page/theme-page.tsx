@@ -13,17 +13,16 @@ export const ThemePage = ({ onNext }: { onNext: () => void }) => {
       <Text className="text-gray-10" size="3">
         {scopedT("theme_page_description")}
       </Text>
-      <SegmentedControl.Root className="h-[300px]">
-        <SegmentedControl.Item
-          className="relative w-[300px] p-2 h-full"
-          value="inbox"
-        >
-          <div className="absolute w-full h-screen border border-dashed border-gray-12 bg-gray-12 text-gray-1">
+      <SegmentedControl.Root className="h-full max-h-[300px]">
+        <SegmentedControl.Item value="inbox">
+          <div className="w-[300px] flex justify-center items-center h-full">
             Light
           </div>
         </SegmentedControl.Item>
-        <SegmentedControl.Item className="w-[300px]" value="drafts">
-          Drafts
+        <SegmentedControl.Item value="drafts">
+          <div className="w-[300px] flex justify-center items-center h-full">
+            Dark
+          </div>
         </SegmentedControl.Item>
       </SegmentedControl.Root>
       <Button onClick={onNext} size="3" className="w-full max-w-[300px]">

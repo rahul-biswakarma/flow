@@ -34,3 +34,7 @@ body {
   initial-value: 0deg;
   syntax: '<angle>';
 }
+
+.rt-SegmentedControlItemLabelActive, .rt-SegmentedControlItemLabelInactive {
+  height: 100%;
+}

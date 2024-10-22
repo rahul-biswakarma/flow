@@ -10,6 +10,6 @@
     "generate": "supabase gen types --lang=typescript --project-id lfhhqhfixgakrbfrtrhb --schema public > ../../packages/supabase/src/types/db.ts"
   },
   "dependencies": {
-    "supabase": "^1.204.3"
+    "supabase": "^1.207.9"
   }
 }
