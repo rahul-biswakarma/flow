@@ -68,38 +68,40 @@ const DotMatrix: React.FC<DotMatrixProps> = ({
 }) => {
   const uniforms = React.useMemo(() => {
     let colorsArray = [
-      colors[0],
-      colors[0],
-      colors[0],
-      colors[0],
-      colors[0],
-      colors[0],
+      colors[0] || [0, 0, 0],
+      colors[0] || [0, 0, 0],
+      colors[0] || [0, 0, 0],
+      colors[0] || [0, 0, 0],
+      colors[0] || [0, 0, 0],
+      colors[0] || [0, 0, 0],
     ];
     if (colors.length === 2) {
       colorsArray = [
-        colors[0],
-        colors[0],
-        colors[0],
-        colors[1],
-        colors[1],
-        colors[1],
+        colors[0] || [0, 0, 0],
+        colors[0] || [0, 0, 0],
+        colors[0] || [0, 0, 0],
+        colors[1] || [0, 0, 0],
+        colors[1] || [0, 0, 0],
+        colors[1] || [0, 0, 0],
       ];
     } else if (colors.length === 3) {
       colorsArray = [
-        colors[0],
-        colors[0],
-        colors[1],
-        colors[1],
-        colors[2],
-        colors[2],
+        colors[0] || [0, 0, 0],
+        colors[0] || [0, 0, 0],
+        colors[1] || [0, 0, 0],
+        colors[1] || [0, 0, 0],
+        colors[2] || [0, 0, 0],
+        colors[2] || [0, 0, 0],
       ];
     }
 
     return {
       u_colors: {
-        value: colorsArray.map((color) =>
-          color ? [color[0] / 255, color[1] / 255, color[2] / 255] : [0, 0, 0],
-        ) as [number, number, number][],
+        value: colorsArray.map((color) => [
+          (color[0] || 0) / 255,
+          (color[1] || 0) / 255,
+          (color[2] || 0) / 255,
+        ]) as [number, number, number][],
         type: "uniform3fv",
       },
       u_opacities: {
