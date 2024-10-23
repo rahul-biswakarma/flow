@@ -7,7 +7,7 @@
     "migrate": "supabase migration up",
     "seed": "supabase db seed generate && supabase db seed run",
     "reset": "supabase db reset",
-    "generate": "supabase gen types --lang=typescript --project-id lfhhqhfixgakrbfrtrhb --schema public > ../../packages/supabase/src/types/db.ts"
+    "generate": "supabase gen types --lang=typescript --local --schema public > ../../packages/supabase/src/types/db.ts"
   },
   "dependencies": {
     "supabase": "^1.207.9"

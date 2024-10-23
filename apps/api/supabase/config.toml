@@ -1,19 +1,15 @@
-project_id = "flow"
+project_id = "create-v1"
 
 [api]
 enabled = true
 port = 54321
-schemas = ["public", "graphql_public"]
-extra_search_path = ["public", "extensions"]
-max_rows = 1000
-external_url = "http://127.0.0.1:54321"
-
-[api.tls]
-enabled = false
+schemas = ["public", "storage"]
+extra_search_path = ["public"]
+max_rows = 100
 
 [auth]
 site_url = "http://localhost:3000"
-additional_redirect_urls = ["https://localhost:3000", "http://localhost:54321/auth/v1/callback", "https://*.app.github.dev/"]
+additional_redirect_urls = ["https://localhost:3000", "http://localhost:54321/auth/v1/callback"]
 jwt_expiry = 36000
 
 [db]
@@ -34,7 +30,7 @@ enable_confirmations = true
 enable_signup = true
 
 [analytics]
-enabled = true
+enabled = false
 port = 54327
 vector_port = 54328
 backend = "postgres"

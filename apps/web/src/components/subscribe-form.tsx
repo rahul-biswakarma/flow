@@ -3,7 +3,7 @@
 import { subscribeAction } from "@/actions/subscribe-action";
 import { Button } from "@v1/ui/button";
 import { Icons } from "@v1/ui/icons";
-import { Input } from "@v1/ui/text";
+import { Input } from "@v1/ui/input";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
 
