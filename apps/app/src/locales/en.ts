@@ -36,9 +36,20 @@ export default {
   "setup.theme_page_heading": "Choose Your Side",
   "setup.theme_page_description":
     "Light or dark? Pick the mode that suits your style (and eyesight).",
-  "setup.theme_page_light_card_content": "Light",
-  "setup.theme_page_light_card_title": "Blind me",
-  "setup.theme_page_dark_card_content": "Dark",
-  "setup.theme_page_dark_card_title": "I'm Batman",
   "setup.theme_page_next_button": "Looking Good! Next Step",
+  "setup.setup_complete": "You're All Set!",
+  "setup.setup_complete_description":
+    "Next, explore more features. Remember, {key} is your superpower. Stuck or unsure? Just hit Cmd+K, and our AI assistant will guide you through anything you need.",
+  "setup.enter_app": "Enter FLoW",
+  "setup.connect_accounts": "Connect Accounts",
+  "setup.connect_accounts_description":
+    "Link your GitHub and LinkedIn to import data and streamline your workflow.",
+  "setup.data_referencing": "Smart Data Referencing",
+  "setup.data_referencing_description":
+    "Use {key} and search 'data reference' to leverage our powerful data concepts.",
+  "setup.ai_partner": "AI Assistant",
+  "setup.ai_partner_description":
+    "FLoW AI helps with everything from data fetching to site building. Just use {key} and select the AI option.",
+  "setup.back_button": "Back",
+  "setup.skip_button": "Skip to the end",
 } as const;

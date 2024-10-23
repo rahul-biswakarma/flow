@@ -13,7 +13,7 @@ import { OnboardingUserCard } from "./user-card";
 
 const pageVariants = {
   initial: (direction: number) => ({
-    x: direction > 0 ? "100%" : "-100%",
+    x: direction > 0 ? 20 : -20,
     opacity: 0,
   }),
   animate: {
@@ -21,14 +21,14 @@ const pageVariants = {
     opacity: 1,
   },
   exit: (direction: number) => ({
-    x: direction < 0 ? "100%" : "-100%",
+    x: direction < 0 ? 20 : -20,
     opacity: 0,
   }),
 };
 
 const buttonVariants = {
   initial: {
-    x: "-100%",
+    x: -10,
     opacity: 0,
   },
   animate: {
@@ -36,14 +36,14 @@ const buttonVariants = {
     opacity: 1,
   },
   exit: {
-    x: "-100%",
+    x: -10,
     opacity: 0,
   },
 };
 
 const pageTransition = {
   type: "tween",
-  ease: "anticipate",
+  ease: "easeInOut",
   duration: 0.3,
 };
 
@@ -76,7 +76,6 @@ export function OnboardingPage({
                 animate="animate"
                 exit="exit"
                 transition={pageTransition}
-                layout
               >
                 <Button
                   onClick={() => changeView("select_project")}
@@ -102,7 +101,6 @@ export function OnboardingPage({
             animate="animate"
             exit="exit"
             transition={pageTransition}
-            layout
           >
             <ProjectManager
               showCreateView={() => changeView("create_project")}
@@ -119,7 +117,6 @@ export function OnboardingPage({
             animate="animate"
             exit="exit"
             transition={pageTransition}
-            layout
           >
             <CreateProject
               showProjectManger={() => changeView("select_project")}
