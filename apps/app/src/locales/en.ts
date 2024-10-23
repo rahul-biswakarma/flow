@@ -36,5 +36,9 @@ export default {
   "setup.theme_page_heading": "Choose Your Side",
   "setup.theme_page_description":
     "Light or dark? Pick the mode that suits your style (and eyesight).",
+  "setup.theme_page_light_card_content": "Light",
+  "setup.theme_page_light_card_title": "Blind me",
+  "setup.theme_page_dark_card_content": "Dark",
+  "setup.theme_page_dark_card_title": "I'm Batman",
   "setup.theme_page_next_button": "Looking Good! Next Step",
 } as const;

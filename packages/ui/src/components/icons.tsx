@@ -9,12 +9,14 @@ import {
   Heart,
   Loader2,
   LogOut,
+  Moon,
   MoveRight,
   MoveUpRight,
   Plus,
   Puzzle,
   Search,
   Sparkles,
+  Sun,
 } from "lucide-react";
 
 export const Icons = {
@@ -34,4 +36,6 @@ export const Icons = {
   Heart,
   Sparkles,
   Search,
+  Sun,
+  Moon,
 };
