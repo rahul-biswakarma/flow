@@ -9,7 +9,7 @@ import { ThemePage } from "./theme-page/theme-page";
 import type { TemplateType } from "./types";
 import { WelcomePage } from "./welcome-page";
 
-type View = "1" | "2" | "3" | "4" | "5" | "6";
+type View = "1" | "2" | "3";
 
 const Dot = () => (
   <div className="w-2.5 h-2.5 bg-gray-a3 rounded-full hover:bg-gray-a8" />
@@ -69,19 +69,22 @@ export const SetupFlow = () => {
   const pageVariants = {
     initial: (direction: string) => ({
       opacity: 0,
-      scale: direction === "forward" ? 1.1 : 0.9,
+      x: direction === "forward" ? 20 : -20,
     }),
-    in: { opacity: 1, scale: 1 },
+    in: {
+      opacity: 1,
+      x: 0,
+    },
     out: (direction: string) => ({
       opacity: 0,
-      scale: direction === "forward" ? 0.9 : 1.1,
+      x: direction === "forward" ? -20 : 20,
     }),
   };
 
   const pageTransition = {
     type: "tween",
-    ease: "anticipate",
-    duration: 0.5,
+    ease: "easeInOut",
+    duration: 0.3,
   };
 
   return (
