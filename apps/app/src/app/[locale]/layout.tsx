@@ -1,5 +1,5 @@
-import "@v1/ui/globals.css";
 import { cn } from "@v1/ui/cn";
+import "@v1/ui/globals.css";
 import { ThemeProvider } from "@v1/ui/theme-provider";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
