@@ -12,10 +12,13 @@
     "start": "email start"
   },
   "dependencies": {
+    "@radix-ui/react-collapsible": "^1.1.1",
     "@react-email/components": "^0.0.24",
-    "@react-email/tailwind": "^0.1.0"
+    "@react-email/tailwind": "^0.1.0",
+    "prism-react-renderer": "^2.4.0"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.14",
     "react-email": "^3.0.1"
   }
 }
