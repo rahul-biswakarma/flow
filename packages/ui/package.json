@@ -46,7 +46,7 @@
     "./scroll-area": "./src/components/scroll-area.tsx",
     "./tailwind.config": "./tailwind.config.ts",
     "./postcss": "./postcss.config.js",
-    "./canvas-reveal-effect": "./src/components/canvas-reveal-effect.tsx",
+    "./canvas-reveal-effect": "./src/components/canvas-reveal-effect/canvas-reveal-effect.tsx",
     "./background-gradient-animation": "./src/components/background-gradient-animation.tsx"
   },
   "dependencies": {
