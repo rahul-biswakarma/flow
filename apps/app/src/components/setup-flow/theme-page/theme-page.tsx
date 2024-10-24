@@ -1,13 +1,47 @@
 import { useScopedI18n } from "@/locales/client";
 import { Button } from "@v1/ui/button";
-import { CanvasRevealEffect } from "@v1/ui/canvas-reveal-effect";
 import { Heading } from "@v1/ui/heading";
 import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
 import { clsx } from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { useState } from "react";
+
+export const BackgroundGradientAnimation = dynamic(
+  () =>
+    import("@v1/ui/background-gradient-animation").then(
+      (mod) => mod.BackgroundGradientAnimation,
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-screen w-screen relative overflow-hidden top-0 left-0" />
+    ),
+  },
+);
+
+const lightThemeGradient = {
+  gradientBackgroundStart: "rgb(240, 240, 250)",
+  gradientBackgroundEnd: "rgb(255, 255, 255)",
+  firstColor: "255, 225, 180",
+  secondColor: "200, 230, 255",
+  thirdColor: "255, 200, 220",
+  fourthColor: "220, 255, 220",
+  fifthColor: "255, 240, 200",
+  pointerColor: "180, 220, 255",
+};
+const darkThemeGradient = {
+  gradientBackgroundStart: "rgb(10, 10, 10)",
+  gradientBackgroundEnd: "rgb(30, 30, 40)",
+  firstColor: "75, 0, 130",
+  secondColor: "0, 0, 128",
+  thirdColor: "25, 25, 112",
+  fourthColor: "47, 79, 79",
+  fifthColor: "72, 61, 139",
+  pointerColor: "138, 43, 226",
+};
 
 const themeCardContainerClassName =
   "w-full max-w-[250px] rounded-xl p-1 gap-4 h-full border-[3px] border-outline-00 hover:border-accent-9";
@@ -20,15 +54,6 @@ export const ThemePage = ({ onNext }: { onNext: () => void }) => {
   const [selectedTheme, setSelectedTheme] = useState<"light" | "dark" | null>(
     null,
   );
-  const [renderKey, setRenderKey] = useState("0");
-
-  useEffect(() => {
-    // Force re-render of CanvasRevealEffect on mount
-    if (renderKey === "0") {
-      console.log("force re-render");
-      setRenderKey(new Date().getTime().toString());
-    }
-  }, []);
 
   const selectLightTheme = () => {
     setTheme("light");
@@ -49,7 +74,6 @@ export const ThemePage = ({ onNext }: { onNext: () => void }) => {
       <div className="flex items-center justify-center gap-5 w-full h-full max-h-[300px]">
         <div
           className={clsx(themeCardContainerClassName, {
-            "grayscale opacity-20": selectedTheme === "dark",
             "!border-accent-9": selectedTheme === "light",
           })}
           typeof="button"
@@ -57,17 +81,9 @@ export const ThemePage = ({ onNext }: { onNext: () => void }) => {
           onKeyUp={selectLightTheme}
         >
           <Card selectedTheme={selectedTheme} theme="light">
-            <CanvasRevealEffect
-              animationSpeed={1}
-              containerClassName="bg-white/90"
-              colors={[
-                [65, 105, 225], // Royal Blue
-                [138, 43, 226], // Blue Violet
-                [233, 150, 122], // Dark Salmon
-              ]}
-              dotSize={2}
-              opacities={[0.3, 0.3, 0.3, 0.5, 0.5, 0.5, 0.7, 0.7, 0.7, 0.9]}
-              showGradient={false}
+            <BackgroundGradientAnimation
+              {...lightThemeGradient}
+              containerClassName="!absolute !w-full !h-full"
             />
           </Card>
         </div>
@@ -76,22 +92,13 @@ export const ThemePage = ({ onNext }: { onNext: () => void }) => {
           onClick={selectDarkTheme}
           onKeyUp={selectDarkTheme}
           className={clsx(themeCardContainerClassName, {
-            "grayscale opacity-20": selectedTheme === "light",
             "!border-accent-9": selectedTheme === "dark",
           })}
         >
           <Card selectedTheme={selectedTheme} theme="dark">
-            <CanvasRevealEffect
-              animationSpeed={1}
-              containerClassName="bg-black"
-              colors={[
-                [100, 149, 237], // Cornflower Blue
-                [147, 112, 219], // Medium Purple
-                [255, 160, 122], // Light Salmon
-              ]}
-              opacities={[0.2, 0.2, 0.2, 0.4, 0.4, 0.4, 0.6, 0.6, 0.6, 0.8]}
-              showGradient={false}
-              dotSize={2}
+            <BackgroundGradientAnimation
+              {...darkThemeGradient}
+              containerClassName="!absolute !w-full !h-full"
             />
           </Card>
         </div>

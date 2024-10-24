@@ -33,7 +33,7 @@ export default {
   "setup.start_from_scratch": "Start from Scratch",
   "setup.explore_more_templates": "Explore Templates",
   "setup.template_page_next_button": "Love It? Let's Go!",
-  "setup.theme_page_heading": "Choose Your Side",
+  "setup.theme_page_heading": "Customize Your View",
   "setup.theme_page_description":
     "Light or dark? Pick the mode that suits your style (and eyesight).",
   "setup.theme_page_next_button": "Looking Good! Next Step",

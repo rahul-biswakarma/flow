@@ -1,24 +1,36 @@
-import { OnboardingPage } from "@/components/onboarding";
-import type { User } from "@/types";
-import { getProjects, getUser, getUserDetails } from "@v1/supabase/queries";
-import { redirect } from "next/navigation";
+"use client";
 
-export const metadata = {
-  title: "Home",
-};
+import { Loader } from "@/components/loader/loader";
+import { OnboardingPage } from "@/components/onboarding";
+import type { Project, User } from "@/types";
+import { getProjects, getUserDetails } from "@v1/supabase/queries";
+import { useEffect, useState } from "react";
+import { redirect } from "react-router-dom";
 
 export default async function Page() {
-  let user: User | null = null;
-  const { data: userData } = await getUser();
-  if (userData.user) {
-    user = await getUserDetails(userData.user.id);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState<User | null>(null);
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const user = await getUserDetails();
+      setUserData(user);
+      if (!user) {
+        redirect("/login");
+      } else {
+        const projectData = await getProjects(user.id);
+        setProjects(projectData);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
   }
 
-  if (!user) {
-    redirect("/login");
-  }
-
-  const projects = await getProjects(user.id);
-
-  return <OnboardingPage userData={user} projects={projects} />;
+  return <OnboardingPage userData={userData as User} projects={projects} />;
 }

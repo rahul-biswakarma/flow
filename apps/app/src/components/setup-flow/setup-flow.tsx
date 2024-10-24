@@ -3,14 +3,24 @@ import type { Theme } from "@/types";
 import { IconButton } from "@v1/ui/icon-button";
 import { Icons } from "@v1/ui/icons";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { type ComponentType, useEffect, useState } from "react";
 import { SetupBackButton } from "./actions/back";
 import { SkipAll } from "./actions/skip-all";
-import { FinalPage } from "./final/final-page";
-import { TemplatePage } from "./template-page";
-import { ThemePage } from "./theme-page/theme-page";
 import type { TemplateType } from "./types";
-import { WelcomePage } from "./welcome-page";
+
+const WelcomePage = dynamic(() =>
+  import("./welcome-page").then((mod) => mod.WelcomePage),
+);
+const ThemePage = dynamic(() =>
+  import("./theme-page/theme-page").then((mod) => mod.ThemePage),
+);
+const TemplatePage = dynamic(() =>
+  import("./template-page").then((mod) => mod.TemplatePage),
+);
+const FinalPage = dynamic(() =>
+  import("./final/final-page").then((mod) => mod.FinalPage),
+);
 
 type View = "1" | "2" | "3";
 
@@ -21,6 +31,54 @@ const Dot = () => (
 type BasePageProps = {
   onNext: () => void;
   onPrev: () => void;
+};
+
+type ThemePageProps = BasePageProps & {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+};
+
+type TemplatePageProps = BasePageProps & {
+  selectedTemplate: TemplateType | null;
+  setSelectedTemplate: (template: TemplateType | null) => void;
+};
+
+type FinalPageProps = BasePageProps & {
+  onComplete: () => void;
+};
+
+type PageConfig =
+  | {
+      id: "1";
+      component: ComponentType<BasePageProps>;
+      icon: React.ReactElement;
+    }
+  | {
+      id: "2";
+      component: ComponentType<ThemePageProps>;
+      icon: React.ReactElement;
+    }
+  | {
+      id: "3";
+      component: ComponentType<TemplatePageProps>;
+      icon: React.ReactElement;
+    }
+  | {
+      id: "4";
+      component: ComponentType<FinalPageProps>;
+      icon: React.ReactElement;
+    };
+
+const pageTransition = {
+  type: "tween",
+  ease: "easeInOut",
+  duration: 0.3,
+};
+
+const initialTransition = {
+  type: "tween",
+  ease: "easeOut",
+  duration: 0.5,
 };
 
 export const SetupFlow = () => {
@@ -43,50 +101,6 @@ export const SetupFlow = () => {
     setIsInitialRender(false);
   }, []);
 
-  const pages = [
-    {
-      id: "1",
-      component: (props: BasePageProps) => <WelcomePage {...props} />,
-      icon: <Icons.Handshake />,
-    },
-    {
-      id: "2",
-      component: (props: BasePageProps) => (
-        <ThemePage {...props} {...{ theme, setTheme }} />
-      ),
-      icon: <Icons.Brush />,
-    },
-    {
-      id: "3",
-      component: (props: BasePageProps) => (
-        <TemplatePage
-          {...props}
-          {...{ selectedTemplate, setSelectedTemplate }}
-        />
-      ),
-      icon: <Icons.Puzzle />,
-    },
-    {
-      id: "4",
-      component: (props: BasePageProps) => (
-        <FinalPage
-          {...props}
-          onComplete={() => {
-            console.log("Entering the app!");
-          }}
-        />
-      ),
-      icon: <Icons.LandPlot />,
-    },
-  ];
-
-  const handleViewChange = (newView: View) => {
-    setDirection(
-      Number.parseInt(newView) > Number.parseInt(view) ? "forward" : "backward",
-    );
-    setView(newView);
-  };
-
   const pageVariants = {
     initial: (direction: string) => ({
       opacity: 0,
@@ -105,26 +119,77 @@ export const SetupFlow = () => {
     }),
   };
 
-  const pageTransition = {
-    type: "tween",
-    ease: "easeInOut",
-    duration: 0.3,
+  const pages: PageConfig[] = [
+    {
+      id: "1",
+      component: (props) => <WelcomePage {...props} />,
+      icon: <Icons.Handshake />,
+    },
+    {
+      id: "2",
+      component: (props) => <ThemePage {...props} />,
+      icon: <Icons.Brush />,
+    },
+    {
+      id: "3",
+      component: (props) => <TemplatePage {...props} />,
+      icon: <Icons.Puzzle />,
+    },
+    {
+      id: "4",
+      component: (props) => <FinalPage {...props} />,
+      icon: <Icons.LandPlot />,
+    },
+  ];
+
+  const handleViewChange = (newView: View) => {
+    setDirection(
+      Number.parseInt(newView) > Number.parseInt(view) ? "forward" : "backward",
+    );
+    setView(newView);
   };
 
-  const initialTransition = {
-    type: "tween",
-    ease: "easeOut",
-    duration: 0.5,
+  const renderPageComponent = (page: PageConfig) => {
+    const baseProps = {
+      onNext: () => handleViewChange((Number(page.id) + 1).toString() as View),
+      onPrev: () => handleViewChange((Number(page.id) - 1).toString() as View),
+    };
+
+    switch (page.id) {
+      case "1":
+        return <page.component {...baseProps} />;
+      case "2":
+        return (
+          <page.component {...baseProps} theme={theme} setTheme={setTheme} />
+        );
+      case "3":
+        return (
+          <page.component
+            {...baseProps}
+            selectedTemplate={selectedTemplate}
+            setSelectedTemplate={setSelectedTemplate}
+          />
+        );
+      case "4":
+        return (
+          <page.component
+            {...baseProps}
+            onComplete={() => console.log("Entering the app!")}
+          />
+        );
+      default:
+        return null;
+    }
   };
 
   return (
     <div className="relative w-screen h-screen overflow-hidden flex flex-col">
       <AnimatePresence initial={true} mode="wait" custom={direction}>
         {pages.map(
-          ({ id, component: PageComponent }) =>
-            view === id && (
+          (page) =>
+            view === page.id && (
               <motion.div
-                key={id}
+                key={page.id}
                 custom={direction}
                 initial="initial"
                 animate="in"
@@ -139,18 +204,7 @@ export const SetupFlow = () => {
                   position: "absolute",
                 }}
               >
-                <PageComponent
-                  onNext={() =>
-                    handleViewChange(
-                      (Number.parseInt(id) + 1).toString() as View,
-                    )
-                  }
-                  onPrev={() =>
-                    handleViewChange(
-                      (Number.parseInt(id) - 1).toString() as View,
-                    )
-                  }
-                />
+                {renderPageComponent(page)}
               </motion.div>
             ),
         )}

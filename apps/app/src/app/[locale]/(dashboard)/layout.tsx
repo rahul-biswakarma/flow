@@ -1,5 +1,6 @@
+import { Loader } from "@/components/loader/loader";
 import { I18nProviderClient } from "@/locales/client";
-import type { ReactElement } from "react";
+import { type ReactElement, Suspense } from "react";
 
 export default async function Layout(props: {
   params: Promise<{ locale: string }>;
@@ -12,5 +13,9 @@ export default async function Layout(props: {
   const { children } = props;
 
   // This is where your authenticated app lives
-  return <I18nProviderClient locale={locale}>{children}</I18nProviderClient>;
+  return (
+    <I18nProviderClient locale={locale}>
+      <Suspense fallback={<Loader />}>{children}</Suspense>
+    </I18nProviderClient>
+  );
 }

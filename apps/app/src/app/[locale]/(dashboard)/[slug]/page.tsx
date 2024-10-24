@@ -1,39 +1,54 @@
-import { SetupFlow } from "@/components/setup-flow/setup-flow";
+"use client";
+
+import { Loader } from "@/components/loader/loader";
+import { SetupFlow } from "@/components/setup-flow";
 import { FlowContextProvider } from "@/context";
 import type { ProjectWithPages, User } from "@/types";
-import {
-  getProjectWithPages,
-  getUser,
-  getUserDetails,
-} from "@v1/supabase/queries";
-import { redirect } from "next/navigation";
+import { getProjectWithPages, getUserDetails } from "@v1/supabase/queries";
+import { useEffect, useState } from "react";
+import { redirect } from "react-router-dom";
 
-export default async function Project({
-  params,
-}: { params: { slug: string } }) {
-  let user: User | null = null;
-  const { slug } = await params;
+export default function Project({ params }: { params: { slug: string } }) {
+  const { slug } = params;
 
-  const { data: userData } = await getUser();
-  if (userData.user) {
-    user = await getUserDetails(userData.user.id);
-  }
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [projectWithPages, setProjectWithPages] =
+    useState<ProjectWithPages | null>(null);
 
-  if (!user) {
-    redirect("/login");
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const userDetails = await getUserDetails();
+      if (!userDetails) {
+        redirect("/login");
+        return;
+      }
+      setUser(userDetails);
 
-  const projectWithPages: ProjectWithPages = await getProjectWithPages(slug);
+      const projectData = await getProjectWithPages(slug);
+      if (!projectData) {
+        redirect("/404");
+        return;
+      }
+      setProjectWithPages(projectData);
+      setLoading(false);
+    };
 
-  if (!projectWithPages) {
-    redirect("/404");
-  }
+    fetchData();
+  }, [slug]);
 
   const triggerSetupFlow =
-    Object.keys(projectWithPages.config ?? {}).length === 0;
+    Object.keys(projectWithPages?.config ?? {}).length === 0;
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
-    <FlowContextProvider user={user} projectWithPages={projectWithPages}>
+    <FlowContextProvider
+      user={user as User}
+      projectWithPages={projectWithPages as ProjectWithPages}
+    >
       {triggerSetupFlow ? <SetupFlow /> : <div>hello</div>}
     </FlowContextProvider>
   );
