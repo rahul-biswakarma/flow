@@ -24,7 +24,7 @@ export function ProjectSelector({
   }, [initialDomain]);
 
   return (
-    <Link href={project.slug} onClick={() => console.log("yes")}>
+    <Link href={project.slug} prefetch={false}>
       <div className="flex group/project-selector gap-2 justify-between items-center p-3 border border-outline-00 bg-gray-a2 rounded-md overflow-hidden">
         <div className="flex gap-2 w-full">
           <Avatar fallback={"FL"} />

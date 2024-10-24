@@ -6,7 +6,7 @@ import { Text } from "@v1/ui/text";
 import { clsx } from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import dynamic from "next/dynamic";
 
@@ -30,15 +30,6 @@ export const ThemePage = ({ onNext }: { onNext: () => void }) => {
   const [selectedTheme, setSelectedTheme] = useState<"light" | "dark" | null>(
     null,
   );
-  const [renderKey, setRenderKey] = useState("0");
-
-  useEffect(() => {
-    // Force re-render of CanvasRevealEffect on mount
-    if (renderKey === "0") {
-      console.log("force re-render");
-      setRenderKey(new Date().getTime().toString());
-    }
-  }, []);
 
   const selectLightTheme = () => {
     setTheme("light");

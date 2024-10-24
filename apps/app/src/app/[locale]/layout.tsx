@@ -1,3 +1,4 @@
+import { Loader } from "@/components/loader/loader";
 import { cn } from "@v1/ui/cn";
 import "@v1/ui/globals.css";
 import { GeistMono } from "geist/font/mono";
@@ -5,6 +6,7 @@ import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import { ThemeProvider as NextThemeProvider } from "next-themes";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Create v1",
@@ -49,7 +51,7 @@ export default function RootLayout({
               radius="medium"
               scaling="100%"
             >
-              {children}
+              <Suspense fallback={<Loader />}>{children}</Suspense>
             </ThemeProvider>
           </NextThemeProvider>
         </main>
