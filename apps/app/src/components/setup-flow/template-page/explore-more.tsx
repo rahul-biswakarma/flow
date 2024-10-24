@@ -1,6 +1,7 @@
 import { useScopedI18n } from "@/locales/client";
 import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
+import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
 
 export const BackgroundGradientAnimation = dynamic(
@@ -24,6 +25,7 @@ export const ExploreMoreButton: React.FC<ExploreMoreButtonProps> = ({
   onClick,
 }) => {
   const scopedT = useScopedI18n("setup");
+  const { appliedTheme } = useTheme();
 
   return (
     <div
@@ -33,12 +35,20 @@ export const ExploreMoreButton: React.FC<ExploreMoreButtonProps> = ({
       role="button"
       tabIndex={0}
     >
-      <div className="relative h-full w-full flex flex-col justify-center items-center rounded-md overflow-hidden bg-gray-a2 group-hover:bg-gray-a4 gap-2 text-white">
-        <BackgroundGradientAnimation containerClassName="!absolute !w-full !h-full" />
-        <Icons.Search className="w-8 h-8 z-10" />
-        <Text className="z-10" size="2">
-          {scopedT("explore_more_templates")}
-        </Text>
+      <div className="relative h-full w-full rounded-md overflow-hidden bg-gray-a2 group-hover:bg-gray-a4">
+        <div
+          className="flex flex-col justify-center items-center h-full w-full absolute gap-2"
+          style={{
+            background: `url(${appliedTheme === "dark" ? "/globe.svg" : "/globe-light.svg"})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <Icons.Search className="w-8 h-8 z-10" />
+          <Text className="z-10" size="2">
+            {scopedT("explore_more_templates")}
+          </Text>
+        </div>
       </div>
     </div>
   );

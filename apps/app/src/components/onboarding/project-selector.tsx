@@ -3,7 +3,7 @@ import { Avatar } from "@v1/ui/avatar";
 import { IconButton } from "@v1/ui/icon-button";
 import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
-import Link from "next/link";
+
 import { useEffect, useState } from "react";
 
 interface ProjectSelectorProps {
@@ -24,7 +24,7 @@ export function ProjectSelector({
   }, [initialDomain]);
 
   return (
-    <Link href={project.slug} prefetch={false}>
+    <a href={project.slug}>
       <div className="flex group/project-selector gap-2 justify-between items-center p-3 border border-outline-00 bg-gray-a2 rounded-md overflow-hidden">
         <div className="flex gap-2 w-full">
           <Avatar fallback={"FL"} />
@@ -44,6 +44,6 @@ export function ProjectSelector({
           <Icons.ArrowRight />
         </IconButton>
       </div>
-    </Link>
+    </a>
   );
 }

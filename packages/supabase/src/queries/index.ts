@@ -1,11 +1,11 @@
 import { logger } from "@v1/logger";
-import { createClient } from "@v1/supabase/server";
+import { createClient } from "@v1/supabase/client";
 import type { Database } from "../types/db";
 type Tables = Database["public"]["Tables"];
 
-export async function getUser() {
-  const supabase = await createClient();
+const supabase = createClient();
 
+export async function getUser() {
   try {
     const result = await supabase.auth.getUser();
 
@@ -17,9 +17,7 @@ export async function getUser() {
   }
 }
 
-export async function getUserDetails() {
-  const supabase = await createClient();
-
+export async function getUserDetails(): Promise<Tables["users"]["Row"] | null> {
   try {
     // Get the authenticated user
     const {
@@ -50,8 +48,6 @@ export async function getUserDetails() {
 }
 
 export async function getProjects(userId: string) {
-  const supabase = await createClient();
-
   try {
     const { data, error } = await supabase
       .from("project_memberships")
@@ -85,7 +81,6 @@ export async function getProjects(userId: string) {
 }
 
 export async function getProject(projectSlug: string) {
-  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("projects")
@@ -100,7 +95,6 @@ export async function getProject(projectSlug: string) {
   }
 }
 export async function getProjectWithPages(projectSlug: string) {
-  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("projects")
@@ -116,7 +110,6 @@ export async function getProjectWithPages(projectSlug: string) {
 }
 
 export async function createProject(project: Tables["projects"]["Insert"]) {
-  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("projects")
@@ -131,7 +124,6 @@ export async function createProject(project: Tables["projects"]["Insert"]) {
   }
 }
 export const getProjectBySlug = async (slug: string) => {
-  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("projects")
