@@ -17,44 +17,73 @@ export async function getUser() {
   }
 }
 
-export async function getUserDetails(userId: string) {
+export async function getUserDetails() {
   const supabase = await createClient();
+
   try {
-    const { data, error } = await supabase
+    // Get the authenticated user
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+
+    if (authError) throw authError;
+
+    if (!user) {
+      return null;
+    }
+
+    // Fetch user details
+    const { data, error: detailsError } = await supabase
       .from("users")
       .select("*")
-      .eq("id", userId)
+      .eq("id", user.id)
       .single();
-    if (error) throw error;
+
+    if (detailsError) throw detailsError;
+
     return data;
   } catch (error) {
-    logger.error("Error fetching user details:", error);
-    throw error;
+    console.error("Error fetching user information:", error);
+    return null;
   }
 }
+
 export async function getProjects(userId: string) {
   const supabase = await createClient();
+
   try {
-    const { data: projectIds, error: projectMemberShipError } = await supabase
-      .from("project_memberships")
-      .select("project_id")
-      .eq("user_id", userId);
-    if (projectMemberShipError) throw projectMemberShipError;
-    const projectIdsArray = projectIds.map((project) => project.project_id);
-    if (projectIdsArray.length === 0) {
-      return [];
-    }
     const { data, error } = await supabase
-      .from("projects")
-      .select("*")
-      .in("id", projectIdsArray);
+      .from("project_memberships")
+      .select(`
+        project_id,
+        projects (
+          id,
+          name,
+          slug,
+          description,
+          created_at,
+          updated_at
+        )
+      `)
+      .eq("user_id", userId);
+
     if (error) throw error;
-    return data;
+
+    // Extract the projects from the joined data
+    const projects = data
+      ?.map((item) => item.projects)
+      .filter(
+        (project): project is Tables["projects"]["Row"] => project !== null,
+      );
+
+    return projects || [];
   } catch (error) {
-    logger.error("Error fetching projects:", error);
-    throw error;
+    console.error("Error fetching projects:", error);
+    return [];
   }
 }
+
 export async function getProject(projectSlug: string) {
   const supabase = await createClient();
   try {
@@ -85,6 +114,7 @@ export async function getProjectWithPages(projectSlug: string) {
     throw error;
   }
 }
+
 export async function createProject(project: Tables["projects"]["Insert"]) {
   const supabase = await createClient();
   try {
