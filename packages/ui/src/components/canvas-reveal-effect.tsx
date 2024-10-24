@@ -1,10 +1,9 @@
 "use client";
 
-import { cn } from "@/utils";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import {} from "clsx";
 import React, { useMemo, useRef } from "react";
 import * as THREE from "three";
+import { cn } from "../utils/cn";
 
 export const CanvasRevealEffect = ({
   animationSpeed = 0.4,
@@ -69,40 +68,40 @@ const DotMatrix: React.FC<DotMatrixProps> = ({
 }) => {
   const uniforms = React.useMemo(() => {
     let colorsArray = [
-      colors[0],
-      colors[0],
-      colors[0],
-      colors[0],
-      colors[0],
-      colors[0],
+      colors[0] || [0, 0, 0],
+      colors[0] || [0, 0, 0],
+      colors[0] || [0, 0, 0],
+      colors[0] || [0, 0, 0],
+      colors[0] || [0, 0, 0],
+      colors[0] || [0, 0, 0],
     ];
     if (colors.length === 2) {
       colorsArray = [
-        colors[0],
-        colors[0],
-        colors[0],
-        colors[1],
-        colors[1],
-        colors[1],
+        colors[0] || [0, 0, 0],
+        colors[0] || [0, 0, 0],
+        colors[0] || [0, 0, 0],
+        colors[1] || [0, 0, 0],
+        colors[1] || [0, 0, 0],
+        colors[1] || [0, 0, 0],
       ];
     } else if (colors.length === 3) {
       colorsArray = [
-        colors[0],
-        colors[0],
-        colors[1],
-        colors[1],
-        colors[2],
-        colors[2],
+        colors[0] || [0, 0, 0],
+        colors[0] || [0, 0, 0],
+        colors[1] || [0, 0, 0],
+        colors[1] || [0, 0, 0],
+        colors[2] || [0, 0, 0],
+        colors[2] || [0, 0, 0],
       ];
     }
 
     return {
       u_colors: {
         value: colorsArray.map((color) => [
-          color[0] / 255,
-          color[1] / 255,
-          color[2] / 255,
-        ]),
+          (color[0] || 0) / 255,
+          (color[1] || 0) / 255,
+          (color[2] || 0) / 255,
+        ]) as [number, number, number][],
         type: "uniform3fv",
       },
       u_opacities: {
@@ -205,15 +204,18 @@ const ShaderMaterial = ({
     }
     lastFrameTime = timestamp;
 
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     const material: any = ref.current.material;
     const timeLocation = material.uniforms.u_time;
     timeLocation.value = timestamp;
   });
 
   const getUniforms = () => {
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     const preparedUniforms: any = {};
 
     for (const uniformName in uniforms) {
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       const uniform: any = uniforms[uniformName];
 
       switch (uniform.type) {
@@ -249,8 +251,8 @@ const ShaderMaterial = ({
       }
     }
 
-    preparedUniforms["u_time"] = { value: 0, type: "1f" };
-    preparedUniforms["u_resolution"] = {
+    preparedUniforms.u_time = { value: 0, type: "1f" };
+    preparedUniforms.u_resolution = {
       value: new THREE.Vector2(size.width * 2, size.height * 2),
     }; // Initialize u_resolution
     return preparedUniforms;
@@ -284,6 +286,7 @@ const ShaderMaterial = ({
   }, [size.width, size.height, source]);
 
   return (
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     <mesh ref={ref as any}>
       <planeGeometry args={[2, 2]} />
       <primitive object={material} attach="material" />

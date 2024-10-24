@@ -11,6 +11,8 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@types/node": "^22.7.9",
+    "@types/three": "^0.169.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "react": "^18.3.1",
@@ -34,6 +36,8 @@
     "./dialog": "./src/components/dialog.tsx",
     "./text-field": "./src/components/text-field.tsx",
     "./dropdown": "./src/components/dropdown.tsx",
+    "./separator": "./src/components/separator.tsx",
+    "./kbd": "./src/components/kbd.tsx",
     "./segmented-control": "./src/components/segmented-control.tsx",
     "./checkbox": "./src/components/checkbox.tsx",
     "./tabs": "./src/components/tabs.tsx",
@@ -50,11 +54,12 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.3",
     "@radix-ui/themes": "^3.1.4",
-    "@types/node": "^22.7.9",
+    "@react-three/fiber": "^8.17.10",
     "class-variance-authority": "^0.7.0",
     "lucide-react": "^0.438.0",
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.4",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "three": "^0.169.0"
   }
 }
