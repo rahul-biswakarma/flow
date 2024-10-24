@@ -1,10 +1,10 @@
 import { cn } from "@v1/ui/cn";
 import "@v1/ui/globals.css";
-import { ThemeProvider } from "@v1/ui/theme-provider";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import { ThemeProvider as NextThemeProvider } from "next-themes";
+import dynamic from "next/dynamic";
 
 export const metadata: Metadata = {
   title: "Create v1",
@@ -17,6 +17,13 @@ export const viewport = {
     { media: "(prefers-color-scheme: dark)" },
   ],
 };
+
+const ThemeProvider = dynamic(
+  () => import("@v1/ui/theme-provider").then((mod) => mod.ThemeProvider),
+  {
+    ssr: false,
+  },
+);
 
 export default function RootLayout({
   children,

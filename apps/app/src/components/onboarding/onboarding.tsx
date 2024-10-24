@@ -1,5 +1,5 @@
 "use client";
-import { useI18n } from "@/locales/client";
+import { useScopedI18n } from "@/locales/client";
 import type { Project, User } from "@/types";
 import { Button } from "@v1/ui/button";
 import { Icons } from "@v1/ui/icons";
@@ -54,7 +54,7 @@ export function OnboardingPage({
   userData: User;
   projects: Project[];
 }) {
-  const t = useI18n();
+  const scopedT = useScopedI18n("onboarding");
   const [view, setView] = useState<OnboardingViews>("select_project");
   const [direction, setDirection] = useState(0);
 
@@ -83,7 +83,7 @@ export function OnboardingPage({
                   className="space-x-3"
                 >
                   <Icons.ChevronLeft />
-                  {t("onboarding.back_to_selection")}
+                  {scopedT("back_to_selection")}
                 </Button>
               </motion.div>
             )}

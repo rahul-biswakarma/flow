@@ -9,6 +9,19 @@ import { SetupBackButton } from "./actions/back";
 import { SkipAll } from "./actions/skip-all";
 import type { TemplateType } from "./types";
 
+const WelcomePage = dynamic(() =>
+  import("./welcome-page").then((mod) => mod.WelcomePage),
+);
+const ThemePage = dynamic(() =>
+  import("./theme-page/theme-page").then((mod) => mod.ThemePage),
+);
+const TemplatePage = dynamic(() =>
+  import("./template-page").then((mod) => mod.TemplatePage),
+);
+const FinalPage = dynamic(() =>
+  import("./final/final-page").then((mod) => mod.FinalPage),
+);
+
 type View = "1" | "2" | "3";
 
 const Dot = () => (
@@ -109,30 +122,22 @@ export const SetupFlow = () => {
   const pages: PageConfig[] = [
     {
       id: "1",
-      component: dynamic<BasePageProps>(() =>
-        import("./welcome-page").then((mod) => mod.WelcomePage),
-      ),
+      component: (props) => <WelcomePage {...props} />,
       icon: <Icons.Handshake />,
     },
     {
       id: "2",
-      component: dynamic<ThemePageProps>(() =>
-        import("./theme-page/theme-page").then((mod) => mod.ThemePage),
-      ),
+      component: (props) => <ThemePage {...props} />,
       icon: <Icons.Brush />,
     },
     {
       id: "3",
-      component: dynamic<TemplatePageProps>(() =>
-        import("./template-page").then((mod) => mod.TemplatePage),
-      ),
+      component: (props) => <TemplatePage {...props} />,
       icon: <Icons.Puzzle />,
     },
     {
       id: "4",
-      component: dynamic<FinalPageProps>(() =>
-        import("./final/final-page").then((mod) => mod.FinalPage),
-      ),
+      component: (props) => <FinalPage {...props} />,
       icon: <Icons.LandPlot />,
     },
   ];

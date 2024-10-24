@@ -1,6 +1,5 @@
 import { useScopedI18n } from "@/locales/client";
 import { Button } from "@v1/ui/button";
-import { CanvasRevealEffect } from "@v1/ui/canvas-reveal-effect";
 import { Heading } from "@v1/ui/heading";
 import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
@@ -8,6 +7,17 @@ import { clsx } from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+
+import dynamic from "next/dynamic";
+
+export const CanvasRevealEffect = dynamic(
+  () =>
+    import("@v1/ui/canvas-reveal-effect").then((mod) => mod.CanvasRevealEffect),
+  {
+    ssr: false,
+    loading: () => <div className="h-full relative bg-white w-full" />,
+  },
+);
 
 const themeCardContainerClassName =
   "w-full max-w-[250px] rounded-xl p-1 gap-4 h-full border-[3px] border-outline-00 hover:border-accent-9";

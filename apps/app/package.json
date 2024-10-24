@@ -27,8 +27,7 @@
     "next-themes": "^0.3.0",
     "nuqs": "^1.20.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "zod": "^3.23.8"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@sentry/nextjs": "^8.35.0",

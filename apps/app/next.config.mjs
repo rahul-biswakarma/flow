@@ -8,6 +8,11 @@ const nextConfig = {
   experimental: {
     instrumentationHook: process.env.NODE_ENV === "production",
   },
+  swcMinify: true,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
+  reactStrictMode: true,
 };
 
 const withBundleAnalyzerWrapper = withBundleAnalyzer({
