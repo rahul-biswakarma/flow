@@ -3,7 +3,6 @@ import { Button } from "@v1/ui/button";
 import { Heading } from "@v1/ui/heading";
 import { Icons } from "@v1/ui/icons";
 import { Kbd } from "@v1/ui/kbd";
-import { Separator } from "@v1/ui/separator";
 import { Text } from "@v1/ui/text";
 import { clsx } from "clsx";
 import { motion } from "framer-motion";
