@@ -1,6 +1,7 @@
 "use client";
 
 import { Loader } from "@/components/loader/loader";
+import { Product } from "@/components/product/product";
 import { SetupFlow } from "@/components/setup-flow";
 import { FlowContextProvider } from "@/context";
 import type { ProjectWithPages, User } from "@/types";
@@ -15,6 +16,7 @@ export default function Project({ params }: { params: { slug: string } }) {
   const [user, setUser] = useState<User | null>(null);
   const [projectWithPages, setProjectWithPages] =
     useState<ProjectWithPages | null>(null);
+  const [showSetupFlow, setShowSetupFlow] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +32,9 @@ export default function Project({ params }: { params: { slug: string } }) {
         redirect("/404");
         return;
       }
+      const triggerSetupFlow =
+        Object.keys(projectWithPages?.config ?? {}).length === 0;
+      setShowSetupFlow(triggerSetupFlow);
       setProjectWithPages(projectData);
       setLoading(false);
     };
@@ -37,10 +42,7 @@ export default function Project({ params }: { params: { slug: string } }) {
     fetchData();
   }, [slug]);
 
-  const triggerSetupFlow =
-    Object.keys(projectWithPages?.config ?? {}).length === 0;
-
-  if (loading) {
+  if (loading && !user && !projectWithPages) {
     return <Loader />;
   }
 
@@ -49,7 +51,11 @@ export default function Project({ params }: { params: { slug: string } }) {
       user={user as User}
       projectWithPages={projectWithPages as ProjectWithPages}
     >
-      {triggerSetupFlow ? <SetupFlow /> : <div>hello</div>}
+      {showSetupFlow ? (
+        <SetupFlow toggleSetupFlow={(e: boolean) => setShowSetupFlow(e)} />
+      ) : (
+        <Product />
+      )}
     </FlowContextProvider>
   );
 }

@@ -2,25 +2,16 @@
 import type { Theme } from "@/types";
 import { IconButton } from "@v1/ui/icon-button";
 import { Icons } from "@v1/ui/icons";
+import { clsx } from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import dynamic from "next/dynamic";
 import { type ComponentType, useEffect, useState } from "react";
 import { SetupBackButton } from "./actions/back";
 import { SkipAll } from "./actions/skip-all";
+import { FinalPage } from "./final/final-page";
+import { TemplatePage } from "./template-page";
+import { ThemePage } from "./theme-page/theme-page";
 import type { TemplateType } from "./types";
-
-const WelcomePage = dynamic(() =>
-  import("./welcome-page").then((mod) => mod.WelcomePage),
-);
-const ThemePage = dynamic(() =>
-  import("./theme-page/theme-page").then((mod) => mod.ThemePage),
-);
-const TemplatePage = dynamic(() =>
-  import("./template-page").then((mod) => mod.TemplatePage),
-);
-const FinalPage = dynamic(() =>
-  import("./final/final-page").then((mod) => mod.FinalPage),
-);
+import { WelcomePage } from "./welcome-page";
 
 type View = "1" | "2" | "3";
 
@@ -81,7 +72,11 @@ const initialTransition = {
   duration: 0.5,
 };
 
-export const SetupFlow = () => {
+export const SetupFlow = ({
+  toggleSetupFlow,
+}: {
+  toggleSetupFlow: (e: boolean) => void;
+}) => {
   const [view, setView] = useState<View>("1");
   const [direction, setDirection] = useState<"forward" | "backward">("forward");
   const [isInitialRender, setIsInitialRender] = useState(true);
@@ -174,7 +169,7 @@ export const SetupFlow = () => {
         return (
           <page.component
             {...baseProps}
-            onComplete={() => console.log("Entering the app!")}
+            onComplete={() => toggleSetupFlow(false)}
           />
         );
       default:
@@ -224,15 +219,17 @@ export const SetupFlow = () => {
           padding: "0 36px",
         }}
       >
-        {Number.parseInt(view) !== 1 ? (
+        <div
+          className={clsx({
+            "invisible pointer-events-none": Number.parseInt(view) === 1,
+          })}
+        >
           <SetupBackButton
             onClick={() => {
               handleViewChange((Number.parseInt(view) - 1).toString() as View);
             }}
           />
-        ) : (
-          <div />
-        )}
+        </div>
         <div className="px-5 py-3 rounded-3xl flex justify-center items-center gap-4 border border-transparent backdrop-blur hover:border:outline-03 hover:bg-gray-4 transition-all">
           {pages.map(({ id, icon }) => (
             <IconButton
@@ -245,11 +242,13 @@ export const SetupFlow = () => {
             </IconButton>
           ))}
         </div>
-        {Number.parseInt(view) !== 4 ? (
+        <div
+          className={clsx({
+            "invisible pointer-events-none": Number.parseInt(view) === 4,
+          })}
+        >
           <SkipAll onSkipAll={() => handleViewChange("4" as View)} />
-        ) : (
-          <div />
-        )}
+        </div>
       </motion.div>
     </div>
   );

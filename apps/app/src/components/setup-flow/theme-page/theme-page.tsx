@@ -44,7 +44,7 @@ const darkThemeGradient = {
 };
 
 const themeCardContainerClassName =
-  "w-full max-w-[250px] rounded-xl p-1 gap-4 h-full border-[3px] border-outline-00 hover:border-accent-9";
+  "w-full max-w-[250px] rounded-xl p-1 gap-4 h-full border-[3px] border-outline-00 hover:border-accent-11";
 const themeCardClassName =
   "relative rounded-md group/canvas-card flex items-center justify-center p-4 relative h-full w-full overflow-hidden";
 
@@ -74,7 +74,7 @@ export const ThemePage = ({ onNext }: { onNext: () => void }) => {
       <div className="flex items-center justify-center gap-5 w-full h-full max-h-[300px]">
         <div
           className={clsx(themeCardContainerClassName, {
-            "!border-accent-9": selectedTheme === "light",
+            "border-accent-8": selectedTheme === "light",
           })}
           typeof="button"
           onClick={selectLightTheme}
@@ -92,7 +92,7 @@ export const ThemePage = ({ onNext }: { onNext: () => void }) => {
           onClick={selectDarkTheme}
           onKeyUp={selectDarkTheme}
           className={clsx(themeCardContainerClassName, {
-            "!border-accent-9": selectedTheme === "dark",
+            "border-accent-8": selectedTheme === "dark",
           })}
         >
           <Card selectedTheme={selectedTheme} theme="dark">
@@ -120,7 +120,6 @@ const Card = ({
   theme: "light" | "dark";
   selectedTheme: "light" | "dark" | null;
 }) => {
-  const [hovered, setHovered] = useState(false);
   return (
     <div
       className={themeCardClassName}
