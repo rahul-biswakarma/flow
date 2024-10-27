@@ -1,4 +1,5 @@
 import { useScopedI18n } from "@/locales/client";
+import { BackgroundGradientAnimation } from "@v1/ui/background-gradient-animation";
 import { Button } from "@v1/ui/button";
 import { Heading } from "@v1/ui/heading";
 import { Icons } from "@v1/ui/icons";
@@ -6,21 +7,7 @@ import { Text } from "@v1/ui/text";
 import { clsx } from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import dynamic from "next/dynamic";
 import { useState } from "react";
-
-export const BackgroundGradientAnimation = dynamic(
-  () =>
-    import("@v1/ui/background-gradient-animation").then(
-      (mod) => mod.BackgroundGradientAnimation,
-    ),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="h-screen w-screen relative overflow-hidden top-0 left-0" />
-    ),
-  },
-);
 
 const lightThemeGradient = {
   gradientBackgroundStart: "rgb(240, 240, 250)",
