@@ -1,11 +1,15 @@
+import { useFlowContext } from "@/context";
 import { useScopedI18n } from "@/locales/client";
+import { createClient } from "@v1/supabase/client";
 import { Button } from "@v1/ui/button";
 import { Heading } from "@v1/ui/heading";
 import { Icons } from "@v1/ui/icons";
 import { Kbd } from "@v1/ui/kbd";
 import { Text } from "@v1/ui/text";
+import { toast } from "@v1/ui/toast";
 import { clsx } from "clsx";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 type FinalPageProps = {
   onComplete: () => void;
@@ -13,6 +17,9 @@ type FinalPageProps = {
 
 export const FinalPage = ({ onComplete }: FinalPageProps) => {
   const scopedT = useScopedI18n("setup");
+  const { projectData } = useFlowContext();
+  const supabase = createClient();
+  const router = useRouter();
 
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -57,6 +64,31 @@ export const FinalPage = ({ onComplete }: FinalPageProps) => {
       }),
     },
   ];
+
+  const handleEnterApp = async () => {
+    if (projectData?.id) {
+      try {
+        const { error } = await supabase
+          .from("projects")
+          .update({ setup_flow_completed: true })
+          .eq("id", projectData.id);
+
+        if (error) {
+          throw error;
+        }
+
+        toast.success(scopedT("setup_flow_completed"));
+        onComplete();
+      } catch (error) {
+        console.error("Error updating project:", error);
+        toast.error(scopedT("setup_flow_completion_error"));
+      }
+    } else {
+      console.error("Project ID not found");
+      toast.error(scopedT("project_not_found"));
+      router.push("/");
+    }
+  };
 
   return (
     <motion.div
@@ -105,7 +137,11 @@ export const FinalPage = ({ onComplete }: FinalPageProps) => {
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <Button onClick={onComplete} size="3" className="w-full max-w-[300px]">
+        <Button
+          onClick={handleEnterApp}
+          size="3"
+          className="w-full max-w-[300px]"
+        >
           {scopedT("enter_app")}
           <Icons.ArrowRight />
         </Button>

@@ -31,8 +31,7 @@ const useProjectData = (slug: string) => {
   );
 
   const isLoading = isLoadingUser || isLoadingProject;
-  const showSetupFlow =
-    projectData && Object.keys(projectData.config || {}).length === 0;
+  const showSetupFlow = !projectData?.setup_flow_completed;
 
   return { user, projectData, isLoading, showSetupFlow };
 };
@@ -89,6 +88,9 @@ function Project({ slug }: { slug: string }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
+            style={{
+              overflow: "hidden",
+            }}
           >
             <Product />
           </motion.div>

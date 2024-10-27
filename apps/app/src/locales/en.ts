@@ -57,6 +57,9 @@ export default {
     "FLoW AI helps with everything from data fetching to site building. Just use {key} and select the AI option.",
   "setup.back_button": "Back",
   "setup.skip_button": "Skip to the end",
+  "setup.setup_flow_completed": "Setup flow completed",
+  "setup.setup_flow_completion_error": "Error completing setup flow",
+  "setup.project_not_found": "Project not found",
 
   "navigation_bar.offline": "Offline",
   "navigation_bar.online": "Online",
