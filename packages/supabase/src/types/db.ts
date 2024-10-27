@@ -121,34 +121,43 @@ export type Database = {
       projects: {
         Row: {
           admins: string[] | null;
+          avatar: string | null;
           config: Json;
           created_at: string | null;
           created_by: string;
           description: string | null;
           id: string;
+          is_published: boolean | null;
           name: string;
+          setup_flow_completed: boolean | null;
           slug: string;
           updated_at: string | null;
         };
         Insert: {
           admins?: string[] | null;
+          avatar?: string | null;
           config?: Json;
           created_at?: string | null;
           created_by: string;
           description?: string | null;
           id?: string;
+          is_published?: boolean | null;
           name: string;
+          setup_flow_completed?: boolean | null;
           slug: string;
           updated_at?: string | null;
         };
         Update: {
           admins?: string[] | null;
+          avatar?: string | null;
           config?: Json;
           created_at?: string | null;
           created_by?: string;
           description?: string | null;
           id?: string;
+          is_published?: boolean | null;
           name?: string;
+          setup_flow_completed?: boolean | null;
           slug?: string;
           updated_at?: string | null;
         };

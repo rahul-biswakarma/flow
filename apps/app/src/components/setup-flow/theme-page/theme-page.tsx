@@ -1,4 +1,5 @@
 import { useScopedI18n } from "@/locales/client";
+import { BackgroundGradientAnimation } from "@v1/ui/background-gradient-animation";
 import { Button } from "@v1/ui/button";
 import { Heading } from "@v1/ui/heading";
 import { Icons } from "@v1/ui/icons";
@@ -6,21 +7,7 @@ import { Text } from "@v1/ui/text";
 import { clsx } from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "next-themes";
-import dynamic from "next/dynamic";
 import { useState } from "react";
-
-export const BackgroundGradientAnimation = dynamic(
-  () =>
-    import("@v1/ui/background-gradient-animation").then(
-      (mod) => mod.BackgroundGradientAnimation,
-    ),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="h-screen w-screen relative overflow-hidden top-0 left-0" />
-    ),
-  },
-);
 
 const lightThemeGradient = {
   gradientBackgroundStart: "rgb(240, 240, 250)",
@@ -44,7 +31,7 @@ const darkThemeGradient = {
 };
 
 const themeCardContainerClassName =
-  "w-full max-w-[250px] rounded-xl p-1 gap-4 h-full border-[3px] border-outline-00 hover:border-accent-9";
+  "w-full max-w-[250px] rounded-xl p-1 gap-4 h-full border-[3px] border-outline-00 hover:border-accent-11";
 const themeCardClassName =
   "relative rounded-md group/canvas-card flex items-center justify-center p-4 relative h-full w-full overflow-hidden";
 
@@ -74,7 +61,7 @@ export const ThemePage = ({ onNext }: { onNext: () => void }) => {
       <div className="flex items-center justify-center gap-5 w-full h-full max-h-[300px]">
         <div
           className={clsx(themeCardContainerClassName, {
-            "!border-accent-9": selectedTheme === "light",
+            "border-accent-8": selectedTheme === "light",
           })}
           typeof="button"
           onClick={selectLightTheme}
@@ -92,7 +79,7 @@ export const ThemePage = ({ onNext }: { onNext: () => void }) => {
           onClick={selectDarkTheme}
           onKeyUp={selectDarkTheme}
           className={clsx(themeCardContainerClassName, {
-            "!border-accent-9": selectedTheme === "dark",
+            "border-accent-8": selectedTheme === "dark",
           })}
         >
           <Card selectedTheme={selectedTheme} theme="dark">
@@ -120,7 +107,6 @@ const Card = ({
   theme: "light" | "dark";
   selectedTheme: "light" | "dark" | null;
 }) => {
-  const [hovered, setHovered] = useState(false);
   return (
     <div
       className={themeCardClassName}

@@ -7,6 +7,7 @@ const nextConfig = {
   transpilePackages: ["@v1/supabase", "@v1/ui"],
   experimental: {
     instrumentationHook: process.env.NODE_ENV === "production",
+    optimizePackageImports: ["@v1/supabase", "@v1/ui"],
   },
   swcMinify: true,
   compiler: {

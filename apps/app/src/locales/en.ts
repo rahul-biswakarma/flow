@@ -1,6 +1,11 @@
 export default {
   welcome: "Hello {name}!",
   cancel: "Cancel",
+
+  "user.sign_in": "Sign in",
+  "user.sign_out": "Sign out",
+  "user.settings": "Settings",
+
   "onboarding.select": "Select a project",
   "onboarding.empty": "No projects",
   "onboarding.get_started": "Get started by creating a new project.",
@@ -52,4 +57,17 @@ export default {
     "FLoW AI helps with everything from data fetching to site building. Just use {key} and select the AI option.",
   "setup.back_button": "Back",
   "setup.skip_button": "Skip to the end",
+  "setup.setup_flow_completed": "Setup flow completed",
+  "setup.setup_flow_completion_error": "Error completing setup flow",
+  "setup.project_not_found": "Project not found",
+
+  "navigation_bar.offline": "Offline",
+  "navigation_bar.online": "Online",
+  "navigation_bar.visual_editor": "Visual Editor",
+  "navigation_bar.logic_builder": "Logic Builder",
+  "navigation_bar.schema_editor": "Schema Editor",
+  "navigation_bar.component_builder": "Component Builder",
+  "navigation_bar.marketplace": "Marketplace",
+  "navigation_bar.connections": "Connections",
+  "navigation_bar.setting": "Settings",
 } as const;
