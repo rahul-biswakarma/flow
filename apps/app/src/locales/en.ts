@@ -1,6 +1,11 @@
 export default {
   welcome: "Hello {name}!",
   cancel: "Cancel",
+
+  "user.sign_in": "Sign in",
+  "user.sign_out": "Sign out",
+  "user.settings": "Settings",
+
   "onboarding.select": "Select a project",
   "onboarding.empty": "No projects",
   "onboarding.get_started": "Get started by creating a new project.",
@@ -52,4 +57,7 @@ export default {
     "FLoW AI helps with everything from data fetching to site building. Just use {key} and select the AI option.",
   "setup.back_button": "Back",
   "setup.skip_button": "Skip to the end",
+
+  "navigation_bar.offline": "Offline",
+  "navigation_bar.online": "Online",
 } as const;

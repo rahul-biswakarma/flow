@@ -38,3 +38,14 @@ body {
 .rt-SegmentedControlItemLabelActive, .rt-SegmentedControlItemLabelInactive {
   height: 100%;
 }
+
+:root {
+    --sidebar-background: var(--gray-surface);
+    --sidebar-foreground: var(--gray-11);
+    --sidebar-primary: var(--indigo-a3);
+    --sidebar-primary-foreground: var(--indigo-11);
+    --sidebar-accent: var(--indigo-a3);
+    --sidebar-accent-foreground: var(--indigo-11);
+    --sidebar-border: var(--gray-4);
+    --sidebar-ring: var(--indigo-9);
+  }

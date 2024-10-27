@@ -33,6 +33,8 @@
     "./tooltip": "./src/components/tooltip.tsx",
     "./noise": "./src/components/noise.tsx",
     "./dialog": "./src/components/dialog.tsx",
+    "./hover-card": "./src/components/hover-card.tsx",
+    "./sidebar": "./src/components/sidebar.tsx",
     "./text-field": "./src/components/text-field.tsx",
     "./dropdown": "./src/components/dropdown.tsx",
     "./separator": "./src/components/separator.tsx",
