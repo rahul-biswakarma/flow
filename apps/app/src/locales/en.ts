@@ -60,4 +60,11 @@ export default {
 
   "navigation_bar.offline": "Offline",
   "navigation_bar.online": "Online",
+  "navigation_bar.visual_editor": "Visual Editor",
+  "navigation_bar.logic_builder": "Logic Builder",
+  "navigation_bar.schema_editor": "Schema Editor",
+  "navigation_bar.component_builder": "Component Builder",
+  "navigation_bar.marketplace": "Marketplace",
+  "navigation_bar.connections": "Connections",
+  "navigation_bar.setting": "Settings",
 } as const;

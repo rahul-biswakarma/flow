@@ -5,11 +5,11 @@ import { Avatar } from "@v1/ui/avatar";
 import { DropdownMenu } from "@v1/ui/dropdown";
 import { Heading } from "@v1/ui/heading";
 import { HoverCard } from "@v1/ui/hover-card";
-import { Icons } from "@v1/ui/icons";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -87,47 +87,39 @@ export function NavigationBar() {
           </SidebarMenu>
         </SidebarHeader>
 
-        <SidebarContent>
-          <SidebarMenu>
-            {navigationBarMenuItems.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <SidebarMenuButton
-                      tooltip={{
-                        children: item.title,
-                        hidden: false,
-                      }}
-                      onClick={() => setActiveNavBarItem(item.key)}
-                      isActive={activeNavBarItem === item.key}
-                      className="px-2.5 md:px-2"
-                      asChild
-                    >
-                      <span className="mx-auto">
-                        {item.icon}
-                        <Text>{item.title}</Text>
-                      </span>
-                    </SidebarMenuButton>
-                  </TooltipTrigger>
-                  <TooltipContent side="right">{item.title}</TooltipContent>
-                </Tooltip>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
+        <SidebarContent className="pt-2">
+          <SidebarGroup>
+            <SidebarMenu>
+              {navigationBarMenuItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <SidebarMenuButton
+                        tooltip={{
+                          children: item.title,
+                          hidden: false,
+                        }}
+                        onClick={() => setActiveNavBarItem(item.key)}
+                        isActive={activeNavBarItem === item.key}
+                        className="px-2.5 md:px-2"
+                        asChild
+                      >
+                        <span className="mx-auto">
+                          {item.icon}
+                          <Text>{item.title}</Text>
+                        </span>
+                      </SidebarMenuButton>
+                    </TooltipTrigger>
+                    <TooltipContent side="right">{item.title}</TooltipContent>
+                  </Tooltip>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroup>
         </SidebarContent>
 
         <SidebarFooter>
           <SidebarMenu>
-            <SidebarMenuItem>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <SidebarMenuButton className="px-2.5 md:px-2">
-                    <Icons.Settings />
-                  </SidebarMenuButton>
-                </TooltipTrigger>
-                <TooltipContent side="right">Settings</TooltipContent>
-              </Tooltip>
-            </SidebarMenuItem>
             <SidebarMenuItem>
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger>

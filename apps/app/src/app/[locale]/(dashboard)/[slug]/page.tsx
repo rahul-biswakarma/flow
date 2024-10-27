@@ -6,56 +6,94 @@ import { SetupFlow } from "@/components/setup-flow";
 import { FlowContextProvider } from "@/context";
 import type { ProjectWithPages, User } from "@/types";
 import { getProjectWithPages, getUserDetails } from "@v1/supabase/queries";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { redirect } from "react-router-dom";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
-export default function Project({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+const useProjectData = (slug: string) => {
+  const router = useRouter();
 
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
-  const [projectWithPages, setProjectWithPages] =
-    useState<ProjectWithPages | null>(null);
-  const [showSetupFlow, setShowSetupFlow] = useState(false);
+  const { data: user, isLoading: isLoadingUser } = useQuery(
+    "user",
+    getUserDetails,
+    {
+      onError: () => router.push("/login"),
+    },
+  );
+
+  const { data: projectData, isLoading: isLoadingProject } = useQuery(
+    ["project", slug],
+    () => getProjectWithPages(slug),
+    {
+      enabled: !!user,
+      onError: () => router.push("/404"),
+    },
+  );
+
+  const isLoading = isLoadingUser || isLoadingProject;
+  const showSetupFlow =
+    projectData && Object.keys(projectData.config || {}).length === 0;
+
+  return { user, projectData, isLoading, showSetupFlow };
+};
+
+const queryClient = new QueryClient();
+
+export default function ProjectWrapper({
+  params,
+}: { params: { slug: string } }) {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Project slug={params.slug} />
+    </QueryClientProvider>
+  );
+}
+
+import { AnimatePresence, motion } from "framer-motion";
+
+function Project({ slug }: { slug: string }) {
+  const { user, projectData, isLoading, showSetupFlow } = useProjectData(slug);
+
+  const [isSetupFlowEnabled, setIsSetupFlowEnabled] = useState(showSetupFlow);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const userDetails = await getUserDetails();
-      if (!userDetails) {
-        redirect("/login");
-        return;
-      }
-      setUser(userDetails);
+    if (showSetupFlow !== isSetupFlowEnabled) {
+      setIsSetupFlowEnabled(showSetupFlow);
+    }
+  }, [showSetupFlow]);
 
-      const projectData = await getProjectWithPages(slug);
-      if (!projectData) {
-        redirect("/404");
-        return;
-      }
-      const triggerSetupFlow =
-        Object.keys(projectWithPages?.config ?? {}).length === 0;
-      setShowSetupFlow(triggerSetupFlow);
-      setProjectWithPages(projectData);
-      setLoading(false);
-    };
-
-    fetchData();
-  }, [slug]);
-
-  if (loading && !user && !projectWithPages) {
+  if (isLoading) {
     return <Loader />;
   }
 
   return (
     <FlowContextProvider
       user={user as User}
-      projectWithPages={projectWithPages as ProjectWithPages}
+      projectWithPages={projectData as ProjectWithPages}
     >
-      {showSetupFlow ? (
-        <SetupFlow toggleSetupFlow={(e: boolean) => setShowSetupFlow(e)} />
-      ) : (
-        <Product />
-      )}
+      <AnimatePresence mode="wait">
+        {isSetupFlowEnabled ? (
+          <motion.div
+            key="setup"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <SetupFlow toggleSetupFlow={setIsSetupFlowEnabled} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="product"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Product />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </FlowContextProvider>
   );
 }

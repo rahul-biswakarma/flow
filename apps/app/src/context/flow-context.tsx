@@ -1,5 +1,6 @@
 "use client";
 
+import { useScopedI18n } from "@/locales/client";
 import type { ProjectWithPages, User } from "@/types";
 import { Icons } from "@v1/ui/icons";
 import React, { useEffect, useState } from "react";
@@ -33,29 +34,43 @@ export const FlowContextProvider = ({
   children,
   projectWithPages,
 }: FlowContextProviderProps) => {
+  const navigationScopedT = useScopedI18n("navigation_bar");
   const navigationBarMenuItems: NavigationBarMenuItem[] = [
     {
       icon: <Icons.AppWindow />,
-      title: "Visual Editor",
+      title: navigationScopedT("visual_editor"),
       key: "nav-bar-visual-editor",
     },
     {
       icon: <Icons.Workflow />,
-      title: "Logic Builder",
+      title: navigationScopedT("logic_builder"),
       key: "nav-bar-logic-builder",
     },
     {
       icon: <Icons.Database />,
-      title: "Schema Editor",
+      title: navigationScopedT("schema_editor"),
       key: "nav-bar-schema-editor",
     },
     {
       icon: <Icons.Layers />,
-      title: "Component Builder",
+      title: navigationScopedT("component_builder"),
       key: "nav-bar-component-builder",
     },
-    { icon: <Icons.Globe />, title: "Marketplace", key: "nav-bar-marketplace" },
-    { icon: <Icons.Cable />, title: "Connections", key: "nav-bar-connections" },
+    {
+      icon: <Icons.Globe />,
+      title: navigationScopedT("marketplace"),
+      key: "nav-bar-marketplace",
+    },
+    {
+      icon: <Icons.Cable />,
+      title: navigationScopedT("connections"),
+      key: "nav-bar-connections",
+    },
+    {
+      icon: <Icons.Settings />,
+      title: navigationScopedT("setting"),
+      key: "nav-bar-setting",
+    },
   ];
 
   const [projectData, setProjectData] =

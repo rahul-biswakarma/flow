@@ -2,35 +2,57 @@
 
 import { Loader } from "@/components/loader/loader";
 import { OnboardingPage } from "@/components/onboarding";
-import type { Project, User } from "@/types";
+import type {} from "@/types";
 import { getProjects, getUserDetails } from "@v1/supabase/queries";
-import { useEffect, useState } from "react";
-import { redirect } from "react-router-dom";
+import { useRouter } from "next/navigation";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
-export default async function Page() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [userData, setUserData] = useState<User | null>(null);
-  const [projects, setProjects] = useState<Project[]>([]);
+export default function PageWrapper() {
+  return (
+    <QueryClientProvider client={new QueryClient()}>
+      <Page />
+    </QueryClientProvider>
+  );
+}
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const user = await getUserDetails();
-      setUserData(user);
-      if (!user) {
-        redirect("/login");
-      } else {
-        const projectData = await getProjects(user.id);
-        setProjects(projectData);
-        setIsLoading(false);
-      }
-    };
+function Page() {
+  const router = useRouter();
 
-    fetchData();
-  }, []);
+  const {
+    data: userData,
+    isLoading: isLoadingUser,
+    error: userError,
+  } = useQuery("user", getUserDetails, {
+    onError: () => router.push("/login"),
+    retry: false,
+  });
+
+  const {
+    data: projects,
+    isLoading: isLoadingProjects,
+    error: projectsError,
+  } = useQuery(
+    ["projects", userData?.id],
+    () => getProjects(userData?.id ?? ""),
+    {
+      enabled: !!userData,
+    },
+  );
+
+  const isLoading = isLoadingUser || isLoadingProjects;
+  const error = userError || projectsError;
 
   if (isLoading) {
     return <Loader />;
   }
 
-  return <OnboardingPage userData={userData as User} projects={projects} />;
+  if (error) {
+    router.push("/login");
+  }
+
+  if (!userData) {
+    return null; // This shouldn't happen due to the redirect, but just in case
+  }
+
+  return <OnboardingPage userData={userData} projects={projects || []} />;
 }
