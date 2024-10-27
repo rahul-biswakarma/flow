@@ -41,7 +41,7 @@ body {
 
 :root {
     --sidebar-background: var(--gray-surface);
-    --sidebar-foreground: var(--gray-11);
+    --sidebar-foreground: var(--gray-12);
     --sidebar-primary: var(--indigo-a3);
     --sidebar-primary-foreground: var(--indigo-11);
     --sidebar-accent: var(--indigo-a3);

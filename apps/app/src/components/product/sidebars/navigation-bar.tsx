@@ -31,8 +31,10 @@ export function NavigationBar() {
   const scopedTUser = useScopedI18n("user");
 
   const projectName = projectData?.name ?? "Untitled";
-  const published = projectData?.published ?? false;
+  const published = projectData?.is_published ?? false;
   const avatar = projectData?.avatar ?? DEFAULT_ORG_AVATAR;
+
+  const userAvatar = user?.avatar_url ?? DEFAULT_ORG_AVATAR;
 
   return (
     <SidebarProvider defaultOpen={false}>
@@ -53,25 +55,25 @@ export function NavigationBar() {
                     />
                   </SidebarMenuButton>
                 </HoverCard.Trigger>
-                <HoverCard.Content maxWidth="300px">
-                  <div className="flex gap-4">
+                <HoverCard.Content side="right" maxWidth="300px">
+                  <div className="flex gap-3">
                     <Avatar
                       size="3"
                       src={avatar ?? DEFAULT_ORG_AVATAR}
                       fallback={projectName[0] ?? DEFAULT_ORG_AVATAR_FALLBACK}
                     />
-                    <div>
+                    <div className="flex gap-1 flex-col">
                       <Heading size="3" as="h3">
                         {projectName}
                       </Heading>
                       <div>
                         {published ? (
-                          <span className="flex items-center gap-1 bg-green-a5 pl-1.5 rounded-lg text-green-10">
+                          <span className="flex items-center gap-1 bg-green-a5 px-1.5 rounded-lg text-green-10">
                             <div className="w-[8px] h-[8px] rounded-full bg-green-10" />
                             <Text size="1">{scopedT("online")}</Text>
                           </span>
                         ) : (
-                          <span className="flex items-center gap-1 bg-orange-a5 pl-1.5 rounded-lg text-orange-10">
+                          <span className="flex items-center gap-1 bg-orange-a5 px-1.5 rounded-lg text-orange-10">
                             <div className="w-[8px] h-[8px] rounded-full bg-orange-10" />
                             <Text size="1">{scopedT("offline")}</Text>
                           </span>
@@ -135,7 +137,7 @@ export function NavigationBar() {
                   >
                     <Avatar
                       className="h-8 w-8 rounded-md"
-                      src={avatar}
+                      src={userAvatar}
                       fallback={projectName[0] ?? "U"}
                     />
                   </SidebarMenuButton>

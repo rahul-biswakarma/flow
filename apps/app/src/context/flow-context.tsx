@@ -2,7 +2,7 @@
 
 import type { ProjectWithPages, User } from "@/types";
 import { Icons } from "@v1/ui/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createContext } from "react";
 
 type NavigationBarMenuItem = {
@@ -63,6 +63,11 @@ export const FlowContextProvider = ({
   const [activeNavBarItem, setActiveNavBarItem] = useState<string>(
     "nav-bar-visual-editor",
   );
+
+  useEffect(() => {
+    if (projectWithPages && projectWithPages?.id !== projectData?.id)
+      setProjectData(projectWithPages);
+  }, [projectWithPages]);
 
   return (
     <FlowContext.Provider
