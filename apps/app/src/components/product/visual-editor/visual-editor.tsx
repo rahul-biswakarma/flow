@@ -12,7 +12,7 @@ export const VisualEditor = () => {
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel defaultSize={25}>One</ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel>Two</ResizablePanel>
+        <ResizablePanel>2</ResizablePanel>
       </ResizablePanelGroup>
     </DndProvider>
   );
