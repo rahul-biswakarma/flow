@@ -1,9 +1,10 @@
+import { useFlowContext } from "@/context";
+import { TooltipProvider } from "@v1/ui/tooltip";
 import { motion } from "framer-motion";
 import { NavigationBar } from "./sidebars/navigation-bar";
-import { useFlowContext } from "@/context";
 
 export const Product = () => {
-  const { navigationBarMenuItems, activeNavBarItem} = useFlowContext()
+  const { navigationBarMenuItems, activeNavBarItem } = useFlowContext();
   return (
     <motion.div
       className="grid grid-cols-[auto_1fr] w-full h-full"
@@ -11,16 +12,18 @@ export const Product = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <NavigationBar />
-      {navigationBarMenuItems.map((item) => {
-        if (item.key === activeNavBarItem) {
-          return (
-            <div key={item.key} className="flex h-full w-full">
-              {item.component}
-            </div>
-          );
-        }
-      })}
+      <TooltipProvider>
+        <NavigationBar />
+        {navigationBarMenuItems.map((item) => {
+          if (item.key === activeNavBarItem) {
+            return (
+              <div key={item.key} className="flex h-full w-full">
+                {item.component}
+              </div>
+            );
+          }
+        })}
+      </TooltipProvider>
     </motion.div>
   );
 };

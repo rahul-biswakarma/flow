@@ -1,7 +1,7 @@
 import { Text } from "@v1/ui/text";
 import { TextField } from "@v1/ui/text-field";
-import { ArrayValueRenderer } from "./array-value-renderer";
 import type { FieldOnChangeProps } from "./types";
+import { ArrayValueRenderer } from "./utils/array-value-renderer";
 
 interface ArrayTextFieldElementProps {
   label: string;
@@ -34,7 +34,7 @@ export const ArrayTextFieldElement = ({
         }}
         inputRenderer={
           <TextField.Root
-            autoFocus
+            autoFocus={value.length > 0}
             className="grow p-0"
             onKeyDown={(e) => {
               if (e.key === "Enter") {

@@ -75,8 +75,9 @@ export default {
   "component_builder.preview": "Preview",
   "component_builder.code": "Code",
   "component_builder.publish": "Publish",
-  "component_builder.field.marketplace_info_group_title": "Marketplace Info",
-  "component_builder.field.props_schema_group_title": "Component Props Schema",
+  "component_builder.field.component_info_group_title": "Component Info",
+  "component_builder.field.props_schema_group_title":
+    "Component Input Data Schema",
   "component_builder.field.name": "Component Name",
   "component_builder.field.name_placeholder": "Enter component name",
   "component_builder.field.description": "Description",
@@ -84,4 +85,17 @@ export default {
     "Enter component description",
   "component_builder.field.keywords": "Keywords",
   "component_builder.field.keywords_placeholder": "Enter component keywords",
+
+  "props_builder.add_field": "Add Field",
+  "props_builder.field.visual_name": "Visual Name",
+  "props_builder.field.visual_name_info":
+    "This will be displayed in the builder UI",
+  "props_builder.field.props_name": "Property Name",
+  "props_builder.field.props_name_info":
+    "This will be used in the component code. It should be a valid JavaScript variable name",
+  "props_builder.field.props_type": "Property Type",
+  "props_builder.field.props_type_info":
+    "This will be used to validate the input value",
+  "props_builder.field.description": "Description",
+  "props_builder.field.description_info": "This will be displayed as a tooltip",
 } as const;

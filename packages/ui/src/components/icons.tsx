@@ -16,6 +16,7 @@ import {
   Globe,
   Handshake,
   Heart,
+  Info,
   LandPlot,
   Layers,
   Loader2,
@@ -35,6 +36,7 @@ import {
 
 export const Icons = {
   Brush,
+  Info,
   X,
   Cross,
   AppWindow,

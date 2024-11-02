@@ -2,26 +2,20 @@ export interface ComponentData {
   name: string;
   description: string;
   author: string;
-  preview_url: string;
+  previewUrl: string;
   keywords: string[];
-  props: Prop[];
-  types: Type[];
+  props: PropSchema[];
   code: string;
 }
 
-interface Prop {
+export interface PropSchema {
   category: string;
-  visual_name: string;
-  prop_name: string;
-  prop_type: string;
+  visualName: string;
+  propName: string;
+  propType: string;
   description: string;
   required: boolean;
-  default_value?: string;
-}
-
-interface Type {
-  type_name: string;
-  type_definition: Record<string, string>;
+  defaultValue?: string;
 }
 
 export interface PreviewProps {

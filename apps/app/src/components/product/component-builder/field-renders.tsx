@@ -1,6 +1,7 @@
 import {
   ArrayTextFieldElement,
   GroupFieldWrapper,
+  SchemaBuilder,
   StringFieldElement,
   TextFieldElement,
 } from "@/components/field-elements";
@@ -20,8 +21,8 @@ export const FieldRenders = ({
   const scopedT = useScopedI18n("component_builder.field");
   return (
     <ScrollArea>
-      <div className="flex w-full h-full gap-4 flex-col">
-        <GroupFieldWrapper groupLabel={scopedT("marketplace_info_group_title")}>
+      <div className="flex w-full h-full gap-6 flex-col">
+        <GroupFieldWrapper groupLabel={scopedT("component_info_group_title")}>
           <TextFieldElement
             label={scopedT("name")}
             placeholder={scopedT("name_placeholder")}
@@ -53,9 +54,7 @@ export const FieldRenders = ({
             }}
           />
         </GroupFieldWrapper>
-        <GroupFieldWrapper groupLabel={scopedT("props_schema_group_title")}>
-          2
-        </GroupFieldWrapper>
+        <SchemaBuilder />
       </div>
     </ScrollArea>
   );

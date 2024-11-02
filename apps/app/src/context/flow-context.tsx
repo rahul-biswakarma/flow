@@ -41,8 +41,6 @@ export const FlowContextProvider = ({
   children,
   projectWithPages,
 }: FlowContextProviderProps) => {
-
-
   const [projectData, setProjectData] =
     useState<ProjectWithPages>(projectWithPages);
   const [activeNavBarItem, setActiveNavBarItem] = useState<string>(
@@ -78,47 +76,47 @@ export const useFlowContext = () => {
   return context;
 };
 
-  const navigationBarMenuItems: NavigationBarMenuItem[] = [
-    {
-      icon: <Icons.AppWindow />,
-      title:"visual_editor",
-      component: <VisualEditor />,
-      key: "nav-bar-visual-editor",
-    },
-    {
-      icon: <Icons.Workflow />,
-      title: "logic_builder",
-      key: "nav-bar-logic-builder",
-      component: <LogicBuilder />
-    },
-    {
-      icon: <Icons.Database />,
-      title: "schema_editor",
-      key: "nav-bar-schema-editor",
-      component: <SchemaEditor />
-    },
-    {
-      icon: <Icons.Layers />,
-      title: "component_builder",
-      key: "nav-bar-component-builder",
-      component: <ComponentBuilder />
-    },
-    {
-      icon: <Icons.Globe />,
-      title: "marketplace",
-      key: "nav-bar-marketplace",
-      component: <Marketplace />
-    },
-    {
-      icon: <Icons.Cable />,
-      title: "connections",
-      key: "nav-bar-connections",
-      component: <Connections />
-    },
-    {
-      icon: <Icons.Settings />,
-      title: "setting",
-      key: "nav-bar-setting",
-      component: <Settings />
-    },
-  ];
+const navigationBarMenuItems: NavigationBarMenuItem[] = [
+  {
+    icon: <Icons.AppWindow />,
+    title: "visual_editor",
+    component: <VisualEditor />,
+    key: "nav-bar-visual-editor",
+  },
+  {
+    icon: <Icons.Workflow />,
+    title: "logic_builder",
+    key: "nav-bar-logic-builder",
+    component: <LogicBuilder />,
+  },
+  {
+    icon: <Icons.Database />,
+    title: "schema_editor",
+    key: "nav-bar-schema-editor",
+    component: <SchemaEditor />,
+  },
+  {
+    icon: <Icons.Layers />,
+    title: "component_builder",
+    key: "nav-bar-component-builder",
+    component: <ComponentBuilder />,
+  },
+  {
+    icon: <Icons.Globe />,
+    title: "marketplace",
+    key: "nav-bar-marketplace",
+    component: <Marketplace />,
+  },
+  {
+    icon: <Icons.Cable />,
+    title: "connections",
+    key: "nav-bar-connections",
+    component: <Connections />,
+  },
+  {
+    icon: <Icons.Settings />,
+    title: "setting",
+    key: "nav-bar-setting",
+    component: <Settings />,
+  },
+];

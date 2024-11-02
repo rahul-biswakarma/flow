@@ -15,10 +15,9 @@ export const ComponentBuilder: React.FC = () => {
     name: "",
     description: "",
     author: "",
-    preview_url: "",
+    previewUrl: "",
     keywords: [],
     props: [],
-    types: [],
     code: "",
   });
 
@@ -27,16 +26,16 @@ export const ComponentBuilder: React.FC = () => {
       <ComponentBuilderHeader isConfigValid={false} />
       <LiveProvider code={newComponentData.code} noInline>
         <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel minSize={25} defaultSize={50} className="p-4">
+          <ResizablePanel minSize={25} defaultSize={50} className="p-6">
             <FieldRenders
               newComponentData={newComponentData}
               setNewComponentData={setNewComponentData}
             />
           </ResizablePanel>
           <ResizableHandle />
-          <ResizablePanel defaultSize={50}>
+          <ResizablePanel minSize={25} defaultSize={50}>
             <ResizablePanelGroup direction="vertical">
-              <ResizablePanel defaultSize={50}>
+              <ResizablePanel minSize={25} defaultSize={50}>
                 <LiveEditor
                   onChange={(e) =>
                     setNewComponentData((prev) => ({ ...prev, code: e }))
@@ -46,7 +45,7 @@ export const ComponentBuilder: React.FC = () => {
                 />
               </ResizablePanel>
               <ResizableHandle />
-              <ResizablePanel defaultSize={50}>
+              <ResizablePanel minSize={25} defaultSize={50}>
                 <LiveError className="text-red-800 bg-red-100" />
                 <LivePreview />
               </ResizablePanel>
