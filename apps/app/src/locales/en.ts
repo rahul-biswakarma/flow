@@ -70,4 +70,18 @@ export default {
   "navigation_bar.marketplace": "Marketplace",
   "navigation_bar.connections": "Connections",
   "navigation_bar.setting": "Settings",
+
+  "component_builder.title": "Component Builder",
+  "component_builder.preview": "Preview",
+  "component_builder.code": "Code",
+  "component_builder.publish": "Publish",
+  "component_builder.field.marketplace_info_group_title": "Marketplace Info",
+  "component_builder.field.props_schema_group_title": "Component Props Schema",
+  "component_builder.field.name": "Component Name",
+  "component_builder.field.name_placeholder": "Enter component name",
+  "component_builder.field.description": "Description",
+  "component_builder.field.description_placeholder":
+    "Enter component description",
+  "component_builder.field.keywords": "Keywords",
+  "component_builder.field.keywords_placeholder": "Enter component keywords",
 } as const;

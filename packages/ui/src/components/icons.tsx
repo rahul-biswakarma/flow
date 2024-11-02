@@ -10,6 +10,7 @@ import {
   CheckCircle,
   ChevronLeft,
   Copy,
+  Cross,
   Database,
   Github,
   Globe,
@@ -29,10 +30,13 @@ import {
   Sparkles,
   Sun,
   Workflow,
+  X,
 } from "lucide-react";
 
 export const Icons = {
   Brush,
+  X,
+  Cross,
   AppWindow,
   Settings,
   Cable,

@@ -37,6 +37,7 @@
     "./sidebar": "./src/components/sidebar.tsx",
     "./resizable": "./src/components/resizable.tsx",
     "./text-field": "./src/components/text-field.tsx",
+    "./text-area": "./src/components/text-area.tsx",
     "./dropdown": "./src/components/dropdown.tsx",
     "./separator": "./src/components/separator.tsx",
     "./kbd": "./src/components/kbd.tsx",
