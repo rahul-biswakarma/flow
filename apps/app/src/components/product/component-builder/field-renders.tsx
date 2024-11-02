@@ -54,7 +54,7 @@ export const FieldRenders = ({
             }}
           />
         </GroupFieldWrapper>
-        <SchemaBuilder />
+        <SchemaBuilder {...{ newComponentData, setNewComponentData }} />
       </div>
     </ScrollArea>
   );

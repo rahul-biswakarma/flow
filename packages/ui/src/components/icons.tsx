@@ -30,12 +30,14 @@ import {
   Settings,
   Sparkles,
   Sun,
+  Trash,
   Workflow,
   X,
 } from "lucide-react";
 
 export const Icons = {
   Brush,
+  Trash,
   Info,
   X,
   Cross,

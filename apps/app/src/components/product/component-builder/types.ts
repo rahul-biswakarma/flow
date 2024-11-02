@@ -8,14 +8,15 @@ export interface ComponentData {
   code: string;
 }
 
+export type PropsType = "string" | "number" | "boolean" | "object" | "self";
+
 export interface PropSchema {
-  category: string;
   visualName: string;
   propName: string;
-  propType: string;
-  description: string;
-  required: boolean;
-  defaultValue?: string;
+  propType: PropsType;
+  description?: string;
+  required?: boolean;
+  isList?: boolean;
 }
 
 export interface PreviewProps {
