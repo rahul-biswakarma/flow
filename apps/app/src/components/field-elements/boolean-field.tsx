@@ -1,28 +1,26 @@
 import { Icons } from "@v1/ui/icons";
+import { Switch } from "@v1/ui/switch";
 import { Text } from "@v1/ui/text";
-import { TextArea } from "@v1/ui/text-area";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import { clsx } from "clsx";
 import { tooltipProps } from "./constants";
 import type { FieldOnChangeProps } from "./types";
 
-interface StringFieldElementProps {
+interface BooleanFieldElementProps {
   label: string;
-  placeholder: string;
-  value: string;
+  value: boolean;
   fieldInfo?: string;
   labelClassName?: string;
-  onChange: (e: FieldOnChangeProps<string>) => void;
+  onChange: (e: FieldOnChangeProps<boolean>) => void;
 }
 
-export const StringFieldElement = ({
+export const BooleanFieldElement = ({
   label,
-  placeholder,
   value,
+  fieldInfo,
   onChange,
   labelClassName,
-  fieldInfo,
-}: StringFieldElementProps) => {
+}: BooleanFieldElementProps) => {
   return (
     <>
       <Text
@@ -42,16 +40,15 @@ export const StringFieldElement = ({
           </Tooltip>
         )}
       </Text>
-      <TextArea
-        value={value}
-        onChange={(e) =>
+      <Switch
+        checked={value}
+        onCheckedChange={(e) =>
           onChange({
-            isEmpty: !e.target.value,
-            type: "string",
-            value: e.target.value,
+            isEmpty: false,
+            type: "boolean",
+            value: e,
           })
         }
-        placeholder={placeholder}
       />
     </>
   );

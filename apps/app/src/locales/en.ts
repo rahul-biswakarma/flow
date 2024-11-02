@@ -1,6 +1,7 @@
 export default {
   welcome: "Hello {name}!",
   cancel: "Cancel",
+  "common.select": "Select",
 
   "user.sign_in": "Sign in",
   "user.sign_out": "Sign out",
@@ -98,4 +99,21 @@ export default {
     "This will be used to validate the input value",
   "props_builder.field.description": "Description",
   "props_builder.field.description_info": "This will be displayed as a tooltip",
+  "props_builder.field.required": "Required",
+  "props_builder.field.required_info":
+    "If checked, this field must be filled in",
+  "props_builder.field.is_list": "This field a list?",
+  "props_builder.field.is_list_info":
+    "If checked, this field will accept multiple entires",
+  "props_builder.type.self": "self",
+  "props_builder.type.self_info":
+    "Self refers to the current object type. It allows a field to contain another instance of the same object, enabling nested or hierarchical structures.",
+  "props_builder.type.number": "number",
+  "props_builder.type.text": "text",
+  "props_builder.type.boolean": "boolean",
+  "props_builder.type.boolean_info":
+    "Boolean allows you to define a true/false",
+  "props_builder.type.object": "object",
+  "props_builder.type.object_info":
+    "Object allows you to define a nested structure with multiple fields",
 } as const;

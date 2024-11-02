@@ -26,14 +26,14 @@ export const ComponentBuilder: React.FC = () => {
       <ComponentBuilderHeader isConfigValid={false} />
       <LiveProvider code={newComponentData.code} noInline>
         <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel minSize={25} defaultSize={50} className="p-6">
+          <ResizablePanel minSize={25} defaultSize={30} className="p-6">
             <FieldRenders
               newComponentData={newComponentData}
               setNewComponentData={setNewComponentData}
             />
           </ResizablePanel>
           <ResizableHandle />
-          <ResizablePanel minSize={25} defaultSize={50}>
+          <ResizablePanel minSize={25} defaultSize={70}>
             <ResizablePanelGroup direction="vertical">
               <ResizablePanel minSize={25} defaultSize={50}>
                 <LiveEditor
