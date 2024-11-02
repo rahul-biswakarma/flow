@@ -3,6 +3,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@v1/ui/resizable";
+import { ScrollArea } from "@v1/ui/scroll-area";
 import type React from "react";
 import { useState } from "react";
 import { LiveEditor, LiveError, LivePreview, LiveProvider } from "react-live";
@@ -22,15 +23,24 @@ export const ComponentBuilder: React.FC = () => {
   });
 
   return (
-    <div className="w-full grid grid-rows-[auto_1fr] h-full max-h-full">
+    <div className="w-full grid grid-rows-[auto_1fr] h-screen max-h-screen overflow-hidden">
       <ComponentBuilderHeader isConfigValid={false} />
       <LiveProvider code={newComponentData.code} noInline>
         <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel minSize={25} defaultSize={30} className="p-6">
-            <FieldRenders
-              newComponentData={newComponentData}
-              setNewComponentData={setNewComponentData}
-            />
+          <ResizablePanel minSize={25} defaultSize={30}>
+            <ScrollArea
+              type="auto"
+              scrollbars="vertical"
+              style={{
+                height: "100%",
+                maxHeight: "100%",
+              }}
+            >
+              <FieldRenders
+                newComponentData={newComponentData}
+                setNewComponentData={setNewComponentData}
+              />
+            </ScrollArea>
           </ResizablePanel>
           <ResizableHandle />
           <ResizablePanel minSize={25} defaultSize={70}>
