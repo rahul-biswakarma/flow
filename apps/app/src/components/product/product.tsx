@@ -5,7 +5,9 @@ import { NavigationBar } from "./sidebars/navigation-bar";
 
 export const Product = () => {
   const { navigationBarMenuItems, activeNavBarItem } = useFlowContext();
-  const activeItem = navigationBarMenuItems.find(item => item.key === activeNavBarItem);
+  const activeItem = navigationBarMenuItems.find(
+    (item) => item.key === activeNavBarItem,
+  );
 
   return (
     <motion.div
