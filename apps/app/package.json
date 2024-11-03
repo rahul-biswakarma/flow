@@ -15,7 +15,6 @@
     "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build"
   },
   "dependencies": {
-    "@types/react-codesandboxer": "^3.1.4",
     "@v1/analytics": "workspace:*",
     "@v1/kv": "workspace:*",
     "@v1/supabase": "workspace:*",
@@ -32,7 +31,6 @@
     "nuqs": "^1.20.0",
     "prettier": "^3.3.3",
     "react": "^18.3.1",
-    "react-codesandboxer": "^3.1.5",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.3.1",

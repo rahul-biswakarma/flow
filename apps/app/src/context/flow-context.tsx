@@ -7,6 +7,7 @@ import { Marketplace } from "@/components/product/marketplace/marketplace";
 import { SchemaEditor } from "@/components/product/schema-editor/schema-editor";
 import { Settings } from "@/components/product/settings/settings";
 import { VisualEditor } from "@/components/product/visual-editor/visual-editor";
+import { useScopedI18n } from "@/locales/client";
 import type { ProjectWithPages, User } from "@/types";
 import { Icons } from "@v1/ui/icons";
 import React, { useEffect, useState } from "react";
@@ -47,6 +48,53 @@ export const FlowContextProvider = ({
     "nav-bar-visual-editor",
   );
 
+  const scopedT = useScopedI18n("navigation_bar");
+
+  const navigationBarMenuItems: NavigationBarMenuItem[] = [
+    {
+      icon: <Icons.AppWindow />,
+      title: scopedT("visual_editor"),
+      component: <VisualEditor />,
+      key: "nav-bar-visual-editor",
+    },
+    {
+      icon: <Icons.Workflow />,
+      title: scopedT("logic_builder"),
+      key: "nav-bar-logic-builder",
+      component: <LogicBuilder />,
+    },
+    {
+      icon: <Icons.Database />,
+      title: scopedT("schema_editor"),
+      key: "nav-bar-schema-editor",
+      component: <SchemaEditor />,
+    },
+    {
+      icon: <Icons.Layers />,
+      title: scopedT("component_builder"),
+      key: "nav-bar-component-builder",
+      component: <ComponentBuilder />,
+    },
+    {
+      icon: <Icons.Globe />,
+      title: scopedT("marketplace"),
+      key: "nav-bar-marketplace",
+      component: <Marketplace />,
+    },
+    {
+      icon: <Icons.Cable />,
+      title: scopedT("connections"),
+      key: "nav-bar-connections",
+      component: <Connections />,
+    },
+    {
+      icon: <Icons.Settings />,
+      title: scopedT("setting"),
+      key: "nav-bar-setting",
+      component: <Settings />,
+    },
+  ];
+
   useEffect(() => {
     if (projectWithPages && projectWithPages?.id !== projectData?.id)
       setProjectData(projectWithPages);
@@ -75,48 +123,3 @@ export const useFlowContext = () => {
   }
   return context;
 };
-
-const navigationBarMenuItems: NavigationBarMenuItem[] = [
-  {
-    icon: <Icons.AppWindow />,
-    title: "visual_editor",
-    component: <VisualEditor />,
-    key: "nav-bar-visual-editor",
-  },
-  {
-    icon: <Icons.Workflow />,
-    title: "logic_builder",
-    key: "nav-bar-logic-builder",
-    component: <LogicBuilder />,
-  },
-  {
-    icon: <Icons.Database />,
-    title: "schema_editor",
-    key: "nav-bar-schema-editor",
-    component: <SchemaEditor />,
-  },
-  {
-    icon: <Icons.Layers />,
-    title: "component_builder",
-    key: "nav-bar-component-builder",
-    component: <ComponentBuilder />,
-  },
-  {
-    icon: <Icons.Globe />,
-    title: "marketplace",
-    key: "nav-bar-marketplace",
-    component: <Marketplace />,
-  },
-  {
-    icon: <Icons.Cable />,
-    title: "connections",
-    key: "nav-bar-connections",
-    component: <Connections />,
-  },
-  {
-    icon: <Icons.Settings />,
-    title: "setting",
-    key: "nav-bar-setting",
-    component: <Settings />,
-  },
-];

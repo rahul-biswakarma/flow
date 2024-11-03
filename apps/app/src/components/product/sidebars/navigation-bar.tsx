@@ -106,7 +106,7 @@ export function NavigationBar() {
                       >
                         <span className="mx-auto">
                           {item.icon}
-                          <Text>{scopedT(item.title as "offline" | "online" | "visual_editor" | "logic_builder" | "schema_editor" | "component_builder" | "marketplace" | "connections" | "setting")}</Text>
+                          <Text>{item.title}</Text>
                         </span>
                       </SidebarMenuButton>
                     </TooltipTrigger>
