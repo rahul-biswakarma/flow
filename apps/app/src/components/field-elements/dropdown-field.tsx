@@ -16,7 +16,7 @@ type Option = {
 
 interface DropdownFieldElementProps {
   label: string;
-  value?: Option;
+  value?: string;
   options: Option[];
   fieldInfo?: string;
   placeholder?: string;
@@ -54,13 +54,13 @@ export const DropdownFieldElement = ({
       </Text>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
-          <Button color="gray" variant="soft">
-            {placeholder && (
-              <Text size="2" className="text-gray-10">
+          <Button color="gray" variant="soft" size="2">
+            {placeholder && !value && (
+              <Text size="2" className="text-gray-11">
                 {placeholder}
               </Text>
             )}
-            {value?.label}
+            {value ?? ""}
             <DropdownMenu.TriggerIcon />
           </Button>
         </DropdownMenu.Trigger>

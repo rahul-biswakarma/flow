@@ -8,7 +8,9 @@ import {
   Cable,
   Check,
   CheckCircle,
+  ChevronDown,
   ChevronLeft,
+  ChevronUp,
   Copy,
   Cross,
   Database,
@@ -37,6 +39,8 @@ import {
 
 export const Icons = {
   Brush,
+  ChevronUp,
+  ChevronDown,
   Trash,
   Info,
   X,

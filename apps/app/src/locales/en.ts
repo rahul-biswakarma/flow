@@ -88,6 +88,7 @@ export default {
   "component_builder.field.keywords_placeholder": "Enter component keywords",
 
   "props_builder.add_field": "Add Field",
+  "props_builder.field.unnamed_prop": "Unnamed Prop",
   "props_builder.field.visual_name": "Visual Name",
   "props_builder.field.visual_name_info":
     "This will be displayed in the builder UI",
