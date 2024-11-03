@@ -66,12 +66,14 @@ export const ArrayTextFieldElement = ({
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                onChange({
-                  isEmpty: false,
-                  type: "string[]",
-                  value: [...value, inputValue],
-                });
-                setInputValue("");
+                if (inputValue.trim() !== "") {
+                  onChange({
+                    isEmpty: false,
+                    type: "string[]",
+                    value: [...value, inputValue],
+                  });
+                  setInputValue("");
+                }
               }
             }}
             placeholder={placeholder}

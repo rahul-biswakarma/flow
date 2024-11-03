@@ -39,7 +39,7 @@ const SchemaBuilder = ({
         <Button
           variant="soft"
           color="gray"
-          disabled={propsData.length === MAX_PROPS - 1}
+          disabled={propsData.length >= MAX_PROPS}
           size="1"
           onClick={() => {
             setNewComponentData((prev) => ({
@@ -210,6 +210,7 @@ const PropsField = ({
           <div className="flex w-full gap-2 items-center justify-between">
             <div className="flex flex-row items-center gap-3">
               <DropdownFieldElement
+                dropdownKey="props_type"
                 labelClassName="pt-0"
                 label={scopedT("props_type")}
                 fieldInfo={scopedT("props_type_info")}

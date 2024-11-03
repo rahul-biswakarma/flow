@@ -22,6 +22,7 @@ interface DropdownFieldElementProps {
   placeholder?: string;
   labelClassName?: string;
   onChange: (e: FieldOnChangeProps<Option>) => void;
+  dropdownKey?: string;
 }
 
 export const DropdownFieldElement = ({
@@ -32,6 +33,7 @@ export const DropdownFieldElement = ({
   labelClassName,
   onChange,
   placeholder,
+  dropdownKey,
 }: DropdownFieldElementProps) => {
   return (
     <>
@@ -71,7 +73,7 @@ export const DropdownFieldElement = ({
             <DropdownMenu.Item
               disabled={option.disabled}
               textValue={option.value}
-              key={`${option.value}_${label}`}
+              key={`${dropdownKey}_${option.value}`}
               className="flex items-center gap-2"
               onSelect={() => {
                 onChange({

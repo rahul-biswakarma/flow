@@ -94,6 +94,7 @@ export const ObjectTypeFields: React.FC<ObjectTypeFieldsProps> = ({
                   placeholder="Key name"
                 />
                 <DropdownFieldElement
+                  dropdownKey={`object_field_${nestingLevel}_${index}`}
                   options={[
                     { label: "String", value: "string" },
                     { label: "Number", value: "number" },
