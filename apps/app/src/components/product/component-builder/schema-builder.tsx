@@ -247,6 +247,7 @@ const PropsField = ({
               <div className="w-full h-0.5 bg-gray-03 border border-dashed border-outline-03" />
               <ObjectTypeFields
                 objectSchema={propData.objectSchema || {}}
+                fieldName={propData.visualName || propData.propName || "Object"}
                 onChange={(newSchema) => {
                   if (onChange) {
                     onChange({ ...propData, objectSchema: newSchema });

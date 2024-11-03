@@ -3,7 +3,6 @@ import { DropdownFieldElement } from "@/components/field-elements/dropdown-field
 import type { FieldOnChangeProps } from "@/components/field-elements/types";
 import { Button } from "@v1/ui/button";
 import { Icons } from "@v1/ui/icons";
-import { Separator } from "@v1/ui/separator";
 import { Text } from "@v1/ui/text";
 import type React from "react";
 import { useState } from "react";
@@ -11,23 +10,26 @@ import type { ObjectSchema, ObjectSchemaProperty, PropsType } from "./types";
 
 const MAX_KEYS = 8;
 const MAX_OBJECT_NESTING = 2;
-const ICON_CLASSES = "!w-4 !h-4 text-gray-10";
+const ICON_CLASSES = "!w-4 !h-4 !text-gray-10";
+const NESTED_MARGIN = 15; // pixels to indent nested objects
 
 interface ObjectTypeFieldsProps {
   objectSchema: ObjectSchema;
   onChange: (newSchema: ObjectSchema) => void;
   nestingLevel: number;
+  fieldName?: string;
 }
 
 export const ObjectTypeFields: React.FC<ObjectTypeFieldsProps> = ({
   objectSchema,
   onChange,
   nestingLevel,
+  fieldName = "Object",
 }) => {
   const [keys, setKeys] = useState<string[]>(Object.keys(objectSchema));
 
   const addKey = () => {
-    const newKey = `newKey${keys.length}`;
+    const newKey = `New Key ${nestingLevel}${keys.length}`;
     setKeys([...keys, newKey]);
     onChange({ ...objectSchema, [newKey]: { type: "string" } });
   };
@@ -62,70 +64,79 @@ export const ObjectTypeFields: React.FC<ObjectTypeFieldsProps> = ({
   };
 
   return (
-    <div className="flex flex-col w-full gap-2 border-l-2 border-gray-a3 p-2">
-      <Text size="2" weight="medium" className="mb-2">
-        Object Properties
+    <div
+      style={{
+        paddingLeft: `${nestingLevel * NESTED_MARGIN}px`,
+      }}
+      className="flex flex-col w-full gap-2 p-2"
+    >
+      <Text size="2" weight="medium">
+        {fieldName} Properties
       </Text>
 
-      {keys.map((key) => {
-        const property = objectSchema[key];
-        if (!property) return null;
+      <div className="flex flex-col gap-2 pl-2 border-l-2 border-outline-02">
+        {keys.map((key, index: number) => {
+          const property = objectSchema[key];
+          if (!property) return null;
 
-        return (
-          <div key={key} className="flex flex-col gap-2">
-            <div className="flex items-center gap-2">
-              <TextFieldElement
-                value={key}
-                onChange={(e: FieldOnChangeProps<string>) =>
-                  updateKey(key, e.value)
-                }
-                placeholder="Key name"
-              />
-              <DropdownFieldElement
-                options={[
-                  { label: "String", value: "string" },
-                  { label: "Number", value: "number" },
-                  { label: "Boolean", value: "boolean" },
-                  ...(nestingLevel < MAX_OBJECT_NESTING
-                    ? [{ label: "Object", value: "object" }]
-                    : []),
-                ]}
-                value={property.type}
-                onChange={(e) => updateType(key, e.value.value as PropsType)}
-              />
-
-              <Button
-                variant="ghost"
-                size="1"
-                color="gray"
-                onClick={() => removeKey(key)}
-              >
-                <Icons.Trash className={ICON_CLASSES} />
-              </Button>
-            </div>
-            {property.type === "object" &&
-              nestingLevel < MAX_OBJECT_NESTING && (
-                <ObjectTypeFields
-                  objectSchema={property.properties || {}}
-                  onChange={(newSchema) => {
-                    const updatedProperty: ObjectSchemaProperty = {
-                      ...property,
-                      properties: newSchema,
-                    };
-                    onChange({
-                      ...objectSchema,
-                      [key]: updatedProperty,
-                    });
-                  }}
-                  nestingLevel={nestingLevel + 1}
+          return (
+            <div
+              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+              key={`object_field_${nestingLevel}_${index}`}
+              className="flex flex-col gap-1"
+            >
+              <div className="flex items-center gap-2">
+                <TextFieldElement
+                  value={key}
+                  onChange={(e: FieldOnChangeProps<string>) =>
+                    updateKey(key, e.value)
+                  }
+                  placeholder="Key name"
                 />
-              )}
-          </div>
-        );
-      })}
-
+                <DropdownFieldElement
+                  options={[
+                    { label: "String", value: "string" },
+                    { label: "Number", value: "number" },
+                    { label: "Boolean", value: "boolean" },
+                    ...(nestingLevel < MAX_OBJECT_NESTING
+                      ? [{ label: "Object", value: "object" }]
+                      : []),
+                  ]}
+                  value={property.type}
+                  onChange={(e) => updateType(key, e.value.value as PropsType)}
+                />
+                <Button
+                  variant="ghost"
+                  size="1"
+                  color="gray"
+                  onClick={() => removeKey(key)}
+                >
+                  <Icons.Trash className={ICON_CLASSES} />
+                </Button>
+              </div>
+              {property.type === "object" &&
+                nestingLevel < MAX_OBJECT_NESTING && (
+                  <ObjectTypeFields
+                    objectSchema={property.properties || {}}
+                    fieldName={key}
+                    onChange={(newSchema) => {
+                      const updatedProperty: ObjectSchemaProperty = {
+                        ...property,
+                        properties: newSchema,
+                      };
+                      onChange({
+                        ...objectSchema,
+                        [key]: updatedProperty,
+                      });
+                    }}
+                    nestingLevel={nestingLevel + 1}
+                  />
+                )}
+            </div>
+          );
+        })}
+      </div>
       <div className="flex gap-2 items-center">
-        <Separator className="w-[50px]" />
         <Button
           size="1"
           color="gray"
