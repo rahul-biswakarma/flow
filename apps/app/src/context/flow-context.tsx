@@ -1,5 +1,12 @@
 "use client";
 
+import { ComponentBuilder } from "@/components/product/component-builder/component-builder";
+import { Connections } from "@/components/product/connections/connections";
+import { LogicBuilder } from "@/components/product/logic-builder/logic-builder";
+import { Marketplace } from "@/components/product/marketplace/marketplace";
+import { SchemaEditor } from "@/components/product/schema-editor/schema-editor";
+import { Settings } from "@/components/product/settings/settings";
+import { VisualEditor } from "@/components/product/visual-editor/visual-editor";
 import { useScopedI18n } from "@/locales/client";
 import type { ProjectWithPages, User } from "@/types";
 import { Icons } from "@v1/ui/icons";
@@ -10,6 +17,7 @@ type NavigationBarMenuItem = {
   icon: React.ReactNode;
   title: string;
   key: string;
+  component: React.ReactNode;
 };
 
 type AppContextType = {
@@ -34,50 +42,58 @@ export const FlowContextProvider = ({
   children,
   projectWithPages,
 }: FlowContextProviderProps) => {
-  const navigationScopedT = useScopedI18n("navigation_bar");
-  const navigationBarMenuItems: NavigationBarMenuItem[] = [
-    {
-      icon: <Icons.AppWindow />,
-      title: navigationScopedT("visual_editor"),
-      key: "nav-bar-visual-editor",
-    },
-    {
-      icon: <Icons.Workflow />,
-      title: navigationScopedT("logic_builder"),
-      key: "nav-bar-logic-builder",
-    },
-    {
-      icon: <Icons.Database />,
-      title: navigationScopedT("schema_editor"),
-      key: "nav-bar-schema-editor",
-    },
-    {
-      icon: <Icons.Layers />,
-      title: navigationScopedT("component_builder"),
-      key: "nav-bar-component-builder",
-    },
-    {
-      icon: <Icons.Globe />,
-      title: navigationScopedT("marketplace"),
-      key: "nav-bar-marketplace",
-    },
-    {
-      icon: <Icons.Cable />,
-      title: navigationScopedT("connections"),
-      key: "nav-bar-connections",
-    },
-    {
-      icon: <Icons.Settings />,
-      title: navigationScopedT("setting"),
-      key: "nav-bar-setting",
-    },
-  ];
-
   const [projectData, setProjectData] =
     useState<ProjectWithPages>(projectWithPages);
   const [activeNavBarItem, setActiveNavBarItem] = useState<string>(
     "nav-bar-visual-editor",
   );
+
+  const scopedT = useScopedI18n("navigation_bar");
+
+  const navigationBarMenuItems: NavigationBarMenuItem[] = [
+    {
+      icon: <Icons.AppWindow />,
+      title: scopedT("visual_editor"),
+      component: <VisualEditor />,
+      key: "nav-bar-visual-editor",
+    },
+    {
+      icon: <Icons.Workflow />,
+      title: scopedT("logic_builder"),
+      key: "nav-bar-logic-builder",
+      component: <LogicBuilder />,
+    },
+    {
+      icon: <Icons.Database />,
+      title: scopedT("schema_editor"),
+      key: "nav-bar-schema-editor",
+      component: <SchemaEditor />,
+    },
+    {
+      icon: <Icons.Layers />,
+      title: scopedT("component_builder"),
+      key: "nav-bar-component-builder",
+      component: <ComponentBuilder />,
+    },
+    {
+      icon: <Icons.Globe />,
+      title: scopedT("marketplace"),
+      key: "nav-bar-marketplace",
+      component: <Marketplace />,
+    },
+    {
+      icon: <Icons.Cable />,
+      title: scopedT("connections"),
+      key: "nav-bar-connections",
+      component: <Connections />,
+    },
+    {
+      icon: <Icons.Settings />,
+      title: scopedT("setting"),
+      key: "nav-bar-setting",
+      component: <Settings />,
+    },
+  ];
 
   useEffect(() => {
     if (projectWithPages && projectWithPages?.id !== projectData?.id)

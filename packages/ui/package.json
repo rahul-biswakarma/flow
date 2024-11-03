@@ -35,7 +35,10 @@
     "./dialog": "./src/components/dialog.tsx",
     "./hover-card": "./src/components/hover-card.tsx",
     "./sidebar": "./src/components/sidebar.tsx",
+    "./resizable": "./src/components/resizable.tsx",
     "./text-field": "./src/components/text-field.tsx",
+    "./switch": "./src/components/switch.tsx",
+    "./text-area": "./src/components/text-area.tsx",
     "./dropdown": "./src/components/dropdown.tsx",
     "./separator": "./src/components/separator.tsx",
     "./kbd": "./src/components/kbd.tsx",
@@ -56,6 +59,7 @@
     "@radix-ui/themes": "^3.1.4",
     "class-variance-authority": "^0.7.0",
     "lucide-react": "^0.438.0",
+    "react-resizable-panels": "^2.1.6",
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7"
