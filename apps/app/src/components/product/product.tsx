@@ -5,6 +5,8 @@ import { NavigationBar } from "./sidebars/navigation-bar";
 
 export const Product = () => {
   const { navigationBarMenuItems, activeNavBarItem } = useFlowContext();
+  const activeItem = navigationBarMenuItems.find(item => item.key === activeNavBarItem);
+
   return (
     <motion.div
       className="grid grid-cols-[auto_1fr] w-full h-full"
@@ -14,15 +16,11 @@ export const Product = () => {
     >
       <TooltipProvider>
         <NavigationBar />
-        {navigationBarMenuItems.map((item) => {
-          if (item.key === activeNavBarItem) {
-            return (
-              <div key={item.key} className="flex h-full w-full">
-                {item.component}
-              </div>
-            );
-          }
-        })}
+        {activeItem && (
+          <div key={activeItem.key} className="flex h-full w-full">
+            {activeItem.component}
+          </div>
+        )}
       </TooltipProvider>
     </motion.div>
   );

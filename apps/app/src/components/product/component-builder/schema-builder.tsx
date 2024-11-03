@@ -8,7 +8,8 @@ import { Button } from "@v1/ui/button";
 import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
 import { clsx } from "clsx";
-import { useMemo, useState } from "react";
+import { nanoid } from "nanoid";
+import { Fragment, useMemo, useState } from "react";
 import { BooleanFieldElement } from "../../field-elements/boolean-field";
 import { DropdownFieldElement } from "../../field-elements/dropdown-field";
 import { TextFieldElement } from "../../field-elements/text-field";
@@ -19,7 +20,7 @@ import { ObjectTypeFields } from "./object-field";
 const ICON_CLASSES = "!w-4 !h-4 !text-gray-10";
 const MAX_PROPS = 10;
 
-export const SchemaBuilder = ({
+const SchemaBuilder = ({
   newComponentData,
   setNewComponentData,
 }: {
@@ -46,6 +47,7 @@ export const SchemaBuilder = ({
               props: [
                 ...prev.props,
                 {
+                  id: nanoid(),
                   visualName: "",
                   propName: "",
                   propType: "text" as PropsType,
@@ -63,31 +65,25 @@ export const SchemaBuilder = ({
       {propsData.length === 0
         ? null
         : propsData.map((prop, index: number) => (
-            <>
+            <Fragment key={prop.id}>
               <PropsField
-                key={`props-name-${
-                  // biome-ignore lint/suspicious/noArrayIndexKey: index is stable; other keys change, causing focus loss
-                  index
-                }`}
                 propData={prop}
                 onChange={(propData) => {
                   setNewComponentData((prev) => ({
                     ...prev,
-                    props: prev.props.map((p, propIndex) =>
-                      propIndex === index ? propData : p,
+                    props: prev.props.map((p) =>
+                      p.id === propData.id ? propData : p,
                     ),
                   }));
                 }}
                 onDelete={() => {
                   setNewComponentData((prev) => ({
                     ...prev,
-                    props: prev.props.filter(
-                      (_, propIndex) => propIndex !== index,
-                    ),
+                    props: prev.props.filter((p) => p.id !== prop.id),
                   }));
                 }}
               />
-            </>
+            </Fragment>
           ))}
     </GroupFieldWrapper>
   );
@@ -262,3 +258,5 @@ const PropsField = ({
     </div>
   );
 };
+
+export default SchemaBuilder;

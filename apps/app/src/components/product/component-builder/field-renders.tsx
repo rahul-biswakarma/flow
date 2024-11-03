@@ -1,14 +1,16 @@
 import {
   ArrayTextFieldElement,
   GroupFieldWrapper,
-  SchemaBuilder,
   StringFieldElement,
   TextFieldElement,
 } from "@/components/field-elements";
 import type { FieldOnChangeProps } from "@/components/field-elements/types";
 import { useScopedI18n } from "@/locales/client";
 import type React from "react";
+import { Suspense, lazy } from "react";
 import type { ComponentData } from "./types";
+
+const SchemaBuilder = lazy(() => import("./schema-builder"));
 
 export const FieldRenders = ({
   newComponentData,
@@ -18,6 +20,19 @@ export const FieldRenders = ({
   setNewComponentData: React.Dispatch<React.SetStateAction<ComponentData>>;
 }) => {
   const scopedT = useScopedI18n("component_builder.field");
+
+  const handleKeywordsChange = (e: FieldOnChangeProps<string[]>) => {
+    setNewComponentData((prev) => {
+      if (prev.keywords !== e.value) {
+        return {
+          ...prev,
+          keywords: e.value,
+        };
+      }
+      return prev;
+    });
+  };
+
   return (
     <div className="flex w-full h-full p-4 gap-4 flex-col">
       <GroupFieldWrapper groupLabel={scopedT("component_info_group_title")}>
@@ -44,15 +59,15 @@ export const FieldRenders = ({
           label={scopedT("keywords")}
           placeholder={scopedT("keywords_placeholder")}
           value={newComponentData.keywords}
-          onChange={(e: FieldOnChangeProps<string[]>): void => {
-            setNewComponentData((prev) => ({
-              ...prev,
-              keywords: e.value,
-            }));
-          }}
+          onChange={handleKeywordsChange}
         />
       </GroupFieldWrapper>
-      <SchemaBuilder {...{ newComponentData, setNewComponentData }} />
+      <Suspense>
+        <SchemaBuilder
+          newComponentData={newComponentData}
+          setNewComponentData={setNewComponentData}
+        />
+      </Suspense>
     </div>
   );
 };

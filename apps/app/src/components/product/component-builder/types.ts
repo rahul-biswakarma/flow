@@ -11,6 +11,7 @@ export interface ComponentData {
 export type PropsType = "string" | "number" | "boolean" | "object" | "self";
 
 export interface PropSchema {
+  id: string;
   visualName: string;
   propName: string;
   propType: PropsType;

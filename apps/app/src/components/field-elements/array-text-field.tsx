@@ -3,6 +3,7 @@ import { Text } from "@v1/ui/text";
 import { TextField } from "@v1/ui/text-field";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import { clsx } from "clsx";
+import { useState } from "react";
 import { tooltipProps } from "./constants";
 import type { FieldOnChangeProps } from "./types";
 import { ArrayValueRenderer } from "./utils/array-value-renderer";
@@ -24,6 +25,8 @@ export const ArrayTextFieldElement = ({
   fieldInfo,
   onChange,
 }: ArrayTextFieldElementProps) => {
+  const [inputValue, setInputValue] = useState("");
+
   return (
     <>
       <Text
@@ -58,15 +61,17 @@ export const ArrayTextFieldElement = ({
           <TextField.Root
             autoFocus={value.length > 0}
             className="grow p-0 shadow-none"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
                 onChange({
                   isEmpty: false,
                   type: "string[]",
-                  value: [...value, e.currentTarget.value],
+                  value: [...value, inputValue],
                 });
-                e.currentTarget.value = "";
+                setInputValue("");
               }
             }}
             placeholder={placeholder}
