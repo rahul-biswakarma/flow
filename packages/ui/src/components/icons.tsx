@@ -33,12 +33,14 @@ import {
   Sparkles,
   Sun,
   Trash,
+  WandSparkles,
   Workflow,
   X,
 } from "lucide-react";
 
 export const Icons = {
   Brush,
+  WandSparkles,
   ChevronUp,
   ChevronDown,
   Trash,

@@ -4,12 +4,16 @@ import {
   ResizablePanelGroup,
 } from "@v1/ui/resizable";
 import { ScrollArea } from "@v1/ui/scroll-area";
+
 import type React from "react";
 import { useState } from "react";
-import { LiveEditor, LiveError, LivePreview, LiveProvider } from "react-live";
+import { LiveError, LivePreview, LiveProvider } from "react-live";
+import { defaultReactCode } from "./constants";
 import { FieldRenders } from "./field-renders";
 import { ComponentBuilderHeader } from "./header";
 import type { ComponentData } from "./types";
+import "./styles.css";
+import { CodeEditor } from "./editor";
 
 export const ComponentBuilder: React.FC = () => {
   const [newComponentData, setNewComponentData] = useState<ComponentData>({
@@ -19,7 +23,7 @@ export const ComponentBuilder: React.FC = () => {
     previewUrl: "",
     keywords: [],
     props: [],
-    code: "",
+    code: defaultReactCode,
   });
 
   return (
@@ -46,12 +50,9 @@ export const ComponentBuilder: React.FC = () => {
           <ResizablePanel minSize={25} defaultSize={70}>
             <ResizablePanelGroup direction="vertical">
               <ResizablePanel minSize={25} defaultSize={50}>
-                <LiveEditor
-                  onChange={(e) =>
-                    setNewComponentData((prev) => ({ ...prev, code: e }))
-                  }
+                <CodeEditor
                   code={newComponentData.code}
-                  className="font-mono"
+                  setNewComponentData={setNewComponentData}
                 />
               </ResizablePanel>
               <ResizableHandle />
