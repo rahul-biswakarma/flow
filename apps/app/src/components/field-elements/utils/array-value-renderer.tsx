@@ -21,7 +21,7 @@ export const ArrayValueRenderer = <T,>({
     <div
       tabIndex={-1}
       className={clsx("flex gap-2 flex-wrap border-gray-7", {
-        "bg-surface rounded p-2 border": value.length > 0,
+        "bg-surface rounded p-2": value.length > 0,
       })}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
@@ -29,7 +29,7 @@ export const ArrayValueRenderer = <T,>({
       {value.map((value) => (
         <div
           key={`${value}`}
-          className="flex gap-1 items-center justify-center px-2 py-1 rounded bg-gray-3 border border-outline-01"
+          className="flex gap-1 items-center justify-center px-2 py-1 rounded bg-gray-3 border border-outline-02"
         >
           {valueRender(value)}
           <IconButton
@@ -40,7 +40,7 @@ export const ArrayValueRenderer = <T,>({
             size="1"
             color="gray"
           >
-            <Icons.X className="w-[16px] h-[16px]" />
+            <Icons.X className="!w-[16px] !h-[16px] text-gray-10" />
           </IconButton>
         </div>
       ))}

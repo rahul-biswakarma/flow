@@ -15,7 +15,7 @@ type Option = {
 };
 
 interface DropdownFieldElementProps {
-  label: string;
+  label?: string;
   value?: string;
   options: Option[];
   fieldInfo?: string;
@@ -35,23 +35,25 @@ export const DropdownFieldElement = ({
 }: DropdownFieldElementProps) => {
   return (
     <>
-      <Text
-        className={clsx(
-          "text-gray-10 pt-1 flex gap-1 items-center h-fit",
-          labelClassName,
-        )}
-        size="2"
-      >
-        {label}
-        {fieldInfo && (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Icons.Info className="!w-[16px] !h-[16px]" />
-            </TooltipTrigger>
-            <TooltipContent {...tooltipProps}>{fieldInfo}</TooltipContent>
-          </Tooltip>
-        )}
-      </Text>
+      {label && (
+        <Text
+          className={clsx(
+            "text-gray-10 pt-1 flex gap-1 items-center h-fit",
+            labelClassName,
+          )}
+          size="2"
+        >
+          {label}
+          {fieldInfo && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Icons.Info className="!w-[16px] !h-[16px]" />
+              </TooltipTrigger>
+              <TooltipContent {...tooltipProps}>{fieldInfo}</TooltipContent>
+            </Tooltip>
+          )}
+        </Text>
+      )}
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
           <Button color="gray" variant="soft" size="2">

@@ -43,6 +43,7 @@ export const StringFieldElement = ({
         )}
       </Text>
       <TextArea
+        className="shadow-none"
         value={value}
         onChange={(e) =>
           onChange({

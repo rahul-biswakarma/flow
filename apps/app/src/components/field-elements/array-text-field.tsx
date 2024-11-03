@@ -57,7 +57,7 @@ export const ArrayTextFieldElement = ({
         inputRenderer={
           <TextField.Root
             autoFocus={value.length > 0}
-            className="grow p-0"
+            className="grow p-0 shadow-none"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();

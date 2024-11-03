@@ -7,14 +7,16 @@ import { useI18n, useScopedI18n } from "@/locales/client";
 import { Button } from "@v1/ui/button";
 import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
+import { clsx } from "clsx";
 import { useMemo, useState } from "react";
-import { BooleanFieldElement } from "../boolean-field";
-import { DropdownFieldElement } from "../dropdown-field";
-import { TextFieldElement } from "../text-field";
-import type { FieldOnChangeProps } from "../types";
-import { GroupFieldWrapper } from "./group-field-wrapper";
+import { BooleanFieldElement } from "../../field-elements/boolean-field";
+import { DropdownFieldElement } from "../../field-elements/dropdown-field";
+import { TextFieldElement } from "../../field-elements/text-field";
+import type { FieldOnChangeProps } from "../../field-elements/types";
+import { GroupFieldWrapper } from "../../field-elements/utils/group-field-wrapper";
+import { ObjectTypeFields } from "./object-field";
 
-const ICON_CLASSES = "!w-4 !h-4 text-gray-10";
+const ICON_CLASSES = "!w-4 !h-4 !text-gray-10";
 const MAX_PROPS = 10;
 
 export const SchemaBuilder = ({
@@ -34,6 +36,8 @@ export const SchemaBuilder = ({
       groupLabel={t("component_builder.field.props_schema_group_title")}
       headerAction={
         <Button
+          variant="soft"
+          color="gray"
           disabled={propsData.length === MAX_PROPS - 1}
           size="1"
           onClick={() => {
@@ -51,7 +55,7 @@ export const SchemaBuilder = ({
             }));
           }}
         >
-          <Icons.Plus />
+          <Icons.Plus className={ICON_CLASSES} />
           {t("props_builder.add_field")}
         </Button>
       }
@@ -126,13 +130,19 @@ const PropsField = ({
   }, [scopedTForTypes]);
 
   return (
-    <div className="border border-gray-a3 bg-gray-a2 rounded mb-2">
+    <div className="border border-outline-03 bg-gray-a2 rounded mb-2">
       <div
-        className="flex justify-between items-center p-2 cursor-pointer"
+        className={clsx(
+          "flex justify-between items-center p-3 cursor-pointer border-outline-03",
+          {
+            "border-b": isExpanded,
+          },
+        )}
         onClick={() => setIsExpanded(!isExpanded)}
         onKeyUp={() => setIsExpanded(!isExpanded)}
       >
-        <Text size="2" className="text-gray-10">
+        <Text size="2" className="text-gray-11">
+          <span className="text-gray-10">{scopedT("field")}</span>
           {propData.visualName || scopedT("unnamed_prop")}
         </Text>
         <div className="flex items-center gap-4 text-gray-11">
@@ -165,7 +175,7 @@ const PropsField = ({
         </div>
       </div>
       {isExpanded && (
-        <div className="flex flex-col gap-3 bg-gray-a2 p-3 rounded">
+        <div className="flex flex-col gap-3 rounded p-3">
           <div className="flex gap-3 w-full">
             <div className="flex flex-col gap-1 w-full">
               <TextFieldElement
@@ -232,6 +242,20 @@ const PropsField = ({
               />
             </div>
           </div>
+          {propData.propType === "object" && (
+            <>
+              <div className="w-full h-0.5 bg-gray-03 border border-dashed border-outline-03" />
+              <ObjectTypeFields
+                objectSchema={propData.objectSchema || {}}
+                onChange={(newSchema) => {
+                  if (onChange) {
+                    onChange({ ...propData, objectSchema: newSchema });
+                  }
+                }}
+                nestingLevel={0}
+              />
+            </>
+          )}
         </div>
       )}
     </div>

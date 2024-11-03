@@ -8,7 +8,7 @@ import { tooltipProps } from "./constants";
 import type { FieldOnChangeProps } from "./types";
 
 interface TextFieldElementProps {
-  label: string;
+  label?: string;
   placeholder?: string;
   value: string;
   fieldInfo?: string;
@@ -31,24 +31,27 @@ export const TextFieldElement: React.FC<TextFieldElementProps> = React.memo(
 
     return (
       <>
-        <Text
-          className={clsx(
-            "text-gray-10 pt-1 flex gap-1 items-center h-fit",
-            labelClassName,
-          )}
-          size="2"
-        >
-          {label}
-          {fieldInfo && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Icons.Info className="!w-[16px] !h-[16px]" />
-              </TooltipTrigger>
-              <TooltipContent {...tooltipProps}>{fieldInfo}</TooltipContent>
-            </Tooltip>
-          )}
-        </Text>
+        {label && (
+          <Text
+            className={clsx(
+              "text-gray-10 pt-1 flex gap-1 items-center h-fit",
+              labelClassName,
+            )}
+            size="2"
+          >
+            {label}
+            {fieldInfo && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Icons.Info className="!w-[16px] !h-[16px]" />
+                </TooltipTrigger>
+                <TooltipContent {...tooltipProps}>{fieldInfo}</TooltipContent>
+              </Tooltip>
+            )}
+          </Text>
+        )}
         <TextField.Root
+          className="shadow-none"
           value={value}
           onChange={handleChange}
           placeholder={placeholder}

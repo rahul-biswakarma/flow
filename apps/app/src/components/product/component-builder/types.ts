@@ -17,6 +17,16 @@ export interface PropSchema {
   description?: string;
   required?: boolean;
   isList?: boolean;
+  objectSchema?: ObjectSchema;
+}
+
+export interface ObjectSchemaProperty {
+  type: PropsType;
+  properties?: ObjectSchema;
+}
+
+export interface ObjectSchema {
+  [key: string]: ObjectSchemaProperty;
 }
 
 export interface PreviewProps {

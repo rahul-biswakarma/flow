@@ -24,7 +24,7 @@ export const GroupFieldWrapper = ({
       )}
     >
       <div className="flex gap-2 justify-between items-center">
-        <Text className="text-gray-11" size="3">
+        <Text className="text-gray-11" size="2">
           {groupLabel}
         </Text>
         {headerAction}
