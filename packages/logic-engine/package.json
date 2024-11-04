@@ -1,0 +1,12 @@
+{
+  "name": "@v1/logic-engine",
+  "version": "1.0.0",
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "reactflow": "^11.11.4"
+  }
+}

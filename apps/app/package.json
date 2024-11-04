@@ -17,6 +17,7 @@
   "dependencies": {
     "@v1/analytics": "workspace:*",
     "@v1/kv": "workspace:*",
+    "@v1/logic-engine": "workspace:*",
     "@v1/supabase": "workspace:*",
     "@v1/ui": "workspace:*",
     "axios": "^1.7.7",

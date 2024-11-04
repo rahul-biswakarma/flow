@@ -4,7 +4,7 @@ import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import { clsx } from "clsx";
-import { tooltipProps } from "./constants";
+import { infoIconSize, tooltipProps } from "./constants";
 import type { FieldOnChangeProps } from "./types";
 
 type Option = {
@@ -40,16 +40,16 @@ export const DropdownFieldElement = ({
       {label && (
         <Text
           className={clsx(
-            "text-gray-10 pt-1 flex gap-1 items-center h-fit",
+            "text-gray-10 flex gap-1 items-center h-fit",
             labelClassName,
           )}
-          size="2"
+          size="1"
         >
           {label}
           {fieldInfo && (
             <Tooltip>
               <TooltipTrigger asChild>
-                <Icons.Info className="!w-[16px] !h-[16px]" />
+                <Icons.Info className={infoIconSize} />
               </TooltipTrigger>
               <TooltipContent {...tooltipProps}>{fieldInfo}</TooltipContent>
             </Tooltip>
@@ -58,9 +58,9 @@ export const DropdownFieldElement = ({
       )}
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
-          <Button color="gray" variant="soft" size="2">
+          <Button color="gray" variant="soft" size="1">
             {placeholder && !value && (
-              <Text size="2" className="text-gray-11">
+              <Text size="1" className="text-gray-11">
                 {placeholder}
               </Text>
             )}
@@ -83,11 +83,12 @@ export const DropdownFieldElement = ({
                 });
               }}
             >
-              {option.label}
+              <Text size="1"> {option.label}</Text>
+
               {option.info && (
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Icons.Info className="!w-[16px] !h-[16px]" />
+                    <Icons.Info className={infoIconSize} />
                   </TooltipTrigger>
                   <TooltipContent side="top" align="center">
                     {option.info}

@@ -3,7 +3,7 @@ import { Text } from "@v1/ui/text";
 import { TextArea } from "@v1/ui/text-area";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import { clsx } from "clsx";
-import { tooltipProps } from "./constants";
+import { infoIconSize, tooltipProps } from "./constants";
 import type { FieldOnChangeProps } from "./types";
 
 interface StringFieldElementProps {
@@ -27,16 +27,16 @@ export const StringFieldElement = ({
     <>
       <Text
         className={clsx(
-          "text-gray-10 pt-1 flex gap-1 items-center h-fit",
+          "text-gray-10  flex gap-1 items-center h-fit",
           labelClassName,
         )}
-        size="2"
+        size="1"
       >
         {label}
         {fieldInfo && (
           <Tooltip>
             <TooltipTrigger asChild>
-              <Icons.Info className="!w-[16px] !h-[16px]" />
+              <Icons.Info className={infoIconSize} />
             </TooltipTrigger>
             <TooltipContent {...tooltipProps}>{fieldInfo}</TooltipContent>
           </Tooltip>
@@ -45,6 +45,7 @@ export const StringFieldElement = ({
       <TextArea
         className="shadow-none"
         value={value}
+        size="1"
         onChange={(e) =>
           onChange({
             isEmpty: !e.target.value,
