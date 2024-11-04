@@ -19,6 +19,7 @@
     "@v1/kv": "workspace:*",
     "@v1/supabase": "workspace:*",
     "@v1/ui": "workspace:*",
+    "@v1/logic-engine": "workspace:*",
     "axios": "^1.7.7",
     "codesandboxer": "^1.0.3",
     "cross-env": "^7.0.3",

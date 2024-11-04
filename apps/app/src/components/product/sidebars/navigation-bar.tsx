@@ -5,6 +5,7 @@ import { Avatar } from "@v1/ui/avatar";
 import { DropdownMenu } from "@v1/ui/dropdown";
 import { Heading } from "@v1/ui/heading";
 import { HoverCard } from "@v1/ui/hover-card";
+import { Icons } from "@v1/ui/icons";
 import {
   Sidebar,
   SidebarContent,
@@ -18,6 +19,7 @@ import {
 } from "@v1/ui/sidebar";
 import { Text } from "@v1/ui/text";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
+import { useTheme } from "next-themes";
 
 export function NavigationBar() {
   const {
@@ -29,6 +31,7 @@ export function NavigationBar() {
   } = useFlowContext();
   const scopedT = useScopedI18n("navigation_bar");
   const scopedTUser = useScopedI18n("user");
+  const { setTheme, theme, themes } = useTheme();
 
   const projectName = projectData?.name ?? "Untitled";
   const published = projectData?.is_published ?? false;
@@ -119,7 +122,39 @@ export function NavigationBar() {
         </SidebarContent>
 
         <SidebarFooter>
-          <SidebarMenu>
+          <SidebarMenu className="flex flex-col gap-2">
+            <SidebarMenuItem>
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger>
+                  <SidebarMenuButton>
+                    {(() => {
+                      switch (theme) {
+                        case "dark":
+                          return <Icons.Moon />;
+                        case "light":
+                          return <Icons.Sun />;
+                        default:
+                          return <Icons.SunMoon />;
+                      }
+                    })()}
+                  </SidebarMenuButton>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content>
+                  {themes.map((theme) => {
+                    return (
+                      <DropdownMenu.Item
+                        key={theme}
+                        onClick={() => {
+                          setTheme(theme);
+                        }}
+                      >
+                        <Text className="capitalize">{theme}</Text>
+                      </DropdownMenu.Item>
+                    );
+                  })}
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
+            </SidebarMenuItem>
             <SidebarMenuItem>
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger>

@@ -32,6 +32,7 @@ import {
   Settings,
   Sparkles,
   Sun,
+  SunMoon,
   Trash,
   WandSparkles,
   Workflow,
@@ -76,4 +77,5 @@ export const Icons = {
   Search,
   Sun,
   Moon,
+  SunMoon,
 };
