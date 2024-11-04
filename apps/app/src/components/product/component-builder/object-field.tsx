@@ -10,7 +10,7 @@ import type { ObjectSchema, ObjectSchemaProperty, PropsType } from "./types";
 
 const MAX_KEYS = 8;
 const MAX_OBJECT_NESTING = 2;
-const ICON_CLASSES = "!w-4 !h-4 !text-gray-10";
+const ICON_CLASSES = "!w-3.5 !h-3.5 !text-gray-10";
 const NESTED_MARGIN = 15; // pixels to indent nested objects
 
 interface ObjectTypeFieldsProps {
@@ -70,7 +70,7 @@ export const ObjectTypeFields: React.FC<ObjectTypeFieldsProps> = ({
       }}
       className="flex flex-col w-full gap-2 p-2"
     >
-      <Text size="2" weight="medium">
+      <Text size="1" weight="medium">
         {fieldName} Properties
       </Text>
 

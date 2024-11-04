@@ -4,7 +4,7 @@ import { TextField } from "@v1/ui/text-field";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import { clsx } from "clsx";
 import React from "react";
-import { tooltipProps } from "./constants";
+import { infoIconSize, tooltipProps } from "./constants";
 import type { FieldOnChangeProps } from "./types";
 
 interface TextFieldElementProps {
@@ -34,16 +34,16 @@ export const TextFieldElement: React.FC<TextFieldElementProps> = React.memo(
         {label && (
           <Text
             className={clsx(
-              "text-gray-10 pt-1 flex gap-1 items-center h-fit",
+              "text-gray-10  flex gap-1 items-center h-fit",
               labelClassName,
             )}
-            size="2"
+            size="1"
           >
             {label}
             {fieldInfo && (
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Icons.Info className="!w-[16px] !h-[16px]" />
+                  <Icons.Info className={infoIconSize} />
                 </TooltipTrigger>
                 <TooltipContent {...tooltipProps}>{fieldInfo}</TooltipContent>
               </Tooltip>
@@ -52,6 +52,7 @@ export const TextFieldElement: React.FC<TextFieldElementProps> = React.memo(
         )}
         <TextField.Root
           className="shadow-none"
+          size="1"
           value={value}
           onChange={handleChange}
           placeholder={placeholder}

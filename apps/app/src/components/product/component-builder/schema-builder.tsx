@@ -17,7 +17,7 @@ import type { FieldOnChangeProps } from "../../field-elements/types";
 import { GroupFieldWrapper } from "../../field-elements/utils/group-field-wrapper";
 import { ObjectTypeFields } from "./object-field";
 
-const ICON_CLASSES = "!w-4 !h-4 !text-gray-10";
+const ICON_CLASSES = "!w-3.5 !h-3.5 !text-gray-10";
 const MAX_PROPS = 10;
 
 const SchemaBuilder = ({
@@ -137,7 +137,7 @@ const PropsField = ({
         onClick={() => setIsExpanded(!isExpanded)}
         onKeyUp={() => setIsExpanded(!isExpanded)}
       >
-        <Text size="2" className="text-gray-11">
+        <Text size="1" className="text-gray-11">
           <span className="text-gray-10">{scopedT("field")}</span>
           {propData.visualName || scopedT("unnamed_prop")}
         </Text>
