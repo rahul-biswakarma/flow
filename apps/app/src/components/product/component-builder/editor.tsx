@@ -71,6 +71,7 @@ export const CodeEditor = ({
       </div>
       <LiveEditor
         onChange={handleCodeChange}
+        language="react"
         code={editorCode}
         className="font-mono h-full"
       />
