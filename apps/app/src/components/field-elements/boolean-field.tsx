@@ -3,7 +3,7 @@ import { Switch } from "@v1/ui/switch";
 import { Text } from "@v1/ui/text";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import { clsx } from "clsx";
-import { infoIconSize, tooltipProps } from "./constants";
+import { fieldFontSize, infoIconSize, tooltipProps } from "./constants";
 import type { FieldOnChangeProps } from "./types";
 
 interface BooleanFieldElementProps {
@@ -25,10 +25,10 @@ export const BooleanFieldElement = ({
     <>
       <Text
         className={clsx(
-          "text-gray-10  flex gap-1 items-center h-fit",
+          "text-gray-10 pt-1 flex gap-1 items-center h-fit",
+          fieldFontSize,
           labelClassName,
         )}
-        size="1"
       >
         {label}
         {fieldInfo && (

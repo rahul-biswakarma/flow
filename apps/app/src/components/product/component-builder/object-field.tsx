@@ -1,4 +1,5 @@
 import { TextFieldElement } from "@/components/field-elements";
+import { fieldFontSize } from "@/components/field-elements/constants";
 import { DropdownFieldElement } from "@/components/field-elements/dropdown-field";
 import type { FieldOnChangeProps } from "@/components/field-elements/types";
 import { Button } from "@v1/ui/button";
@@ -70,7 +71,7 @@ export const ObjectTypeFields: React.FC<ObjectTypeFieldsProps> = ({
       }}
       className="flex flex-col w-full gap-2 p-2"
     >
-      <Text size="1" weight="medium">
+      <Text className={fieldFontSize} weight="medium">
         {fieldName} Properties
       </Text>
 

@@ -4,7 +4,7 @@ import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import { clsx } from "clsx";
-import { infoIconSize, tooltipProps } from "./constants";
+import { fieldFontSize, infoIconSize, tooltipProps } from "./constants";
 import type { FieldOnChangeProps } from "./types";
 
 type Option = {
@@ -40,10 +40,10 @@ export const DropdownFieldElement = ({
       {label && (
         <Text
           className={clsx(
-            "text-gray-10 flex gap-1 items-center h-fit",
+            "text-gray-10 flex gap-1 pt-1 items-center h-fit",
+            fieldFontSize,
             labelClassName,
           )}
-          size="1"
         >
           {label}
           {fieldInfo && (
@@ -60,11 +60,13 @@ export const DropdownFieldElement = ({
         <DropdownMenu.Trigger>
           <Button color="gray" variant="soft" size="1">
             {placeholder && !value && (
-              <Text size="1" className="text-gray-11">
+              <Text className={clsx("text-gray-11 capitalize", fieldFontSize)}>
                 {placeholder}
               </Text>
             )}
-            {value ?? ""}
+            <Text className={clsx("text-gray-11 capitalize", fieldFontSize)}>
+              {value ?? ""}
+            </Text>
             <DropdownMenu.TriggerIcon />
           </Button>
         </DropdownMenu.Trigger>
@@ -83,8 +85,9 @@ export const DropdownFieldElement = ({
                 });
               }}
             >
-              <Text size="1"> {option.label}</Text>
-
+              <Text className={clsx("capitalize", fieldFontSize)}>
+                {option.label}
+              </Text>
               {option.info && (
                 <Tooltip>
                   <TooltipTrigger asChild>

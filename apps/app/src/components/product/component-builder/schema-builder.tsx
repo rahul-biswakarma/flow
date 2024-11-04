@@ -1,3 +1,4 @@
+import { fieldFontSize } from "@/components/field-elements/constants";
 import type {
   ComponentData,
   PropSchema,
@@ -137,7 +138,7 @@ const PropsField = ({
         onClick={() => setIsExpanded(!isExpanded)}
         onKeyUp={() => setIsExpanded(!isExpanded)}
       >
-        <Text size="1" className="text-gray-11">
+        <Text className={clsx("text-gray-11", fieldFontSize)}>
           <span className="text-gray-10">{scopedT("field")}</span>
           {propData.visualName || scopedT("unnamed_prop")}
         </Text>
@@ -211,7 +212,7 @@ const PropsField = ({
             <div className="flex flex-row items-center gap-3">
               <DropdownFieldElement
                 dropdownKey="props_type"
-                labelClassName="pt-0"
+                labelClassName="!pt-0"
                 label={scopedT("props_type")}
                 fieldInfo={scopedT("props_type_info")}
                 placeholder={t("common.select")}
@@ -229,7 +230,7 @@ const PropsField = ({
             </div>
             <div className="flex flex-row items-center gap-3">
               <BooleanFieldElement
-                labelClassName="pt-0"
+                labelClassName="!pt-0"
                 label={scopedT("is_list")}
                 fieldInfo={scopedT("is_list_info")}
                 value={propData.isList ?? false}
