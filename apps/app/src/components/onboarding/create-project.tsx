@@ -1,18 +1,24 @@
-import apiClient from "@/lib/api-client";
 import { useScopedI18n } from "@/locales/client";
-import type { Project } from "@/types";
+import { createClient } from "@v1/supabase/client";
+import {
+  addProjectMember,
+  createProject,
+  getProjectBySlug,
+} from "@v1/supabase/queries";
 import { Button } from "@v1/ui/button";
 import { Heading } from "@v1/ui/heading";
 import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
 import { TextField } from "@v1/ui/text-field";
 import { toast } from "@v1/ui/toast";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export const CreateProject = ({
   showProjectManger,
 }: { showProjectManger: () => void }) => {
+  const supabase = createClient();
+  const router = useRouter();
   const scopedT = useScopedI18n("onboarding");
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
@@ -21,27 +27,55 @@ export const CreateProject = ({
   const handleProjectRedirect = (slug: string) => {
     setName("");
     setSlug("");
-    setTimeout(() => {
-      redirect(`/${slug}`);
-    }, 100);
+    router.push(`/${slug}`);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const { data, error } = await apiClient.post<Project>("/project.create", {
+      // Get the current user
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+      if (userError || !user) {
+        throw new Error("Unauthorized");
+      }
+
+      // Check if slug is already taken
+      const projectsWithSameSlug = await getProjectBySlug(slug);
+      if (projectsWithSameSlug.length > 0) {
+        throw new Error("Slug already taken");
+      }
+
+      // Create project
+      const projectData = {
         name,
         slug,
-      });
-      if (error) {
-        toast.error(scopedT("project_create_error", { error }));
-      } else if (data.slug) {
+        created_by: user.id,
+        admins: [user.id],
+      };
+      const project = await createProject(projectData);
+
+      if (project.id) {
+        // Add project member
+        await addProjectMember({
+          project_id: project.id,
+          user_id: user.id,
+        });
+
         toast.success(scopedT("project_created"));
-        handleProjectRedirect(data.slug);
+        handleProjectRedirect(project.slug);
+      } else {
+        throw new Error("Failed to create project");
       }
-    } catch (e) {
-      toast.error(scopedT("project_create_error", { error: e as string }));
+    } catch (error) {
+      toast.error(
+        scopedT("project_create_error", {
+          error: error instanceof Error ? error.message : "Unknown error",
+        }),
+      );
     } finally {
       setIsLoading(false);
     }

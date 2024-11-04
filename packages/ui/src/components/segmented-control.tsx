@@ -1,3 +1,3 @@
-import {SegmentedControl as RadixSegmentedControl} from "@radix-ui/themes"
+import { SegmentedControl as RadixSegmentedControl } from "@radix-ui/themes";
 
 export const SegmentedControl = RadixSegmentedControl;

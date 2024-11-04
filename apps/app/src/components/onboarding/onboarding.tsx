@@ -1,5 +1,5 @@
 "use client";
-import { useI18n } from "@/locales/client";
+import { useScopedI18n } from "@/locales/client";
 import type { Project, User } from "@/types";
 import { Button } from "@v1/ui/button";
 import { Icons } from "@v1/ui/icons";
@@ -13,7 +13,7 @@ import { OnboardingUserCard } from "./user-card";
 
 const pageVariants = {
   initial: (direction: number) => ({
-    x: direction > 0 ? "100%" : "-100%",
+    x: direction > 0 ? 20 : -20,
     opacity: 0,
   }),
   animate: {
@@ -21,14 +21,14 @@ const pageVariants = {
     opacity: 1,
   },
   exit: (direction: number) => ({
-    x: direction < 0 ? "100%" : "-100%",
+    x: direction < 0 ? 20 : -20,
     opacity: 0,
   }),
 };
 
 const buttonVariants = {
   initial: {
-    x: "-100%",
+    x: -10,
     opacity: 0,
   },
   animate: {
@@ -36,14 +36,14 @@ const buttonVariants = {
     opacity: 1,
   },
   exit: {
-    x: "-100%",
+    x: -10,
     opacity: 0,
   },
 };
 
 const pageTransition = {
   type: "tween",
-  ease: "anticipate",
+  ease: "easeInOut",
   duration: 0.3,
 };
 
@@ -54,7 +54,7 @@ export function OnboardingPage({
   userData: User;
   projects: Project[];
 }) {
-  const t = useI18n();
+  const scopedT = useScopedI18n("onboarding");
   const [view, setView] = useState<OnboardingViews>("select_project");
   const [direction, setDirection] = useState(0);
 
@@ -76,7 +76,6 @@ export function OnboardingPage({
                 animate="animate"
                 exit="exit"
                 transition={pageTransition}
-                layout
               >
                 <Button
                   onClick={() => changeView("select_project")}
@@ -84,7 +83,7 @@ export function OnboardingPage({
                   className="space-x-3"
                 >
                   <Icons.ChevronLeft />
-                  {t("onboarding.back_to_selection")}
+                  {scopedT("back_to_selection")}
                 </Button>
               </motion.div>
             )}
@@ -102,7 +101,6 @@ export function OnboardingPage({
             animate="animate"
             exit="exit"
             transition={pageTransition}
-            layout
           >
             <ProjectManager
               showCreateView={() => changeView("create_project")}
@@ -119,7 +117,6 @@ export function OnboardingPage({
             animate="animate"
             exit="exit"
             transition={pageTransition}
-            layout
           >
             <CreateProject
               showProjectManger={() => changeView("select_project")}

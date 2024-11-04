@@ -1,24 +1,58 @@
+"use client";
+
+import { Loader } from "@/components/loader/loader";
 import { OnboardingPage } from "@/components/onboarding";
-import type { User } from "@/types";
-import { getProjects, getUser, getUserDetails } from "@v1/supabase/queries";
-import { redirect } from "next/navigation";
+import type {} from "@/types";
+import { getProjects, getUserDetails } from "@v1/supabase/queries";
+import { useRouter } from "next/navigation";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
-export const metadata = {
-  title: "Home",
-};
+export default function PageWrapper() {
+  return (
+    <QueryClientProvider client={new QueryClient()}>
+      <Page />
+    </QueryClientProvider>
+  );
+}
 
-export default async function Page() {
-  let user: User | null = null;
-  const { data: userData } = await getUser();
-  if (userData.user) {
-    user = await getUserDetails(userData.user.id);
+function Page() {
+  const router = useRouter();
+
+  const {
+    data: userData,
+    isLoading: isLoadingUser,
+    error: userError,
+  } = useQuery("user", getUserDetails, {
+    onError: () => router.push("/login"),
+    retry: false,
+  });
+
+  const {
+    data: projects,
+    isLoading: isLoadingProjects,
+    error: projectsError,
+  } = useQuery(
+    ["projects", userData?.id],
+    () => getProjects(userData?.id ?? ""),
+    {
+      enabled: !!userData,
+    },
+  );
+
+  const isLoading = isLoadingUser || isLoadingProjects;
+  const error = userError || projectsError;
+
+  if (isLoading) {
+    return <Loader />;
   }
 
-  if (!user) {
-    redirect("/login");
+  if (error) {
+    router.push("/login");
   }
 
-  const projects = await getProjects(user.id);
+  if (!userData) {
+    return null; // This shouldn't happen due to the redirect, but just in case
+  }
 
-  return <OnboardingPage userData={user} projects={projects} />;
+  return <OnboardingPage userData={userData} projects={projects || []} />;
 }
