@@ -1,4 +1,10 @@
 import {
+  AlignCenterHorizontal,
+  AlignCenterVertical,
+  AlignEndHorizontal,
+  AlignEndVertical,
+  AlignStartHorizontal,
+  AlignStartVertical,
   AppWindow,
   ArrowLeft,
   ArrowRight,
@@ -41,6 +47,12 @@ import {
 
 export const Icons = {
   Brush,
+  AlignStartHorizontal,
+  AlignEndHorizontal,
+  AlignCenterHorizontal,
+  AlignStartVertical,
+  AlignEndVertical,
+  AlignCenterVertical,
   WandSparkles,
   ChevronUp,
   ChevronDown,

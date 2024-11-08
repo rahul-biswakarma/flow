@@ -79,7 +79,7 @@ export const CodeEditor = ({
         language="tsx"
         onChange={handleCodeChange}
         code={editorCode}
-        className="font-mono h-full"
+        className="font-mono h-full text-[14px]"
       />
     </div>
   );

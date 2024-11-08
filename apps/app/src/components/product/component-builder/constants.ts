@@ -1,5 +1,4 @@
-export const defaultReactCode = `
-const Component = (props) => {
+export const defaultReactCode = `const Component = (props) => {
 	return <div>Hello World</div>;
 };
 
