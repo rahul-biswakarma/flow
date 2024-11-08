@@ -25,7 +25,7 @@ export const ExploreMoreButton: React.FC<ExploreMoreButtonProps> = ({
   onClick,
 }) => {
   const scopedT = useScopedI18n("setup");
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   return (
     <div
@@ -39,7 +39,7 @@ export const ExploreMoreButton: React.FC<ExploreMoreButtonProps> = ({
         <div
           className="flex flex-col justify-center items-center h-full w-full absolute gap-2"
           style={{
-            background: `url(${theme === "dark" ? "/globe.svg" : "/globe-light.svg"})`,
+            background: `url(${resolvedTheme === "dark" ? "/globe.svg" : "/globe-light.svg"})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

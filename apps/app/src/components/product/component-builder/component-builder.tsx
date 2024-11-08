@@ -13,7 +13,7 @@ import { FieldRenders } from "./field-renders";
 import { ComponentBuilderHeader } from "./header";
 import type { ComponentData } from "./types";
 import "./styles.css";
-import { CodeEditor } from "./editor";
+import { CodeEditor } from "./code-editor";
 
 export const ComponentBuilder: React.FC = () => {
   const [newComponentData, setNewComponentData] = useState<ComponentData>({
