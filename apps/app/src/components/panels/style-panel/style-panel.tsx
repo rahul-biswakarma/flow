@@ -22,7 +22,6 @@ export const StylePanel = ({
   return (
     <div className="style-editor">
       <section className="flex flex-col gap-2">
-        {/* Width and Height */}
         <div className="w-full flex gap-2">
           <UnitTextInput
             slotValue="w"
@@ -41,7 +40,6 @@ export const StylePanel = ({
             }}
           />
         </div>
-        {/* X and Y */}
         <div className="w-full flex gap-2">
           <UnitTextInput
             hideOptionDropdown={true}
@@ -99,7 +97,6 @@ export const StylePanel = ({
             </IconButton>
           }
         />
-        {/* Direction */}
         <SegmentedControl.Root
           id="direction"
           size="1"
@@ -119,21 +116,21 @@ export const StylePanel = ({
               }));
           }}
         >
-          <SegmentedControlItem value="row" content="Horizontal Layout">
-            <IconRenderer>
+          <SegmentedControl.Item value="row" className="w-full">
+            <IconRenderer content="Horizontal Layout">
               <Icons.ArrowRight />
             </IconRenderer>
-          </SegmentedControlItem>
-          <SegmentedControlItem value="column" content="Vertical Layout">
-            <IconRenderer>
+          </SegmentedControl.Item>
+          <SegmentedControl.Item value="column">
+            <IconRenderer content="Vertical Layout">
               <Icons.ArrowDown />
             </IconRenderer>
-          </SegmentedControlItem>
-          <SegmentedControlItem value="wrap" content="Wrap">
-            <IconRenderer>
+          </SegmentedControl.Item>
+          <SegmentedControl.Item value="wrap">
+            <IconRenderer content="Wrap">
               <Icons.Undo2 className="transform scale-y-[-1]" />
             </IconRenderer>
-          </SegmentedControlItem>
+          </SegmentedControl.Item>
         </SegmentedControl.Root>
         <LabelRenderer content="Content Alignment" />
         <SegmentedControl.Root
@@ -145,22 +142,22 @@ export const StylePanel = ({
           }
         >
           <SegmentedControl.Item value="start">
-            <IconRenderer>
+            <IconRenderer content="Align Left">
               <Icons.AlignStartVertical />
             </IconRenderer>
           </SegmentedControl.Item>
           <SegmentedControl.Item value="center">
-            <IconRenderer>
+            <IconRenderer content="Align Horizontally Center">
               <Icons.AlignCenterVertical />
             </IconRenderer>
           </SegmentedControl.Item>
-          <SegmentedControl.Item value="stretch">
-            <IconRenderer>
+          <SegmentedControl.Item value="justify-between">
+            <IconRenderer content="Align Horizontally Space Between">
               <Icons.AlignHorizontalSpaceBetween />
             </IconRenderer>
           </SegmentedControl.Item>
           <SegmentedControl.Item value="end">
-            <IconRenderer>
+            <IconRenderer content="Align Right">
               <Icons.AlignEndVertical />
             </IconRenderer>
           </SegmentedControl.Item>
@@ -177,22 +174,22 @@ export const StylePanel = ({
           }
         >
           <SegmentedControl.Item value="start">
-            <IconRenderer>
+            <IconRenderer content="Align Top">
               <Icons.AlignStartHorizontal />
             </IconRenderer>
           </SegmentedControl.Item>
           <SegmentedControl.Item value="center">
-            <IconRenderer>
+            <IconRenderer content="Align Vertically Center">
               <Icons.AlignCenterHorizontal />
             </IconRenderer>
           </SegmentedControl.Item>
           <SegmentedControl.Item value="space-between">
-            <IconRenderer>
+            <IconRenderer content="Align Vertically Space Between">
               <Icons.AlignVerticalSpaceBetween />
             </IconRenderer>
           </SegmentedControl.Item>
           <SegmentedControl.Item value="end">
-            <IconRenderer>
+            <IconRenderer content="Align Bottom">
               <Icons.AlignEndHorizontal />
             </IconRenderer>
           </SegmentedControl.Item>
@@ -276,30 +273,19 @@ export const StylePanel = ({
   );
 };
 
-export const SegmentedControlItem = ({
-  content,
+const IconRenderer = ({
   children,
-  value,
-}: {
-  content?: string;
-  children: ReactNode;
-  value: string;
-}) => {
+  content,
+}: { children: ReactNode; content?: string }) => {
   return (
     <Tooltip delayDuration={TOOLTIP_DELAY_DURATION}>
       <TooltipTrigger asChild className="w-full h-full">
-        <SegmentedControl.Item value={value}>{children}</SegmentedControl.Item>
+        <span className="w-full h-full flex items-center justify-center">
+          {children}
+        </span>
       </TooltipTrigger>
       {content && <TooltipContent>{content}</TooltipContent>}
     </Tooltip>
-  );
-};
-
-const IconRenderer = ({ children }: { children: ReactNode }) => {
-  return (
-    <span className="h-full w-full flex items-center justify-center text-gray-11">
-      {children}
-    </span>
   );
 };
 
