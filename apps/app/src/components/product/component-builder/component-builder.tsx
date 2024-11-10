@@ -11,6 +11,7 @@ import { FieldRenders } from "./field-renders";
 import { ComponentBuilderHeader } from "./header";
 import type { ComponentData } from "./types";
 import "./styles.css";
+import type { StyleData } from "@/components/panels/style-panel/type";
 import { SandpackProvider } from "@codesandbox/sandpack-react";
 import { amethyst, aquaBlue } from "@codesandbox/sandpack-themes";
 import { useTheme } from "next-themes";
@@ -28,6 +29,7 @@ export const ComponentBuilder: React.FC = () => {
     props: [],
     code: defaultComponentCode,
   });
+  const [styleValue, setStyleValue] = useState<StyleData>({});
 
   const { resolvedTheme } = useTheme();
 
@@ -41,7 +43,7 @@ export const ComponentBuilder: React.FC = () => {
           bundlerURL: "https://sandpack-bundler.codesandbox.io",
           experimental_enableServiceWorker: true,
         }}
-        files={sandPackFilesConfig(newComponentData.code)}
+        files={sandPackFilesConfig({ code: newComponentData.code, styleValue })}
       >
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel minSize={25} defaultSize={30}>
@@ -70,7 +72,7 @@ export const ComponentBuilder: React.FC = () => {
               </ResizablePanel>
               <ResizableHandle />
               <ResizablePanel minSize={25} defaultSize={50}>
-                <ComponentBuilderPreview />
+                <ComponentBuilderPreview {...{ styleValue, setStyleValue }} />
               </ResizablePanel>
             </ResizablePanelGroup>
           </ResizablePanel>

@@ -3,8 +3,10 @@ import { SegmentedControl } from "@v1/ui/segmented-control";
 import { Text } from "@v1/ui/text";
 
 import "./style-panel.css";
+import { IconButton } from "@v1/ui/icon-button";
 import type { ReactNode } from "react";
 import type React from "react";
+import { ColorPicker } from "./color-picker";
 import type { StyleData } from "./type";
 import { UnitTextInput } from "./unit-text-input";
 
@@ -39,14 +41,27 @@ export const StylePanel = ({
           id="direction"
           size="1"
           className="w-full"
-          defaultValue="row"
+          onValueChange={(value) => {
+            if (value === "wrap") {
+              setStyleValue((prev) => ({
+                ...prev,
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }));
+            } else
+              setStyleValue((prev) => ({
+                ...prev,
+                flexDirection: value,
+                flexWrap: "no-wrap",
+              }));
+          }}
         >
           <SegmentedControl.Item value="row">
             <IconRenderer>
               <Icons.ArrowRight />
             </IconRenderer>
           </SegmentedControl.Item>
-          <SegmentedControl.Item value="col">
+          <SegmentedControl.Item value="column">
             <IconRenderer>
               <Icons.ArrowDown />
             </IconRenderer>
@@ -59,37 +74,12 @@ export const StylePanel = ({
         </SegmentedControl.Root>
         <LabelRenderer content="Content Alignment" />
         <SegmentedControl.Root
-          id="justify"
-          size="1"
-          className="w-full"
-          defaultValue="start"
-        >
-          <SegmentedControl.Item value="start">
-            <IconRenderer>
-              <Icons.AlignStartHorizontal />
-            </IconRenderer>
-          </SegmentedControl.Item>
-          <SegmentedControl.Item value="center">
-            <IconRenderer>
-              <Icons.AlignCenterHorizontal />
-            </IconRenderer>
-          </SegmentedControl.Item>
-          <SegmentedControl.Item value="space-between">
-            <IconRenderer>
-              <Icons.AlignHorizontalSpaceBetween />
-            </IconRenderer>
-          </SegmentedControl.Item>
-          <SegmentedControl.Item value="end">
-            <IconRenderer>
-              <Icons.AlignEndHorizontal />
-            </IconRenderer>
-          </SegmentedControl.Item>
-        </SegmentedControl.Root>
-        <SegmentedControl.Root
           id="align"
           size="1"
           className="w-full"
-          defaultValue="start"
+          onValueChange={(value) =>
+            setStyleValue((prev) => ({ ...prev, justifyContent: value }))
+          }
         >
           <SegmentedControl.Item value="start">
             <IconRenderer>
@@ -103,7 +93,7 @@ export const StylePanel = ({
           </SegmentedControl.Item>
           <SegmentedControl.Item value="stretch">
             <IconRenderer>
-              <Icons.AlignVerticalSpaceBetween />
+              <Icons.AlignHorizontalSpaceBetween />
             </IconRenderer>
           </SegmentedControl.Item>
           <SegmentedControl.Item value="end">
@@ -112,6 +102,112 @@ export const StylePanel = ({
             </IconRenderer>
           </SegmentedControl.Item>
         </SegmentedControl.Root>
+        <SegmentedControl.Root
+          id="justify"
+          size="1"
+          className="w-full"
+          onValueChange={(value) =>
+            setStyleValue((prev) => ({
+              ...prev,
+              alignItems: value,
+            }))
+          }
+        >
+          <SegmentedControl.Item value="start">
+            <IconRenderer>
+              <Icons.AlignStartHorizontal />
+            </IconRenderer>
+          </SegmentedControl.Item>
+          <SegmentedControl.Item value="center">
+            <IconRenderer>
+              <Icons.AlignCenterHorizontal />
+            </IconRenderer>
+          </SegmentedControl.Item>
+          <SegmentedControl.Item value="space-between">
+            <IconRenderer>
+              <Icons.AlignVerticalSpaceBetween />
+            </IconRenderer>
+          </SegmentedControl.Item>
+          <SegmentedControl.Item value="end">
+            <IconRenderer>
+              <Icons.AlignEndHorizontal />
+            </IconRenderer>
+          </SegmentedControl.Item>
+        </SegmentedControl.Root>
+        <LabelRenderer
+          content="Background Color"
+          rightSlot={
+            <IconButton
+              variant="ghost"
+              color="gray"
+              size="1"
+              className="text-gray-10"
+              onClick={() => {
+                if (styleValue.backgroundColor) {
+                  setStyleValue((prev) => {
+                    const { backgroundColor, ...rest } = prev;
+                    return rest;
+                  });
+                } else {
+                  setStyleValue((prev) => ({
+                    ...prev,
+                    backgroundColor: "#cccccc",
+                  }));
+                }
+              }}
+            >
+              {styleValue.backgroundColor ? <Icons.X /> : <Icons.Plus />}
+            </IconButton>
+          }
+        />
+        {styleValue.backgroundColor && (
+          <ColorPicker
+            value={styleValue.backgroundColor}
+            onChange={(e) =>
+              setStyleValue((prev) => ({
+                ...prev,
+                backgroundColor: e,
+              }))
+            }
+          />
+        )}
+        <LabelRenderer
+          content="Text Color"
+          rightSlot={
+            <IconButton
+              variant="ghost"
+              color="gray"
+              size="1"
+              className="text-gray-10"
+              onClick={() => {
+                if (styleValue.color) {
+                  setStyleValue((prev) => {
+                    const { color, ...rest } = prev;
+                    return rest;
+                  });
+                } else {
+                  setStyleValue((prev) => ({
+                    ...prev,
+                    color: "#cccccc",
+                  }));
+                }
+              }}
+            >
+              {styleValue.color ? <Icons.X /> : <Icons.Plus />}
+            </IconButton>
+          }
+        />
+        {styleValue.color && (
+          <ColorPicker
+            value={styleValue.color}
+            onChange={(e) =>
+              setStyleValue((prev) => ({
+                ...prev,
+                color: e,
+              }))
+            }
+          />
+        )}
       </section>
     </div>
   );
@@ -125,10 +221,16 @@ const IconRenderer = ({ children }: { children: ReactNode }) => {
   );
 };
 
-const LabelRenderer = ({ content }: { content: string }) => {
+const LabelRenderer = ({
+  content,
+  rightSlot,
+}: { content: string; rightSlot?: ReactNode }) => {
   return (
-    <Text size="2" className="text-gray-10">
-      {content}
-    </Text>
+    <div className="flex w-full justify-between items-center">
+      <Text size="2" className="text-gray-10">
+        {content}
+      </Text>
+      {rightSlot}
+    </div>
   );
 };

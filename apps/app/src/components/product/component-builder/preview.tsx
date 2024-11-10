@@ -7,23 +7,14 @@ import {
   ResizablePanelGroup,
 } from "@v1/ui/resizable";
 import { Text } from "@v1/ui/text";
-import { useState } from "react";
 
-export const ComponentBuilderPreview = () => {
-  const [styleValue, setStyleValue] = useState<StyleData>({
-    width: "auto",
-    height: "auto",
-    backgroundColor: "none",
-    borderRadius: "0px",
-    borderWidth: "0px",
-    borderColor: "#000000",
-    padding: "0px",
-    margin: "0px",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    display: "static",
-  });
-
+export const ComponentBuilderPreview = ({
+  styleValue,
+  setStyleValue,
+}: {
+  styleValue: StyleData;
+  setStyleValue: React.Dispatch<React.SetStateAction<StyleData>>;
+}) => {
   return (
     <div className="w-full h-full">
       <ResizablePanelGroup direction="horizontal">
@@ -53,7 +44,12 @@ export const ComponentBuilderPreview = () => {
                 Preview
               </Text>
             </div>
-            <SandpackPreview showOpenInCodeSandbox={false} />
+            <SandpackPreview
+              style={{
+                height: "calc(100% - 30px)",
+              }}
+              showOpenInCodeSandbox={false}
+            />
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>

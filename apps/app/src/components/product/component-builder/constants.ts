@@ -1,4 +1,9 @@
-export const sandPackFilesConfig = (appCode: string) => ({
+import type { StyleData } from "@/components/panels/style-panel/type";
+
+export const sandPackFilesConfig = ({
+  code,
+  styleValue,
+}: { code: string; styleValue: StyleData }) => ({
   "tsconfig.json": {
     code: `{
   "include": [
@@ -13,7 +18,7 @@ export const sandPackFilesConfig = (appCode: string) => ({
 }`,
   },
   "/App.tsx": {
-    code: appCode,
+    code: code,
   },
   "/index.tsx": {
     code: `import React, { StrictMode } from "react";
@@ -25,7 +30,7 @@ import App from "./App";
 const root = createRoot(document.getElementById("root"));
 root.render(
   <StrictMode>
-    <App />
+    <App style={${JSON.stringify(styleValue)}} />
   </StrictMode>
 );`,
   },
@@ -61,7 +66,7 @@ root.render(
 
 export const defaultComponentCode = `import React, {useState} from "react";
 
-export default function App(): JSX.Element {
+export default function App(props): JSX.Element {
   const [counter, setCounter] = useState(0);
   return (
     <div
@@ -70,6 +75,7 @@ export default function App(): JSX.Element {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%',
+        ...props.style,
       }}
     >
       <button

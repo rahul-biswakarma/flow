@@ -5,7 +5,7 @@ import { Text } from "@v1/ui/text";
 import * as parserBabel from "prettier/parser-babel";
 import * as prettierPluginEstree from "prettier/plugins/estree";
 import * as prettier from "prettier/standalone";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import type { ComponentData } from "./types";
 
 export const CodeEditor = ({
@@ -17,6 +17,15 @@ export const CodeEditor = ({
 }) => {
   const { sandpack } = useSandpack();
   const { files, activeFile } = sandpack;
+
+  useEffect(() => {
+    const newCode = files?.[activeFile]?.code ?? "";
+    if (newCode === code) return;
+    setNewComponentData((prev) => ({
+      ...prev,
+      code: newCode,
+    }));
+  }, [files, activeFile, setNewComponentData]);
 
   const formatCode = useCallback(async (codeToFormat: string) => {
     try {

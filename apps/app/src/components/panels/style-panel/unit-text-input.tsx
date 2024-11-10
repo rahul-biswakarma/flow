@@ -36,14 +36,14 @@ export const UnitTextInput = ({
             </DropdownMenu.Item>
             <DropdownMenu.Item
               onClick={() => {
-                handleChange("fit");
+                handleChange("fit-content");
               }}
             >
               fit
             </DropdownMenu.Item>
             <DropdownMenu.Item
               onClick={() => {
-                handleChange("fill");
+                handleChange("100%");
               }}
             >
               full
