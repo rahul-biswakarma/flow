@@ -46,7 +46,7 @@ export const ComponentBuilderPreview = ({
             </div>
             <SandpackPreview
               style={{
-                height: "calc(100% - 30px)",
+                height: "calc(100% - 36px)",
               }}
               showOpenInCodeSandbox={false}
             />

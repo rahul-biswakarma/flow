@@ -23,7 +23,6 @@ export const sandPackFilesConfig = ({
   "/index.tsx": {
     code: `import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./styles.css";
 
 import App from "./App";
 
@@ -42,7 +41,7 @@ root.render(
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
   </head>
-  <body>
+  <body style="margin: 0px;">
     <div id="root"></div>
   </body>
 </html>`,
@@ -71,9 +70,6 @@ export default function App(props): JSX.Element {
   return (
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
         height: '100%',
         ...props.style,
       }}

@@ -4,8 +4,9 @@ import { Text } from "@v1/ui/text";
 
 import "./style-panel.css";
 import { IconButton } from "@v1/ui/icon-button";
-import type { ReactNode } from "react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import type React from "react";
+import type { ReactNode } from "react";
 import { ColorPicker } from "./color-picker";
 import type { StyleData } from "./type";
 import { UnitTextInput } from "./unit-text-input";
@@ -20,7 +21,6 @@ export const StylePanel = ({
   return (
     <div className="style-editor">
       <section className="flex flex-col gap-2">
-        <LabelRenderer content="Layout" />
         <div className="w-full flex gap-2">
           <UnitTextInput
             slotValue="w"
@@ -37,6 +37,43 @@ export const StylePanel = ({
             }}
           />
         </div>
+        <LabelRenderer
+          content="Layout"
+          rightSlot={
+            <IconButton
+              variant="ghost"
+              color="gray"
+              size="1"
+              className="text-gray-10"
+              onClick={() => {
+                if (styleValue.display) {
+                  setStyleValue((prev) => {
+                    const { display, ...rest } = prev;
+                    return rest;
+                  });
+                } else {
+                  setStyleValue((prev) => ({
+                    ...prev,
+                    display: "flex",
+                  }));
+                }
+              }}
+            >
+              <Tooltip>
+                <TooltipTrigger>
+                  <Icons.SquareSquare
+                    style={{
+                      color: styleValue.display
+                        ? "var(--indigo-10)"
+                        : "var(--gray-10)",
+                    }}
+                  />
+                </TooltipTrigger>
+                <TooltipContent>Auto Layout</TooltipContent>
+              </Tooltip>
+            </IconButton>
+          }
+        />
         <SegmentedControl.Root
           id="direction"
           size="1"

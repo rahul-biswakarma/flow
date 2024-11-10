@@ -8,26 +8,41 @@ import { HexColorPicker } from "react-colorful";
 interface ColorPickerProps {
   value: string;
   onChange: (color: string) => void;
-  cssVariables?: { [key: string]: string };
 }
 
 export const ColorPicker: React.FC<ColorPickerProps> = ({
   value,
   onChange,
-  cssVariables = {},
 }) => {
   const [color, setColor] = useState("#000000");
+  const [inputColor, setInputColor] = useState("#000000");
   const [opacity, setOpacity] = useState(100);
 
   useEffect(() => {
     const { hex, alpha } = parseColor(value);
     setColor(hex);
+    setInputColor(hex);
     setOpacity(Math.round(alpha * 100));
   }, [value]);
 
   const handleColorChange = (newColor: string) => {
     setColor(newColor);
+    setInputColor(newColor);
     updateColor(newColor, opacity);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputColor(e.target.value);
+  };
+
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleColorChange(inputColor);
+    }
+  };
+
+  const handleInputBlur = () => {
+    handleColorChange(inputColor);
   };
 
   const handleOpacityChange = (newOpacity: number) => {
@@ -36,17 +51,24 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
   };
 
   const updateColor = (hex: string, opacityValue: number) => {
-    const rgb = convert.hex.rgb(hex);
-    const rgba = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${opacityValue / 100})`;
-    onChange(rgba);
+    try {
+      const rgb = convert.hex.rgb(hex);
+      const rgba = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${opacityValue / 100})`;
+      onChange(rgba);
+    } catch (error) {
+      console.error("Error converting color:", error);
+      onChange("rgba(0, 0, 0, 1)");
+    }
   };
 
   return (
     <div className="flex items-center space-x-2">
       <TextField.Root
         className="w-full"
-        value={color}
-        onChange={(e) => handleColorChange(e.target.value)}
+        value={inputColor}
+        onChange={handleInputChange}
+        onKeyDown={handleInputKeyDown}
+        onBlur={handleInputBlur}
       >
         <TextField.Slot>
           <HoverCard.Root>

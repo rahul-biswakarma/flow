@@ -66,7 +66,9 @@ export const CodeEditor = ({
         </IconButton>
       </div>
       <SandpackCodeEditor
-        className="h-full"
+        style={{
+          height: "calc(100% - 36px)",
+        }}
         showTabs={false}
         showLineNumbers={true}
       />

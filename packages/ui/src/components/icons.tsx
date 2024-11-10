@@ -40,6 +40,7 @@ import {
   Search,
   Settings,
   Sparkles,
+  SquareSquare,
   Sun,
   SunMoon,
   Trash,
@@ -51,6 +52,7 @@ import {
 
 export const Icons = {
   Brush,
+  SquareSquare,
   Undo2,
   ArrowDown,
   AlignHorizontalSpaceBetween,
