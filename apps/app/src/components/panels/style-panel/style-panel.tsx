@@ -3,6 +3,7 @@ import { SegmentedControl } from "@v1/ui/segmented-control";
 import { Text } from "@v1/ui/text";
 
 import "./style-panel.css";
+import { TOOLTIP_DELAY_DURATION } from "@/constants";
 import { IconButton } from "@v1/ui/icon-button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import type React from "react";
@@ -21,9 +22,11 @@ export const StylePanel = ({
   return (
     <div className="style-editor">
       <section className="flex flex-col gap-2">
+        {/* Width and Height */}
         <div className="w-full flex gap-2">
           <UnitTextInput
             slotValue="w"
+            tooltipContent="Width"
             value={styleValue.width ?? "auto"}
             handleChange={(value) =>
               setStyleValue((prev) => ({ ...prev, width: value }))
@@ -31,7 +34,29 @@ export const StylePanel = ({
           />
           <UnitTextInput
             slotValue="h"
+            tooltipContent="Height"
             value={styleValue.height ?? "auto"}
+            handleChange={(value) => {
+              setStyleValue((prev) => ({ ...prev, height: value }));
+            }}
+          />
+        </div>
+        {/* X and Y */}
+        <div className="w-full flex gap-2">
+          <UnitTextInput
+            hideOptionDropdown={true}
+            slotValue="x"
+            tooltipContent="X-position"
+            value={styleValue.x ?? "0"}
+            handleChange={(value) =>
+              setStyleValue((prev) => ({ ...prev, width: value }))
+            }
+          />
+          <UnitTextInput
+            hideOptionDropdown={true}
+            slotValue="y"
+            tooltipContent="Y-position"
+            value={styleValue.y ?? "0"}
             handleChange={(value) => {
               setStyleValue((prev) => ({ ...prev, height: value }));
             }}
@@ -74,6 +99,7 @@ export const StylePanel = ({
             </IconButton>
           }
         />
+        {/* Direction */}
         <SegmentedControl.Root
           id="direction"
           size="1"
@@ -93,21 +119,21 @@ export const StylePanel = ({
               }));
           }}
         >
-          <SegmentedControl.Item value="row">
+          <SegmentedControlItem value="row" content="Horizontal Layout">
             <IconRenderer>
               <Icons.ArrowRight />
             </IconRenderer>
-          </SegmentedControl.Item>
-          <SegmentedControl.Item value="column">
+          </SegmentedControlItem>
+          <SegmentedControlItem value="column" content="Vertical Layout">
             <IconRenderer>
               <Icons.ArrowDown />
             </IconRenderer>
-          </SegmentedControl.Item>
-          <SegmentedControl.Item value="wrap">
+          </SegmentedControlItem>
+          <SegmentedControlItem value="wrap" content="Wrap">
             <IconRenderer>
               <Icons.Undo2 className="transform scale-y-[-1]" />
             </IconRenderer>
-          </SegmentedControl.Item>
+          </SegmentedControlItem>
         </SegmentedControl.Root>
         <LabelRenderer content="Content Alignment" />
         <SegmentedControl.Root
@@ -247,6 +273,25 @@ export const StylePanel = ({
         )}
       </section>
     </div>
+  );
+};
+
+export const SegmentedControlItem = ({
+  content,
+  children,
+  value,
+}: {
+  content?: string;
+  children: ReactNode;
+  value: string;
+}) => {
+  return (
+    <Tooltip delayDuration={TOOLTIP_DELAY_DURATION}>
+      <TooltipTrigger asChild className="w-full h-full">
+        <SegmentedControl.Item value={value}>{children}</SegmentedControl.Item>
+      </TooltipTrigger>
+      {content && <TooltipContent>{content}</TooltipContent>}
+    </Tooltip>
   );
 };
 

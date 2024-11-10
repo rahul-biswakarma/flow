@@ -12,4 +12,6 @@ export interface StyleData {
   display?: string;
   flexDirection?: string;
   color?: string;
+  x?: string;
+  y?: string;
 }
