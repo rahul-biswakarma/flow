@@ -7,13 +7,15 @@ import { ScrollArea } from "@v1/ui/scroll-area";
 
 import type React from "react";
 import { useState } from "react";
-import { LiveProvider } from "react-live";
-import { defaultReactCode } from "./constants";
 import { FieldRenders } from "./field-renders";
 import { ComponentBuilderHeader } from "./header";
 import type { ComponentData } from "./types";
 import "./styles.css";
+import { SandpackProvider } from "@codesandbox/sandpack-react";
+import { amethyst, aquaBlue } from "@codesandbox/sandpack-themes";
+import { useTheme } from "next-themes";
 import { CodeEditor } from "./code-editor";
+import { defaultComponentCode, sandPackFilesConfig } from "./constants";
 import { ComponentBuilderPreview } from "./preview";
 
 export const ComponentBuilder: React.FC = () => {
@@ -24,13 +26,23 @@ export const ComponentBuilder: React.FC = () => {
     previewUrl: "",
     keywords: [],
     props: [],
-    code: defaultReactCode,
+    code: defaultComponentCode,
   });
 
+  const { resolvedTheme } = useTheme();
+
   return (
-    <div className="w-full grid grid-rows-[auto_1fr] h-screen max-h-screen overflow-hidden">
+    <div className="w-full grid grid-rows-[auto_1fr] h-screen max-h-screen">
       <ComponentBuilderHeader isConfigValid={false} />
-      <LiveProvider code={newComponentData.code} noInline>
+      <SandpackProvider
+        theme={resolvedTheme === "dark" ? amethyst : aquaBlue}
+        template="react-ts"
+        options={{
+          bundlerURL: "https://sandpack-bundler.codesandbox.io",
+          experimental_enableServiceWorker: true,
+        }}
+        files={sandPackFilesConfig(newComponentData.code)}
+      >
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel minSize={25} defaultSize={30}>
             <ScrollArea
@@ -63,7 +75,7 @@ export const ComponentBuilder: React.FC = () => {
             </ResizablePanelGroup>
           </ResizablePanel>
         </ResizablePanelGroup>
-      </LiveProvider>
+      </SandpackProvider>
     </div>
   );
 };

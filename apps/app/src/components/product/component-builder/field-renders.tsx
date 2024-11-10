@@ -34,7 +34,7 @@ export const FieldRenders = ({
   };
 
   return (
-    <div className="flex w-full h-full p-4 gap-4 flex-col">
+    <div className="flex w-full h-full p-3 gap-3 flex-col">
       <GroupFieldWrapper groupLabel={scopedT("component_info_group_title")}>
         <TextFieldElement
           label={scopedT("name")}

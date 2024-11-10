@@ -7,7 +7,9 @@ import "./style-panel.css";
 import type { ReactNode } from "react";
 import { UnitTextInput } from "./unit-text-input";
 
-export const StylePanel: React.FC = () => {
+export const StylePanel: React.FC = ({styleValue, setStyleValue}: {
+  styleValue
+}) => {
   return (
     <div className="style-editor">
       <section className="flex flex-col gap-2">

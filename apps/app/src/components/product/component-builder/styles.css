@@ -1,13 +1,4 @@
-.prism-code {
-	height: 100%;
-}
-
-pre {
-  counter-reset: token-line;
-}
-
-.token-line::before {
-  counter-increment: token-line;
-  content: counter(token-line);
-  padding-right: 10px;
+.cm-lineNumbers {
+  font-size: 14px !important;
+  opacity: 0.5;
 }
