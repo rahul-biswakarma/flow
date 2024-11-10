@@ -8,7 +8,6 @@ import {
 } from "@v1/ui/resizable";
 import { Text } from "@v1/ui/text";
 import { useState } from "react";
-import {} from "react-live";
 
 export const ComponentBuilderPreview = () => {
   const [styleValue, setStyleValue] = useState<StyleData>({
