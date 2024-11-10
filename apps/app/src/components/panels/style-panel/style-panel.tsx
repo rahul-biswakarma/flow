@@ -1,22 +1,39 @@
 import { Icons } from "@v1/ui/icons";
 import { SegmentedControl } from "@v1/ui/segmented-control";
 import { Text } from "@v1/ui/text";
-import type React from "react";
 
 import "./style-panel.css";
 import type { ReactNode } from "react";
+import type React from "react";
+import type { StyleData } from "./type";
 import { UnitTextInput } from "./unit-text-input";
 
-export const StylePanel: React.FC = ({styleValue, setStyleValue}: {
-  styleValue
+export const StylePanel = ({
+  styleValue,
+  setStyleValue,
+}: {
+  styleValue: StyleData;
+  setStyleValue: React.Dispatch<React.SetStateAction<StyleData>>;
 }) => {
   return (
     <div className="style-editor">
       <section className="flex flex-col gap-2">
         <LabelRenderer content="Layout" />
         <div className="w-full flex gap-2">
-          <UnitTextInput slotValue="w" />
-          <UnitTextInput slotValue="h" />
+          <UnitTextInput
+            slotValue="w"
+            value={styleValue.width ?? "auto"}
+            handleChange={(value) =>
+              setStyleValue((prev) => ({ ...prev, width: value }))
+            }
+          />
+          <UnitTextInput
+            slotValue="h"
+            value={styleValue.height ?? "auto"}
+            handleChange={(value) => {
+              setStyleValue((prev) => ({ ...prev, height: value }));
+            }}
+          />
         </div>
         <SegmentedControl.Root
           id="direction"

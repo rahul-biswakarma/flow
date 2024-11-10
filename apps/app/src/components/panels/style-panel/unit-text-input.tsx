@@ -23,7 +23,7 @@ export const UnitTextInput = ({
       <TextField.Slot>{slotValue}</TextField.Slot>
       <TextField.Slot>
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger>
+          <DropdownMenu.Trigger className="cursor-default">
             <Icons.Settings />
           </DropdownMenu.Trigger>
           <DropdownMenu.Content>

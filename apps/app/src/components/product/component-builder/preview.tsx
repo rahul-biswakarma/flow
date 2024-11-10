@@ -1,4 +1,5 @@
 import { StylePanel } from "@/components/panels/style-panel/style-panel";
+import type { StyleData } from "@/components/panels/style-panel/type";
 import { SandpackPreview } from "@codesandbox/sandpack-react";
 import {
   ResizableHandle,
@@ -6,9 +7,24 @@ import {
   ResizablePanelGroup,
 } from "@v1/ui/resizable";
 import { Text } from "@v1/ui/text";
+import { useState } from "react";
 import {} from "react-live";
 
 export const ComponentBuilderPreview = () => {
+  const [styleValue, setStyleValue] = useState<StyleData>({
+    width: "auto",
+    height: "auto",
+    backgroundColor: "none",
+    borderRadius: "0px",
+    borderWidth: "0px",
+    borderColor: "#000000",
+    padding: "0px",
+    margin: "0px",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    display: "static",
+  });
+
   return (
     <div className="w-full h-full">
       <ResizablePanelGroup direction="horizontal">
@@ -23,7 +39,10 @@ export const ComponentBuilderPreview = () => {
               <Text size="2" className="text-gray-8">
                 Styles Panel
               </Text>
-              <StylePanel />
+              <StylePanel
+                styleValue={styleValue}
+                setStyleValue={setStyleValue}
+              />
             </div>
           </div>
         </ResizablePanel>
