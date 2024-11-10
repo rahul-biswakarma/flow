@@ -32,5 +32,6 @@
   },
   "[jsonc]": {
     "editor.defaultFormatter": "biomejs.biome"
-  }
+  },
+  "cSpell.words": ["codemirror", "Keymap", "Sandpack"]
 }

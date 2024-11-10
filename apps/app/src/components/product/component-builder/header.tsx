@@ -11,10 +11,10 @@ export const ComponentBuilderHeader = ({
 }) => {
   const scopedT = useScopedI18n("component_builder");
   return (
-    <div className="flex justify-between items-center gap-2 py-4 px-6 border-b border-outline-02">
+    <div className="flex justify-between items-center gap-2 py-4 px-4 border-b border-outline-02">
       <div className="flex gap-4 items-center">
         <IconButton variant="ghost" size="1" color="gray">
-          <Icons.ArrowLeft />
+          <Icons.ArrowLeft className="stroke-gray-10" />
         </IconButton>
         <Text size="4">{scopedT("title")}</Text>
       </div>

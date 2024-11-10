@@ -139,19 +139,22 @@ export function NavigationBar() {
                     })()}
                   </SidebarMenuButton>
                 </DropdownMenu.Trigger>
-                <DropdownMenu.Content>
-                  {themes.map((theme) => {
-                    return (
-                      <DropdownMenu.Item
-                        key={theme}
-                        onClick={() => {
-                          setTheme(theme);
-                        }}
-                      >
-                        <Text className="capitalize">{theme}</Text>
-                      </DropdownMenu.Item>
-                    );
-                  })}
+                <DropdownMenu.Content side="right">
+                  <DropdownMenu.RadioGroup value={theme}>
+                    {themes.map((themeOption) => {
+                      return (
+                        <DropdownMenu.RadioItem
+                          value={themeOption}
+                          key={theme}
+                          onClick={() => {
+                            setTheme(themeOption);
+                          }}
+                        >
+                          <Text className="capitalize">{themeOption}</Text>
+                        </DropdownMenu.RadioItem>
+                      );
+                    })}
+                  </DropdownMenu.RadioGroup>
                 </DropdownMenu.Content>
               </DropdownMenu.Root>
             </SidebarMenuItem>
@@ -169,7 +172,7 @@ export function NavigationBar() {
                     />
                   </SidebarMenuButton>
                 </DropdownMenu.Trigger>
-                <DropdownMenu.Content>
+                <DropdownMenu.Content side="right">
                   <DropdownMenu.Item>
                     {scopedTUser("settings")}
                   </DropdownMenu.Item>

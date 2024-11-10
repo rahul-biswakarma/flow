@@ -60,7 +60,10 @@ export const ArrayTextFieldElement = ({
         inputRenderer={
           <TextField.Root
             autoFocus={value.length > 0}
-            className={clsx("grow p-0 shadow-none", fieldFontSize)}
+            className={clsx(
+              "grow p-0 shadow-none border border-outline-01",
+              fieldFontSize,
+            )}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => {

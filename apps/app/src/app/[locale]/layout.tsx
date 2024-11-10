@@ -42,19 +42,17 @@ export default function RootLayout({
       )}
     >
       <body>
-        <main className="relative before:absolute before:top-0 before:left-0 before:w-full before:h-full before:content-[''] before:opacity-[0.015] before:z-[100] before:pointer-events-none">
-          <NextThemeProvider attribute="class" defaultTheme="system">
-            <ThemeProvider
-              accentColor="indigo"
-              grayColor="slate"
-              panelBackground="translucent"
-              radius="medium"
-              scaling="100%"
-            >
-              <Suspense fallback={<Loader />}>{children}</Suspense>
-            </ThemeProvider>
-          </NextThemeProvider>
-        </main>
+        <NextThemeProvider attribute="class" defaultTheme="system">
+          <ThemeProvider
+            accentColor="indigo"
+            grayColor="slate"
+            panelBackground="translucent"
+            radius="medium"
+            scaling="100%"
+          >
+            <Suspense fallback={<Loader />}>{children}</Suspense>
+          </ThemeProvider>
+        </NextThemeProvider>
       </body>
     </html>
   );
