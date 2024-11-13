@@ -42,6 +42,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        "inset-gray": "inset 0 -1px 0 0 var(--gray-3)",
+      },
       animation: {
         first: "moveVertical 30s ease infinite",
         second: "moveInCircle 20s reverse infinite",

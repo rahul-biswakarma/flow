@@ -6,7 +6,7 @@ import * as parserBabel from "prettier/parser-babel";
 import * as prettierPluginEstree from "prettier/plugins/estree";
 import * as prettier from "prettier/standalone";
 import { useCallback, useEffect } from "react";
-import type { ComponentData } from "./types";
+import type { ComponentData } from "../types";
 
 export const CodeEditor = ({
   code,
@@ -67,7 +67,7 @@ export const CodeEditor = ({
       </div>
       <SandpackCodeEditor
         style={{
-          height: "calc(100% - 36px)",
+          height: "calc(100% - 40px)",
         }}
         showTabs={false}
         showLineNumbers={true}

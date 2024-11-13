@@ -11,10 +11,10 @@ import { Text } from "@v1/ui/text";
 import { clsx } from "clsx";
 import { nanoid } from "nanoid";
 import { Fragment, useMemo, useState } from "react";
-import { BooleanFieldElement } from "../../field-elements/boolean-field";
-import { DropdownFieldElement } from "../../field-elements/dropdown-field";
-import { TextFieldElement } from "../../field-elements/text-field";
-import type { FieldOnChangeProps } from "../../field-elements/types";
+import { BooleanFieldElement } from "../../../field-elements/boolean-field";
+import { DropdownFieldElement } from "../../../field-elements/dropdown-field";
+import { TextFieldElement } from "../../../field-elements/text-field";
+import type { FieldOnChangeProps } from "../../../field-elements/types";
 import { ObjectTypeFields } from "./object-field";
 
 const ICON_CLASSES = "!w-3.5 !h-3.5 !text-gray-10";

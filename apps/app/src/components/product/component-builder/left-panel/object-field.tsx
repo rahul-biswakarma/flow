@@ -7,7 +7,7 @@ import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
 import type React from "react";
 import { useState } from "react";
-import type { ObjectSchema, ObjectSchemaProperty, PropsType } from "./types";
+import type { ObjectSchema, ObjectSchemaProperty, PropsType } from "../types";
 
 const MAX_KEYS = 8;
 const MAX_OBJECT_NESTING = 2;
