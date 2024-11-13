@@ -15,6 +15,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+::-webkit-scrollbar-corner {
+  display: none;
+  background: transparent;
+ }
+
 body {
   font-family: var(--default-font-family);
 }

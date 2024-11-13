@@ -10,7 +10,7 @@ import { ArrayValueRenderer } from "./utils/array-value-renderer";
 
 interface ArrayTextFieldElementProps {
   label: string;
-  placeholder: string;
+  placeholder?: string;
   labelClassName?: string;
   value: string[];
   fieldInfo?: string;

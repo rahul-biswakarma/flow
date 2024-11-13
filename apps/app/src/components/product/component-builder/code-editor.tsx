@@ -52,7 +52,7 @@ export const CodeEditor = ({
 
   return (
     <div className="h-full w-full z-10 text-[14px]">
-      <div className="flex items-center justify-between gap-2 w-full py-2 px-3 border-b border-outline-03">
+      <div className="flex items-center justify-between gap-2 w-full py-2 px-3 border-b border-outline-03 h-10">
         <Text size="2" className="text-gray-11">
           Editor
         </Text>

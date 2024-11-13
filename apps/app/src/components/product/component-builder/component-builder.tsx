@@ -39,10 +39,6 @@ export const ComponentBuilder: React.FC = () => {
       <SandpackProvider
         theme={resolvedTheme === "dark" ? amethyst : aquaBlue}
         template="react-ts"
-        options={{
-          bundlerURL: "https://sandpack-bundler.codesandbox.io",
-          experimental_enableServiceWorker: true,
-        }}
         files={sandPackFilesConfig({ code: newComponentData.code, styleValue })}
       >
         <ResizablePanelGroup direction="horizontal">

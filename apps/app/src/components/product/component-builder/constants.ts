@@ -23,13 +23,25 @@ export const sandPackFilesConfig = ({
   "/index.tsx": {
     code: `import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { Theme as ThemeProvider } from "@radix-ui/themes";
 
 import App from "./App";
+import "@radix-ui/themes/styles.css";
+
 
 const root = createRoot(document.getElementById("root"));
 root.render(
   <StrictMode>
-    <App style={${JSON.stringify(styleValue)}} />
+    <ThemeProvider
+      accentColor="indigo"
+      grayColor="slate"
+      panelBackground="translucent"
+      radius="medium"
+      scaling="100%"
+      appearance="dark"
+    >
+      <App style={${JSON.stringify(styleValue)}} />
+    </ThemeProvider>
   </StrictMode>
 );`,
   },
@@ -40,8 +52,9 @@ root.render(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>html, body {margin: 0px;}</style>
   </head>
-  <body style="margin: 0px;">
+  <body>
     <div id="root"></div>
   </body>
 </html>`,
@@ -52,6 +65,7 @@ root.render(
         react: "^18.0.0",
         "react-dom": "^18.0.0",
         "react-scripts": "^4.0.0",
+        "@radix-ui/themes": "^3.1.4",
       },
       devDependencies: {
         "@types/react": "^18.0.0",

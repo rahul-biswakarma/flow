@@ -8,7 +8,7 @@ import type { FieldOnChangeProps } from "./types";
 
 interface StringFieldElementProps {
   label: string;
-  placeholder: string;
+  placeholder?: string;
   value: string;
   fieldInfo?: string;
   labelClassName?: string;
