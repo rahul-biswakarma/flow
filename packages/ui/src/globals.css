@@ -5,14 +5,19 @@
 @tailwind utilities;
 
 .radix-themes {
-	--default-font-family: var(--font-geist-sans), BlinkMacSystemFont, 'Segoe UI (Custom)', Roboto,
-    'Helvetica Neue', 'Open Sans (Custom)', system-ui, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji';
+  --default-font-family: var(--font-geist-sans), BlinkMacSystemFont,
+    "Segoe UI (Custom)", Roboto, "Helvetica Neue", "Open Sans (Custom)",
+    system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar-corner {
+  display: none;
+  background: transparent;
 }
 
 body {
@@ -26,31 +31,32 @@ body {
 }
 
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .scrollbar-hide::-webkit-scrollbar {
-  display: none;  /* Chrome, Safari and Opera */
+  display: none; /* Chrome, Safari and Opera */
 }
 
 @property --border-angle {
   inherits: false;
   initial-value: 0deg;
-  syntax: '<angle>';
+  syntax: "<angle>";
 }
 
-.rt-SegmentedControlItemLabelActive, .rt-SegmentedControlItemLabelInactive {
+.rt-SegmentedControlItemLabelActive,
+.rt-SegmentedControlItemLabelInactive {
   height: 100%;
 }
 
 :root {
-    --sidebar-background: var(--gray-surface);
-    --sidebar-foreground: var(--gray-12);
-    --sidebar-primary: var(--indigo-a3);
-    --sidebar-primary-foreground: var(--indigo-11);
-    --sidebar-accent: var(--indigo-a3);
-    --sidebar-accent-foreground: var(--indigo-11);
-    --sidebar-border: var(--gray-4);
-    --sidebar-ring: var(--indigo-9);
-  }
+  --sidebar-background: var(--gray-surface);
+  --sidebar-foreground: var(--gray-12);
+  --sidebar-primary: var(--indigo-a3);
+  --sidebar-primary-foreground: var(--indigo-11);
+  --sidebar-accent: var(--indigo-a3);
+  --sidebar-accent-foreground: var(--indigo-11);
+  --sidebar-border: var(--gray-4);
+  --sidebar-ring: var(--indigo-9);
+}

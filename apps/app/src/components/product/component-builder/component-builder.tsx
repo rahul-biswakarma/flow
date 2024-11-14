@@ -3,20 +3,22 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@v1/ui/resizable";
-import { ScrollArea } from "@v1/ui/scroll-area";
 
 import type React from "react";
 import { useState } from "react";
-import { FieldRenders } from "./field-renders";
 import { ComponentBuilderHeader } from "./header";
+import { FieldRenders } from "./left-panel/field-renders";
 import type { ComponentData } from "./types";
 import "./styles.css";
+import type { StyleData } from "@/components/panels/style-panel/type";
 import { SandpackProvider } from "@codesandbox/sandpack-react";
 import { amethyst, aquaBlue } from "@codesandbox/sandpack-themes";
+import { ScrollArea } from "@v1/ui/scroll-area";
 import { useTheme } from "next-themes";
-import { CodeEditor } from "./code-editor";
 import { defaultComponentCode, sandPackFilesConfig } from "./constants";
-import { ComponentBuilderPreview } from "./preview";
+import { ComponentBuilderAIChat } from "./left-panel/component-builder-ai-chat";
+import { CodeEditor } from "./right-panel/code-editor";
+import { ComponentBuilderPreview } from "./right-panel/preview";
 
 export const ComponentBuilder: React.FC = () => {
   const [newComponentData, setNewComponentData] = useState<ComponentData>({
@@ -28,6 +30,7 @@ export const ComponentBuilder: React.FC = () => {
     props: [],
     code: defaultComponentCode,
   });
+  const [styleValue, setStyleValue] = useState<StyleData>({});
 
   const { resolvedTheme } = useTheme();
 
@@ -37,27 +40,24 @@ export const ComponentBuilder: React.FC = () => {
       <SandpackProvider
         theme={resolvedTheme === "dark" ? amethyst : aquaBlue}
         template="react-ts"
-        options={{
-          bundlerURL: "https://sandpack-bundler.codesandbox.io",
-          experimental_enableServiceWorker: true,
-        }}
-        files={sandPackFilesConfig(newComponentData.code)}
+        files={sandPackFilesConfig({ code: newComponentData.code, styleValue })}
       >
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel minSize={25} defaultSize={30}>
-            <ScrollArea
-              type="auto"
-              scrollbars="vertical"
-              style={{
-                height: "100%",
-                maxHeight: "100%",
-              }}
-            >
-              <FieldRenders
-                newComponentData={newComponentData}
-                setNewComponentData={setNewComponentData}
-              />
-            </ScrollArea>
+            <ResizablePanelGroup direction="vertical">
+              <ResizablePanel minSize={30} defaultSize={40}>
+                <ScrollArea>
+                  <FieldRenders
+                    newComponentData={newComponentData}
+                    setNewComponentData={setNewComponentData}
+                  />
+                </ScrollArea>
+              </ResizablePanel>
+              <ResizableHandle />
+              <ResizablePanel minSize={30}>
+                <ComponentBuilderAIChat />
+              </ResizablePanel>
+            </ResizablePanelGroup>
           </ResizablePanel>
           <ResizableHandle />
           <ResizablePanel minSize={25} defaultSize={70}>
@@ -70,7 +70,7 @@ export const ComponentBuilder: React.FC = () => {
               </ResizablePanel>
               <ResizableHandle />
               <ResizablePanel minSize={25} defaultSize={50}>
-                <ComponentBuilderPreview />
+                <ComponentBuilderPreview {...{ styleValue, setStyleValue }} />
               </ResizablePanel>
             </ResizablePanelGroup>
           </ResizablePanel>

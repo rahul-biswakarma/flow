@@ -32,8 +32,6 @@ export const ExploreMoreButton: React.FC<ExploreMoreButtonProps> = ({
       className="relative p-2 rounded-lg border border-dashed border-outline-03 w-[300px] hover:bg-gray-a3 cursor-pointer group h-[240px]"
       onClick={onClick}
       onKeyUp={onClick}
-      role="button"
-      tabIndex={0}
     >
       <div className="relative h-full w-full rounded-md overflow-hidden bg-gray-a2 group-hover:bg-gray-a4">
         <div

@@ -1,18 +1,13 @@
 import {
   ArrayTextFieldElement,
-  GroupFieldWrapper,
   StringFieldElement,
   TextFieldElement,
 } from "@/components/field-elements";
 import type { FieldOnChangeProps } from "@/components/field-elements/types";
 import { useScopedI18n } from "@/locales/client";
-import type React from "react";
-import { Suspense, lazy } from "react";
-import type { ComponentData } from "./types";
+import type { ComponentData } from "../types";
 
-const SchemaBuilder = lazy(() => import("./schema-builder"));
-
-export const FieldRenders = ({
+export const ComponentInfoForm = ({
   newComponentData,
   setNewComponentData,
 }: {
@@ -35,10 +30,9 @@ export const FieldRenders = ({
 
   return (
     <div className="flex w-full h-full p-3 gap-3 flex-col">
-      <GroupFieldWrapper groupLabel={scopedT("component_info_group_title")}>
+      <div className="space-y-1.5 border border-outline-02 bg-gray-a2 rounded-md p-3">
         <TextFieldElement
           label={scopedT("name")}
-          placeholder={scopedT("name_placeholder")}
           value={newComponentData.name}
           onChange={(e: FieldOnChangeProps<string>): void => {
             setNewComponentData((prev) => ({ ...prev, name: e.value }));
@@ -46,7 +40,6 @@ export const FieldRenders = ({
         />
         <StringFieldElement
           label={scopedT("description")}
-          placeholder={scopedT("description_placeholder")}
           value={newComponentData.description}
           onChange={(e: FieldOnChangeProps<string>): void => {
             setNewComponentData((prev) => ({
@@ -57,17 +50,10 @@ export const FieldRenders = ({
         />
         <ArrayTextFieldElement
           label={scopedT("keywords")}
-          placeholder={scopedT("keywords_placeholder")}
           value={newComponentData.keywords}
           onChange={handleKeywordsChange}
         />
-      </GroupFieldWrapper>
-      <Suspense>
-        <SchemaBuilder
-          newComponentData={newComponentData}
-          setNewComponentData={setNewComponentData}
-        />
-      </Suspense>
+      </div>
     </div>
   );
 };

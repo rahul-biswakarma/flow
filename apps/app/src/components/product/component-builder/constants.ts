@@ -1,4 +1,9 @@
-export const sandPackFilesConfig = (appCode: string) => ({
+import type { StyleData } from "@/components/panels/style-panel/type";
+
+export const sandPackFilesConfig = ({
+  code,
+  styleValue,
+}: { code: string; styleValue: StyleData }) => ({
   "tsconfig.json": {
     code: `{
   "include": [
@@ -13,19 +18,30 @@ export const sandPackFilesConfig = (appCode: string) => ({
 }`,
   },
   "/App.tsx": {
-    code: appCode,
+    code: code,
   },
   "/index.tsx": {
     code: `import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./styles.css";
+import { Theme as ThemeProvider } from "@radix-ui/themes";
 
 import App from "./App";
+import "@radix-ui/themes/styles.css";
+
 
 const root = createRoot(document.getElementById("root"));
 root.render(
   <StrictMode>
-    <App />
+    <ThemeProvider
+      accentColor="indigo"
+      grayColor="slate"
+      panelBackground="translucent"
+      radius="medium"
+      scaling="100%"
+      appearance="dark"
+    >
+      <App style={${JSON.stringify(styleValue)}} />
+    </ThemeProvider>
   </StrictMode>
 );`,
   },
@@ -36,6 +52,7 @@ root.render(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>html, body {margin: 0px;}</style>
   </head>
   <body>
     <div id="root"></div>
@@ -48,6 +65,7 @@ root.render(
         react: "^18.0.0",
         "react-dom": "^18.0.0",
         "react-scripts": "^4.0.0",
+        "@radix-ui/themes": "^3.1.4",
       },
       devDependencies: {
         "@types/react": "^18.0.0",
@@ -61,15 +79,13 @@ root.render(
 
 export const defaultComponentCode = `import React, {useState} from "react";
 
-export default function App(): JSX.Element {
+export default function App(props): JSX.Element {
   const [counter, setCounter] = useState(0);
   return (
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
         height: '100%',
+        ...props.style,
       }}
     >
       <button

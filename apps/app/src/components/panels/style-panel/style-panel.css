@@ -3,3 +3,7 @@
   width: 14px;
   height: 14px;
 }
+
+.rt-SegmentedControlItemLabelActive {
+  width: 100%;
+}

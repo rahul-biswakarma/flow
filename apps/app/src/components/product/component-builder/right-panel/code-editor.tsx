@@ -5,8 +5,8 @@ import { Text } from "@v1/ui/text";
 import * as parserBabel from "prettier/parser-babel";
 import * as prettierPluginEstree from "prettier/plugins/estree";
 import * as prettier from "prettier/standalone";
-import { useCallback } from "react";
-import type { ComponentData } from "./types";
+import { useCallback, useEffect } from "react";
+import type { ComponentData } from "../types";
 
 export const CodeEditor = ({
   code,
@@ -17,6 +17,15 @@ export const CodeEditor = ({
 }) => {
   const { sandpack } = useSandpack();
   const { files, activeFile } = sandpack;
+
+  useEffect(() => {
+    const newCode = files?.[activeFile]?.code ?? "";
+    if (newCode === code) return;
+    setNewComponentData((prev) => ({
+      ...prev,
+      code: newCode,
+    }));
+  }, [files, activeFile, setNewComponentData]);
 
   const formatCode = useCallback(async (codeToFormat: string) => {
     try {
@@ -43,7 +52,7 @@ export const CodeEditor = ({
 
   return (
     <div className="h-full w-full z-10 text-[14px]">
-      <div className="flex items-center justify-between gap-2 w-full py-2 px-3 border-b border-outline-03">
+      <div className="flex items-center justify-between gap-2 w-full py-2 px-3 border-b border-outline-03 h-10">
         <Text size="2" className="text-gray-11">
           Editor
         </Text>
@@ -57,7 +66,9 @@ export const CodeEditor = ({
         </IconButton>
       </div>
       <SandpackCodeEditor
-        className="h-full"
+        style={{
+          height: "calc(100% - 40px)",
+        }}
         showTabs={false}
         showLineNumbers={true}
       />

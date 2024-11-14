@@ -11,11 +11,10 @@ import { Text } from "@v1/ui/text";
 import { clsx } from "clsx";
 import { nanoid } from "nanoid";
 import { Fragment, useMemo, useState } from "react";
-import { BooleanFieldElement } from "../../field-elements/boolean-field";
-import { DropdownFieldElement } from "../../field-elements/dropdown-field";
-import { TextFieldElement } from "../../field-elements/text-field";
-import type { FieldOnChangeProps } from "../../field-elements/types";
-import { GroupFieldWrapper } from "../../field-elements/utils/group-field-wrapper";
+import { BooleanFieldElement } from "../../../field-elements/boolean-field";
+import { DropdownFieldElement } from "../../../field-elements/dropdown-field";
+import { TextFieldElement } from "../../../field-elements/text-field";
+import type { FieldOnChangeProps } from "../../../field-elements/types";
 import { ObjectTypeFields } from "./object-field";
 
 const ICON_CLASSES = "!w-3.5 !h-3.5 !text-gray-10";
@@ -33,36 +32,7 @@ const SchemaBuilder = ({
   const t = useI18n();
 
   return (
-    <GroupFieldWrapper
-      className="text-gray-10 !flex flex-col w-full !gap-2"
-      groupLabel={t("component_builder.field.props_schema_group_title")}
-      headerAction={
-        <Button
-          variant="soft"
-          color="gray"
-          disabled={propsData.length >= MAX_PROPS}
-          size="1"
-          onClick={() => {
-            setNewComponentData((prev) => ({
-              ...prev,
-              props: [
-                ...prev.props,
-                {
-                  id: nanoid(),
-                  visualName: "",
-                  propName: "",
-                  propType: "text" as PropsType,
-                  isList: false,
-                },
-              ],
-            }));
-          }}
-        >
-          <Icons.Plus className={ICON_CLASSES} />
-          {t("props_builder.add_field")}
-        </Button>
-      }
-    >
+    <div className="flex flex-col w-full text-gray-10 gap-2">
       {propsData.length === 0
         ? null
         : propsData.map((prop, index: number) => (
@@ -86,7 +56,30 @@ const SchemaBuilder = ({
               />
             </Fragment>
           ))}
-    </GroupFieldWrapper>
+      <Button
+        variant="soft"
+        color="gray"
+        disabled={propsData.length >= MAX_PROPS}
+        onClick={() => {
+          setNewComponentData((prev) => ({
+            ...prev,
+            props: [
+              ...prev.props,
+              {
+                id: nanoid(),
+                visualName: "",
+                propName: "",
+                propType: "text" as PropsType,
+                isList: false,
+              },
+            ],
+          }));
+        }}
+      >
+        <Icons.Plus className={ICON_CLASSES} />
+        {t("props_builder.add_field")}
+      </Button>
+    </div>
   );
 };
 
@@ -127,10 +120,10 @@ const PropsField = ({
   }, [scopedTForTypes]);
 
   return (
-    <div className="border border-outline-03 bg-gray-a2 rounded mb-2">
+    <div className="border border-outline-02 bg-gray-a2 rounded-md mb-2">
       <div
         className={clsx(
-          "flex justify-between items-center p-3 cursor-pointer border-outline-03",
+          "flex justify-between items-center p-3 cursor-pointer border-outline-02",
           {
             "border-b": isExpanded,
           },
