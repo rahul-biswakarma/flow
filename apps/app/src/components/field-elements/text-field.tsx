@@ -43,7 +43,7 @@ export const TextFieldElement: React.FC<TextFieldElementProps> = React.memo(
             {fieldInfo && (
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Icons.Info className={infoIconSize} />
+                  <Icons.InfoCircle className={infoIconSize} />
                 </TooltipTrigger>
                 <TooltipContent {...tooltipProps}>{fieldInfo}</TooltipContent>
               </Tooltip>

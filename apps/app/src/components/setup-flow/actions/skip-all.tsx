@@ -25,7 +25,7 @@ export const SkipAll = ({ onSkipAll }: { onSkipAll: () => void }) => {
           >
             {scopedT("skip_button")}
           </motion.span>
-          <Icons.ArrowRightToLine />
+          <Icons.ArrowBarToRight />
         </div>
       </Button>
     </motion.div>

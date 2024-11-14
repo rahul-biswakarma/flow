@@ -49,7 +49,7 @@ export const DropdownFieldElement = ({
           {fieldInfo && (
             <Tooltip>
               <TooltipTrigger asChild>
-                <Icons.Info className={infoIconSize} />
+                <Icons.InfoCircle className={infoIconSize} />
               </TooltipTrigger>
               <TooltipContent {...tooltipProps}>{fieldInfo}</TooltipContent>
             </Tooltip>
@@ -91,7 +91,7 @@ export const DropdownFieldElement = ({
               {option.info && (
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Icons.Info className={infoIconSize} />
+                    <Icons.InfoCircle className={infoIconSize} />
                   </TooltipTrigger>
                   <TooltipContent side="top" align="center">
                     {option.info}

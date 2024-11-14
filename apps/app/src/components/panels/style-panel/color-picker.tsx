@@ -20,15 +20,19 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 
   useEffect(() => {
     const { hex, alpha } = parseColor(value);
-    setColor(hex);
-    setInputColor(hex);
-    setOpacity(Math.round(alpha * 100));
+    if (hex !== color || Math.round(alpha * 100) !== opacity) {
+      setColor(hex);
+      setInputColor(hex);
+      setOpacity(Math.round(alpha * 100));
+    }
   }, [value]);
 
   const handleColorChange = (newColor: string) => {
-    setColor(newColor);
-    setInputColor(newColor);
-    updateColor(newColor, opacity);
+    if (newColor !== color) {
+      setColor(newColor);
+      setInputColor(newColor);
+      updateColor(newColor, opacity);
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +68,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
   return (
     <div className="flex items-center space-x-2">
       <TextField.Root
-        className="w-full"
+        className="w-full shadow-none"
         value={inputColor}
         onChange={handleInputChange}
         onKeyDown={handleInputKeyDown}
@@ -73,13 +77,15 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
         <TextField.Slot>
           <HoverCard.Root>
             <HoverCard.Trigger>
-              <div
-                className="w-5 h-5 border border-outline-01 rounded-sm cursor-default"
-                style={{
-                  backgroundColor: color,
-                  opacity: opacity / 100,
-                }}
-              />
+              <div className="w-5 h-5 border border-outline-02 rounded-sm overflow-hidden cursor-default">
+                <div
+                  className="w-full h-full rounded-sm"
+                  style={{
+                    backgroundColor: color,
+                    opacity: opacity / 100,
+                  }}
+                />
+              </div>
             </HoverCard.Trigger>
             <HoverCard.Content maxWidth="300px">
               <div>
@@ -90,7 +96,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
         </TextField.Slot>
         <TextField.Slot>
           <TextField.Root
-            className="shadow-none border-l border-outline-01 bg-transparent w-[70px] outline-none"
+            className="shadow-none bg-transparent w-[90px] outline-none text-right"
             value={opacity}
             type="number"
             max={100}

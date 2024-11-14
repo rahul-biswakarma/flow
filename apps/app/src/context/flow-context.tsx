@@ -58,7 +58,7 @@ export const FlowContextProvider = ({
       key: "nav-bar-visual-editor",
     },
     {
-      icon: <Icons.Workflow />,
+      icon: <Icons.Schema />,
       title: scopedT("logic_builder"),
       key: "nav-bar-logic-builder",
       component: <LogicBuilder />,
@@ -70,7 +70,7 @@ export const FlowContextProvider = ({
       component: <SchemaEditor />,
     },
     {
-      icon: <Icons.Layers />,
+      icon: <Icons.Components />,
       title: scopedT("component_builder"),
       key: "nav-bar-component-builder",
       component: <ComponentBuilder />,
@@ -82,7 +82,7 @@ export const FlowContextProvider = ({
       component: <Marketplace />,
     },
     {
-      icon: <Icons.Cable />,
+      icon: <Icons.Affiliate />,
       title: scopedT("connections"),
       key: "nav-bar-connections",
       component: <Connections />,

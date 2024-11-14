@@ -77,7 +77,7 @@ export const SchemaBuilder = ({
           variant="soft"
           onClick={() => setShowAIGenerator(true)}
         >
-          <Icons.Bot className="w-4 h-4 mr-1" />
+          <Icons.TopologyStar3 className="w-4 h-4 mr-1" />
           AI Assistant
         </Button>
       </div>

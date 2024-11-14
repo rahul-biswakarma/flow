@@ -1,9 +1,12 @@
-.lucide {
+.tabler-icon {
   color: currentColor;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
 }
 
-.rt-SegmentedControlItemLabelActive {
-  width: 100%;
+.row-style-fields {
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
 }

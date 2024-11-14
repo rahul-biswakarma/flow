@@ -22,12 +22,12 @@ export const ShadowPicker = ({
 
   return (
     <div className="flex items-center gap-2">
-      <Text size="1" className="text-gray-11">
+      <Text size="2" className="text-gray-11">
         Shadow
       </Text>
       <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenu.Trigger>
-          <Button variant="outline" size="1">
+          <Button variant="outline" size="2">
             {shadows.find((s) => s.value === value)?.name || "Custom"}
           </Button>
         </DropdownMenu.Trigger>
@@ -45,7 +45,7 @@ export const ShadowPicker = ({
                   className="w-8 h-8 rounded-md bg-white border border-gray-7"
                   style={{ boxShadow: shadow.value }}
                 />
-                <Text size="1">{shadow.name}</Text>
+                <Text size="2">{shadow.name}</Text>
               </div>
             </DropdownMenu.Item>
           ))}

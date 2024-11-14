@@ -71,7 +71,7 @@ export const ComponentBuilderPreview = ({
                     </IconButton>
                   </Tabs.List>
                   <Tabs.Content value="style-panel">
-                    <div className="p-3">
+                    <div className="p-4">
                       <StylePanel
                         styleValue={styleValue}
                         setStyleValue={setStyleValue}

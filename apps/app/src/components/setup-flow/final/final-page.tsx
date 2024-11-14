@@ -45,7 +45,7 @@ export const FinalPage = ({ onComplete }: FinalPageProps) => {
 
   const infoItems = [
     {
-      icon: <Icons.Github className="w-8 h-8" />,
+      icon: <Icons.BrandGithub className="w-8 h-8" />,
       title: scopedT("connect_accounts"),
       description: scopedT("connect_accounts_description"),
     },
@@ -57,7 +57,7 @@ export const FinalPage = ({ onComplete }: FinalPageProps) => {
       }),
     },
     {
-      icon: <Icons.Bot className="w-8 h-8" />,
+      icon: <Icons.TopologyStar3 className="w-8 h-8" />,
       title: scopedT("ai_partner"),
       description: scopedT("ai_partner_description", {
         key: <Kbd>Cmd + K</Kbd>,

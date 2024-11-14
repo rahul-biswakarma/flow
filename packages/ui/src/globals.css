@@ -24,7 +24,7 @@ body {
   font-family: var(--default-font-family);
 }
 
-.lucide {
+.tabler-icon {
   color: currentColor;
   width: 20px;
   height: 20px;
@@ -43,11 +43,6 @@ body {
   inherits: false;
   initial-value: 0deg;
   syntax: "<angle>";
-}
-
-.rt-SegmentedControlItemLabelActive,
-.rt-SegmentedControlItemLabelInactive {
-  height: 100%;
 }
 
 :root {

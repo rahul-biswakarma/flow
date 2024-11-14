@@ -76,7 +76,7 @@ export const TemplatePage = ({
                 className="w-full max-w-[300px]"
               >
                 {scopedT("template_page_next_button")}
-                <Icons.MoveRight />
+                <Icons.ArrowNarrowRight />
               </Button>
             </motion.div>
           )}
