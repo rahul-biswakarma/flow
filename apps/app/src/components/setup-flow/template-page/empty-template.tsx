@@ -24,8 +24,6 @@ export const EmptyTemplateSlide: React.FC<EmptyTemplateSlideProps> = ({
       )}
       onClick={onClick}
       onKeyUp={onClick}
-      role="button"
-      tabIndex={0}
     >
       <div
         className={clsx(
