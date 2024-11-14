@@ -62,7 +62,7 @@ export const CodeEditor = ({
           variant="ghost"
           onClick={handleFormatClick}
         >
-          <Icons.WandSparkles className="!w-4 !h-4 !text-gray-11" />
+          <Icons.Wand className="!w-4 !h-4 !text-gray-11" />
         </IconButton>
       </div>
       <SandpackCodeEditor

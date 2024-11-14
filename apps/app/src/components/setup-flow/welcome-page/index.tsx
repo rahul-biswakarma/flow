@@ -14,7 +14,7 @@ export const WelcomePage = ({ onNext }: { onNext: () => void }) => {
       </Text>
       <Button onClick={onNext} size="3" className="w-full max-w-[300px]">
         {scopedT("get_started")}
-        <Icons.MoveRight />
+        <Icons.ArrowNarrowRight />
       </Button>
     </div>
   );

@@ -20,15 +20,15 @@ const FIELD_TYPES: {
   value: FieldType;
   icon: React.ReactNode;
 }[] = [
-  { label: "Text", value: "text", icon: <Icons.Type /> },
+  { label: "Text", value: "text", icon: <Icons.FileTypography /> },
   { label: "Number", value: "number", icon: <Icons.Hash /> },
   { label: "Boolean", value: "boolean", icon: <Icons.ToggleLeft /> },
   { label: "Date", value: "date", icon: <Icons.Calendar /> },
   { label: "Reference", value: "reference", icon: <Icons.Link /> },
   { label: "Array", value: "array", icon: <Icons.List /> },
   { label: "Object", value: "object", icon: <Icons.Box /> },
-  { label: "Rich Text", value: "rich-text", icon: <Icons.Type /> },
-  { label: "Image", value: "image", icon: <Icons.Image /> },
+  { label: "Rich Text", value: "rich-text", icon: <Icons.FileTypography /> },
+  { label: "Image", value: "image", icon: <Icons.Photo /> },
   { label: "File", value: "file", icon: <Icons.File /> },
 ];
 

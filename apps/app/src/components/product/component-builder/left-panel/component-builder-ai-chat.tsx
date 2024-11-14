@@ -16,7 +16,7 @@ export const ComponentBuilderAIChat = () => {
             <TextField.Slot />
             <TextField.Slot>
               <IconButton variant="ghost" color="gray">
-                <Icons.SendHorizontal />
+                <Icons.Send />
               </IconButton>
             </TextField.Slot>
           </TextField.Root>

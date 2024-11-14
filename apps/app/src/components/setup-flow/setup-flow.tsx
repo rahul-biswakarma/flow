@@ -118,7 +118,7 @@ export const SetupFlow = ({
     {
       id: "1",
       component: (props) => <WelcomePage {...props} />,
-      icon: <Icons.Handshake />,
+      icon: <Icons.Comet />,
     },
     {
       id: "2",
@@ -133,7 +133,7 @@ export const SetupFlow = ({
     {
       id: "4",
       component: (props) => <FinalPage {...props} />,
-      icon: <Icons.LandPlot />,
+      icon: <Icons.Golf />,
     },
   ];
 

@@ -92,7 +92,7 @@ export const ThemePage = ({ onNext }: { onNext: () => void }) => {
       </div>
       <Button onClick={onNext} size="3" className="w-full max-w-[300px]">
         {scopedT("theme_page_next_button")}
-        <Icons.MoveRight />
+        <Icons.ArrowNarrowRight />
       </Button>
     </div>
   );

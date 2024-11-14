@@ -47,7 +47,7 @@ export const ChatMessage = ({
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
           {message.role === "assistant" ? (
-            <Icons.Bot className="w-4 h-4" />
+            <Icons.TopologyStar3 className="w-4 h-4" />
           ) : (
             <Icons.User className="w-4 h-4" />
           )}

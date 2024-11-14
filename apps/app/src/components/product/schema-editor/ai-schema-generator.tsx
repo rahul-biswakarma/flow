@@ -77,7 +77,7 @@ export const AISchemaGenerator = ({ onGenerate }: AISchemaGeneratorProps) => {
           {isGenerating ? (
             <Icons.Loader className="w-4 h-4 animate-spin mr-2" />
           ) : (
-            <Icons.Bot className="w-4 h-4 mr-2" />
+            <Icons.TopologyStar3 className="w-4 h-4 mr-2" />
           )}
           Generate Schema
         </Button>

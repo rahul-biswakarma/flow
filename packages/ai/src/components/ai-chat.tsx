@@ -53,7 +53,7 @@ export const AIChat = ({
             >
               <div className="flex items-center gap-2 mb-2">
                 {message.role === "assistant" ? (
-                  <Icons.Bot className="w-4 h-4" />
+                  <Icons.TopologyStar3 className="w-4 h-4" />
                 ) : (
                   <Icons.User className="w-4 h-4" />
                 )}

@@ -34,7 +34,7 @@ export const BooleanFieldElement = ({
         {fieldInfo && (
           <Tooltip>
             <TooltipTrigger asChild>
-              <Icons.Info className={infoIconSize} />
+              <Icons.InfoCircle className={infoIconSize} />
             </TooltipTrigger>
             <TooltipContent {...tooltipProps}>{fieldInfo}</TooltipContent>
           </Tooltip>
