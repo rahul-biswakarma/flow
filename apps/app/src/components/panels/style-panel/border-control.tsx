@@ -41,6 +41,7 @@ export const BorderControl = ({
     <div className="space-y-2">
       {!unified ? (
         <UnitTextInput
+          type="number"
           slotValue={<Icons.BorderSides />}
           tooltipContent="Border Width"
           value={unifiedValue ?? "0"}
@@ -50,6 +51,7 @@ export const BorderControl = ({
       ) : (
         <div className="grid grid-cols-2 gap-2">
           <UnitTextInput
+            type="number"
             slotValue={<Icons.BorderTop />}
             tooltipContent="Top Border"
             value={value.top ?? "0"}
@@ -57,6 +59,7 @@ export const BorderControl = ({
             units={["px", "rem"]}
           />
           <UnitTextInput
+            type="number"
             slotValue={<Icons.BorderRight />}
             tooltipContent="Right Border"
             value={value.right ?? "0"}
@@ -64,6 +67,7 @@ export const BorderControl = ({
             units={["px", "rem"]}
           />
           <UnitTextInput
+            type="number"
             slotValue={<Icons.BorderBottom />}
             tooltipContent="Bottom Border"
             value={value.bottom ?? "0"}
@@ -71,6 +75,7 @@ export const BorderControl = ({
             units={["px", "rem"]}
           />
           <UnitTextInput
+            type="number"
             slotValue={<Icons.BorderLeft />}
             tooltipContent="Left Border"
             value={value.left ?? "0"}
@@ -123,6 +128,7 @@ export const BorderRadiusControl = ({
     <div className="space-y-2">
       {!unified ? (
         <UnitTextInput
+          type="number"
           slotValue={<Icons.BorderCorners />}
           tooltipContent="Border Radius"
           value={unifiedValue ?? "0"}
@@ -132,6 +138,7 @@ export const BorderRadiusControl = ({
       ) : (
         <div className="grid grid-cols-2 gap-2">
           <UnitTextInput
+            type="number"
             slotValue={<Icons.RadiusTopLeft />}
             tooltipContent="Top Left Radius"
             value={value.topLeft ?? "0"}
@@ -139,6 +146,7 @@ export const BorderRadiusControl = ({
             units={["px", "rem"]}
           />
           <UnitTextInput
+            type="number"
             slotValue={<Icons.RadiusTopRight />}
             tooltipContent="Top Right Radius"
             value={value.topRight ?? "0"}
@@ -146,6 +154,7 @@ export const BorderRadiusControl = ({
             units={["px", "rem"]}
           />
           <UnitTextInput
+            type="number"
             slotValue={<Icons.RadiusBottomLeft />}
             tooltipContent="Bottom Left Radius"
             value={value.bottomLeft ?? "0"}
@@ -153,6 +162,7 @@ export const BorderRadiusControl = ({
             units={["px", "rem"]}
           />
           <UnitTextInput
+            type="number"
             slotValue={<Icons.RadiusBottomRight />}
             tooltipContent="Bottom Right Radius"
             value={value.bottomRight ?? "0"}

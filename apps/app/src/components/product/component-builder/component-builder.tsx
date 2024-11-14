@@ -31,6 +31,7 @@ export const ComponentBuilder: React.FC = () => {
     code: defaultComponentCode,
   });
   const [styleValue, setStyleValue] = useState<StyleData>({});
+  console.log("styleValue", styleValue);
 
   const { resolvedTheme } = useTheme();
 

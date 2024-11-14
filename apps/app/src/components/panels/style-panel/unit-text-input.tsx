@@ -17,6 +17,7 @@ interface UnitTextInputProps {
   units?: string[];
   presets?: { label: string; value: string }[];
   error?: boolean;
+  type?: "number" | "text";
 }
 
 export const UnitTextInput = ({
@@ -27,13 +28,19 @@ export const UnitTextInput = ({
   units = ["px", "rem", "em", "%"],
   presets,
   error,
+  type,
 }: UnitTextInputProps) => {
   const [currentUnit, setCurrentUnit] = useState(() => {
     const match = value.match(/[a-z%]+$/);
     return match ? match[0] : units[0];
   });
 
-  const numericValue = Number.parseFloat(value) || 0;
+  let numericValue: string | number = Number.parseFloat(value) || 0;
+  for (const preset of presets || []) {
+    if (preset.value === value) {
+      numericValue = value;
+    }
+  }
 
   const handleNumericChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -41,19 +48,25 @@ export const UnitTextInput = ({
       handleChange(`0${currentUnit}`);
       return;
     }
-    const numeric = Number.parseFloat(newValue);
-    if (!Number.isNaN(numeric)) handleChange(`${numeric}${currentUnit}`);
+    handleChange(`${newValue}${currentUnit}`);
   };
 
   const handleUnitChange = (newUnit: string) => {
+    let isPresetValue = false;
     setCurrentUnit(newUnit);
-    handleChange(numericValue + newUnit);
+    for (const preset of presets || []) {
+      if (preset.value === value) {
+        isPresetValue = true;
+      }
+    }
+    handleChange((isPresetValue ? "0" : numericValue) + newUnit);
   };
 
   return (
     <Tooltip delayDuration={TOOLTIP_DELAY_DURATION}>
       <TooltipTrigger>
         <TextField.Root
+          type={type}
           value={numericValue}
           onChange={handleNumericChange}
           className={clsx("shadow-none", { "border-red-7": error })}
@@ -73,9 +86,9 @@ export const UnitTextInput = ({
                   </Button>
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content>
-                  {presets?.map((preset) => (
+                  {presets?.map((preset, index) => (
                     <DropdownMenu.Item
-                      key={preset.value}
+                      key={`${preset.value}-${index}`}
                       onClick={() => handleChange(preset.value)}
                     >
                       {preset.label}
