@@ -8,7 +8,7 @@ import type { FieldOnChangeProps } from "./types";
 
 interface StringFieldElementProps {
   label: string;
-  placeholder: string;
+  placeholder?: string;
   value: string;
   fieldInfo?: string;
   labelClassName?: string;
@@ -43,7 +43,7 @@ export const StringFieldElement = ({
         )}
       </Text>
       <TextArea
-        className={clsx("shadow-none", fieldFontSize)}
+        className={clsx("shadow-none border border-outline-01", fieldFontSize)}
         value={value}
         onChange={(e) =>
           onChange({

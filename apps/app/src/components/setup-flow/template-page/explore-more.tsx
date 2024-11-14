@@ -25,21 +25,19 @@ export const ExploreMoreButton: React.FC<ExploreMoreButtonProps> = ({
   onClick,
 }) => {
   const scopedT = useScopedI18n("setup");
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   return (
     <div
       className="relative p-2 rounded-lg border border-dashed border-outline-03 w-[300px] hover:bg-gray-a3 cursor-pointer group h-[240px]"
       onClick={onClick}
       onKeyUp={onClick}
-      role="button"
-      tabIndex={0}
     >
       <div className="relative h-full w-full rounded-md overflow-hidden bg-gray-a2 group-hover:bg-gray-a4">
         <div
           className="flex flex-col justify-center items-center h-full w-full absolute gap-2"
           style={{
-            background: `url(${theme === "dark" ? "/globe.svg" : "/globe-light.svg"})`,
+            background: `url(${resolvedTheme === "dark" ? "/globe.svg" : "/globe-light.svg"})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

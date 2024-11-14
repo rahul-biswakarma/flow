@@ -51,7 +51,10 @@ export const TextFieldElement: React.FC<TextFieldElementProps> = React.memo(
           </Text>
         )}
         <TextField.Root
-          className={clsx("shadow-none", fieldFontSize)}
+          className={clsx(
+            "shadow-none border border-outline-01",
+            fieldFontSize,
+          )}
           value={value}
           onChange={handleChange}
           placeholder={placeholder}

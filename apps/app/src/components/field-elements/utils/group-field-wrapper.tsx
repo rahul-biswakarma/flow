@@ -1,7 +1,7 @@
 import { Text } from "@v1/ui/text";
 import { clsx } from "clsx";
 
-export const GroupFieldWrapper = ({
+export const GroupFieldCardWrapper = ({
   children,
   groupLabel,
   className,
