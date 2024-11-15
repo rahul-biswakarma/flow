@@ -22,42 +22,27 @@ export const ChatInterface = () => {
     [createSchema, updateSchema],
   );
 
-  const handleResponse = useCallback(
-    async (e: Response) => {
-      const message = await e.json();
-      // Here you would implement schema detection logic
-      // For now, we'll use a simple check
-      if (message.content.toLowerCase().includes("schema")) {
-        const mockSchema: DetectedSchema = {
-          name: "User",
-          description: "User schema detected from chat",
-          fields: [
-            {
-              name: "username",
-              type: "text",
-              required: true,
-              unique: true,
-            },
-            {
-              name: "email",
-              type: "text",
-              required: true,
-              unique: true,
-            },
-          ],
-        };
-        handleSchemaDetected(mockSchema);
+  const handleMessage = (message: string) => {
+    try {
+      // Look for JSON schema definitions in the message
+      const schemaMatch = message.match(/```json\n([\s\S]*?)```/);
+      if (schemaMatch?.[1]) {
+        const schema = JSON.parse(schemaMatch[1]);
+        if (schema.name && schema.fields) {
+          handleSchemaDetected(schema);
+        }
       }
-    },
-    [handleSchemaDetected],
-  );
+    } catch (error) {
+      console.error("Error processing schema:", error);
+    }
+  };
 
   return (
     <AIChat
       title="Schema Assistant"
       placeholder="Describe your schema needs..."
-      onResponse={handleResponse}
-      onError={(error: unknown) => {
+      onMessageComplete={handleMessage}
+      onError={(error) => {
         console.error("Chat error:", error);
       }}
     />

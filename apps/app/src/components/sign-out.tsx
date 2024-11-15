@@ -1,14 +1,14 @@
 "use client";
 
 import { useI18n } from "@/locales/client";
-import { createClient } from "@v1/supabase/client";
+import { createSupabaseClient } from "@v1/supabase/client";
 import { Button } from "@v1/ui/button";
 import { IconButton } from "@v1/ui/icon-button";
 import { Icons } from "@v1/ui/icons";
 import { useRouter } from "next/navigation";
 
 export function SignOut({ iconOnly = false }: { iconOnly?: boolean }) {
-  const supabase = createClient();
+  const supabase = createSupabaseClient();
   const t = useI18n();
   const router = useRouter();
 

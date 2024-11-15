@@ -1,5 +1,5 @@
 import { useScopedI18n } from "@/locales/client";
-import { createClient } from "@v1/supabase/client";
+import { createSupabaseClient } from "@v1/supabase/client";
 import {
   addProjectMember,
   createProject,
@@ -17,7 +17,7 @@ import { useState } from "react";
 export const CreateProject = ({
   showProjectManger,
 }: { showProjectManger: () => void }) => {
-  const supabase = createClient();
+  const supabase = createSupabaseClient();
   const router = useRouter();
   const scopedT = useScopedI18n("onboarding");
   const [name, setName] = useState("");

@@ -3,7 +3,7 @@
 import { Loader } from "@/components/loader/loader";
 import { OnboardingPage } from "@/components/onboarding";
 import type {} from "@/types";
-import { getProjects, getUserDetails } from "@v1/supabase/queries";
+import { getUserDetails, getUserProjects } from "@v1/supabase/queries";
 import { useRouter } from "next/navigation";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
@@ -22,7 +22,7 @@ function Page() {
     data: userData,
     isLoading: isLoadingUser,
     error: userError,
-  } = useQuery("user", getUserDetails, {
+  } = useQuery("user", async () => await getUserDetails(), {
     onError: () => router.push("/login"),
     retry: false,
   });
@@ -33,7 +33,11 @@ function Page() {
     error: projectsError,
   } = useQuery(
     ["projects", userData?.id],
-    () => getProjects(userData?.id ?? ""),
+    async () =>
+      await getUserProjects({
+        userId: userData?.id || "",
+        page: 1,
+      }),
     {
       enabled: !!userData,
     },

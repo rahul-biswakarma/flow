@@ -25,6 +25,7 @@
     "./theme-data": "./src/utils/theme-data.ts",
     "./theme-provider": "./src/components/theme-provider.tsx",
     "./avatar": "./src/components/avatar.tsx",
+    "./motion-div": "./src/components/motion-div.tsx",
     "./icon-button": "./src/components/icon-button.tsx",
     "./heading": "./src/components/heading.tsx",
     "./button": "./src/components/button.tsx",

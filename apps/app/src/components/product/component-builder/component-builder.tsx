@@ -31,13 +31,19 @@ export const ComponentBuilder: React.FC = () => {
     code: defaultComponentCode,
   });
   const [styleValue, setStyleValue] = useState<StyleData>({});
-  console.log("styleValue", styleValue);
+
+  const isConfigValid = Boolean(
+    newComponentData.name &&
+      newComponentData.description &&
+      newComponentData.code &&
+      newComponentData.props.length > 0,
+  );
 
   const { resolvedTheme } = useTheme();
 
   return (
     <div className="w-full grid grid-rows-[auto_1fr] h-screen max-h-screen">
-      <ComponentBuilderHeader isConfigValid={false} />
+      <ComponentBuilderHeader isConfigValid={isConfigValid} />
       <SandpackProvider
         theme={resolvedTheme === "dark" ? amethyst : aquaBlue}
         template="react-ts"
@@ -56,7 +62,9 @@ export const ComponentBuilder: React.FC = () => {
               </ResizablePanel>
               <ResizableHandle />
               <ResizablePanel minSize={30}>
-                <ComponentBuilderAIChat />
+                <ComponentBuilderAIChat
+                  setNewComponentData={setNewComponentData}
+                />
               </ResizablePanel>
             </ResizablePanelGroup>
           </ResizablePanel>

@@ -33,5 +33,12 @@
   "[jsonc]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
-  "cSpell.words": ["codemirror", "Keymap", "Sandpack"]
+  "cSpell.words": [
+    "codemirror",
+    "Keymap",
+    "ratelimit",
+    "Sandpack",
+    "supabase",
+    "UPSTASH"
+  ]
 }

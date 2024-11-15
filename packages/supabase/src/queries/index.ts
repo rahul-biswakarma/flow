@@ -1,115 +1,115 @@
+import type { UserResponse } from "@supabase/supabase-js";
 import { logger } from "@v1/logger";
-import { createClient } from "@v1/supabase/client";
-import type { Database } from "../types/db";
-type Tables = Database["public"]["Tables"];
+import { createSupabaseClient } from "@v1/supabase/client";
+import type { Tables } from "../types";
 
-const supabase = createClient();
+const supabase = createSupabaseClient();
+const BATCH_SIZE = 20;
 
-export async function getUser() {
+export async function getAuthUser(): Promise<UserResponse> {
   try {
-    const result = await supabase.auth.getUser();
+    const response = await supabase.auth.getUser();
 
-    return result;
+    return response;
   } catch (error) {
-    logger.error(error);
-
+    logger.error("Error in getUser:", error);
     throw error;
   }
 }
 
-export async function getUserDetails(): Promise<Tables["users"]["Row"] | null> {
+export async function getUserDetails(): Promise<Tables<"users"> | null> {
   try {
-    // Get the authenticated user
-    const {
-      data: { user },
-      error: authError,
-    } = await supabase.auth.getUser();
+    const { data, error: authError } = await getAuthUser();
 
     if (authError) throw authError;
+    if (!data) return null;
 
-    if (!user) {
-      return null;
-    }
-
-    // Fetch user details
-    const { data, error: detailsError } = await supabase
+    const { data: response, error } = await supabase
       .from("users")
       .select("*")
-      .eq("id", user.id)
+      .eq("id", data.user.id)
       .single();
+    if (error) throw error;
 
-    if (detailsError) throw detailsError;
-
-    return data;
+    return response;
   } catch (error) {
-    console.error("Error fetching user information:", error);
+    logger.error("Error in getUserDetails:", error);
     return null;
   }
 }
 
-export async function getProjects(userId: string) {
+export async function getUserProjects({
+  userId,
+  page = 1,
+}: {
+  userId: string;
+  page: number;
+}): Promise<Tables<"projects">[]> {
   try {
-    const { data, error } = await supabase
+    const { data, error: authError } = await getAuthUser();
+
+    if(authError) throw authError;
+
+    const { data: response, error } = await supabase
       .from("project_memberships")
-      .select(`
-        project_id,
-        projects (
-          id,
+      .select(`project_id, projects (  id,
           name,
           slug,
           description,
           created_at,
-          updated_at
-        )
-      `)
-      .eq("user_id", userId);
+          updated_at )`)
+      .eq("user_id", userId)
+      .range(page * BATCH_SIZE - BATCH_SIZE, page * BATCH_SIZE - 1);
 
     if (error) throw error;
 
-    // Extract the projects from the joined data
-    const projects = data
+    const projects = response
       ?.map((item) => item.projects)
-      .filter(
-        (project): project is Tables["projects"]["Row"] => project !== null,
-      );
+      .filter((project): project is Tables<"projects"> => project !== null);
 
-    return projects || [];
+    return projects ?? [];
   } catch (error) {
-    console.error("Error fetching projects:", error);
+    logger.error("Error in getProjects:", error);
     return [];
   }
 }
 
-export async function getProject(projectSlug: string) {
+export async function getProjectWithPages(slug: string): Promise<
+  | (Tables<"projects"> & {
+      pages: Tables<"pages">[];
+    })
+  | null
+> {
+  const {
+    data: { user },
+    error: authError,
+  } = await getAuthUser();
+
+  if (authError || !user) throw authError;
+
   try {
-    const { data, error } = await supabase
-      .from("projects")
-      .select("*")
-      .eq("slug", projectSlug)
-      .single();
-    if (error) throw error;
-    return data;
-  } catch (error) {
-    logger.error("Error fetching project:", error);
-    throw error;
-  }
-}
-export async function getProjectWithPages(projectSlug: string) {
-  try {
-    const { data, error } = await supabase
+    const { data: response, error: projectError } = await supabase
       .from("projects")
       .select("*, pages(*)")
-      .eq("slug", projectSlug)
+      .eq("slug", slug)
       .single();
-    if (error) throw error;
-    return data;
+
+    if (projectError) throw projectError;
+    return response;
   } catch (error) {
-    logger.error("Error fetching project with pages:", error);
-    throw error;
+    logger.error("Error in getProjectWithPages:", error);
+    return null;
   }
 }
 
-export async function createProject(project: Tables["projects"]["Insert"]) {
+export async function createProject(project: Tables<"projects">) {
+  const {
+    data: { user },
+    error: authError,
+  } = await getAuthUser();
+
+  if (authError || !user) throw authError;
+
   try {
     const { data, error } = await supabase
       .from("projects")
@@ -123,6 +123,7 @@ export async function createProject(project: Tables["projects"]["Insert"]) {
     throw error;
   }
 }
+
 export const getProjectBySlug = async (slug: string) => {
   try {
     const { data, error } = await supabase
@@ -136,8 +137,8 @@ export const getProjectBySlug = async (slug: string) => {
     throw error;
   }
 };
+
 export async function getRolesForProject(projectId: string) {
-  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("roles")
@@ -151,8 +152,7 @@ export async function getRolesForProject(projectId: string) {
   }
 }
 
-export async function createRole(role: Tables["roles"]["Insert"]) {
-  const supabase = await createClient();
+export async function createRole(role: Tables<"roles">) {
   try {
     const { data, error } = await supabase
       .from("roles")
@@ -167,53 +167,10 @@ export async function createRole(role: Tables["roles"]["Insert"]) {
     throw error;
   }
 }
-export async function getUserRoles(userId: string) {
-  const supabase = await createClient();
-  try {
-    const { data, error } = await supabase
-      .from("user_roles")
-      .select("*, roles(*)")
-      .eq("user_id", userId);
-    if (error) throw error;
-    return data;
-  } catch (error) {
-    logger.error("Error fetching user roles:", error);
-    throw error;
-  }
-}
-export async function assignUserRole(userRole: Tables["user_roles"]["Insert"]) {
-  const supabase = await createClient();
-  try {
-    const { data, error } = await supabase
-      .from("user_roles")
-      .insert(userRole)
-      .select()
-      .single();
-    if (error) throw error;
-    return data;
-  } catch (error) {
-    logger.error("Error assigning user role:", error);
-    throw error;
-  }
-}
-export async function getProjectMembers(projectId: string) {
-  const supabase = await createClient();
-  try {
-    const { data, error } = await supabase
-      .from("project_memberships")
-      .select("*, users(*)")
-      .eq("project_id", projectId);
-    if (error) throw error;
-    return data;
-  } catch (error) {
-    logger.error("Error fetching project members:", error);
-    throw error;
-  }
-}
+
 export async function addProjectMember(
-  membership: Tables["project_memberships"]["Insert"],
+  membership: Tables<"project_memberships">,
 ) {
-  const supabase = await createClient();
   try {
     const { data, error } = await supabase
       .from("project_memberships")
@@ -224,66 +181,6 @@ export async function addProjectMember(
     return data;
   } catch (error) {
     logger.error("Error adding project member:", error);
-    throw error;
-  }
-}
-export async function getProjectPages(projectId: string) {
-  const supabase = await createClient();
-  try {
-    const { data, error } = await supabase
-      .from("pages")
-      .select("*")
-      .eq("project_id", projectId);
-    if (error) throw error;
-    return data;
-  } catch (error) {
-    logger.error("Error fetching project pages:", error);
-    throw error;
-  }
-}
-export async function createPage(page: Tables["pages"]["Insert"]) {
-  const supabase = await createClient();
-  try {
-    const { data, error } = await supabase
-      .from("pages")
-      .insert(page)
-      .select()
-      .single();
-    if (error) throw error;
-    return data;
-  } catch (error) {
-    logger.error("Error creating page:", error);
-    throw error;
-  }
-}
-export async function getProjectCustomNodes(projectId: string) {
-  const supabase = await createClient();
-  try {
-    const { data, error } = await supabase
-      .from("custom_nodes")
-      .select("*")
-      .eq("project_id", projectId);
-    if (error) throw error;
-    return data;
-  } catch (error) {
-    logger.error("Error fetching project components:", error);
-    throw error;
-  }
-}
-export async function createCustomNodes(
-  component: Tables["custom_nodes"]["Insert"],
-) {
-  const supabase = await createClient();
-  try {
-    const { data, error } = await supabase
-      .from("custom_nodes")
-      .insert(component)
-      .select()
-      .single();
-    if (error) throw error;
-    return data;
-  } catch (error) {
-    logger.error("Error creating component:", error);
     throw error;
   }
 }

@@ -44,7 +44,7 @@ export const AIChat = ({
 
       <ScrollArea className="flex-1 p-4">
         <div className="space-y-4">
-          {messages.map((message, index) => (
+          {messages.map((message) => (
             <Card
               key={message.id}
               className={`p-4 ${

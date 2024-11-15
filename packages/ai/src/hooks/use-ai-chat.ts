@@ -7,6 +7,7 @@ export interface UseAIChatOptions {
   id?: string;
   initialMessages?: Message[];
   onResponse?: (response: Response) => void;
+  onMessageComplete?: (message: string) => void;
   onFinish?: (message: Message) => void;
   onError?: (error: Error) => void;
 }
@@ -16,6 +17,7 @@ export const useAIChat = ({
   id,
   initialMessages = [],
   onResponse,
+  onMessageComplete,
   onFinish,
   onError,
 }: UseAIChatOptions = {}) => {
@@ -35,7 +37,10 @@ export const useAIChat = ({
     id,
     initialMessages,
     onResponse,
-    onFinish,
+    onFinish: (message) => {
+      onMessageComplete?.(message.content);
+      onFinish?.(message);
+    },
     onError,
   });
 
