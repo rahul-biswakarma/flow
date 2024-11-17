@@ -1,6 +1,5 @@
-
-import { NextApiRequest, NextApiResponse } from 'next';
 import { Redis } from "@upstash/redis";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 // Validate Redis configuration
 if (
@@ -19,7 +18,10 @@ const redisClient = new Redis({
   automaticDeserialization: true,
 });
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   // Handle Redis operations here
   // Example: Get a value from Redis
   const { key } = req.query;

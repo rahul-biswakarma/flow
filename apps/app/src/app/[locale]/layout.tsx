@@ -52,6 +52,7 @@ export default function RootLayout({
           >
             <Suspense fallback={<Loader />}>{children}</Suspense>
           </ThemeProvider>
+          {/* <div className="noise-bg-container" /> */}
         </NextThemeProvider>
       </body>
     </html>

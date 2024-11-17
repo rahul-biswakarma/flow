@@ -48,7 +48,7 @@ export async function getUserProjects({
   try {
     const { data, error: authError } = await getAuthUser();
 
-    if(authError) throw authError;
+    if (authError) throw authError;
 
     const { data: response, error } = await supabase
       .from("project_memberships")

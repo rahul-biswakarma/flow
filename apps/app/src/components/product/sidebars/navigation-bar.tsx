@@ -21,6 +21,8 @@ import { Text } from "@v1/ui/text";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import { useTheme } from "next-themes";
 
+import "./navigation-bar.css";
+
 export function NavigationBar() {
   const {
     projectData,
@@ -41,7 +43,7 @@ export function NavigationBar() {
 
   return (
     <SidebarProvider defaultOpen={false}>
-      <Sidebar className="z-50" collapsible="icon">
+      <Sidebar className="z-50 navigation-bar" collapsible="icon">
         <SidebarHeader>
           <SidebarMenu>
             <SidebarMenuItem>

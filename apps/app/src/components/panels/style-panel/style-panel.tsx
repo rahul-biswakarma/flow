@@ -37,7 +37,7 @@ export const StylePanel = ({
   };
 
   return (
-    <div className="style-editor flex flex-col gap-6">
+    <div className="style-editor flex flex-col gap-6 w-full h-full">
       <Section
         title="Layout"
         actions={
@@ -157,7 +157,7 @@ export const StylePanel = ({
       </Section>
 
       <Section title="Colors">
-        <div className="space-y-4">
+        <div className="flex flex-col gap-2 pt-1">
           <PropertyToggle
             label="Background Color"
             enabled={styleValue.backgroundColor !== undefined}
@@ -170,10 +170,12 @@ export const StylePanel = ({
             }
           />
           {styleValue.backgroundColor !== undefined && (
-            <ColorPicker
-              value={styleValue.backgroundColor}
-              onChange={(v) => updateStyle({ backgroundColor: v })}
-            />
+            <div className="pb-2">
+              <ColorPicker
+                value={styleValue.backgroundColor}
+                onChange={(v) => updateStyle({ backgroundColor: v })}
+              />
+            </div>
           )}
 
           <PropertyToggle

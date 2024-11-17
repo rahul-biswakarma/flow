@@ -11,18 +11,22 @@ export const Product = () => {
 
   return (
     <motion.div
-      className="grid grid-cols-[auto_1fr] w-full h-full"
+      className="grid grid-cols-[auto_1fr] w-full h-full bg-product"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <TooltipProvider>
         <NavigationBar />
-        {activeItem && (
-          <div key={activeItem.key} className="flex h-full w-full">
-            {activeItem.component}
+        <div className="w-full h-full p-2 pl-0">
+          <div className="w-full h-full border rounded-sm overflow-hidden bg-panel border-panel">
+            {activeItem && (
+              <div key={activeItem.key} className="flex h-full w-full">
+                {activeItem.component}
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </TooltipProvider>
     </motion.div>
   );

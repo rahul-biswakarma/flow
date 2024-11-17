@@ -3,7 +3,12 @@ import { Text } from "@v1/ui/text";
 import { TextArea } from "@v1/ui/text-area";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import { clsx } from "clsx";
-import { fieldFontSize, infoIconSize, tooltipProps } from "./constants";
+import {
+  fieldFontSize,
+  fieldStyles,
+  infoIconSize,
+  tooltipProps,
+} from "./constants";
 import type { FieldOnChangeProps } from "./types";
 
 interface StringFieldElementProps {
@@ -27,7 +32,7 @@ export const StringFieldElement = ({
     <>
       <Text
         className={clsx(
-          "text-gray-10  flex gap-1 pt-1 items-center h-fit",
+          "text-gray-11 flex gap-1 pt-1 items-center h-fit",
           fieldFontSize,
           labelClassName,
         )}
@@ -43,7 +48,7 @@ export const StringFieldElement = ({
         )}
       </Text>
       <TextArea
-        className={clsx("shadow-none border border-outline-01", fieldFontSize)}
+        className={clsx(fieldStyles, fieldFontSize)}
         value={value}
         onChange={(e) =>
           onChange({

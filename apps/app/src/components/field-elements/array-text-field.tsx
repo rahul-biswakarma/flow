@@ -4,7 +4,12 @@ import { TextField } from "@v1/ui/text-field";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import { clsx } from "clsx";
 import { useState } from "react";
-import { fieldFontSize, infoIconSize, tooltipProps } from "./constants";
+import {
+  fieldFontSize,
+  fieldStyles,
+  infoIconSize,
+  tooltipProps,
+} from "./constants";
 import type { FieldOnChangeProps } from "./types";
 import { ArrayValueRenderer } from "./utils/array-value-renderer";
 
@@ -31,7 +36,7 @@ export const ArrayTextFieldElement = ({
     <>
       <Text
         className={clsx(
-          "text-gray-10 pt-1 flex gap-1 items-center h-fit",
+          "text-gray-11 pt-1 flex gap-1 items-center h-fit",
           fieldFontSize,
           labelClassName,
         )}
@@ -60,10 +65,7 @@ export const ArrayTextFieldElement = ({
         inputRenderer={
           <TextField.Root
             autoFocus={value.length > 0}
-            className={clsx(
-              "grow p-0 shadow-none border border-outline-01",
-              fieldFontSize,
-            )}
+            className={clsx("grow p-0", fieldStyles, fieldFontSize)}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => {

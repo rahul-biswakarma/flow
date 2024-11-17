@@ -68,7 +68,7 @@ export const Loader: React.FC = ({
   }, []);
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen">
+    <div className="flex justify-center items-center w-screen h-screen bg-gray-1">
       <svg
         width={width}
         height={height}

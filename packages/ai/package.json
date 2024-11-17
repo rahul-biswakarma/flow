@@ -2,6 +2,8 @@
   "name": "@v1/ai",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "sideEffects": false,
   "scripts": {
     "lint": "biome check .",
     "format": "biome format --write .",

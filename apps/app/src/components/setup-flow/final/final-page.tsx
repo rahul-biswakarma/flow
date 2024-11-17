@@ -1,6 +1,6 @@
 import { useFlowContext } from "@/context";
 import { useScopedI18n } from "@/locales/client";
-import { createClient } from "@v1/supabase/client";
+import { createSupabaseClient } from "@v1/supabase/client";
 import { Button } from "@v1/ui/button";
 import { Heading } from "@v1/ui/heading";
 import { Icons } from "@v1/ui/icons";
@@ -18,7 +18,7 @@ type FinalPageProps = {
 export const FinalPage = ({ onComplete }: FinalPageProps) => {
   const scopedT = useScopedI18n("setup");
   const { projectData } = useFlowContext();
-  const supabase = createClient();
+  const supabase = createSupabaseClient();
   const router = useRouter();
 
   const containerVariants = {

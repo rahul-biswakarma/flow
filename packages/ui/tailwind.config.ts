@@ -43,7 +43,7 @@ const config: Config = {
   theme: {
     extend: {
       boxShadow: {
-        "inset-gray": "inset 0 -1px 0 0 var(--gray-3)",
+        "inset-gray": "inset 0 -1px 1px 0 var(--outline-02)",
       },
       animation: {
         first: "moveVertical 30s ease infinite",
@@ -95,6 +95,9 @@ const config: Config = {
         ...radixColorObject,
         accent: generateRadixColorScale("accent"),
         focus: generateRadixColorScale("focus"),
+        "outline-01": "var(--outline-01)",
+        "outline-02": "var(--outline-02)",
+        "outline-03": "var(--outline-03)",
         sidebar: {
           DEFAULT: "var(--sidebar-background)",
           foreground: "var(--sidebar-foreground)",
@@ -112,6 +115,9 @@ const config: Config = {
         "panel-translucent": "var(--color-panel-translucent)",
         surface: "var(--color-surface)",
         overlay: "var(--color-overlay)",
+        product: "var(--product-bg)",
+        panel: "var(--gray-1)",
+        "panel-header": "var(--gray-2)",
       },
       borderRadius: {
         xs: "var(--radius-1)",
@@ -122,11 +128,7 @@ const config: Config = {
         xl: "var(--radius-6)",
       },
       borderColor: {
-        "outline-00": "var(--gray-3)",
-        "outline-01": "var(--gray-4)",
-        "outline-02": "var(--gray-5)",
-        "outline-03": "var(--gray-6)",
-        "outline-04": "var(--gray-7)",
+        panel: "var(--outline-02)",
         surface: "var(--gray-surface)",
       },
     },

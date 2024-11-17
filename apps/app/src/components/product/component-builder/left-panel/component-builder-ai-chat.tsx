@@ -1,6 +1,6 @@
+import { useFlowContext } from "@/context";
 import { AIChat } from "@v1/ai/ai-chat";
 import type { ComponentData, PropSchema } from "../types";
-
 interface ComponentBuilderAIChatProps {
   setNewComponentData?: React.Dispatch<React.SetStateAction<ComponentData>>;
 }
@@ -15,6 +15,8 @@ interface ComponentMetadata {
 export const ComponentBuilderAIChat = ({
   setNewComponentData,
 }: ComponentBuilderAIChatProps) => {
+  const { user } = useFlowContext();
+
   const handleMessage = (message: string) => {
     try {
       // Extract component metadata
@@ -45,13 +47,16 @@ export const ComponentBuilderAIChat = ({
   };
 
   return (
-    <AIChat
-      title="Component Assistant"
-      placeholder="Describe the component you want to create..."
-      onMessageComplete={handleMessage}
-      onError={(error) => {
-        console.error("Chat error:", error);
-      }}
-    />
+    <div className="relative h-full w-full bg-gray-a1">
+      <AIChat
+        userAvatar={user?.avatar_url ?? undefined}
+        title="Component Assistant"
+        placeholder="Describe the component you want to create..."
+        onMessageComplete={handleMessage}
+        onError={(error) => {
+          console.error("Chat error:", error);
+        }}
+      />
+    </div>
   );
 };

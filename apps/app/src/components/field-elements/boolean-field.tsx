@@ -25,7 +25,7 @@ export const BooleanFieldElement = ({
     <>
       <Text
         className={clsx(
-          "text-gray-10 pt-1 flex gap-1 items-center h-fit",
+          "text-gray-11 pt-1 flex gap-1 items-center h-fit",
           fieldFontSize,
           labelClassName,
         )}

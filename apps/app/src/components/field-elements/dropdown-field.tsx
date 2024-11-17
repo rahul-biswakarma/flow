@@ -40,7 +40,7 @@ export const DropdownFieldElement = ({
       {label && (
         <Text
           className={clsx(
-            "text-gray-10 flex gap-1 pt-1 items-center h-fit",
+            "text-gray-11 flex gap-1 pt-1 items-center h-fit",
             fieldFontSize,
             labelClassName,
           )}
