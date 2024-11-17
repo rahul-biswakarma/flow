@@ -5,8 +5,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true
+    "declarationMap": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx"]

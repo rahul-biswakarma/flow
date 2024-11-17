@@ -147,7 +147,7 @@ export function NavigationBar() {
                       return (
                         <DropdownMenu.RadioItem
                           value={themeOption}
-                          key={theme}
+                          key={`theme-selector-navbar-${themeOption}`}
                           onClick={() => {
                             setTheme(themeOption);
                           }}

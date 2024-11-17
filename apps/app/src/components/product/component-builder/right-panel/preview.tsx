@@ -23,7 +23,7 @@ export const ComponentBuilderPreview = ({
   const [showPreviewSettings, setShowPreviewSettings] = useState(false);
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full max-h-full">
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel>
           <div className="w-full h-full max-h-full min-h-0">
@@ -54,22 +54,25 @@ export const ComponentBuilderPreview = ({
           <>
             <ResizableHandle />
             <ResizablePanel defaultSize={30}>
-              <Tabs.Root defaultValue="style-panel">
-                <Tabs.List
-                  size="2"
-                  className="relative !shadow-inset-gray bg-panel-header"
-                >
-                  <Tabs.Trigger value="style-panel">Styles</Tabs.Trigger>
-                  <IconButton
-                    variant="ghost"
-                    color="gray"
-                    className="text-gray-11 absolute right-3 top-0 translate-y-[50%]"
-                    onClick={() => setShowPreviewSettings(false)}
-                  >
-                    <Icons.X />
-                  </IconButton>
-                </Tabs.List>
-                <ScrollArea>
+              <ScrollArea className="relative max-h-full">
+                <Tabs.Root className="max-h-full" defaultValue="style-panel">
+                  <div className="sticky z-10 top-0">
+                    <Tabs.List
+                      size="2"
+                      className="!shadow-inset-gray bg-panel-header"
+                    >
+                      <Tabs.Trigger value="style-panel">Styles</Tabs.Trigger>
+                      <IconButton
+                        variant="ghost"
+                        color="gray"
+                        className="text-gray-11 absolute right-3 top-0 translate-y-[50%]"
+                        onClick={() => setShowPreviewSettings(false)}
+                      >
+                        <Icons.X />
+                      </IconButton>
+                    </Tabs.List>
+                  </div>
+
                   <Tabs.Content className="bg-panel" value="style-panel">
                     <div className="p-4 w-full h-full max-h-full pb-[52px]">
                       <StylePanel
@@ -78,8 +81,8 @@ export const ComponentBuilderPreview = ({
                       />
                     </div>
                   </Tabs.Content>
-                </ScrollArea>
-              </Tabs.Root>
+                </Tabs.Root>
+              </ScrollArea>
             </ResizablePanel>
           </>
         )}
