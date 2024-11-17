@@ -22,6 +22,11 @@
   --outline-03: var(--gray-5);
 }
 
+.dark .rt-TextFieldRoot,
+.dark .rt-TextAreaRoot {
+  background-color: rgba(6, 6, 6, 0.8);
+}
+
 .light {
   --dark: #fff;
   --product-bg: var(--gray-3);
