@@ -1,4 +1,5 @@
 import { useScopedI18n } from "@/locales/client";
+import type { Project } from "@/types";
 import { createSupabaseClient } from "@v1/supabase/client";
 import {
   addProjectMember,
@@ -55,7 +56,7 @@ export const CreateProject = ({
         slug,
         created_by: user.id,
         admins: [user.id],
-      };
+      } as Project;
       const project = await createProject(projectData);
 
       if (project.id) {

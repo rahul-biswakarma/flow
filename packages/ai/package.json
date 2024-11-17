@@ -5,8 +5,9 @@
   "type": "module",
   "sideEffects": false,
   "scripts": {
+    "clean": "rm -rf .turbo node_modules",
     "lint": "biome check .",
-    "format": "biome format --write .",
+    "format": "biome --write .",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
