@@ -1,3 +1,1 @@
-import { Tabs as RadixTabs } from "@radix-ui/themes";
-
-export const Tabs = RadixTabs;
+export { Tabs } from "@radix-ui/themes";

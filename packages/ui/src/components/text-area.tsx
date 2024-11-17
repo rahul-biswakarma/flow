@@ -1,3 +1,1 @@
-import { TextArea as RadixTextArea } from "@radix-ui/themes";
-
-export const TextArea = RadixTextArea;
+export { TextArea } from "@radix-ui/themes";

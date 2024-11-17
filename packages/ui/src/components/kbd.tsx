@@ -1,3 +1,1 @@
-import { Kbd as RadixKbd } from "@radix-ui/themes";
-
-export const Kbd = RadixKbd;
+export { Kbd } from "@radix-ui/themes";

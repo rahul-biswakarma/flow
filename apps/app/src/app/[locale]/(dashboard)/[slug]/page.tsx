@@ -6,8 +6,9 @@ import { SetupFlow } from "@/components/setup-flow";
 import { FlowContextProvider } from "@/context";
 import type { ProjectWithPages, User } from "@/types";
 import { getProjectWithPages, getUserDetails } from "@v1/supabase/queries";
+import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
 const useProjectData = (slug: string) => {
@@ -38,17 +39,16 @@ const useProjectData = (slug: string) => {
 
 const queryClient = new QueryClient();
 
-export default function ProjectWrapper({
-  params,
-}: { params: { slug: string } }) {
+export default function ProjectWrapper(props: {
+  params: Promise<{ slug: string }>;
+}) {
+  const params = use(props.params);
   return (
     <QueryClientProvider client={queryClient}>
       <Project slug={params.slug} />
     </QueryClientProvider>
   );
 }
-
-import { AnimatePresence, motion } from "framer-motion";
 
 function Project({ slug }: { slug: string }) {
   const { user, projectData, isLoading, showSetupFlow } = useProjectData(slug);

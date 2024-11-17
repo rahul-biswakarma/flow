@@ -1,3 +1,1 @@
-import { Card as RadixCard } from "@radix-ui/themes";
-
-export const Card = RadixCard;
+export { Card } from "@radix-ui/themes";

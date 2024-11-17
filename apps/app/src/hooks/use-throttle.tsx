@@ -6,7 +6,7 @@ export function useThrottle<T extends (...args: any[]) => any>(
   delay: number,
 ): T {
   const lastCall = useRef<number>(0);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     return () => {

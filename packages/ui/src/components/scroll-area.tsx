@@ -1,3 +1,1 @@
-import { ScrollArea as RadixScrollArea } from "@radix-ui/themes";
-
-export const ScrollArea = RadixScrollArea;
+export { ScrollArea } from "@radix-ui/themes";

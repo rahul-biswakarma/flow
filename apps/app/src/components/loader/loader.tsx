@@ -1,9 +1,7 @@
 "use client";
-
-import type React from "react";
 import { useEffect, useRef } from "react";
 
-export const Loader: React.FC = ({
+export const Loader = ({
   width = 50,
   height = 50,
 }: {

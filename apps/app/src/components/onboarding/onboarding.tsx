@@ -3,9 +3,8 @@ import { useScopedI18n } from "@/locales/client";
 import type { Project, User } from "@/types";
 import { Button } from "@v1/ui/button";
 import { Icons } from "@v1/ui/icons";
-import { MotionDiv } from "@v1/ui/motion-div";
 import { Toaster } from "@v1/ui/toast";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { CreateProject } from "./create-project";
 import { ProjectManager } from "./project-manager";
@@ -70,7 +69,7 @@ export function OnboardingPage({
         <div>
           <AnimatePresence>
             {view === "create_project" && (
-              <MotionDiv
+              <motion.div
                 key="onboarding-back-button"
                 variants={buttonVariants}
                 initial="initial"
@@ -86,7 +85,7 @@ export function OnboardingPage({
                   <Icons.ChevronLeft />
                   {scopedT("back_to_selection")}
                 </Button>
-              </MotionDiv>
+              </motion.div>
             )}
           </AnimatePresence>
         </div>
@@ -94,7 +93,7 @@ export function OnboardingPage({
       </div>
       <AnimatePresence initial={false} custom={direction} mode="wait">
         {view === "select_project" ? (
-          <MotionDiv
+          <motion.div
             key="project-manager"
             custom={direction}
             variants={pageVariants}
@@ -108,9 +107,9 @@ export function OnboardingPage({
               projects={projects}
               userData={userData}
             />
-          </MotionDiv>
+          </motion.div>
         ) : (
-          <MotionDiv
+          <motion.div
             key="create-project"
             custom={direction}
             variants={pageVariants}
@@ -122,7 +121,7 @@ export function OnboardingPage({
             <CreateProject
               showProjectManger={() => changeView("select_project")}
             />
-          </MotionDiv>
+          </motion.div>
         )}
       </AnimatePresence>
       <Toaster richColors position="top-center" />

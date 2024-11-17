@@ -1,3 +1,1 @@
-import { Avatar as RadixAvatar } from "@radix-ui/themes";
-
-export const Avatar = RadixAvatar;
+export { Avatar } from "@radix-ui/themes";

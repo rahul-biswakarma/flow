@@ -59,7 +59,7 @@ export async function getAuthActionClient() {
       return result;
     })
     .use(async ({ next, metadata }) => {
-      const ip = headers().get("x-forwarded-for");
+      const ip = (await headers()).get("x-forwarded-for");
       const cacheKey = serverCache.generateKey("ratelimit", ip!, metadata.name);
       const cachedAttempts = await serverCache.get<number>(cacheKey);
 

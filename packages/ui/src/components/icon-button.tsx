@@ -1,3 +1,1 @@
-import { IconButton as RadixIconButton } from "@radix-ui/themes";
-
-export const IconButton = RadixIconButton;
+export { IconButton } from "@radix-ui/themes";
