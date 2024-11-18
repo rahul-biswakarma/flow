@@ -1,18 +1,18 @@
-import { Button } from "@v1/ui/button";
-import { Card } from "@v1/ui/card";
-import { Icons } from "@v1/ui/icons";
+"use client";
+import { Avatar } from "@v1/ui/avatar";
+import { RichTextEditor } from "@v1/ui/rte";
 import { ScrollArea } from "@v1/ui/scroll-area";
 import { Text } from "@v1/ui/text";
-import { TextField } from "@v1/ui/text-field";
-import { useCallback, useEffect, useRef } from "react";
-import type { UseAIChatOptions } from "../hooks/use-ai-chat";
-import { useAIChat } from "../hooks/use-ai-chat";
+import { clsx } from "clsx";
+import { useRef } from "react";
+import { type UseAIChatOptions, useAIChat } from "../hooks/use-ai-chat";
 
 export interface AIChatProps extends UseAIChatOptions {
   title?: string;
   placeholder?: string;
   className?: string;
   onSend?: (message: string) => void;
+  userAvatar?: string;
 }
 
 export const AIChat = ({
@@ -20,80 +20,46 @@ export const AIChat = ({
   placeholder = "Type a message...",
   className = "",
   onSend,
+  userAvatar,
   ...chatOptions
 }: AIChatProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useAIChat(chatOptions);
 
-  const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, []);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, scrollToBottom]);
-
   return (
-    <div className={`flex flex-col h-full ${className}`}>
-      <div className="p-4 border-b border-outline-02">
-        <Text size="2" weight="medium">
-          {title}
-        </Text>
-      </div>
-
-      <ScrollArea className="flex-1 p-4">
-        <div className="space-y-4">
-          {messages.map((message, index) => (
-            <Card
+    <div className={clsx("h-full w-full p-3", className)}>
+      <ScrollArea>
+        <div className="flex flex-col h-full">
+          {messages.map((message) => (
+            <div
               key={message.id}
-              className={`p-4 ${
-                message.role === "assistant" ? "bg-accent-3" : "bg-gray-3"
+              className={`p-3 w-fit ${
+                message.role === "assistant" ? "bg-gray-a3" : "bg-accent-a3"
               }`}
             >
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-start gap-2">
                 {message.role === "assistant" ? (
-                  <Icons.TopologyStar3 className="w-4 h-4" />
+                  <Avatar size="2" fallback={"U"} src={userAvatar} />
                 ) : (
-                  <Icons.User className="w-4 h-4" />
+                  <Avatar size="2" fallback={"U"} src={userAvatar} />
                 )}
-                <Text size="2" weight="medium">
-                  {message.role === "assistant" ? "AI Assistant" : "You"}
+                <Text size="2" className="whitespace-pre-wrap">
+                  {message.content}
                 </Text>
               </div>
-              <Text className="whitespace-pre-wrap">{message.content}</Text>
-            </Card>
+            </div>
           ))}
           <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
-
-      <Card className="m-4 p-2">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (input.trim()) {
-              onSend?.(input);
-              handleSubmit(e);
-            }
-          }}
-          className="flex items-center gap-2"
-        >
-          <TextField.Root
-            value={input}
-            onChange={handleInputChange}
-            placeholder={placeholder}
-            className="flex-1"
-          />
-          <Button type="submit" disabled={isLoading || !input.trim()}>
-            {isLoading ? (
-              <Icons.Loader className="w-4 h-4 animate-spin" />
-            ) : (
-              <Icons.ArrowRight className="w-4 h-4" />
-            )}
-          </Button>
-        </form>
-      </Card>
+      <div className="w-full sticky bottom-0 left-0 py-3">
+        <RichTextEditor
+          content={{}}
+          variant="ai-chat"
+          placeholder="Hello, how can I help you?"
+        />
+      </div>
     </div>
   );
 };

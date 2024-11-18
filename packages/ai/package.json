@@ -2,14 +2,18 @@
   "name": "@v1/ai",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "sideEffects": false,
   "scripts": {
+    "clean": "rm -rf .turbo node_modules",
     "lint": "biome check .",
-    "format": "biome format --write .",
+    "format": "biome --write .",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "ai": "^3.4.33",
-    "react": "^18.3.1"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.12",

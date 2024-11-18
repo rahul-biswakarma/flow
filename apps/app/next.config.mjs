@@ -10,6 +10,7 @@ const nextConfig = {
     optimizePackageImports: ["@v1/supabase", "@v1/ui"],
   },
   swcMinify: true,
+  compress: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },

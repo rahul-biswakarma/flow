@@ -5,7 +5,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "strict": true
+    "strict": true,
+    "jsx": "preserve"
   },
   "include": [
     "next-env.d.ts",

@@ -1,10 +1,11 @@
 import { useScopedI18n } from "@/locales/client";
-import { createClient } from "@v1/supabase/client";
+import type { Project } from "@/types";
+import { createSupabaseClient } from "@v1/supabase/client";
 import {
   addProjectMember,
   createProject,
   getProjectBySlug,
-} from "@v1/supabase/queries";
+} from "@v1/supabase/queries/client";
 import { Button } from "@v1/ui/button";
 import { Heading } from "@v1/ui/heading";
 import { Icons } from "@v1/ui/icons";
@@ -17,7 +18,7 @@ import { useState } from "react";
 export const CreateProject = ({
   showProjectManger,
 }: { showProjectManger: () => void }) => {
-  const supabase = createClient();
+  const supabase = createSupabaseClient();
   const router = useRouter();
   const scopedT = useScopedI18n("onboarding");
   const [name, setName] = useState("");
@@ -55,7 +56,7 @@ export const CreateProject = ({
         slug,
         created_by: user.id,
         admins: [user.id],
-      };
+      } as Project;
       const project = await createProject(projectData);
 
       if (project.id) {

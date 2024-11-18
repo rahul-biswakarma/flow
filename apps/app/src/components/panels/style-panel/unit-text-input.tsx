@@ -1,5 +1,4 @@
 import { TOOLTIP_DELAY_DURATION } from "@/constants";
-import { Button } from "@v1/ui/button";
 import { DropdownMenu } from "@v1/ui/dropdown";
 import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
@@ -80,10 +79,10 @@ export const UnitTextInput = ({
             <TextField.Slot>
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger>
-                  <Button color="gray" variant="ghost" size="2">
+                  <div className="flex items-center hover:bg-gray-a3 rounded-sm h-full px-2 -mr-1.5 cursor-default">
                     {currentUnit}
                     <Icons.ChevronDown className="size-3 ml-1" />
-                  </Button>
+                  </div>
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content>
                   {presets?.map((preset, index) => (

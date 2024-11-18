@@ -17,7 +17,7 @@ import { TextFieldElement } from "../../../field-elements/text-field";
 import type { FieldOnChangeProps } from "../../../field-elements/types";
 import { ObjectTypeFields } from "./object-field";
 
-const ICON_CLASSES = "!w-3.5 !h-3.5 !text-gray-10";
+const ICON_CLASSES = "!w-4 !h-4 !text-gray-10";
 const MAX_PROPS = 10;
 
 const SchemaBuilder = ({
@@ -120,10 +120,10 @@ const PropsField = ({
   }, [scopedTForTypes]);
 
   return (
-    <div className="border border-outline-02 bg-gray-a2 rounded-md mb-2">
+    <div className="bg-panel border-panel rounded-sm mb-2">
       <div
         className={clsx(
-          "flex justify-between items-center p-3 cursor-pointer border-outline-02",
+          "flex justify-between items-center p-4 cursor-pointer border-outline-01",
           {
             "border-b": isExpanded,
           },

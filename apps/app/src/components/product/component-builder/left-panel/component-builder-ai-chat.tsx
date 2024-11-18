@@ -1,27 +1,62 @@
-import { IconButton } from "@v1/ui/icon-button";
-import { Icons } from "@v1/ui/icons";
-import { Text } from "@v1/ui/text";
-import { TextField } from "@v1/ui/text-field";
+import { useFlowContext } from "@/context";
+import { AIChat } from "@v1/ai/ai-chat";
+import type { ComponentData, PropSchema } from "../types";
+interface ComponentBuilderAIChatProps {
+  setNewComponentData?: React.Dispatch<React.SetStateAction<ComponentData>>;
+}
 
-export const ComponentBuilderAIChat = () => {
+interface ComponentMetadata {
+  name: string;
+  description: string;
+  keywords: string[];
+  props: PropSchema[];
+}
+
+export const ComponentBuilderAIChat = ({
+  setNewComponentData,
+}: ComponentBuilderAIChatProps) => {
+  const { user } = useFlowContext();
+
+  const handleMessage = (message: string) => {
+    try {
+      // Extract component metadata
+      const metadataMatch = message.match(/```json\n([\s\S]*?)```/);
+      if (metadataMatch?.[1]) {
+        const metadata: ComponentMetadata = JSON.parse(metadataMatch[1]);
+        setNewComponentData?.((prev) => ({
+          ...prev,
+          name: metadata.name,
+          description: metadata.description,
+          keywords: metadata.keywords,
+          props: metadata.props,
+        }));
+      }
+
+      // Extract component code
+      const codeBlockMatch = message.match(/```tsx\n([\s\S]*?)```/);
+      if (codeBlockMatch?.[1]) {
+        const componentCode = codeBlockMatch[1].trim();
+        setNewComponentData?.((prev) => ({
+          ...prev,
+          code: componentCode,
+        }));
+      }
+    } catch (error) {
+      console.error("Error processing AI message:", error);
+    }
+  };
+
   return (
-    <div className="relative h-full bg-gray-a1">
-      <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-between z-10">
-        <div className="flex justify-between items-center gap-2 px-3 py-2 border-b border-outline-02">
-          <Text size="2">Flux AI</Text>
-        </div>
-        <div />
-        <div className="p-2">
-          <TextField.Root placeholder="Enter your thoughts">
-            <TextField.Slot />
-            <TextField.Slot>
-              <IconButton variant="ghost" color="gray">
-                <Icons.Send />
-              </IconButton>
-            </TextField.Slot>
-          </TextField.Root>
-        </div>
-      </div>
+    <div className="h-full w-full bg-gray-a1">
+      <AIChat
+        userAvatar={user?.avatar_url ?? undefined}
+        title="Component Assistant"
+        placeholder="Describe the component you want to create..."
+        onMessageComplete={handleMessage}
+        onError={(error) => {
+          console.error("Chat error:", error);
+        }}
+      />
     </div>
   );
 };

@@ -1,58 +1,25 @@
-"use client";
-
 import { Loader } from "@/components/loader/loader";
 import { OnboardingPage } from "@/components/onboarding";
 import type {} from "@/types";
-import { getProjects, getUserDetails } from "@v1/supabase/queries";
-import { useRouter } from "next/navigation";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { getUserDetails, getUserProjects } from "@v1/supabase/queries/server";
+import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
-export default function PageWrapper() {
-  return (
-    <QueryClientProvider client={new QueryClient()}>
-      <Page />
-    </QueryClientProvider>
-  );
-}
+export default async function PageWrapper() {
+  const user = await getUserDetails();
 
-function Page() {
-  const router = useRouter();
+  if (!user) {
+    redirect("/login");
+  }
 
-  const {
-    data: userData,
-    isLoading: isLoadingUser,
-    error: userError,
-  } = useQuery("user", getUserDetails, {
-    onError: () => router.push("/login"),
-    retry: false,
+  const projects = await getUserProjects({
+    userId: user.id,
+    page: 1,
   });
 
-  const {
-    data: projects,
-    isLoading: isLoadingProjects,
-    error: projectsError,
-  } = useQuery(
-    ["projects", userData?.id],
-    () => getProjects(userData?.id ?? ""),
-    {
-      enabled: !!userData,
-    },
+  return (
+    <Suspense fallback={<Loader />}>
+      <OnboardingPage userData={user} projects={projects || []} />
+    </Suspense>
   );
-
-  const isLoading = isLoadingUser || isLoadingProjects;
-  const error = userError || projectsError;
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (error) {
-    router.push("/login");
-  }
-
-  if (!userData) {
-    return null; // This shouldn't happen due to the redirect, but just in case
-  }
-
-  return <OnboardingPage userData={userData} projects={projects || []} />;
 }

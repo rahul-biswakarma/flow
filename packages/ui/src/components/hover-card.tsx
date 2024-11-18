@@ -1,3 +1,1 @@
-import { HoverCard as RadixHoverCard } from "@radix-ui/themes";
-
-export const HoverCard = RadixHoverCard;
+export { HoverCard } from "@radix-ui/themes";

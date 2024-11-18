@@ -13,7 +13,6 @@ import "./styles.css";
 import type { StyleData } from "@/components/panels/style-panel/type";
 import { SandpackProvider } from "@codesandbox/sandpack-react";
 import { amethyst, aquaBlue } from "@codesandbox/sandpack-themes";
-import { ScrollArea } from "@v1/ui/scroll-area";
 import { useTheme } from "next-themes";
 import { defaultComponentCode, sandPackFilesConfig } from "./constants";
 import { ComponentBuilderAIChat } from "./left-panel/component-builder-ai-chat";
@@ -31,13 +30,19 @@ export const ComponentBuilder: React.FC = () => {
     code: defaultComponentCode,
   });
   const [styleValue, setStyleValue] = useState<StyleData>({});
-  console.log("styleValue", styleValue);
+
+  const isConfigValid = Boolean(
+    newComponentData.name &&
+      newComponentData.description &&
+      newComponentData.code &&
+      newComponentData.props.length > 0,
+  );
 
   const { resolvedTheme } = useTheme();
 
   return (
-    <div className="w-full grid grid-rows-[auto_1fr] h-screen max-h-screen">
-      <ComponentBuilderHeader isConfigValid={false} />
+    <div className="w-full grid grid-rows-[auto_1fr] h-full max-h-full">
+      <ComponentBuilderHeader isConfigValid={isConfigValid} />
       <SandpackProvider
         theme={resolvedTheme === "dark" ? amethyst : aquaBlue}
         template="react-ts"
@@ -47,16 +52,16 @@ export const ComponentBuilder: React.FC = () => {
           <ResizablePanel minSize={25} defaultSize={30}>
             <ResizablePanelGroup direction="vertical">
               <ResizablePanel minSize={30} defaultSize={40}>
-                <ScrollArea>
-                  <FieldRenders
-                    newComponentData={newComponentData}
-                    setNewComponentData={setNewComponentData}
-                  />
-                </ScrollArea>
+                <FieldRenders
+                  newComponentData={newComponentData}
+                  setNewComponentData={setNewComponentData}
+                />
               </ResizablePanel>
               <ResizableHandle />
               <ResizablePanel minSize={30}>
-                <ComponentBuilderAIChat />
+                <ComponentBuilderAIChat
+                  setNewComponentData={setNewComponentData}
+                />
               </ResizablePanel>
             </ResizablePanelGroup>
           </ResizablePanel>

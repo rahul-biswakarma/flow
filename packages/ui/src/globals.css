@@ -14,6 +14,31 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.dark {
+  --dark: #000;
+  --product-bg: #000;
+  --outline-01: var(--gray-3);
+  --outline-02: var(--gray-4);
+  --outline-03: var(--gray-5);
+}
+
+.dark .rt-TextFieldRoot,
+.dark .rt-TextAreaRoot {
+  background-color: rgba(6, 6, 6, 0.8);
+}
+
+.light {
+  --dark: #fff;
+  --product-bg: var(--gray-3);
+  --outline-01: var(--gray-5);
+  --outline-02: var(--gray-6);
+  --outline-03: var(--gray-7);
+}
+
+.light .rt-TextFieldRoot,
+.light .rt-TextAreaRoot {
+  background-color: var(--gray-3);
+}
 
 ::-webkit-scrollbar-corner {
   display: none;
@@ -22,6 +47,7 @@
 
 body {
   font-family: var(--default-font-family);
+  background-color: var(--product-bg);
 }
 
 .tabler-icon {
@@ -39,12 +65,6 @@ body {
   display: none; /* Chrome, Safari and Opera */
 }
 
-@property --border-angle {
-  inherits: false;
-  initial-value: 0deg;
-  syntax: "<angle>";
-}
-
 :root {
   --sidebar-background: var(--gray-surface);
   --sidebar-foreground: var(--gray-12);
@@ -55,3 +75,18 @@ body {
   --sidebar-border: var(--gray-4);
   --sidebar-ring: var(--indigo-9);
 }
+
+/* .noise-bg-container {
+    width: 100%;
+    height: 100%;
+    background-size: 109px;
+    background-repeat: repeat;
+    background-image: url('https://framerusercontent.com/images/rR6HYXBrMmX4cRpXfXUOvpvpB0.png');
+    opacity: 0.02;
+    border-radius: 0;
+    flex: none;
+    inset: 0;
+    pointer-events: none;
+    position: fixed;
+    z-index: 10000;
+} */

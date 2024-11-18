@@ -23,11 +23,11 @@ export const ComponentBuilderPreview = ({
   const [showPreviewSettings, setShowPreviewSettings] = useState(false);
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full max-h-full">
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel>
           <div className="w-full h-full max-h-full min-h-0">
-            <div className="flex justify-between w-full px-3 py-2 border-b border-outline-02 items-center h-10">
+            <div className="flex justify-between w-full px-3 py-2 border-b border-panel bg-panel-header items-center h-10">
               <Text size="2" className="text-gray-11">
                 Preview
               </Text>
@@ -54,24 +54,27 @@ export const ComponentBuilderPreview = ({
           <>
             <ResizableHandle />
             <ResizablePanel defaultSize={30}>
-              <ScrollArea>
-                <Tabs.Root defaultValue="style-panel">
-                  <Tabs.List
-                    size="2"
-                    className="sticky top-0 left-0 z-10 bg-gray-1 !shadow-inset-gray"
-                  >
-                    <Tabs.Trigger value="style-panel">Styles</Tabs.Trigger>
-                    <IconButton
-                      variant="ghost"
-                      color="gray"
-                      className="text-gray-11 absolute right-3 top-0 translate-y-[50%]"
-                      onClick={() => setShowPreviewSettings(false)}
+              <ScrollArea className="relative max-h-full">
+                <Tabs.Root className="max-h-full" defaultValue="style-panel">
+                  <div className="sticky z-10 top-0">
+                    <Tabs.List
+                      size="2"
+                      className="!shadow-inset-gray bg-panel-header"
                     >
-                      <Icons.X />
-                    </IconButton>
-                  </Tabs.List>
-                  <Tabs.Content value="style-panel">
-                    <div className="p-4">
+                      <Tabs.Trigger value="style-panel">Styles</Tabs.Trigger>
+                      <IconButton
+                        variant="ghost"
+                        color="gray"
+                        className="text-gray-11 absolute right-3 top-0 translate-y-[50%]"
+                        onClick={() => setShowPreviewSettings(false)}
+                      >
+                        <Icons.X />
+                      </IconButton>
+                    </Tabs.List>
+                  </div>
+
+                  <Tabs.Content className="bg-panel" value="style-panel">
+                    <div className="p-4 w-full h-full max-h-full pb-[52px]">
                       <StylePanel
                         styleValue={styleValue}
                         setStyleValue={setStyleValue}

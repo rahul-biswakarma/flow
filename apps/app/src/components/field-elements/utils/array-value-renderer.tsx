@@ -1,7 +1,7 @@
 import { IconButton } from "@v1/ui/icon-button";
 import { Icons } from "@v1/ui/icons";
 import { clsx } from "clsx";
-import { useState } from "react";
+import { useState, type JSX } from "react";
 import type { ReactNode } from "react";
 
 export const ArrayValueRenderer = <T,>({
@@ -21,7 +21,7 @@ export const ArrayValueRenderer = <T,>({
     <div
       tabIndex={-1}
       className={clsx("flex gap-2 flex-wrap border-gray-7", {
-        "bg-surface rounded p-2": value.length > 0,
+        "bg-surface rounded p-1": value.length > 0,
       })}
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
@@ -29,7 +29,7 @@ export const ArrayValueRenderer = <T,>({
       {value.map((value) => (
         <div
           key={`${value}`}
-          className="flex gap-1 items-center justify-center px-2 py-1 rounded bg-gray-3 border border-outline-02"
+          className="flex gap-1 items-center justify-center px-2 py-1 rounded bg-gray-surface border border-outline-01"
         >
           {valueRender(value)}
           <IconButton
