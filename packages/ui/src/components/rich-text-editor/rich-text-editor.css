@@ -1,0 +1,23 @@
+.rte-base {
+  font-size: 14px;
+}
+
+.dark .rte-base {
+  background-color: #080809;
+}
+
+.light .rte-base {
+  background-color: var(--gray-3);
+}
+
+.ProseMirror:focus {
+  outline: none;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  color: var(--gray-7);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

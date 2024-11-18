@@ -65,12 +65,6 @@ body {
   display: none; /* Chrome, Safari and Opera */
 }
 
-@property --border-angle {
-  inherits: false;
-  initial-value: 0deg;
-  syntax: "<angle>";
-}
-
 :root {
   --sidebar-background: var(--gray-surface);
   --sidebar-foreground: var(--gray-12);

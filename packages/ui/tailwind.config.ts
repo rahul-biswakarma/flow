@@ -51,12 +51,8 @@ const config: Config = {
         third: "moveInCircle 40s linear infinite",
         fourth: "moveHorizontal 40s ease infinite",
         fifth: "moveInCircle 20s ease infinite",
-        border: "border 4s linear infinite",
       },
       keyframes: {
-        border: {
-          to: { "--border-angle": "360deg" },
-        },
         moveHorizontal: {
           "0%": {
             transform: "translateX(-50%) translateY(-10%)",

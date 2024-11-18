@@ -24,7 +24,8 @@
     "./client": "./src/clients/client.ts",
     "./mutations": "./src/mutations/index.ts",
     "./middleware": "./src/clients/middleware.ts",
-    "./queries": "./src/queries/index.ts",
+    "./queries/client": "./src/queries/client.ts",
+    "./queries/server": "./src/queries/server.ts",
     "./types": "./src/types/index.ts"
   }
 }

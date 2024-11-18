@@ -5,7 +5,7 @@ import {
   addProjectMember,
   createProject,
   getProjectBySlug,
-} from "@v1/supabase/queries";
+} from "@v1/supabase/queries/client";
 import { Button } from "@v1/ui/button";
 import { Heading } from "@v1/ui/heading";
 import { Icons } from "@v1/ui/icons";

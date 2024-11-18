@@ -47,7 +47,7 @@ export const ComponentBuilderAIChat = ({
   };
 
   return (
-    <div className="relative h-full w-full bg-gray-a1">
+    <div className="h-full w-full bg-gray-a1">
       <AIChat
         userAvatar={user?.avatar_url ?? undefined}
         title="Component Assistant"

@@ -1,11 +1,10 @@
+"use client";
 import { Avatar } from "@v1/ui/avatar";
-import { Button } from "@v1/ui/button";
-import { Icons } from "@v1/ui/icons";
 import { RichTextEditor } from "@v1/ui/rte";
 import { ScrollArea } from "@v1/ui/scroll-area";
 import { Text } from "@v1/ui/text";
-import { TextField } from "@v1/ui/text-field";
-import { useCallback, useEffect, useRef } from "react";
+import { clsx } from "clsx";
+import { useRef } from "react";
 import { type UseAIChatOptions, useAIChat } from "../hooks/use-ai-chat";
 
 export interface AIChatProps extends UseAIChatOptions {
@@ -28,18 +27,10 @@ export const AIChat = ({
   const { messages, input, handleInputChange, handleSubmit, isLoading } =
     useAIChat(chatOptions);
 
-  const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, []);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, scrollToBottom]);
-
   return (
-    <div className={`h-full w-full ${className}`}>
-      <ScrollArea className="flex-1 p-4">
-        <div className="flex flex-col h-full justify-end space-y-4">
+    <div className={clsx("h-full w-full p-3", className)}>
+      <ScrollArea>
+        <div className="flex flex-col h-full">
           {messages.map((message) => (
             <div
               key={message.id}
@@ -62,42 +53,12 @@ export const AIChat = ({
           <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
-
-      <div className="p-3 w-full">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (input.trim()) {
-              onSend?.(input);
-              handleSubmit(e);
-            }
-          }}
-        >
-          <RichTextEditor content={{}} />
-          <TextField.Root
-            value={input}
-            size="3"
-            radius="full"
-            onChange={handleInputChange}
-            placeholder={placeholder}
-            className="flex-1 !px-0 !w-fit"
-          >
-            <TextField.Slot
-              style={{
-                padding: "5px",
-              }}
-            />
-            <TextField.Slot>
-              <Button type="submit" disabled={isLoading || !input.trim()}>
-                {isLoading ? (
-                  <Icons.Loader className="w-4 h-4 animate-spin" />
-                ) : (
-                  <Icons.ArrowRight className="w-4 h-4" />
-                )}
-              </Button>
-            </TextField.Slot>
-          </TextField.Root>
-        </form>
+      <div className="w-full sticky bottom-0 left-0 py-3">
+        <RichTextEditor
+          content={{}}
+          variant="ai-chat"
+          placeholder="Hello, how can I help you?"
+        />
       </div>
     </div>
   );

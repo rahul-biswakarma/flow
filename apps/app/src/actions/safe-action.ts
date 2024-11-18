@@ -6,7 +6,7 @@ import { ratelimit } from "@v1/kv/ratelimit";
 import { serverCache } from "@v1/kv/server-cache";
 import { CACHE_TTL } from "@v1/kv/utils";
 import { logger } from "@v1/logger";
-import { getAuthUser } from "@v1/supabase/queries";
+import { getAuthUser } from "@v1/supabase/queries/server";
 import { createSupabaseClient } from "@v1/supabase/server";
 import {
   DEFAULT_SERVER_ERROR_MESSAGE,
