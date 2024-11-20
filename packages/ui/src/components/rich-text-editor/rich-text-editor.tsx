@@ -1,7 +1,7 @@
 import { useEditor } from "@tiptap/react";
 import "./rich-text-editor.css";
 import Placeholder from "@tiptap/extension-placeholder";
-import { AIChat } from "./editors/ai-chat";
+import { AIChatEditor } from "./editors/ai-chat-editor";
 import { starterExtension } from "./extension";
 import type { RichTextEditorProps } from "./types";
 
@@ -29,7 +29,7 @@ export const RichTextEditor = ({
   switch (variant) {
     case "ai-chat":
       return (
-        <AIChat
+        <AIChatEditor
           content={content}
           editor={editor}
           placeholder={placeholder}

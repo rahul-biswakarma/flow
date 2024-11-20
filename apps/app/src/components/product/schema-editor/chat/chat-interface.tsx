@@ -39,6 +39,7 @@ export const ChatInterface = () => {
 
   return (
     <AIChat
+      api="/api/ai/sb"
       title="Schema Assistant"
       placeholder="Describe your schema needs..."
       onMessageComplete={handleMessage}

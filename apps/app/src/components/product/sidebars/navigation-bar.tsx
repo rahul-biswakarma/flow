@@ -1,3 +1,5 @@
+"use client";
+
 import { DEFAULT_ORG_AVATAR, DEFAULT_ORG_AVATAR_FALLBACK } from "@/constants";
 import { useFlowContext } from "@/context/flow-context";
 import { useScopedI18n } from "@/locales/client";
@@ -18,8 +20,8 @@ import {
   SidebarProvider,
 } from "@v1/ui/sidebar";
 import { Text } from "@v1/ui/text";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 import "./navigation-bar.css";
 
@@ -34,12 +36,22 @@ export function NavigationBar() {
   const scopedT = useScopedI18n("navigation_bar");
   const scopedTUser = useScopedI18n("user");
   const { setTheme, theme, themes } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Ensure hydration is complete before rendering theme-dependent content
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const projectName = projectData?.name ?? "Untitled";
   const published = projectData?.is_published ?? false;
   const avatar = projectData?.avatar ?? DEFAULT_ORG_AVATAR;
-
   const userAvatar = user?.avatar_url ?? DEFAULT_ORG_AVATAR;
+
+  // Render a placeholder or loading state until mounted
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <SidebarProvider defaultOpen={false}>
@@ -97,26 +109,17 @@ export function NavigationBar() {
             <SidebarMenu>
               {navigationBarMenuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <SidebarMenuButton
-                        tooltip={{
-                          children: item.title,
-                          hidden: false,
-                        }}
-                        onClick={() => setActiveNavBarItem(item.key)}
-                        isActive={activeNavBarItem === item.key}
-                        className="px-2.5 md:px-2"
-                        asChild
-                      >
-                        <span className="mx-auto">
-                          {item.icon}
-                          <Text>{item.title}</Text>
-                        </span>
-                      </SidebarMenuButton>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">{item.title}</TooltipContent>
-                  </Tooltip>
+                  <SidebarMenuButton
+                    onClick={() => setActiveNavBarItem(item.key)}
+                    isActive={activeNavBarItem === item.key}
+                    className="px-2.5 md:px-2"
+                    asChild
+                  >
+                    <span className="mx-auto">
+                      {item.icon}
+                      <Text>{item.title}</Text>
+                    </span>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
@@ -129,16 +132,13 @@ export function NavigationBar() {
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger>
                   <SidebarMenuButton>
-                    {(() => {
-                      switch (theme) {
-                        case "dark":
-                          return <Icons.Moon />;
-                        case "light":
-                          return <Icons.Sun />;
-                        default:
-                          return <Icons.SunMoon />;
-                      }
-                    })()}
+                    {mounted && (
+                      <>
+                        {theme === "dark" && <Icons.Moon />}
+                        {theme === "light" && <Icons.Sun />}
+                        {theme === "system" && <Icons.SunMoon />}
+                      </>
+                    )}
                   </SidebarMenuButton>
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content side="right">

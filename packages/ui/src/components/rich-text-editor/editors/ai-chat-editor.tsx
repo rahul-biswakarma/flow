@@ -6,12 +6,14 @@ import "./ai-chat.css";
 import { IconButton } from "../../icon-button";
 import { Icons } from "../../icons";
 
-export const AIChat = ({
+export const AIChatEditor = ({
   containerClassName,
   editor,
   readOnly,
   beforeSlot,
   onSubmit,
+  disabled,
+  isLoading,
 }: RichTextEditorProps & {
   editor: Editor;
 }) => {
@@ -44,12 +46,13 @@ export const AIChat = ({
         />
         <div className="flex items-start gap-2 h-full">
           <IconButton
+            disabled={disabled ?? isLoading}
             onClick={() => {
               onSubmit?.(editor);
             }}
             size="1"
           >
-            <Icons.ArrowRight />
+            {isLoading ? <Icons.Loader /> : <Icons.ArrowRight />}
           </IconButton>
         </div>
       </div>

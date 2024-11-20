@@ -40,6 +40,7 @@ export const ComponentInfoForm = ({
           onChange={(e: FieldOnChangeProps<string>): void => {
             setNewComponentData((prev) => ({ ...prev, name: e.value }));
           }}
+          placeholder="Pokemon card"
         />
       </div>
       <div className={clsx(fieldWrapperClass)}>

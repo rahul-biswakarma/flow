@@ -12,7 +12,7 @@ import {
 import type { FieldOnChangeProps } from "./types";
 
 interface StringFieldElementProps {
-  label: string;
+  label?: string;
   placeholder?: string;
   value: string;
   fieldInfo?: string;
