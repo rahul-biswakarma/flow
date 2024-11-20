@@ -9,4 +9,6 @@ export interface RichTextEditorProps {
   submitButtonRenderer?: React.ReactNode;
   placeholder?: string;
   onSubmit?: (editor: Editor) => void;
+  disabled?: boolean;
+  isLoading?: boolean;
 }

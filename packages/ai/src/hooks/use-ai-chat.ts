@@ -1,3 +1,5 @@
+"use client";
+
 import type { Message } from "ai";
 import { useChat as useVercelChat } from "ai/react";
 import { useCallback } from "react";
@@ -10,6 +12,10 @@ export interface UseAIChatOptions {
   onMessageComplete?: (message: string) => void;
   onFinish?: (message: Message) => void;
   onError?: (error: Error) => void;
+  onStream?: {
+    code?: (code: string) => void;
+    metadata?: (metadata: Record<string, unknown>) => void;
+  };
 }
 
 export const useAIChat = ({
@@ -20,6 +26,7 @@ export const useAIChat = ({
   onMessageComplete,
   onFinish,
   onError,
+  onStream,
 }: UseAIChatOptions = {}) => {
   const {
     messages,
@@ -37,10 +44,7 @@ export const useAIChat = ({
     id,
     initialMessages,
     onResponse,
-    onFinish: (message) => {
-      onMessageComplete?.(message.content);
-      onFinish?.(message);
-    },
+    onFinish: onFinish,
     onError,
   });
 

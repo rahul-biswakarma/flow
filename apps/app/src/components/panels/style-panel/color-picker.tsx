@@ -96,7 +96,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
         </TextField.Slot>
         <TextField.Slot>
           <TextField.Root
-            className="shadow-none bg-transparent w-[90px] outline-none text-right"
+            className="shadow-none !bg-transparent w-[90px] outline-none text-right"
             value={opacity}
             type="number"
             max={100}

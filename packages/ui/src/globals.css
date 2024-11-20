@@ -24,7 +24,7 @@
 
 .dark .rt-TextFieldRoot,
 .dark .rt-TextAreaRoot {
-  background-color: rgba(6, 6, 6, 0.8);
+  background-color: var(--gray-a3)
 }
 
 .light {
@@ -37,7 +37,7 @@
 
 .light .rt-TextFieldRoot,
 .light .rt-TextAreaRoot {
-  background-color: var(--gray-3);
+  background-color: var(--gray-a3);
 }
 
 ::-webkit-scrollbar-corner {

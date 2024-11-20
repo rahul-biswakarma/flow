@@ -1,4 +1,5 @@
 "use client";
+import type { Editor } from "@tiptap/react";
 import { Avatar } from "@v1/ui/avatar";
 import { RichTextEditor } from "@v1/ui/rte";
 import { ScrollArea } from "@v1/ui/scroll-area";
@@ -13,6 +14,16 @@ export interface AIChatProps extends UseAIChatOptions {
   className?: string;
   onSend?: (message: string) => void;
   userAvatar?: string;
+  disabled?: boolean;
+  contentHandler?: ({
+    response,
+    totalMessages,
+    currentMessage,
+  }: {
+    response: string;
+    totalMessages: number;
+    currentMessage: number;
+  }) => string;
 }
 
 export const AIChat = ({
@@ -21,31 +32,52 @@ export const AIChat = ({
   className = "",
   onSend,
   userAvatar,
+  disabled = false,
+  contentHandler,
   ...chatOptions
 }: AIChatProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { messages, input, handleInputChange, handleSubmit, isLoading } =
-    useAIChat(chatOptions);
+  const { messages, isLoading, submitMessage } = useAIChat(chatOptions);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleMessageSubmit = async (editor: Editor) => {
+    try {
+      const content = editor.getText().trim();
+      if (!content || disabled) return;
+
+      onSend?.(content);
+      editor.commands.setContent("");
+      scrollToBottom();
+      await submitMessage(content);
+    } catch (error) {
+      console.error("Error submitting message:", error);
+    }
+  };
 
   return (
     <div className={clsx("h-full w-full p-3", className)}>
       <ScrollArea>
-        <div className="flex flex-col h-full">
-          {messages.map((message) => (
+        <div className="flex flex-col justify-end h-full">
+          {messages.map((message, index) => (
             <div
               key={message.id}
-              className={`p-3 w-fit ${
-                message.role === "assistant" ? "bg-gray-a3" : "bg-accent-a3"
-              }`}
+              className={clsx("py-3 px-4 w-auto rounded-md", {
+                "bg-gray-a2 ml-auto": message.role === "user",
+              })}
             >
-              <div className="flex items-start gap-2">
-                {message.role === "assistant" ? (
-                  <Avatar size="2" fallback={"U"} src={userAvatar} />
-                ) : (
-                  <Avatar size="2" fallback={"U"} src={userAvatar} />
+              <div className="flex gap-2">
+                {message.role === "assistant" && (
+                  <Avatar size="2" fallback="A" />
                 )}
                 <Text size="2" className="whitespace-pre-wrap">
-                  {message.content}
+                  {contentHandler?.({
+                    response: message.content.trim(),
+                    totalMessages: messages.length,
+                    currentMessage: index,
+                  }) ?? message.content.trim()}
                 </Text>
               </div>
             </div>
@@ -53,11 +85,14 @@ export const AIChat = ({
           <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
-      <div className="w-full sticky bottom-0 left-0 py-3">
+      <div className="w-full left-0 py-3">
         <RichTextEditor
           content={{}}
           variant="ai-chat"
-          placeholder="Hello, how can I help you?"
+          placeholder={placeholder}
+          onSubmit={handleMessageSubmit}
+          disabled={disabled}
+          isLoading={isLoading}
         />
       </div>
     </div>
