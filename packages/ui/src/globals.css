@@ -24,7 +24,7 @@
 
 .dark .rt-TextFieldRoot,
 .dark .rt-TextAreaRoot {
-  background-color: var(--gray-a3)
+  background-color: var(--gray-a3);
 }
 
 .light {

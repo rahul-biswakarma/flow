@@ -1,3 +1,5 @@
+import type {} from "./types";
+
 interface ParsedFields {
   explanation: string;
   componentName: string;
@@ -19,57 +21,77 @@ export function parseAIResponse(response: string): ParsedFields {
 
   const text = response.toString();
 
-  // Live update for simple string fields
-  const updateStringField = (
-    field: keyof ParsedFields,
-    openTag: string,
-    closeTag: string,
-  ) => {
-    const startIndex = text.lastIndexOf(openTag);
-    if (startIndex !== -1) {
-      const endIndex = text.indexOf(closeTag, startIndex);
-      const content =
-        endIndex !== -1
-          ? text.slice(startIndex + openTag.length, endIndex)
-          : text.slice(startIndex + openTag.length);
-      parsedData[field] = content.trim();
-    }
-  };
-
-  // Parse fields that require complete data
-  const parseCompleteField = (
-    field: keyof ParsedFields,
-    openTag: string,
-    closeTag: string,
-  ) => {
-    const regex = new RegExp(`${openTag}([\\s\\S]*?)${closeTag}`);
-    const match = text.match(regex);
-    if (match?.[1]) {
-      parsedData[field] = match[1].trim();
-    }
-  };
-
-  // Parse simple string fields
-  updateStringField(
-    "explanation",
+  // Extract fields
+  parsedData.explanation = extractStreamingContent(
+    text,
     "<ComponentExplanation>",
     "</ComponentExplanation>",
   );
-  updateStringField("componentName", "<ComponentName>", "</ComponentName>");
-  updateStringField(
-    "componentDescription",
+  parsedData.componentName = extractStreamingContent(
+    text,
+    "<ComponentName>",
+    "</ComponentName>",
+  );
+  parsedData.componentDescription = extractStreamingContent(
+    text,
     "<ComponentDescription>",
     "</ComponentDescription>",
   );
-
-  // Parse fields that require complete data
-  parseCompleteField(
-    "componentKeywords",
+  parsedData.componentKeywords = extractCompleteContent(
+    text,
     "<ComponentKeywords>",
     "</ComponentKeywords>",
+    "[]",
   );
-  parseCompleteField("componentProps", "<ComponentProps>", "</ComponentProps>");
-  updateStringField("componentCode", "<ComponentCode>", "</ComponentCode>");
+  parsedData.componentProps = extractCompleteContent(
+    text,
+    "<ComponentProps>",
+    "</ComponentProps>",
+    "[]",
+  );
+
+  // Clean up code content
+  let code = extractStreamingContent(
+    text,
+    "<ComponentCode>",
+    "</ComponentCode>",
+  );
+  // Remove ```tsx and ``` markers if present
+  code = code.replace(/^```tsx?\n/, "").replace(/\n```$/, "");
+  parsedData.componentCode = code;
 
   return parsedData;
+}
+
+function extractStreamingContent(
+  text: string,
+  openTag: string,
+  closeTag: string,
+): string {
+  const startIndex = text.lastIndexOf(openTag);
+  if (startIndex === -1) return "";
+
+  const endIndex = text.indexOf(closeTag, startIndex);
+  if (endIndex === -1) {
+    return text.slice(startIndex + openTag.length);
+  }
+
+  return text.slice(startIndex + openTag.length, endIndex).trim();
+}
+
+function extractCompleteContent(
+  text: string,
+  openTag: string,
+  closeTag: string,
+  defaultValue: string,
+): string {
+  const startIndex = text.indexOf(openTag);
+  if (startIndex === -1) return defaultValue;
+
+  const endIndex = text.lastIndexOf(closeTag);
+  if (endIndex === -1) {
+    return defaultValue;
+  }
+
+  return text.slice(startIndex + openTag.length, endIndex).trim();
 }

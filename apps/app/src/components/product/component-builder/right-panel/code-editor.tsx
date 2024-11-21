@@ -6,26 +6,23 @@ import * as parserBabel from "prettier/parser-babel";
 import * as prettierPluginEstree from "prettier/plugins/estree";
 import * as prettier from "prettier/standalone";
 import { useCallback, useEffect } from "react";
-import type { ComponentData } from "../types";
+import { useComponentBuilderContext } from "../context";
 
-export const CodeEditor = ({
-  code,
-  setNewComponentData,
-}: {
-  code: string;
-  setNewComponentData: React.Dispatch<React.SetStateAction<ComponentData>>;
-}) => {
+export const CodeEditor = () => {
   const { sandpack } = useSandpack();
   const { files, activeFile } = sandpack;
 
+  const { isAIGenerating, isAIGeneratingRef, setComponentCode, componentCode } =
+    useComponentBuilderContext();
+
+  // Handle code updates from Sandpack
   useEffect(() => {
-    const newCode = files?.[activeFile]?.code ?? "";
-    if (newCode === code) return;
-    setNewComponentData((prev) => ({
-      ...prev,
-      code: newCode,
-    }));
-  }, [files, activeFile, setNewComponentData]);
+    if (!isAIGeneratingRef.current) {
+      const newCode = files?.[activeFile]?.code ?? "";
+      if (newCode === componentCode) return;
+      setComponentCode(() => newCode);
+    }
+  }, [files, activeFile, setComponentCode, componentCode]);
 
   const formatCode = useCallback(async (codeToFormat: string) => {
     try {
@@ -42,13 +39,10 @@ export const CodeEditor = ({
   }, []);
 
   const handleFormatClick = useCallback(async () => {
-    const code = files?.[activeFile]?.code ?? "";
-    const formattedCode = await formatCode(code);
-    setNewComponentData((prev) => ({
-      ...prev,
-      code: formattedCode,
-    }));
-  }, [formatCode]);
+    const currentCode = files?.[activeFile]?.code ?? "";
+    const formattedCode = await formatCode(currentCode);
+    sandpack.updateFile(activeFile, formattedCode);
+  }, [formatCode, files, activeFile, sandpack]);
 
   return (
     <div className="h-full w-full z-10 text-[14px]">
@@ -61,17 +55,23 @@ export const CodeEditor = ({
           size="1"
           variant="ghost"
           onClick={handleFormatClick}
+          disabled={isAIGenerating}
         >
           <Icons.Wand className="!w-4 !h-4 !text-gray-11" />
         </IconButton>
       </div>
-      <SandpackCodeEditor
+      <div
+        className="sandpack-code-editor"
         style={{
           height: "calc(100% - 40px)",
         }}
-        showTabs={false}
-        showLineNumbers={true}
-      />
+      >
+        <SandpackCodeEditor
+          showTabs={false}
+          showLineNumbers={true}
+          readOnly={isAIGenerating}
+        />
+      </div>
     </div>
   );
 };

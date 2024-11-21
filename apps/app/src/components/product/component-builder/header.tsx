@@ -6,20 +6,22 @@ import { Text } from "@v1/ui/text";
 
 export const ComponentBuilderHeader = ({
   isConfigValid,
+  disabled,
 }: {
+  disabled?: boolean;
   isConfigValid: boolean;
 }) => {
   const scopedT = useScopedI18n("component_builder");
   return (
     <div className="flex justify-between items-center gap-2 py-4 px-4 border-b border-panel bg-panel-header">
       <div className="flex gap-4 items-center">
-        <IconButton variant="ghost" size="1" color="gray">
+        <IconButton disabled={disabled} variant="ghost" size="1" color="gray">
           <Icons.ArrowLeft className="stroke-gray-10" />
         </IconButton>
         <Text size="4">{scopedT("title")}</Text>
       </div>
       <div className="flex justify-end items-center gap-2">
-        <Button disabled={!isConfigValid} variant="surface">
+        <Button disabled={!isConfigValid || disabled} variant="surface">
           {scopedT("publish")}
         </Button>
       </div>
