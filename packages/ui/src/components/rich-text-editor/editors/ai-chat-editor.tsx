@@ -44,7 +44,20 @@ export const AIChatEditor = ({
           className="w-full h-full pt-1"
           editor={editor}
         />
-        <div className="flex items-start gap-2 h-full">
+        <div className="flex items-center gap-2 h-full">
+          <IconButton
+            disabled={disabled ?? isLoading}
+            variant="ghost"
+            color="gray"
+            onClick={() => {
+              editor.commands.setContent(
+                "Build a Pokemon Card component that show random pokemon stats",
+              );
+            }}
+            size="1"
+          >
+            <Icons.Bulb />
+          </IconButton>
           <IconButton
             disabled={disabled ?? isLoading}
             onClick={() => {

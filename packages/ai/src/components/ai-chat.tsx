@@ -15,6 +15,7 @@ export interface AIChatProps extends UseAIChatOptions {
   onSend?: (message: string) => void;
   userAvatar?: string;
   disabled?: boolean;
+  ref?: React.RefObject<Editor>;
   contentHandler?: ({
     response,
     totalMessages,
@@ -34,6 +35,7 @@ export const AIChat = ({
   userAvatar,
   disabled = false,
   contentHandler,
+  ref,
   ...chatOptions
 }: AIChatProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -73,11 +75,13 @@ export const AIChat = ({
                   <Avatar size="2" fallback="A" />
                 )}
                 <Text size="2" className="whitespace-pre-wrap">
-                  {contentHandler?.({
-                    response: message.content.trim(),
-                    totalMessages: messages.length,
-                    currentMessage: index,
-                  }) ?? message.content.trim()}
+                  {message.role === "user"
+                    ? message.content.trim()
+                    : (contentHandler?.({
+                        response: message.content.trim(),
+                        totalMessages: messages.length,
+                        currentMessage: index,
+                      }) ?? message.content.trim())}
                 </Text>
               </div>
             </div>
@@ -85,8 +89,9 @@ export const AIChat = ({
           <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
-      <div className="w-full left-0 py-3">
+      <div className="sticky bottom-0 w-full left-0 py-3">
         <RichTextEditor
+          ref={ref}
           content={{}}
           variant="ai-chat"
           placeholder={placeholder}

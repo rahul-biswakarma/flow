@@ -30,11 +30,16 @@ export interface ObjectSchema {
   [key: string]: ObjectSchemaProperty;
 }
 
-export interface PreviewProps {
-  code: string;
-  props: Array<{
-    prop_name: string;
-    prop_type: string;
-    default_value?: string;
-  }>;
+export interface GenerationState {
+  name: boolean;
+  description: boolean;
+  keywords: boolean;
+  props: boolean;
+  code: boolean;
+}
+
+export interface GenerationStatus {
+  isGenerating: boolean;
+  completed: GenerationState;
+  current: keyof GenerationState | null;
 }

@@ -1,78 +1,37 @@
-import { useFlowContext } from "@/context";
 import { AIChat } from "@v1/ai/ai-chat";
-import { useCallback, useRef } from "react";
-import type { ComponentData, PropSchema } from "../types";
+import debounce from "lodash/debounce";
+import { useCallback } from "react";
+import { useComponentBuilderContext } from "../context";
 import { parseAIResponse } from "../utils";
 
-interface ComponentBuilderAIChatProps {
-  setNewComponentData?: React.Dispatch<React.SetStateAction<ComponentData>>;
-}
+export const ComponentBuilderAIChat = () => {
+  const {
+    isAIGenerating,
+    componentName,
+    componentDescription,
+    componentKeywords,
+    componentProps,
+    componentCode,
+    setIsAIGenerating,
+    setComponentName,
+    setComponentDescription,
+    setComponentKeywords,
+    setComponentProps,
+    setComponentCode,
+  } = useComponentBuilderContext();
 
-export const ComponentBuilderAIChat = ({
-  setNewComponentData,
-}: ComponentBuilderAIChatProps) => {
-  const { user } = useFlowContext();
-  const lastMessageRef = useRef<{
-    response: string;
-    totalMessages: number;
-    currentMessage: number;
-  } | null>(null);
-  const lastParsedDataRef = useRef<Partial<ComponentData>>({});
+  const updateState = useCallback((updates: Partial<typeof state>) => {
+    // Batch all state updates
+    setComponentName((prev) => updates.componentName || prev);
+    setComponentDescription((prev) => updates.componentDescription || prev);
+    setComponentKeywords((prev) => updates.componentKeywords || prev);
+    setComponentProps((prev) => updates.componentProps || prev);
+    setComponentCode((prev) => updates.componentCode || prev);
+  }, []);
 
-  const processMessage = useCallback(
-    (message: typeof lastMessageRef.current) => {
-      if (!message || message.totalMessages - 1 !== message.currentMessage) {
-        return;
-      }
-
-      const rawParsedData = parseAIResponse(message.response);
-      console.log("Raw parsed data:", rawParsedData, message.response);
-
-      let componentKeywords: string[] = [];
-      let componentProps: PropSchema[] = [];
-
-      try {
-        if (rawParsedData.componentKeywords) {
-          componentKeywords =
-            JSON.parse(rawParsedData.componentKeywords ?? "[]") ?? [];
-        }
-      } catch (error) {
-        console.error("Error parsing componentKeywords:", error);
-      }
-
-      try {
-        if (rawParsedData.componentProps) {
-          componentProps =
-            JSON.parse(rawParsedData.componentProps ?? "[]") ?? [];
-        }
-      } catch (error) {
-        console.error("Error parsing componentProps:", error);
-      }
-
-      const newData: Partial<ComponentData> = {
-        name: rawParsedData.componentName,
-        description: rawParsedData.componentDescription,
-        keywords: componentKeywords,
-        props: componentProps,
-        code: rawParsedData.componentCode,
-      };
-
-      if (
-        JSON.stringify(newData) !== JSON.stringify(lastParsedDataRef.current)
-      ) {
-        lastParsedDataRef.current = newData;
-        setNewComponentData?.((prev) => ({
-          ...prev,
-          ...(newData.name && { name: newData.name }),
-          ...(newData.description && { description: newData.description }),
-          ...(newData.keywords && { keywords: newData.keywords }),
-          ...(newData.props && { props: newData.props }),
-          ...(newData.code && { code: newData.code }),
-        }));
-      }
-    },
-    [setNewComponentData],
-  );
+  const debouncedUpdateState = useCallback(debounce(updateState, 300), [
+    updateState,
+  ]);
 
   const handleMetadataStream = useCallback(
     (data: {
@@ -80,25 +39,78 @@ export const ComponentBuilderAIChat = ({
       totalMessages: number;
       currentMessage: number;
     }): string => {
-      lastMessageRef.current = data;
       const rawParsedData = parseAIResponse(data.response);
+      const isLastMessage = data.totalMessages - 1 === data.currentMessage;
 
-      // Schedule the processing for the next tick
-      setTimeout(() => processMessage(data), 0);
+      if (!isLastMessage) {
+        return rawParsedData.explanation;
+      }
 
-      return rawParsedData.explanation;
+      const updates: Partial<typeof state> = {};
+
+      if (
+        rawParsedData.componentName &&
+        componentName !== rawParsedData.componentName
+      ) {
+        updates.componentName = rawParsedData.componentName;
+      }
+
+      if (
+        rawParsedData.componentDescription &&
+        componentDescription !== rawParsedData.componentDescription
+      ) {
+        updates.componentDescription = rawParsedData.componentDescription;
+      }
+
+      if (
+        rawParsedData.componentKeywords &&
+        JSON.stringify(componentKeywords) !== rawParsedData.componentKeywords
+      ) {
+        updates.componentKeywords = JSON.parse(rawParsedData.componentKeywords);
+      }
+
+      if (
+        rawParsedData.componentProps &&
+        JSON.stringify(componentProps) !== rawParsedData.componentProps
+      ) {
+        updates.componentProps = JSON.parse(rawParsedData.componentProps);
+      }
+
+      if (
+        rawParsedData.componentCode &&
+        componentCode !== rawParsedData.componentCode
+      ) {
+        updates.componentCode = rawParsedData.componentCode;
+      }
+
+      debouncedUpdateState(updates);
+
+      return rawParsedData.explanation ?? "";
     },
-    [processMessage],
+    [
+      componentName,
+      componentDescription,
+      componentKeywords,
+      componentProps,
+      componentCode,
+      debouncedUpdateState,
+    ],
   );
 
   return (
-    <div className="h-full w-full bg-gray-a1 pb-[56px]">
+    <div className="relative h-full w-full bg-gray-a1">
       <AIChat
         api="/api/ai/cb"
-        userAvatar={user?.avatar_url ?? undefined}
         title="Component Assistant"
         placeholder="Describe the component you want to create..."
         contentHandler={handleMetadataStream}
+        disabled={isAIGenerating}
+        onSend={() => {
+          setIsAIGenerating(true);
+        }}
+        onFinish={() => {
+          setIsAIGenerating(false);
+        }}
         onError={(error) => {
           console.error("Chat error:", error);
         }}

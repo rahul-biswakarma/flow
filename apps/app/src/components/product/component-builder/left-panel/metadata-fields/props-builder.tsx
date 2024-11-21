@@ -1,79 +1,79 @@
+import {
+  BooleanFieldElement,
+  TextFieldElement,
+} from "@/components/field-elements";
 import { fieldFontSize } from "@/components/field-elements/constants";
-import type {
-  ComponentData,
-  PropSchema,
-  PropsType,
-} from "@/components/product/component-builder/types";
+import { DropdownFieldElement } from "@/components/field-elements/dropdown-field";
+import type { FieldOnChangeProps } from "@/components/field-elements/types";
+import type { PropSchema } from "@/components/product/component-builder/types";
 import { useI18n, useScopedI18n } from "@/locales/client";
 import { Button } from "@v1/ui/button";
 import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
 import { clsx } from "clsx";
 import { nanoid } from "nanoid";
-import { Fragment, useMemo, useState } from "react";
-import { BooleanFieldElement } from "../../../field-elements/boolean-field";
-import { DropdownFieldElement } from "../../../field-elements/dropdown-field";
-import { TextFieldElement } from "../../../field-elements/text-field";
-import type { FieldOnChangeProps } from "../../../field-elements/types";
-import { ObjectTypeFields } from "./object-field";
+import { useMemo, useState } from "react";
+import { useComponentBuilderContext } from "../../context";
+import type { PropsType } from "../../types";
+import { ObjectTypeFields } from "../object-field";
 
 const ICON_CLASSES = "!w-4 !h-4 !text-gray-10";
 const MAX_PROPS = 10;
 
-const SchemaBuilder = ({
-  newComponentData,
-  setNewComponentData,
-}: {
-  newComponentData: ComponentData;
-  setNewComponentData: React.Dispatch<React.SetStateAction<ComponentData>>;
-}) => {
-  const propsData = newComponentData.props;
-
+export const PropsBuilder = () => {
   const t = useI18n();
 
+  const {
+    componentProps,
+    isAIGeneratingRef,
+    isAIGenerating,
+    setComponentProps,
+  } = useComponentBuilderContext();
+
   return (
-    <div className="flex flex-col w-full text-gray-10 gap-2">
-      {propsData.length === 0
+    <div
+      key="component-builder-prop-builder"
+      className="flex flex-col w-full text-gray-10 gap-2"
+    >
+      {componentProps.length === 0
         ? null
-        : propsData.map((prop, index: number) => (
-            <Fragment key={prop.id}>
+        : componentProps.map((prop, index: number) => (
+            <div key={prop.id}>
               <PropsField
                 propData={prop}
                 onChange={(propData) => {
-                  setNewComponentData((prev) => ({
-                    ...prev,
-                    props: prev.props.map((p) =>
-                      p.id === propData.id ? propData : p,
-                    ),
-                  }));
+                  if (!isAIGeneratingRef.current) {
+                    setComponentProps((prev) =>
+                      prev.map((p) => (p.id === propData.id ? propData : p)),
+                    );
+                  }
                 }}
                 onDelete={() => {
-                  setNewComponentData((prev) => ({
-                    ...prev,
-                    props: prev.props.filter((p) => p.id !== prop.id),
-                  }));
+                  if (!isAIGeneratingRef.current) {
+                    setComponentProps((prev) =>
+                      prev.filter((p) => p.id !== prop.id),
+                    );
+                  }
                 }}
               />
-            </Fragment>
+            </div>
           ))}
       <Button
         variant="soft"
         color="gray"
-        disabled={propsData.length >= MAX_PROPS}
+        disabled={componentProps.length >= MAX_PROPS || isAIGenerating}
         onClick={() => {
-          setNewComponentData((prev) => ({
+          setComponentProps((prev) => [
             ...prev,
-            props: [
-              ...prev.props,
-              {
-                id: nanoid(),
-                visualName: "",
-                propName: "",
-                propType: "text" as PropsType,
-                isList: false,
-              },
-            ],
-          }));
+            {
+              id: nanoid(),
+              propName: "",
+              visualName: "",
+              description: "",
+              propType: "text" as PropsType,
+              isList: false,
+            },
+          ]);
         }}
       >
         <Icons.Plus className={ICON_CLASSES} />
@@ -253,5 +253,3 @@ const PropsField = ({
     </div>
   );
 };
-
-export default SchemaBuilder;

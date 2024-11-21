@@ -1,44 +1,36 @@
+import { SandpackProvider } from "@codesandbox/sandpack-react";
+import { amethyst, aquaBlue } from "@codesandbox/sandpack-themes";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@v1/ui/resizable";
-
-import type React from "react";
-import { useState } from "react";
-import { ComponentBuilderHeader } from "./header";
-import { FieldRenders } from "./left-panel/field-renders";
-import type { ComponentData } from "./types";
-import "./styles.css";
-import type { StyleData } from "@/components/panels/style-panel/type";
-import { SandpackProvider } from "@codesandbox/sandpack-react";
-import { amethyst, aquaBlue } from "@codesandbox/sandpack-themes";
 import { useTheme } from "next-themes";
-import { defaultComponentCode, sandPackFilesConfig } from "./constants";
+import { sandPackFilesConfig } from "./constants";
+import { ComponentBuilderHeader } from "./header";
 import { ComponentBuilderAIChat } from "./left-panel/component-builder-ai-chat";
 import { CodeEditor } from "./right-panel/code-editor";
 import { ComponentBuilderPreview } from "./right-panel/preview";
+import "./styles.css";
+import {
+  ComponentBuilderProvider,
+  useComponentBuilderContext,
+} from "./context/component-builder.context";
+import { MetadataFields } from "./left-panel/metadata-fields/metadata-fields";
 
-export const ComponentBuilder: React.FC = () => {
-  const [newComponentData, setNewComponentData] = useState<ComponentData>({
-    name: "",
-    description: "",
-    author: "",
-    previewUrl: "",
-    keywords: [],
-    props: [],
-    code: defaultComponentCode,
-  });
-  const [styleValue, setStyleValue] = useState<StyleData>({});
-
-  const isConfigValid = Boolean(
-    newComponentData.name &&
-      newComponentData.description &&
-      newComponentData.code &&
-      newComponentData.props.length > 0,
+export const ComponentBuilder = () => {
+  return (
+    <ComponentBuilderProvider>
+      <ComponentBuilderContent />
+    </ComponentBuilderProvider>
   );
+};
 
+const ComponentBuilderContent = () => {
   const { resolvedTheme } = useTheme();
+
+  const { isConfigValid, componentCode, styleValue } =
+    useComponentBuilderContext();
 
   return (
     <div className="w-full grid grid-rows-[auto_1fr] h-full max-h-full">
@@ -46,37 +38,29 @@ export const ComponentBuilder: React.FC = () => {
       <SandpackProvider
         theme={resolvedTheme === "dark" ? amethyst : aquaBlue}
         template="react-ts"
-        files={sandPackFilesConfig({ code: newComponentData.code, styleValue })}
+        files={sandPackFilesConfig({ code: componentCode, styleValue })}
       >
         <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel minSize={25} defaultSize={30}>
+          <ResizablePanel minSize={30} defaultSize={40}>
             <ResizablePanelGroup direction="vertical">
-              <ResizablePanel minSize={30} defaultSize={40}>
-                <FieldRenders
-                  newComponentData={newComponentData}
-                  setNewComponentData={setNewComponentData}
-                />
+              <ResizablePanel minSize={30}>
+                <MetadataFields />
               </ResizablePanel>
               <ResizableHandle />
-              <ResizablePanel minSize={30}>
-                <ComponentBuilderAIChat
-                  setNewComponentData={setNewComponentData}
-                />
+              <ResizablePanel minSize={40}>
+                <ComponentBuilderAIChat />
               </ResizablePanel>
             </ResizablePanelGroup>
           </ResizablePanel>
           <ResizableHandle />
-          <ResizablePanel minSize={25} defaultSize={70}>
+          <ResizablePanel minSize={40}>
             <ResizablePanelGroup direction="vertical">
-              <ResizablePanel minSize={25} defaultSize={50}>
-                <CodeEditor
-                  code={newComponentData.code}
-                  setNewComponentData={setNewComponentData}
-                />
+              <ResizablePanel minSize={30}>
+                <CodeEditor />
               </ResizablePanel>
               <ResizableHandle />
-              <ResizablePanel minSize={25} defaultSize={50}>
-                <ComponentBuilderPreview {...{ styleValue, setStyleValue }} />
+              <ResizablePanel minSize={30}>
+                <ComponentBuilderPreview />
               </ResizablePanel>
             </ResizablePanelGroup>
           </ResizablePanel>

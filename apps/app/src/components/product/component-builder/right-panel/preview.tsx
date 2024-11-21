@@ -1,5 +1,4 @@
 import { StylePanel } from "@/components/panels/style-panel/style-panel";
-import type { StyleData } from "@/components/panels/style-panel/type";
 import { SandpackPreview } from "@codesandbox/sandpack-react";
 import { IconButton } from "@v1/ui/icon-button";
 import { Icons } from "@v1/ui/icons";
@@ -12,15 +11,13 @@ import { ScrollArea } from "@v1/ui/scroll-area";
 import { Tabs } from "@v1/ui/tabs";
 import { Text } from "@v1/ui/text";
 import { useState } from "react";
+import { useComponentBuilderContext } from "../context";
 
-export const ComponentBuilderPreview = ({
-  styleValue,
-  setStyleValue,
-}: {
-  styleValue: StyleData;
-  setStyleValue: React.Dispatch<React.SetStateAction<StyleData>>;
-}) => {
-  const [showPreviewSettings, setShowPreviewSettings] = useState(false);
+export const ComponentBuilderPreview = () => {
+  const { isAIGenerating, styleValue, setStyleValue } =
+    useComponentBuilderContext();
+
+  const [showPreviewSettings, setShowPreviewSettings] = useState(true);
 
   return (
     <div className="w-full h-full max-h-full">
@@ -37,6 +34,7 @@ export const ComponentBuilderPreview = ({
                   color="gray"
                   className="text-gray-11"
                   onClick={() => setShowPreviewSettings(true)}
+                  disabled={isAIGenerating}
                 >
                   <Icons.Settings />
                 </IconButton>
@@ -53,7 +51,7 @@ export const ComponentBuilderPreview = ({
         {showPreviewSettings && (
           <>
             <ResizableHandle />
-            <ResizablePanel defaultSize={30}>
+            <ResizablePanel minSize={40}>
               <ScrollArea className="relative max-h-full">
                 <Tabs.Root className="max-h-full" defaultValue="style-panel">
                   <div className="sticky z-10 top-0">
@@ -67,6 +65,7 @@ export const ComponentBuilderPreview = ({
                         color="gray"
                         className="text-gray-11 absolute right-3 top-0 translate-y-[50%]"
                         onClick={() => setShowPreviewSettings(false)}
+                        disabled={isAIGenerating}
                       >
                         <Icons.X />
                       </IconButton>

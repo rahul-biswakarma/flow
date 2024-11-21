@@ -38,7 +38,7 @@ You are an AI assistant specialized in creating React components. Follow these s
 </ComponentProps>
 
 6. <ComponentCode>
-   // React and TypeScript code here
+   // React and TypeScript code here. NOTE: This should contain direct code for the component. Don to wrap it with  \`\`\`something \`\`\`
 </ComponentCode>
 
 Component requirements:

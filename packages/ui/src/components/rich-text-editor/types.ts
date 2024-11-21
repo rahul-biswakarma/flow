@@ -11,4 +11,5 @@ export interface RichTextEditorProps {
   onSubmit?: (editor: Editor) => void;
   disabled?: boolean;
   isLoading?: boolean;
+  ref?: React.RefObject<Editor>;
 }

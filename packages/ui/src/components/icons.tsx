@@ -25,6 +25,7 @@ import {
   IconBoxPadding,
   IconBrandGithub,
   IconBrush,
+  IconBulb,
   IconCalendar,
   IconCheck,
   IconChevronDown,
@@ -90,6 +91,7 @@ const IconWrapper = (Icon: React.ComponentType<IconProps>) => {
 
 export const Icons = {
   Brush: IconWrapper(IconBrush),
+  Bulb: IconWrapper(IconBulb),
   Layout: IconWrapper(IconLayout),
   LayoutOff: IconWrapper(IconLayoutOff),
   BoxMargin: IconWrapper(IconBoxMargin),
