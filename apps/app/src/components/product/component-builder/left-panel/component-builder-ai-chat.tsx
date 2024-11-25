@@ -48,7 +48,7 @@ export const ComponentBuilderAIChat = () => {
     const isLastMessage = data.totalMessages - 1 === data.currentMessage;
 
     if (!isLastMessage) {
-      return rawParsedData.explanation;``
+      return rawParsedData.explanation;
     }
 
     const updates: UpdateStateProps = {};
