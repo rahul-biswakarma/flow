@@ -13,6 +13,7 @@ import {
 import type { FieldOnChangeProps } from "./types";
 
 interface TextFieldElementProps {
+  ref?: React.RefObject<HTMLInputElement>;
   label?: string;
   placeholder?: string;
   value: string;
@@ -22,7 +23,7 @@ interface TextFieldElementProps {
 }
 
 export const TextFieldElement: React.FC<TextFieldElementProps> = React.memo(
-  ({ label, placeholder, value, fieldInfo, onChange, labelClassName }) => {
+  ({ label, placeholder, value, fieldInfo, onChange, labelClassName, ref }) => {
     const handleChange = React.useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
         onChange?.({
@@ -56,6 +57,7 @@ export const TextFieldElement: React.FC<TextFieldElementProps> = React.memo(
           </Text>
         )}
         <TextField.Root
+          ref={ref}
           className={clsx(fieldStyles, fieldFontSize)}
           value={value}
           onChange={handleChange}

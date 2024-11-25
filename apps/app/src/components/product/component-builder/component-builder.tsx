@@ -40,32 +40,38 @@ const ComponentBuilderContent = () => {
         template="react-ts"
         files={sandPackFilesConfig({ code: componentCode, styleValue })}
       >
-        <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel minSize={30} defaultSize={40}>
-            <ResizablePanelGroup direction="vertical">
-              <ResizablePanel minSize={30}>
-                <MetadataFields />
-              </ResizablePanel>
-              <ResizableHandle />
-              <ResizablePanel minSize={40}>
-                <ComponentBuilderAIChat />
-              </ResizablePanel>
-            </ResizablePanelGroup>
+        <ComponentBuilderWrapper />
+      </SandpackProvider>
+    </div>
+  );
+};
+
+const ComponentBuilderWrapper = () => {
+  return (
+    <ResizablePanelGroup direction="horizontal">
+      <ResizablePanel minSize={30} defaultSize={40}>
+        <ResizablePanelGroup direction="vertical">
+          <ResizablePanel minSize={30}>
+            <MetadataFields />
           </ResizablePanel>
           <ResizableHandle />
           <ResizablePanel minSize={40}>
-            <ResizablePanelGroup direction="vertical">
-              <ResizablePanel minSize={30}>
-                <CodeEditor />
-              </ResizablePanel>
-              <ResizableHandle />
-              <ResizablePanel minSize={30}>
-                <ComponentBuilderPreview />
-              </ResizablePanel>
-            </ResizablePanelGroup>
+            <ComponentBuilderAIChat />
           </ResizablePanel>
         </ResizablePanelGroup>
-      </SandpackProvider>
-    </div>
+      </ResizablePanel>
+      <ResizableHandle />
+      <ResizablePanel minSize={40}>
+        <ResizablePanelGroup direction="vertical">
+          <ResizablePanel minSize={30}>
+            <CodeEditor />
+          </ResizablePanel>
+          <ResizableHandle />
+          <ResizablePanel minSize={30}>
+            <ComponentBuilderPreview />
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      </ResizablePanel>
+    </ResizablePanelGroup>
   );
 };

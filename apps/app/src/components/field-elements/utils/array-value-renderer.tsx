@@ -1,7 +1,7 @@
 import { IconButton } from "@v1/ui/icon-button";
 import { Icons } from "@v1/ui/icons";
 import { clsx } from "clsx";
-import { useState, type JSX } from "react";
+import { type JSX, useState } from "react";
 import type { ReactNode } from "react";
 
 export const ArrayValueRenderer = <T,>({
@@ -9,16 +9,19 @@ export const ArrayValueRenderer = <T,>({
   valueRender,
   inputRenderer,
   removeItem,
+  ref,
 }: {
   value: T[];
   valueRender: (value: T) => JSX.Element;
-  inputRenderer: ReactNode;
+  inputRenderer?: ReactNode;
   removeItem?: (value: T) => void;
+  ref?: React.RefObject<HTMLDivElement>;
 }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
     <div
+      ref={ref}
       tabIndex={-1}
       className={clsx("flex gap-2 flex-wrap border-gray-7", {
         "bg-surface rounded p-1": value.length > 0,

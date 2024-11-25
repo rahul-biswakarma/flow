@@ -9,6 +9,7 @@ export interface ComponentData {
 }
 
 export type PropsType = "string" | "number" | "boolean" | "object" | "self";
+export type StreamDataStatus = "not-started" | "in-progress" | "complete";
 
 export interface PropSchema {
   id: string;

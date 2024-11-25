@@ -1,17 +1,25 @@
 import { AIChat } from "@v1/ai/ai-chat";
-import debounce from "lodash/debounce";
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { useComponentBuilderContext } from "../context";
+import type { PropSchema } from "../types";
 import { parseAIResponse } from "../utils";
+
+type UpdateStateProps = {
+  componentName?: string;
+  componentDescription?: string;
+  componentKeywords?: string[];
+  componentProps?: PropSchema[];
+  componentCode?: string;
+};
 
 export const ComponentBuilderAIChat = () => {
   const {
     isAIGenerating,
-    componentName,
-    componentDescription,
-    componentKeywords,
-    componentProps,
-    componentCode,
+    componentNameRef,
+    componentDescriptionRef,
+    componentKeywordsRef,
+    componentPropsRef,
+    componentCodeRef,
     setIsAIGenerating,
     setComponentName,
     setComponentDescription,
@@ -20,82 +28,86 @@ export const ComponentBuilderAIChat = () => {
     setComponentCode,
   } = useComponentBuilderContext();
 
-  const updateState = useCallback((updates: Partial<typeof state>) => {
-    // Batch all state updates
-    setComponentName((prev) => updates.componentName || prev);
-    setComponentDescription((prev) => updates.componentDescription || prev);
-    setComponentKeywords((prev) => updates.componentKeywords || prev);
-    setComponentProps((prev) => updates.componentProps || prev);
-    setComponentCode((prev) => updates.componentCode || prev);
+  const nameRef = useRef<string>("");
+  const descriptionRef = useRef<string>("");
+
+  const updateState = useCallback(() => {
+    setComponentName((prev) => nameRef?.current || prev);
+    setComponentDescription((prev) => descriptionRef?.current || prev);
+    setComponentKeywords((prev) => componentKeywordsRef?.current || prev);
+    setComponentProps((prev) => componentPropsRef?.current || prev);
+    setComponentCode((prev) => componentCodeRef?.current || prev);
   }, []);
 
-  const debouncedUpdateState = useCallback(debounce(updateState, 300), [
-    updateState,
-  ]);
+  const handleMetadataStream = (data: {
+    response: string;
+    totalMessages: number;
+    currentMessage: number;
+  }): string => {
+    const rawParsedData = parseAIResponse(data.response);
+    const isLastMessage = data.totalMessages - 1 === data.currentMessage;
 
-  const handleMetadataStream = useCallback(
-    (data: {
-      response: string;
-      totalMessages: number;
-      currentMessage: number;
-    }): string => {
-      const rawParsedData = parseAIResponse(data.response);
-      const isLastMessage = data.totalMessages - 1 === data.currentMessage;
+    if (!isLastMessage) {
+      return rawParsedData.explanation;``
+    }
 
-      if (!isLastMessage) {
-        return rawParsedData.explanation;
-      }
+    const updates: UpdateStateProps = {};
 
-      const updates: Partial<typeof state> = {};
-
+    if (rawParsedData.componentName) {
+      updates.componentName = rawParsedData.componentName.content;
+      nameRef.current = rawParsedData.componentName.content;
       if (
-        rawParsedData.componentName &&
-        componentName !== rawParsedData.componentName
+        componentNameRef?.current &&
+        componentNameRef.current.value !==
+          rawParsedData.componentName.content &&
+        rawParsedData.componentName.status !== "complete"
       ) {
-        updates.componentName = rawParsedData.componentName;
+        componentNameRef.current.value = rawParsedData.componentName.content;
       }
+      if (rawParsedData.componentName.status === "complete") {
+        setComponentName(rawParsedData.componentName.content);
+      }
+    }
 
+    if (rawParsedData.componentDescription) {
+      updates.componentDescription = rawParsedData.componentDescription.content;
+      descriptionRef.current = rawParsedData.componentDescription.content;
       if (
-        rawParsedData.componentDescription &&
-        componentDescription !== rawParsedData.componentDescription
+        componentDescriptionRef?.current &&
+        componentDescriptionRef.current.value !==
+          rawParsedData.componentDescription.content
       ) {
-        updates.componentDescription = rawParsedData.componentDescription;
+        componentDescriptionRef.current.value =
+          rawParsedData.componentDescription.content;
       }
 
-      if (
-        rawParsedData.componentKeywords &&
-        JSON.stringify(componentKeywords) !== rawParsedData.componentKeywords
-      ) {
-        updates.componentKeywords = JSON.parse(rawParsedData.componentKeywords);
+      if (rawParsedData.componentDescription.status === "complete") {
+        setComponentDescription(rawParsedData.componentDescription.content);
       }
+    }
 
-      if (
-        rawParsedData.componentProps &&
-        JSON.stringify(componentProps) !== rawParsedData.componentProps
-      ) {
-        updates.componentProps = JSON.parse(rawParsedData.componentProps);
-      }
+    if (
+      rawParsedData.componentKeywords &&
+      componentKeywordsRef?.current &&
+      componentKeywordsRef.current.join("") !==
+        rawParsedData.componentKeywords.content.join("") &&
+      rawParsedData.componentKeywords.status !== "complete"
+    ) {
+      updates.componentKeywords = rawParsedData.componentKeywords.content;
+      componentKeywordsRef.current = rawParsedData.componentKeywords.content;
+      setComponentKeywords(() => [...rawParsedData.componentKeywords.content]);
+    }
 
-      if (
-        rawParsedData.componentCode &&
-        componentCode !== rawParsedData.componentCode
-      ) {
-        updates.componentCode = rawParsedData.componentCode;
-      }
+    // if (rawParsedData.componentProps) {
+    //   updates.componentProps = JSON.parse(rawParsedData.componentProps);
+    // }
 
-      debouncedUpdateState(updates);
+    // if (rawParsedData.componentCode) {
+    //   updates.componentCode = rawParsedData.componentCode;
+    // }
 
-      return rawParsedData.explanation ?? "";
-    },
-    [
-      componentName,
-      componentDescription,
-      componentKeywords,
-      componentProps,
-      componentCode,
-      debouncedUpdateState,
-    ],
-  );
+    return rawParsedData.explanation ?? "";
+  };
 
   return (
     <div className="relative h-full w-full bg-gray-a1">
@@ -110,6 +122,7 @@ export const ComponentBuilderAIChat = () => {
         }}
         onFinish={() => {
           setIsAIGenerating(false);
+          updateState();
         }}
         onError={(error) => {
           console.error("Chat error:", error);

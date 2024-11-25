@@ -20,6 +20,7 @@ interface ArrayTextFieldElementProps {
   value: string[];
   fieldInfo?: string;
   onChange: (e: FieldOnChangeProps<string[]>) => void;
+  containerRef?: React.RefObject<HTMLDivElement>;
 }
 
 export const ArrayTextFieldElement = ({
@@ -29,6 +30,7 @@ export const ArrayTextFieldElement = ({
   labelClassName,
   fieldInfo,
   onChange,
+  containerRef,
 }: ArrayTextFieldElementProps) => {
   const [inputValue, setInputValue] = useState("");
 
@@ -52,6 +54,7 @@ export const ArrayTextFieldElement = ({
         )}
       </Text>
       <ArrayValueRenderer<string>
+        ref={containerRef}
         value={value}
         valueRender={(value: string) => <Text size="2">{value}</Text>}
         removeItem={(discardedValue) => {

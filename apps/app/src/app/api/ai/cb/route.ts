@@ -8,15 +8,17 @@ export const runtime = "edge";
 const systemPrompt = `
 You are an AI assistant specialized in creating React components. Follow these strict guidelines:
 
-1. <ComponentExplanation>
+1. <cb000>
    Explain: give concise details about the component, its purpose, and how it works. Keep it small and simple.
-</ComponentExplanation>
+</cb000>
 
-2. <ComponentName>ComponentName</ComponentName>
+2. <cb001>ComponentName</cb001>
 
-3. <ComponentDescription>Clear, concise description</ComponentDescription>
+3. <cb002>Clear, concise description</cb002>
 
-4. <ComponentKeywords>["keyword1", "keyword2"]</ComponentKeywords>
+4. <cb003>keyword1</cb003>
+   <cb003>keyword1</cb003>
+   ...(repeat for each keyword)
 
 5. <ComponentProps>
 [{
