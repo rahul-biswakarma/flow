@@ -3,7 +3,7 @@ import { Text } from "@v1/ui/text";
 import { TextField } from "@v1/ui/text-field";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import { clsx } from "clsx";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   fieldFontSize,
   fieldStyles,
@@ -20,7 +20,7 @@ interface ArrayTextFieldElementProps {
   value: string[];
   fieldInfo?: string;
   onChange: (e: FieldOnChangeProps<string[]>) => void;
-  containerRef?: React.RefObject<HTMLDivElement>;
+  streamingValue?: string;
 }
 
 export const ArrayTextFieldElement = ({
@@ -30,9 +30,39 @@ export const ArrayTextFieldElement = ({
   labelClassName,
   fieldInfo,
   onChange,
-  containerRef,
+  streamingValue,
 }: ArrayTextFieldElementProps) => {
   const [inputValue, setInputValue] = useState("");
+  const streamingRef = useRef<string>("");
+  const [isStreaming, setIsStreaming] = useState(false);
+
+  useEffect(() => {
+    if (streamingValue && streamingValue !== streamingRef.current) {
+      setIsStreaming(true);
+      streamingRef.current = streamingValue;
+
+      const chars = streamingValue.split("");
+      let currentIndex = 0;
+
+      const streamInterval = setInterval(() => {
+        if (currentIndex < chars.length) {
+          setInputValue((prev) => prev + chars[currentIndex]);
+          currentIndex++;
+        } else {
+          clearInterval(streamInterval);
+          onChange({
+            isEmpty: false,
+            type: "string[]",
+            value: [...value, streamingValue],
+          });
+          setInputValue("");
+          setIsStreaming(false);
+        }
+      }, 50);
+
+      return () => clearInterval(streamInterval);
+    }
+  }, [streamingValue, onChange, value]);
 
   return (
     <>
@@ -54,7 +84,6 @@ export const ArrayTextFieldElement = ({
         )}
       </Text>
       <ArrayValueRenderer<string>
-        ref={containerRef}
         value={value}
         valueRender={(value: string) => <Text size="2">{value}</Text>}
         removeItem={(discardedValue) => {
@@ -68,11 +97,13 @@ export const ArrayTextFieldElement = ({
         inputRenderer={
           <TextField.Root
             autoFocus={value.length > 0}
-            className={clsx("grow p-0", fieldStyles, fieldFontSize)}
+            className={clsx("grow p-0", fieldStyles, fieldFontSize, {
+              "animate-pulse": isStreaming,
+            })}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === "Enter" && !isStreaming) {
                 e.preventDefault();
                 if (inputValue.trim() !== "") {
                   onChange({
@@ -85,6 +116,7 @@ export const ArrayTextFieldElement = ({
               }
             }}
             placeholder={placeholder}
+            disabled={isStreaming}
           />
         }
       />

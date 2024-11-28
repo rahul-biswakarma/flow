@@ -6,7 +6,6 @@ import { LogicBuilder } from "@/components/product/logic-builder/logic-builder";
 import { Marketplace } from "@/components/product/marketplace/marketplace";
 import { SchemaEditor } from "@/components/product/schema-editor/schema-editor";
 import { Settings } from "@/components/product/settings/settings";
-import { VisualEditor } from "@/components/product/visual-editor/visual-editor";
 import { useScopedI18n } from "@/locales/client";
 import type { ProjectWithPages, User } from "@/types";
 import { Icons } from "@v1/ui/icons";
@@ -45,18 +44,18 @@ export const FlowContextProvider = ({
   const [projectData, setProjectData] =
     useState<ProjectWithPages>(projectWithPages);
   const [activeNavBarItem, setActiveNavBarItem] = useState<string>(
-    "nav-bar-visual-editor",
+    "nav-bar-component-builder",
   );
 
   const scopedT = useScopedI18n("navigation_bar");
 
   const navigationBarMenuItems: NavigationBarMenuItem[] = [
-    {
-      icon: <Icons.AppWindow />,
-      title: scopedT("visual_editor"),
-      component: <VisualEditor />,
-      key: "nav-bar-visual-editor",
-    },
+    // {
+    //   icon: <Icons.AppWindow />,
+    //   title: scopedT("visual_editor"),
+    //   component: <VisualEditor />,
+    //   key: "nav-bar-visual-editor",
+    // },
     {
       icon: <Icons.Schema />,
       title: scopedT("logic_builder"),

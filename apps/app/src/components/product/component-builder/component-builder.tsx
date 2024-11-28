@@ -12,6 +12,7 @@ import { ComponentBuilderAIChat } from "./left-panel/component-builder-ai-chat";
 import { CodeEditor } from "./right-panel/code-editor";
 import { ComponentBuilderPreview } from "./right-panel/preview";
 import "./styles.css";
+import { useEffect, useState } from "react";
 import {
   ComponentBuilderProvider,
   useComponentBuilderContext,
@@ -28,9 +29,17 @@ export const ComponentBuilder = () => {
 
 const ComponentBuilderContent = () => {
   const { resolvedTheme } = useTheme();
-
+  const [mounted, setMounted] = useState(false);
   const { isConfigValid, componentCode, styleValue } =
     useComponentBuilderContext();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className="w-full grid grid-rows-[auto_1fr] h-full max-h-full">
@@ -40,38 +49,32 @@ const ComponentBuilderContent = () => {
         template="react-ts"
         files={sandPackFilesConfig({ code: componentCode, styleValue })}
       >
-        <ComponentBuilderWrapper />
-      </SandpackProvider>
-    </div>
-  );
-};
-
-const ComponentBuilderWrapper = () => {
-  return (
-    <ResizablePanelGroup direction="horizontal">
-      <ResizablePanel minSize={30} defaultSize={40}>
-        <ResizablePanelGroup direction="vertical">
-          <ResizablePanel minSize={30}>
-            <MetadataFields />
+        <ResizablePanelGroup direction="horizontal">
+          <ResizablePanel minSize={30} defaultSize={40}>
+            <ResizablePanelGroup direction="vertical">
+              <ResizablePanel minSize={30}>
+                <MetadataFields />
+              </ResizablePanel>
+              <ResizableHandle />
+              <ResizablePanel minSize={40}>
+                <ComponentBuilderAIChat />
+              </ResizablePanel>
+            </ResizablePanelGroup>
           </ResizablePanel>
           <ResizableHandle />
           <ResizablePanel minSize={40}>
-            <ComponentBuilderAIChat />
+            <ResizablePanelGroup direction="vertical">
+              <ResizablePanel minSize={30}>
+                <CodeEditor />
+              </ResizablePanel>
+              <ResizableHandle />
+              <ResizablePanel minSize={30}>
+                <ComponentBuilderPreview />
+              </ResizablePanel>
+            </ResizablePanelGroup>
           </ResizablePanel>
         </ResizablePanelGroup>
-      </ResizablePanel>
-      <ResizableHandle />
-      <ResizablePanel minSize={40}>
-        <ResizablePanelGroup direction="vertical">
-          <ResizablePanel minSize={30}>
-            <CodeEditor />
-          </ResizablePanel>
-          <ResizableHandle />
-          <ResizablePanel minSize={30}>
-            <ComponentBuilderPreview />
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      </ResizablePanel>
-    </ResizablePanelGroup>
+      </SandpackProvider>
+    </div>
   );
 };
