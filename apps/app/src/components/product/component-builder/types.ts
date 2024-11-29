@@ -1,3 +1,5 @@
+import type { EditorView } from "@codemirror/view";
+
 export interface ComponentData {
   name: string;
   description: string;
@@ -43,4 +45,8 @@ export interface GenerationStatus {
   isGenerating: boolean;
   completed: GenerationState;
   current: keyof GenerationState | null;
+}
+
+export interface CodeMirrorRef {
+  getCodemirror: () => EditorView | undefined;
 }

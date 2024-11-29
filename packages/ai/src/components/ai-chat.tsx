@@ -92,7 +92,6 @@ export const AIChat = ({
       <div className="sticky bottom-0 w-full left-0 py-3">
         <RichTextEditor
           ref={ref}
-          content={{}}
           variant="ai-chat"
           placeholder={placeholder}
           onSubmit={handleMessageSubmit}

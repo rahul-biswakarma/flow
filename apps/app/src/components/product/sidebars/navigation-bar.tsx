@@ -56,7 +56,7 @@ export function NavigationBar() {
   return (
     <SidebarProvider defaultOpen={false}>
       <Sidebar className="z-50 navigation-bar" collapsible="icon">
-        <SidebarHeader>
+        <SidebarHeader className="pt-0">
           <SidebarMenu>
             <SidebarMenuItem>
               <HoverCard.Root>
@@ -126,7 +126,7 @@ export function NavigationBar() {
           </SidebarGroup>
         </SidebarContent>
 
-        <SidebarFooter>
+        <SidebarFooter className="pb-0">
           <SidebarMenu className="flex flex-col gap-2">
             <SidebarMenuItem>
               <DropdownMenu.Root>
@@ -168,7 +168,8 @@ export function NavigationBar() {
                     className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground md:h-8 md:p-0"
                   >
                     <Avatar
-                      className="h-8 w-8 rounded-md"
+                      className="h-8 w-8"
+                      radius="small"
                       src={userAvatar}
                       fallback={projectName[0] ?? "U"}
                     />

@@ -12,8 +12,13 @@ export const CodeEditor = () => {
   const { sandpack } = useSandpack();
   const { files, activeFile } = sandpack;
 
-  const { isAIGenerating, isAIGeneratingRef, setComponentCode, componentCode } =
-    useComponentBuilderContext();
+  const {
+    isAIGenerating,
+    isAIGeneratingRef,
+    setComponentCode,
+    componentCode,
+    componentCodeRef,
+  } = useComponentBuilderContext();
 
   // Handle code updates from Sandpack
   useEffect(() => {
@@ -67,6 +72,7 @@ export const CodeEditor = () => {
         }}
       >
         <SandpackCodeEditor
+          ref={componentCodeRef}
           showTabs={false}
           showLineNumbers={true}
           readOnly={isAIGenerating}

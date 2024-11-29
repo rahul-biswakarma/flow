@@ -39,9 +39,9 @@ You are an AI assistant specialized in creating React components. Follow these s
 }]
 </ComponentProps>
 
-6. <ComponentCode>
-   // React and TypeScript code here. NOTE: This should contain direct code for the component. Don to wrap it with  \`\`\`something \`\`\`
-</ComponentCode>
+6. <cb005>
+   // React and TypeScript code here. NOTE: This should contain format string code and do not wrap it with markdown code_block
+</cb005>
 
 Component requirements:
 - TypeScript with proper types/interfaces
@@ -74,7 +74,7 @@ export async function POST(req: Request) {
     const { messages } = await req.json();
 
     const result = await streamText({
-      model: openai("gpt-4"),
+      model: openai("gpt-3.5-turbo"),
       messages: [
         {
           role: "system",
