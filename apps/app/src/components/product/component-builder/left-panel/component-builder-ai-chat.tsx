@@ -106,9 +106,11 @@ export const ComponentBuilderAIChat = () => {
       }
     }
 
+    console.log("rawParsedData", rawParsedData.componentProps.content);
+
     if (
       rawParsedData.componentProps.content &&
-      rawParsedData.componentProps.status !== "complete"
+      rawParsedData.componentProps.status === "complete"
     ) {
       try {
         latestDataRef.current.componentProps = JSON.parse(

@@ -35,24 +35,19 @@ Example of INCORRECT format:
 <cb003>Button, Interactive, UI</cb003>
 
 5. <cb004>
-[{
-  "name": "ComponentName",
-  "description": "Technical description matching cb002",
-  "keywords": ["keyword1", "keyword2"],
-  "props": [
-    {
-      "id": "prop-unique-id",
-      "visualName": "Human Readable Name",
-      "propName": "camelCasePropName",
-      "propType": "text|number|boolean|object|component|function|array",
-      "description": "Clear, specific prop description",
-      "required": boolean,
-      "isList": boolean,
-      "defaultValue": "default value if any",
-      "validation": "validation rules if any"
-    }
-  ]
-}]
+ [
+  {
+    "id": "prop-unique-id",
+    "visualName": "Human Readable Name",
+    "propName": "camelCasePropName",
+    "propType": "text|number|boolean|object|component|function|array",
+    "description": "Clear, specific prop description",
+    "required": boolean,
+    "isList": boolean,
+    "defaultValue": "default value if any",
+    "validation": "validation rules if any"
+  }
+]
 </cb004>
 
 6. <cb005>

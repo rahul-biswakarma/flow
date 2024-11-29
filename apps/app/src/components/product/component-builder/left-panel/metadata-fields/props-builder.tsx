@@ -37,8 +37,8 @@ export const PropsBuilder = () => {
     >
       {componentProps.length === 0
         ? null
-        : componentProps.map((prop, index: number) => (
-            <div key={prop.id}>
+        : componentProps.map((prop) => (
+            <div key={`props_builder_${prop.id}`}>
               <PropsField
                 propData={prop}
                 onChange={(propData) => {
@@ -120,7 +120,7 @@ const PropsField = ({
   }, [scopedTForTypes]);
 
   return (
-    <div className="bg-panel border-panel rounded-sm mb-2">
+    <div className="bg-gray-2 border border-gray-a2 rounded-sm mb-2">
       <div
         className={clsx(
           "flex justify-between items-center p-4 cursor-pointer border-outline-01",
@@ -165,7 +165,7 @@ const PropsField = ({
         </div>
       </div>
       {isExpanded && (
-        <div className="flex flex-col gap-3 rounded p-3">
+        <div className="flex flex-col gap-5 rounded p-3">
           <div className="flex gap-3 w-full">
             <div className="flex flex-col gap-1 w-full">
               <TextFieldElement
