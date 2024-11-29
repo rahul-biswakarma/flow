@@ -3,6 +3,20 @@
   "organizeImports": {
     "enabled": true
   },
+  "files": {
+    "maxSize": 1048576,
+    "ignore": [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/.next/**",
+      "**/build/**",
+      "**/.turbo/**",
+      "**/coverage/**",
+      "**/.cache/**",
+      "**/public/**",
+      "**/.vercel/**"
+    ]
+  },
   "linter": {
     "ignore": ["node_modules", ".next", "packages/tsconfig"],
     "enabled": true,
