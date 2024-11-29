@@ -5,7 +5,7 @@ import { RichTextEditor } from "@v1/ui/rte";
 import { ScrollArea } from "@v1/ui/scroll-area";
 import { Text } from "@v1/ui/text";
 import { clsx } from "clsx";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { type UseAIChatOptions, useAIChat } from "../hooks/use-ai-chat";
 
 export interface AIChatProps extends UseAIChatOptions {
@@ -39,11 +39,28 @@ export const AIChat = ({
   ...chatOptions
 }: AIChatProps) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
   const { messages, isLoading, submitMessage } = useAIChat(chatOptions);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  // Auto-scroll effect
+  useEffect(() => {
+    const scrollToBottom = () => {
+      if (scrollAreaRef.current) {
+        const scrollContainer = scrollAreaRef.current.querySelector(
+          "[data-radix-scroll-area-viewport]",
+        );
+        if (scrollContainer) {
+          scrollContainer.scrollTop = scrollContainer.scrollHeight;
+        }
+      }
+    };
+
+    scrollToBottom();
+    // Add a small delay to ensure content is rendered
+    const timeoutId = setTimeout(scrollToBottom, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [messages]); // Re-run when messages change
 
   const handleMessageSubmit = async (editor: Editor) => {
     try {
@@ -52,7 +69,6 @@ export const AIChat = ({
 
       onSend?.(content);
       editor.commands.setContent("");
-      scrollToBottom();
       await submitMessage(content);
     } catch (error) {
       console.error("Error submitting message:", error);
@@ -60,14 +76,14 @@ export const AIChat = ({
   };
 
   return (
-    <div className={clsx("h-full w-full p-3", className)}>
-      <ScrollArea>
-        <div className="flex flex-col justify-end h-full">
+    <div className={clsx("flex flex-col h-full w-full", className)}>
+      <ScrollArea ref={scrollAreaRef}>
+        <div className="relative flex gap-2 flex-col justify-end h-full p-3 pb-0">
           {messages.map((message, index) => (
             <div
               key={message.id}
-              className={clsx("py-3 px-4 w-auto rounded-md", {
-                "bg-gray-a2 ml-auto": message.role === "user",
+              className={clsx("py-3 w-auto rounded-md", {
+                "bg-gray-a2 ml-auto px-4": message.role === "user",
               })}
             >
               <div className="flex gap-2">
@@ -77,11 +93,13 @@ export const AIChat = ({
                 <Text size="2" className="whitespace-pre-wrap">
                   {message.role === "user"
                     ? message.content.trim()
-                    : (contentHandler?.({
+                    : contentHandler?.({
                         response: message.content.trim(),
                         totalMessages: messages.length,
                         currentMessage: index,
-                      }) ?? message.content.trim())}
+                      }) ||
+                      message.content.trim() ||
+                      "Thinking..."}
                 </Text>
               </div>
             </div>
@@ -89,7 +107,8 @@ export const AIChat = ({
           <div ref={messagesEndRef} />
         </div>
       </ScrollArea>
-      <div className="sticky bottom-0 w-full left-0 py-3">
+
+      <div className="p-3 pt-0">
         <RichTextEditor
           ref={ref}
           variant="ai-chat"

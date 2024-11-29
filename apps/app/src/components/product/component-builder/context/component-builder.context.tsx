@@ -11,9 +11,7 @@ const ComponentBuilderContext = createContext<ComponentBuilderContextType>({
   isAIGeneratingRef: { current: false },
   componentNameRef: undefined,
   componentDescriptionRef: undefined,
-  componentKeywordsRef: {
-    current: [],
-  },
+  componentKeywordsRef: undefined,
   componentPropsRef: undefined,
   componentCodeRef: undefined,
   styleValue: {},
@@ -37,7 +35,7 @@ export const ComponentBuilderProvider = ({
   const isAIGeneratingRef = useRef(false);
   const componentNameRef = useRef<HTMLInputElement>(null);
   const componentDescriptionRef = useRef<HTMLTextAreaElement>(null);
-  const componentKeywordsRef = useRef<string[]>([]);
+  const componentKeywordsRef = useRef<HTMLDivElement>(null);
   const componentPropsRef = useRef<PropSchema[]>([]);
   const componentCodeRef = useRef<CodeMirrorRef>(null);
 

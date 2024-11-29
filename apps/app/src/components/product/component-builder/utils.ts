@@ -14,6 +14,62 @@ interface ParsedFields {
   componentCode: StreamParsedData<string>;
 }
 
+function generateExplanationText(parsedData: ParsedFields): string {
+  const steps = [
+    {
+      field: "componentName",
+      text: "Component name",
+      status: parsedData.componentName.status,
+    },
+    {
+      field: "componentDescription",
+      text: "Description",
+      status: parsedData.componentDescription.status,
+    },
+    {
+      field: "componentKeywords",
+      text: "Keywords",
+      status: parsedData.componentKeywords.status,
+    },
+    {
+      field: "componentProps",
+      text: "Props interface",
+      status: parsedData.componentProps.status,
+    },
+    {
+      field: "componentCode",
+      text: "Implementation",
+      status: parsedData.componentCode.status,
+    },
+  ];
+
+  const getStatusSymbol = (status: StreamDataStatus): string => {
+    const symbols = {
+      complete: "✓",
+      "in-progress": "●",
+      "not-started": "○",
+    };
+
+    const symbol = symbols[status] || symbols["not-started"];
+    return symbol;
+  };
+
+  // Find the longest task text for padding
+  const maxLength = Math.max(...steps.map((step) => step.text.length));
+
+  const stepsText = steps
+    .map((step) => {
+      const statusSymbol = getStatusSymbol(step.status);
+      const paddedText = step.text.padEnd(maxLength, " ");
+      return `${statusSymbol} ${paddedText}`;
+    })
+    .join("\n");
+
+  return `
+${stepsText}
+`;
+}
+
 export function parseAIResponse(response: string): ParsedFields {
   const parsedData: ParsedFields = {
     explanation: "",
@@ -42,7 +98,7 @@ export function parseAIResponse(response: string): ParsedFields {
   const text = response.toString();
 
   // Extract fields
-  parsedData.explanation = extractStreamingContent(
+  const explanationContent = extractStreamingContent(
     text,
     "<cb000>",
     "</cb000>",
@@ -64,19 +120,52 @@ export function parseAIResponse(response: string): ParsedFields {
   );
   parsedData.componentProps = extractCompleteContent(
     text,
-    "<ComponentProps>",
-    "</ComponentProps>",
+    "<cb004>",
+    "</cb004>",
     "[]",
   );
-
-  // Clean up code content
   parsedData.componentCode = extractStreamingContent(
     text,
     "<cb005>",
     "</cb005>",
   );
 
+  if (
+    parsedData.componentProps.status === "complete" ||
+    parsedData.componentProps.status === "in-progress"
+  ) {
+    parsedData.componentKeywords.status = "complete";
+  }
+
+  // Clean up code block markers in componentCode.content
+  let codeContent = parsedData.componentCode.content.trim();
+  // Remove content from start until first newline if it starts with ```
+  if (codeContent.startsWith("```")) {
+    const firstNewlineIndex = codeContent.indexOf("\n");
+    if (firstNewlineIndex !== -1) {
+      codeContent = codeContent.substring(firstNewlineIndex + 1);
+      // Remove content from last ``` to end
+      const lastBackticksIndex = codeContent.lastIndexOf("```");
+      if (lastBackticksIndex !== -1) {
+        codeContent = codeContent.substring(0, lastBackticksIndex);
+      }
+    }
+  }
+
+  // Update the cleaned content
+  parsedData.componentCode.content = codeContent.trim();
+
+  // Generate dynamic explanation text
+  const generatedExplanation = generateExplanationText(parsedData);
+  parsedData.explanation = `${explanationContent}
+  ${generatedExplanation}`;
+
   return parsedData;
+}
+
+function hasPartialTags(content: string): boolean {
+  const partialTagPattern = /<\/?cb\d{3}/;
+  return partialTagPattern.test(content);
 }
 
 function extractStreamingContent(
@@ -95,17 +184,29 @@ function extractStreamingContent(
     };
 
   const endIndex = text.indexOf(closeTag, startIndex);
+  let content = "";
+  let status: StreamDataStatus = "not-started";
+
   if (endIndex === -1) {
-    return {
-      content: text.slice(startIndex + openTag.length).trim(),
-      status: "in-progress",
-    };
+    content = text.slice(startIndex + openTag.length).trim();
+    status = "in-progress";
+  } else {
+    content = text.slice(startIndex + openTag.length, endIndex).trim();
+    status = "complete";
   }
 
-  return {
-    content: text.slice(startIndex + openTag.length, endIndex).trim(),
-    status: "complete",
-  };
+  // Clean up any remaining tags
+  content = content
+    .replace(new RegExp(openTag, "g"), "")
+    .replace(new RegExp(closeTag.replace("/", "\\/"), "g"), "")
+    .trim();
+
+  // Check for partial tags and update status if needed
+  if (status === "complete" && hasPartialTags(content)) {
+    status = "in-progress";
+  }
+
+  return { content, status };
 }
 
 function extractStreamingStringArrayContent(
@@ -125,7 +226,7 @@ function extractStreamingStringArrayContent(
 
   return {
     content: result,
-    status: "complete",
+    status: "in-progress",
   };
 }
 
@@ -144,15 +245,27 @@ function extractCompleteContent(
   }
 
   const endIndex = text.lastIndexOf(closeTag);
+  let content = "";
+  let status: StreamDataStatus = "not-started";
+
   if (endIndex === -1) {
-    return {
-      content: text.slice(startIndex + openTag.length).trim(),
-      status: "in-progress",
-    };
+    content = text.slice(startIndex + openTag.length).trim();
+    status = "in-progress";
+  } else {
+    content = text.slice(startIndex + openTag.length, endIndex).trim();
+    status = "complete";
   }
 
-  return {
-    content: text.slice(startIndex + openTag.length, endIndex).trim(),
-    status: "complete",
-  };
+  // Clean up any remaining tags
+  content = content
+    .replace(new RegExp(openTag, "g"), "")
+    .replace(new RegExp(closeTag.replace("/", "\\/"), "g"), "")
+    .trim();
+
+  // Check for partial tags and update status if needed
+  if (status === "complete" && hasPartialTags(content)) {
+    status = "in-progress";
+  }
+
+  return { content, status };
 }

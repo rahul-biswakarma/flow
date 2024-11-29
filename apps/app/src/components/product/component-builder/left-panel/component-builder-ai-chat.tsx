@@ -81,6 +81,44 @@ export const ComponentBuilderAIChat = () => {
       }
     }
 
+    if (rawParsedData.componentKeywords) {
+      latestDataRef.current.componentKeywords =
+        rawParsedData.componentKeywords.content;
+
+      for (const keyword of rawParsedData.componentKeywords.content) {
+        const keywordElement = document.createElement("div");
+        keywordElement.classList.add(
+          "flex",
+          "gap-1",
+          "items-center",
+          "justify-center",
+          "px-2",
+          "py-1",
+          "rounded",
+          "bg-gray-surface",
+          "border",
+          "border-outline-01",
+          "cursor-default",
+        );
+        keywordElement.textContent = keyword;
+
+        componentKeywordsRef?.current?.appendChild(keywordElement);
+      }
+    }
+
+    if (
+      rawParsedData.componentProps.content &&
+      rawParsedData.componentProps.status !== "complete"
+    ) {
+      try {
+        latestDataRef.current.componentProps = JSON.parse(
+          rawParsedData.componentProps.content,
+        );
+      } catch (e) {
+        // ignore
+      }
+    }
+
     if (
       rawParsedData.componentCode.content &&
       rawParsedData.componentCode.status !== "complete" &&
@@ -106,11 +144,11 @@ export const ComponentBuilderAIChat = () => {
       });
     }
 
-    return rawParsedData.explanation ?? "";
+    return rawParsedData.explanation ?? "Thinking...";
   };
 
   return (
-    <div className="relative h-full w-full bg-gray-a1">
+    <div className="flex grow relative h-full w-full bg-gray-a1">
       <AIChat
         api="/api/ai/cb"
         title="Component Assistant"

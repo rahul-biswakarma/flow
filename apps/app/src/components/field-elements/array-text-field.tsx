@@ -97,9 +97,14 @@ export const ArrayTextFieldElement = ({
         inputRenderer={
           <TextField.Root
             autoFocus={value.length > 0}
-            className={clsx("grow p-0", fieldStyles, fieldFontSize, {
-              "animate-pulse": isStreaming,
-            })}
+            className={clsx(
+              "grow p-0 !bg-transparent",
+              fieldStyles,
+              fieldFontSize,
+              {
+                "!border-none !outline-none": value.length > 0,
+              },
+            )}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => {

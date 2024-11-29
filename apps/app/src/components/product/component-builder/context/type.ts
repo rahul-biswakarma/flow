@@ -7,7 +7,7 @@ export type ComponentBuilderContextType = {
   isAIGeneratingRef: React.MutableRefObject<boolean>;
   componentNameRef?: React.RefObject<HTMLInputElement>;
   componentDescriptionRef?: React.RefObject<HTMLTextAreaElement>;
-  componentKeywordsRef?: React.MutableRefObject<string[]>;
+  componentKeywordsRef?: React.RefObject<HTMLDivElement>;
   componentPropsRef?: React.MutableRefObject<PropSchema[]>;
   componentCodeRef?: React.RefObject<CodeMirrorRef>;
   styleValue: StyleData;

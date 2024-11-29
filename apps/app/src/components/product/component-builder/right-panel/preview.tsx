@@ -52,36 +52,33 @@ export const ComponentBuilderPreview = () => {
           <>
             <ResizableHandle />
             <ResizablePanel minSize={40}>
-              <ScrollArea className="relative max-h-full">
-                <Tabs.Root className="max-h-full" defaultValue="style-panel">
-                  <div className="sticky z-10 top-0">
-                    <Tabs.List
-                      size="2"
-                      className="!shadow-inset-gray bg-panel-header"
-                    >
-                      <Tabs.Trigger value="style-panel">Styles</Tabs.Trigger>
-                      <IconButton
-                        variant="ghost"
-                        color="gray"
-                        className="text-gray-11 absolute right-3 top-0 translate-y-[50%]"
-                        onClick={() => setShowPreviewSettings(false)}
-                        disabled={isAIGenerating}
-                      >
-                        <Icons.X />
-                      </IconButton>
-                    </Tabs.List>
-                  </div>
-
+              <Tabs.Root className="max-h-full" defaultValue="style-panel">
+                <Tabs.List
+                  size="2"
+                  className="relative !shadow-inset-gray bg-panel-header"
+                >
+                  <Tabs.Trigger value="style-panel">Styles</Tabs.Trigger>
+                  <IconButton
+                    variant="ghost"
+                    color="gray"
+                    className="text-gray-11 absolute right-3 -top-0.5 translate-y-[50%]"
+                    onClick={() => setShowPreviewSettings(false)}
+                    disabled={isAIGenerating}
+                  >
+                    <Icons.X />
+                  </IconButton>
+                </Tabs.List>
+                <ScrollArea className="flex relative max-h-full">
                   <Tabs.Content className="bg-panel" value="style-panel">
-                    <div className="p-4 w-full h-full max-h-full pb-[52px]">
+                    <div className="p-4 w-full h-full max-h-full">
                       <StylePanel
                         styleValue={styleValue}
                         setStyleValue={setStyleValue}
                       />
                     </div>
                   </Tabs.Content>
-                </Tabs.Root>
-              </ScrollArea>
+                </ScrollArea>
+              </Tabs.Root>
             </ResizablePanel>
           </>
         )}
