@@ -123,7 +123,7 @@ const PropsField = ({
     <div className="bg-gray-2 border border-gray-a2 rounded-sm mb-2">
       <div
         className={clsx(
-          "flex justify-between items-center p-4 cursor-pointer border-outline-01",
+          "flex justify-between items-center p-4 cursor-pointer border-gray-a2",
           {
             "border-b": isExpanded,
           },
@@ -235,7 +235,7 @@ const PropsField = ({
           </div>
           {propData.propType === "object" && (
             <>
-              <div className="w-full h-0.5 bg-gray-03 border border-dashed border-outline-03" />
+              <div className="w-full h-0.5 bg-gray-03 border border-dashed border-gray-a3" />
               <ObjectTypeFields
                 objectSchema={propData.objectSchema || {}}
                 fieldName={propData.visualName || propData.propName || "Object"}

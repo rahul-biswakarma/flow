@@ -11,7 +11,7 @@ import type { ObjectSchema, ObjectSchemaProperty, PropsType } from "../types";
 
 const MAX_KEYS = 8;
 const MAX_OBJECT_NESTING = 2;
-const ICON_CLASSES = "!w-3.5 !h-3.5 !text-gray-10";
+const ICON_CLASSES = "!text-gray-10";
 const NESTED_MARGIN = 15; // pixels to indent nested objects
 
 interface ObjectTypeFieldsProps {
@@ -32,7 +32,7 @@ export const ObjectTypeFields: React.FC<ObjectTypeFieldsProps> = ({
   const addKey = () => {
     const newKey = `New Key ${nestingLevel}${keys.length}`;
     setKeys([...keys, newKey]);
-    onChange({ ...objectSchema, [newKey]: { type: "string" } });
+    onChange({ ...objectSchema, [newKey]: { type: "string", name: newKey } });
   };
 
   const removeKey = (keyToRemove: string) => {
@@ -75,7 +75,7 @@ export const ObjectTypeFields: React.FC<ObjectTypeFieldsProps> = ({
         {fieldName} Properties
       </Text>
 
-      <div className="flex flex-col gap-2 pl-2 border-l-2 border-outline-02">
+      <div className="flex flex-col gap-2 pl-2 border-l-2 border-gray-a3">
         {keys.map((key, index: number) => {
           const property = objectSchema[key];
           if (!property) return null;
@@ -95,6 +95,7 @@ export const ObjectTypeFields: React.FC<ObjectTypeFieldsProps> = ({
                   placeholder="Key name"
                 />
                 <DropdownFieldElement
+                  triggerSize="2"
                   dropdownKey={`object_field_${nestingLevel}_${index}`}
                   options={[
                     { label: "String", value: "string" },
@@ -109,7 +110,7 @@ export const ObjectTypeFields: React.FC<ObjectTypeFieldsProps> = ({
                 />
                 <Button
                   variant="ghost"
-                  size="1"
+                  className="py-2 ml-1"
                   color="gray"
                   onClick={() => removeKey(key)}
                 >

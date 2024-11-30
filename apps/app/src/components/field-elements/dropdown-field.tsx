@@ -23,6 +23,7 @@ interface DropdownFieldElementProps {
   labelClassName?: string;
   onChange: (e: FieldOnChangeProps<Option>) => void;
   dropdownKey?: string;
+  triggerSize?: "1" | "2" | "3";
 }
 
 export const DropdownFieldElement = ({
@@ -34,6 +35,7 @@ export const DropdownFieldElement = ({
   onChange,
   placeholder,
   dropdownKey,
+  triggerSize = "1",
 }: DropdownFieldElementProps) => {
   return (
     <>
@@ -58,7 +60,7 @@ export const DropdownFieldElement = ({
       )}
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
-          <Button color="gray" variant="soft" size="1">
+          <Button color="gray" variant="soft" size={triggerSize}>
             {placeholder && !value && (
               <Text className={clsx("text-gray-11 capitalize", fieldFontSize)}>
                 {placeholder}

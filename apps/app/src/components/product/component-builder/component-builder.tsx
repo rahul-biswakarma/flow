@@ -12,7 +12,7 @@ import { ComponentBuilderAIChat } from "./left-panel/component-builder-ai-chat";
 import { CodeEditor } from "./right-panel/code-editor";
 import { ComponentBuilderPreview } from "./right-panel/preview";
 import "./styles.css";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import {
   ComponentBuilderProvider,
   useComponentBuilderContext,
@@ -29,7 +29,6 @@ export const ComponentBuilder = () => {
 
 const ComponentBuilderContent = () => {
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
   const { isConfigValid, componentCode, styleValue } =
     useComponentBuilderContext();
 
@@ -40,14 +39,6 @@ const ComponentBuilderContent = () => {
   );
 
   console.log("files", files);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <div className="w-full grid grid-rows-[auto_1fr] h-full max-h-full">

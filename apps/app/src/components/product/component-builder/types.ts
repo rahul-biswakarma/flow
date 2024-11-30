@@ -25,6 +25,7 @@ export interface PropSchema {
 }
 
 export interface ObjectSchemaProperty {
+  name: string;
   type: PropsType;
   properties?: ObjectSchema;
 }
