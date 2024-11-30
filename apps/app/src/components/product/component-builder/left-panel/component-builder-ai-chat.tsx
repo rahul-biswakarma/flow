@@ -106,8 +106,6 @@ export const ComponentBuilderAIChat = () => {
       }
     }
 
-    console.log("rawParsedData", rawParsedData.componentProps.content);
-
     if (
       rawParsedData.componentProps.content &&
       rawParsedData.componentProps.status === "complete"

@@ -12,7 +12,7 @@ import { ComponentBuilderAIChat } from "./left-panel/component-builder-ai-chat";
 import { CodeEditor } from "./right-panel/code-editor";
 import { ComponentBuilderPreview } from "./right-panel/preview";
 import "./styles.css";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ComponentBuilderProvider,
   useComponentBuilderContext,
@@ -33,6 +33,14 @@ const ComponentBuilderContent = () => {
   const { isConfigValid, componentCode, styleValue } =
     useComponentBuilderContext();
 
+  // Create files config when component code or style changes
+  const files = useMemo(
+    () => sandPackFilesConfig({ code: componentCode, styleValue }),
+    [componentCode, styleValue],
+  );
+
+  console.log("files", files);
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -47,7 +55,7 @@ const ComponentBuilderContent = () => {
       <SandpackProvider
         theme={resolvedTheme === "dark" ? amethyst : aquaBlue}
         template="react-ts"
-        files={sandPackFilesConfig({ code: componentCode, styleValue })}
+        files={files}
       >
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel minSize={30} defaultSize={40}>

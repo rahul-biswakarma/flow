@@ -24,7 +24,7 @@ export const ArrayValueRenderer = <T,>({
       ref={ref}
       tabIndex={-1}
       className={clsx(
-        "flex gap-2 flex-wrap border-gray-7 bg-gray-a3 rounded-sm",
+        "flex gap-1 flex-wrap border-gray-7 bg-gray-a3 rounded-sm",
         {
           "rounded p-1": value.length > 0,
         },

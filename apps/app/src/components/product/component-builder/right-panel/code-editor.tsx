@@ -26,7 +26,7 @@ export const CodeEditor = () => {
     if (!isAIGeneratingRef.current) {
       const newCode = files?.[activeFile]?.code ?? "";
       if (newCode === componentCode) return;
-      setComponentCode(() => newCode);
+      setComponentCode(newCode);
     }
   }, [files, activeFile, setComponentCode, componentCode]);
 
