@@ -40,12 +40,14 @@ Example of INCORRECT format:
     "id": "prop-unique-id",
     "visualName": "Human Readable Name",
     "propName": "camelCasePropName",
-    "propType": "text|number|boolean|object|component|function|array",
+    "propType": "text|number|boolean|object|array",
     "description": "Clear, specific prop description",
     "required": boolean,
     "isList": boolean,
     "defaultValue": "default value if any",
-    "validation": "validation rules if any"
+    "validation": "validation rules if any",
+    "objectSchema": {
+    }
   }
 ]
 </cb004>
@@ -62,8 +64,9 @@ Example of INCORRECT format:
       - Accessibility features (ARIA attributes)
       - Responsive design considerations
    5. Include prop validation
-   6. Add error handling
-   7. Export the component
+   6. Add default value for props
+   7. Add error handling
+   6. Export the component as Default export
 
    The code should be production-ready and fully functional.
 </cb005>
