@@ -6,10 +6,8 @@ import { withSentryConfig } from "@sentry/nextjs";
 const nextConfig = {
   transpilePackages: ["@v1/supabase", "@v1/ui"],
   experimental: {
-    instrumentationHook: process.env.NODE_ENV === "production",
     optimizePackageImports: ["@v1/supabase", "@v1/ui"],
   },
-  swcMinify: true,
   compress: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",

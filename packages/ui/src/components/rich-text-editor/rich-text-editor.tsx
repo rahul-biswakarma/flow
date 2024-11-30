@@ -21,8 +21,9 @@ export const RichTextEditor = ({
   ];
 
   const editor = useEditor({
+    immediatelyRender: false,
     extensions,
-    content,
+    content: content,
   });
   if (!editor) return null;
 

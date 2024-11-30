@@ -1,7 +1,7 @@
 import type { Editor, JSONContent } from "@tiptap/react";
 
 export interface RichTextEditorProps {
-  content: JSONContent;
+  content?: JSONContent;
   readOnly?: boolean;
   afterSlot?: React.ReactNode;
   beforeSlot?: React.ReactNode;

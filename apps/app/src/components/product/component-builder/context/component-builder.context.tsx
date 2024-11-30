@@ -1,14 +1,19 @@
 import type { StyleData } from "@/components/panels/style-panel/type";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { defaultComponentCode } from "../constants";
-import type { PropSchema } from "../types";
+import type { CodeMirrorRef, PropSchema } from "../types";
 import type { ComponentBuilderContextType } from "./type";
 
 const ComponentBuilderContext = createContext<ComponentBuilderContextType>({
   isConfigValid: false,
   isAIGenerating: false,
   isAIGeneratingRef: { current: false },
+  componentNameRef: undefined,
+  componentDescriptionRef: undefined,
+  componentKeywordsRef: undefined,
+  componentPropsRef: undefined,
+  componentCodeRef: undefined,
   styleValue: {},
   componentName: "",
   componentDescription: "",
@@ -27,7 +32,12 @@ const ComponentBuilderContext = createContext<ComponentBuilderContextType>({
 export const ComponentBuilderProvider = ({
   children,
 }: { children: React.ReactNode }) => {
-  const isAIGeneratingRef = React.useRef(false);
+  const isAIGeneratingRef = useRef(false);
+  const componentNameRef = useRef<HTMLInputElement>(null);
+  const componentDescriptionRef = useRef<HTMLTextAreaElement>(null);
+  const componentKeywordsRef = useRef<HTMLDivElement>(null);
+  const componentPropsRef = useRef<PropSchema[]>([]);
+  const componentCodeRef = useRef<CodeMirrorRef>(null);
 
   const [isAIGenerating, setIsAIGenerating] = useState(false);
   const [styleValue, setStyleValue] = useState<StyleData>({});
@@ -51,6 +61,11 @@ export const ComponentBuilderProvider = ({
         isConfigValid,
         isAIGenerating,
         isAIGeneratingRef,
+        componentNameRef,
+        componentDescriptionRef,
+        componentKeywordsRef,
+        componentPropsRef,
+        componentCodeRef,
         styleValue,
         componentName,
         componentDescription,

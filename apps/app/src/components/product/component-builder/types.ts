@@ -1,3 +1,5 @@
+import type { EditorView } from "@codemirror/view";
+
 export interface ComponentData {
   name: string;
   description: string;
@@ -9,6 +11,7 @@ export interface ComponentData {
 }
 
 export type PropsType = "string" | "number" | "boolean" | "object" | "self";
+export type StreamDataStatus = "not-started" | "in-progress" | "complete";
 
 export interface PropSchema {
   id: string;
@@ -42,4 +45,8 @@ export interface GenerationStatus {
   isGenerating: boolean;
   completed: GenerationState;
   current: keyof GenerationState | null;
+}
+
+export interface CodeMirrorRef {
+  getCodemirror: () => EditorView | undefined;
 }

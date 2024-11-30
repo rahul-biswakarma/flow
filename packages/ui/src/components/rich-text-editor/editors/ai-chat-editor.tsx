@@ -42,6 +42,7 @@ export const AIChatEditor = ({
             }
           }}
           className="w-full h-full pt-1"
+          readOnly={readOnly}
           editor={editor}
         />
         <div className="flex items-center gap-2 h-full">
@@ -65,7 +66,11 @@ export const AIChatEditor = ({
             }}
             size="1"
           >
-            {isLoading ? <Icons.Loader /> : <Icons.ArrowRight />}
+            {isLoading ? (
+              <Icons.Loader className="rotate-infinitely" />
+            ) : (
+              <Icons.ArrowRight />
+            )}
           </IconButton>
         </div>
       </div>

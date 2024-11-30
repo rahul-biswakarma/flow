@@ -18,6 +18,7 @@ interface StringFieldElementProps {
   fieldInfo?: string;
   labelClassName?: string;
   onChange: (e: FieldOnChangeProps<string>) => void;
+  ref?: React.RefObject<HTMLTextAreaElement>;
 }
 
 export const StringFieldElement = ({
@@ -27,6 +28,7 @@ export const StringFieldElement = ({
   onChange,
   labelClassName,
   fieldInfo,
+  ref,
 }: StringFieldElementProps) => {
   return (
     <>
@@ -48,6 +50,7 @@ export const StringFieldElement = ({
         )}
       </Text>
       <TextArea
+        ref={ref}
         className={clsx(fieldStyles, fieldFontSize)}
         value={value}
         onChange={(e) =>

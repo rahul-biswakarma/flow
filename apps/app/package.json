@@ -16,9 +16,8 @@
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.72",
-    "@codesandbox/sandpack-react": "^2.19.9",
+    "@codesandbox/sandpack-react": "^2.19.10",
     "@codesandbox/sandpack-themes": "^2.0.21",
-    "@types/lodash": "^4.17.13",
     "@v1/ai": "workspace:*",
     "@v1/analytics": "workspace:*",
     "@v1/kv": "workspace:*",
@@ -44,13 +43,15 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.3",
-    "react-router-dom": "^6.27.0"
+    "react-router-dom": "^6.27.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "15.0.3",
     "@sentry/nextjs": "^8.35.0",
     "@supabase/sentry-js-integration": "^0.2.0",
     "@types/color-convert": "^2.0.4",
+    "@types/lodash": "^4.17.13",
     "@types/node": "^22.7.9",
     "typescript": "^5.6.3"
   }

@@ -1,6 +1,7 @@
 import { SandpackCodeEditor, useSandpack } from "@codesandbox/sandpack-react";
 import { IconButton } from "@v1/ui/icon-button";
 import { Icons } from "@v1/ui/icons";
+import { ScrollArea } from "@v1/ui/scroll-area";
 import { Text } from "@v1/ui/text";
 import * as parserBabel from "prettier/parser-babel";
 import * as prettierPluginEstree from "prettier/plugins/estree";
@@ -10,28 +11,37 @@ import { useComponentBuilderContext } from "../context";
 
 export const CodeEditor = () => {
   const { sandpack } = useSandpack();
-  const { files, activeFile } = sandpack;
+  const { files, activeFile, updateFile } = sandpack;
 
-  const { isAIGenerating, isAIGeneratingRef, setComponentCode, componentCode } =
-    useComponentBuilderContext();
+  const {
+    isAIGenerating,
+    isAIGeneratingRef,
+    setComponentCode,
+    componentCodeRef,
+    componentCode,
+  } = useComponentBuilderContext();
 
   // Handle code updates from Sandpack
   useEffect(() => {
     if (!isAIGeneratingRef.current) {
       const newCode = files?.[activeFile]?.code ?? "";
       if (newCode === componentCode) return;
-      setComponentCode(() => newCode);
+      setComponentCode(newCode);
+
+      // Update the preview by syncing file changes
+      updateFile(activeFile, newCode);
     }
-  }, [files, activeFile, setComponentCode, componentCode]);
+  }, [files, activeFile, setComponentCode, componentCode, updateFile]);
 
   const formatCode = useCallback(async (codeToFormat: string) => {
     try {
-      return await prettier.format(codeToFormat, {
+      const formattedCode = await prettier.format(codeToFormat, {
         parser: "babel",
         plugins: [parserBabel, prettierPluginEstree],
         semi: true,
         singleQuote: true,
       });
+      return formattedCode;
     } catch (error) {
       console.error("Formatting error:", error);
       return codeToFormat;
@@ -45,8 +55,8 @@ export const CodeEditor = () => {
   }, [formatCode, files, activeFile, sandpack]);
 
   return (
-    <div className="h-full w-full z-10 text-[14px]">
-      <div className="flex items-center justify-between gap-2 w-full py-2 px-3 h-10 border-b bg-panel-header border-panel">
+    <div className="flex flex-col h-full w-full z-10 text-[14px]">
+      <div className="flex items-center justify-between gap-2 w-full py-2 px-3 min-h-10 border-b bg-panel-header border-panel">
         <Text size="2" className="text-gray-11">
           Editor
         </Text>
@@ -60,18 +70,14 @@ export const CodeEditor = () => {
           <Icons.Wand className="!w-4 !h-4 !text-gray-11" />
         </IconButton>
       </div>
-      <div
-        className="sandpack-code-editor"
-        style={{
-          height: "calc(100% - 40px)",
-        }}
-      >
+      <ScrollArea>
         <SandpackCodeEditor
+          ref={componentCodeRef}
           showTabs={false}
           showLineNumbers={true}
           readOnly={isAIGenerating}
         />
-      </div>
+      </ScrollArea>
     </div>
   );
 };

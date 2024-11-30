@@ -20,6 +20,14 @@ export const sandPackFilesConfig = ({
   "/App.tsx": {
     code: code,
   },
+  "/index.css": {
+    code: `body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+    }`,
+  },
   "/index.tsx": {
     code: `import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
@@ -27,7 +35,7 @@ import { Theme as ThemeProvider } from "@radix-ui/themes";
 
 import App from "./App";
 import "@radix-ui/themes/styles.css";
-
+import "./index.css";
 
 const root = createRoot(document.getElementById("root"));
 root.render(
@@ -52,7 +60,6 @@ root.render(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>html, body {margin: 0px;}</style>
   </head>
   <body>
     <div id="root"></div>
@@ -102,7 +109,4 @@ export default function App(props): JSX.Element {
     </div>
   );
 }
-
-
-
 `;

@@ -1,10 +1,15 @@
 import type { StyleData } from "@/components/panels/style-panel/type";
-import type { PropSchema } from "../types";
+import type { CodeMirrorRef, PropSchema } from "../types";
 
 export type ComponentBuilderContextType = {
   isConfigValid: boolean;
   isAIGenerating: boolean;
   isAIGeneratingRef: React.MutableRefObject<boolean>;
+  componentNameRef?: React.RefObject<HTMLInputElement>;
+  componentDescriptionRef?: React.RefObject<HTMLTextAreaElement>;
+  componentKeywordsRef?: React.RefObject<HTMLDivElement>;
+  componentPropsRef?: React.MutableRefObject<PropSchema[]>;
+  componentCodeRef?: React.RefObject<CodeMirrorRef>;
   styleValue: StyleData;
   componentName: string;
   componentDescription: string;
