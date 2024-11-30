@@ -16,7 +16,6 @@ import { useComponentBuilderContext } from "../context";
 export const ComponentBuilderPreview = () => {
   const { isAIGenerating, styleValue, setStyleValue } =
     useComponentBuilderContext();
-
   const [showPreviewSettings, setShowPreviewSettings] = useState(true);
 
   return (
@@ -41,10 +40,11 @@ export const ComponentBuilderPreview = () => {
               )}
             </div>
             <SandpackPreview
+              showOpenInCodeSandbox={false}
+              showRefreshButton={true}
               style={{
                 height: "calc(100% - 40px)",
               }}
-              showOpenInCodeSandbox={false}
             />
           </div>
         </ResizablePanel>

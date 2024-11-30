@@ -11,14 +11,14 @@ import { useComponentBuilderContext } from "../context";
 
 export const CodeEditor = () => {
   const { sandpack } = useSandpack();
-  const { files, activeFile } = sandpack;
+  const { files, activeFile, updateFile } = sandpack;
 
   const {
     isAIGenerating,
     isAIGeneratingRef,
     setComponentCode,
-    componentCode,
     componentCodeRef,
+    componentCode,
   } = useComponentBuilderContext();
 
   // Handle code updates from Sandpack
@@ -27,17 +27,21 @@ export const CodeEditor = () => {
       const newCode = files?.[activeFile]?.code ?? "";
       if (newCode === componentCode) return;
       setComponentCode(newCode);
+
+      // Update the preview by syncing file changes
+      updateFile(activeFile, newCode);
     }
-  }, [files, activeFile, setComponentCode, componentCode]);
+  }, [files, activeFile, setComponentCode, componentCode, updateFile]);
 
   const formatCode = useCallback(async (codeToFormat: string) => {
     try {
-      return await prettier.format(codeToFormat, {
+      const formattedCode = await prettier.format(codeToFormat, {
         parser: "babel",
         plugins: [parserBabel, prettierPluginEstree],
         semi: true,
         singleQuote: true,
       });
+      return formattedCode;
     } catch (error) {
       console.error("Formatting error:", error);
       return codeToFormat;

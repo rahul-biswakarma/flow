@@ -37,7 +37,6 @@ import App from "./App";
 import "@radix-ui/themes/styles.css";
 import "./index.css";
 
-
 const root = createRoot(document.getElementById("root"));
 root.render(
   <StrictMode>
@@ -62,7 +61,7 @@ root.render(
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
   </head>
-  <body style="margin: 0px !important">
+  <body>
     <div id="root"></div>
   </body>
 </html>`,
@@ -110,7 +109,4 @@ export default function App(props): JSX.Element {
     </div>
   );
 }
-
-
-
 `;

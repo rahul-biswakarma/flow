@@ -82,11 +82,15 @@ export const AIChat = ({
           {messages.map((message, index) => (
             <div
               key={message.id}
-              className={clsx("py-3 w-auto rounded-md", {
-                "bg-gray-a2 ml-auto px-4": message.role === "user",
+              className={clsx("w-full", {
+                "px-4": message.role === "user",
               })}
             >
-              <div className="flex gap-2">
+              <div
+                className={clsx("flex gap-2 py-3 rounded-md", {
+                  "bg-gray-a2 ml-auto px-4 w-fit": message.role === "user",
+                })}
+              >
                 {message.role === "assistant" && (
                   <Avatar size="2" fallback="A" />
                 )}
