@@ -53,9 +53,7 @@ export const getProjectBySlug = async (slug: string) => {
   return getProjectBySlugQuery({ supabase, slug });
 };
 
-export async function addProjectMember(
-  membership: Tables<"project_memberships">,
-) {
+export async function addProjectMember(membership: Tables<"user_projects">) {
   const supabase = await createSupabaseClient();
   return getProjectMembersQuery({ supabase, membership });
 }
