@@ -20,6 +20,8 @@ export const ProjectManager = ({
 }: ProjectManagerProps) => {
   const scopedT = useScopedI18n("onboarding");
 
+  console.log("projects", projects);
+
   const projectsAvailable = projects.length > 0;
 
   const containerVariants = {

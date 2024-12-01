@@ -13,6 +13,7 @@ export type Project = Tables<"projects">;
 
 export type ProjectWithPages = Tables<"projects"> & {
   pages: Tables<"pages">[];
+  config: Record<string, unknown>;
 };
 
 export type Component = Tables<"components">;

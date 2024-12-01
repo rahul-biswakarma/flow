@@ -54,7 +54,7 @@ export const getUserDetailsQuery = async ({
 export const getUserProjectsQuery = async ({
   supabase,
   userId,
-  page,
+  page = 1,
 }: { supabase: SupabaseClient; userId: string; page: number }): Promise<
   Tables<"projects">[]
 > => {
@@ -62,11 +62,11 @@ export const getUserProjectsQuery = async ({
     await verifyAuthUser({ supabase });
 
     const { data: response, error } = await supabase
-      .from("project_memberships")
-      .select(`project_id, projects (  id,
-          name,
-          slug,
-          description)`)
+      .from("user_projects")
+      .select(`
+          project_id,
+          projects(id, name, slug)
+      `)
       .eq("user_id", userId)
       .range(page * BATCH_SIZE - BATCH_SIZE, page * BATCH_SIZE - 1);
 
@@ -168,7 +168,7 @@ export const updateProjectConfigQuery = async ({
   try {
     const { data, error } = await supabase
       .from("projects")
-      .update(config)
+      .update({ config })
       .eq("slug", slug)
       .select();
     if (error) throw error;

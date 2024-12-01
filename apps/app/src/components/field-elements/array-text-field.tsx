@@ -3,7 +3,7 @@ import { Text } from "@v1/ui/text";
 import { TextField } from "@v1/ui/text-field";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import { clsx } from "clsx";
-import { useEffect, useRef, useState } from "react";
+import { type RefObject, useState } from "react";
 import {
   fieldFontSize,
   fieldStyles,
@@ -20,7 +20,8 @@ interface ArrayTextFieldElementProps {
   value: string[];
   fieldInfo?: string;
   onChange: (e: FieldOnChangeProps<string[]>) => void;
-  streamingValue?: string;
+  isStreaming?: boolean;
+  ref?: RefObject<HTMLDivElement>;
 }
 
 export const ArrayTextFieldElement = ({
@@ -30,39 +31,10 @@ export const ArrayTextFieldElement = ({
   labelClassName,
   fieldInfo,
   onChange,
-  streamingValue,
+  isStreaming,
+  ref,
 }: ArrayTextFieldElementProps) => {
   const [inputValue, setInputValue] = useState("");
-  const streamingRef = useRef<string>("");
-  const [isStreaming, setIsStreaming] = useState(false);
-
-  useEffect(() => {
-    if (streamingValue && streamingValue !== streamingRef.current) {
-      setIsStreaming(true);
-      streamingRef.current = streamingValue;
-
-      const chars = streamingValue.split("");
-      let currentIndex = 0;
-
-      const streamInterval = setInterval(() => {
-        if (currentIndex < chars.length) {
-          setInputValue((prev) => prev + chars[currentIndex]);
-          currentIndex++;
-        } else {
-          clearInterval(streamInterval);
-          onChange({
-            isEmpty: false,
-            type: "string[]",
-            value: [...value, streamingValue],
-          });
-          setInputValue("");
-          setIsStreaming(false);
-        }
-      }, 50);
-
-      return () => clearInterval(streamInterval);
-    }
-  }, [streamingValue, onChange, value]);
 
   return (
     <>
@@ -84,7 +56,9 @@ export const ArrayTextFieldElement = ({
         )}
       </Text>
       <ArrayValueRenderer<string>
+        ref={ref}
         value={value}
+        isStreaming={isStreaming}
         valueRender={(value: string) => <Text size="2">{value}</Text>}
         removeItem={(discardedValue) => {
           const newValue = value.filter((v) => v !== discardedValue);
@@ -104,6 +78,7 @@ export const ArrayTextFieldElement = ({
               {
                 "!border-none !outline-none": value.length > 0,
               },
+              { "!w-0": isStreaming },
             )}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}

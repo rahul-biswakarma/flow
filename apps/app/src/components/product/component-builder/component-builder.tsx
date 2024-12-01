@@ -38,8 +38,6 @@ const ComponentBuilderContent = () => {
     [componentCode, styleValue],
   );
 
-  console.log("files", files);
-
   return (
     <div className="w-full grid grid-rows-[auto_1fr] h-full max-h-full">
       <ComponentBuilderHeader isConfigValid={isConfigValid} />

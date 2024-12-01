@@ -32,7 +32,7 @@ export const ComponentBuilderHeader = ({
         description: componentDescription,
         code: componentCode,
         keywords: componentKeywords,
-      } as Component,
+      } as unknown as Component,
       properties: {},
     });
 
@@ -54,6 +54,7 @@ export const ComponentBuilderHeader = ({
         <Button
           disabled={!isConfigValid || disabled}
           variant="surface"
+          color="green"
           onClick={handleCreate}
         >
           {scopedT("publish")}

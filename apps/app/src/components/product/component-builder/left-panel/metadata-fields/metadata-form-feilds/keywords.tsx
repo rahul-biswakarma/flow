@@ -6,11 +6,18 @@ import { useComponentBuilderContext } from "../../../context";
 export const ComponentKeywordsField = () => {
   const scopedT = useScopedI18n("component_builder.field");
 
-  const { componentKeywords, isAIGeneratingRef, setComponentKeywords } =
-    useComponentBuilderContext();
+  const {
+    componentKeywords,
+    componentKeywordsRef,
+    isAIGeneratingRef,
+    isAIGenerating,
+    setComponentKeywords,
+  } = useComponentBuilderContext();
 
   return (
     <ArrayTextFieldElement
+      isStreaming={isAIGenerating}
+      ref={componentKeywordsRef}
       label={scopedT("keywords")}
       value={componentKeywords}
       onChange={(e: FieldOnChangeProps<string[]>): void => {

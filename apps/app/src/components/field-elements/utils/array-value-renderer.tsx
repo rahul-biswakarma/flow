@@ -10,11 +10,13 @@ export const ArrayValueRenderer = <T,>({
   inputRenderer,
   removeItem,
   ref,
+  isStreaming,
 }: {
   value: T[];
   valueRender: (value: T) => JSX.Element;
   inputRenderer?: ReactNode;
   removeItem?: (value: T) => void;
+  isStreaming?: boolean;
   ref?: React.RefObject<HTMLDivElement>;
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -24,9 +26,9 @@ export const ArrayValueRenderer = <T,>({
       ref={ref}
       tabIndex={-1}
       className={clsx(
-        "flex gap-1 flex-wrap border-gray-7 bg-gray-a3 rounded-sm",
+        "flex gap-1 flex-wrap border-gray-7 bg-gray-a3 rounded-sm min-h-10",
         {
-          "rounded p-1": value.length > 0,
+          "rounded p-1": value.length > 0 || isStreaming,
         },
       )}
       onFocus={() => setIsFocused(true)}
@@ -51,7 +53,7 @@ export const ArrayValueRenderer = <T,>({
           </IconButton>
         </div>
       ))}
-      {(isFocused || !value.length) && inputRenderer}
+      {isFocused && inputRenderer}
     </div>
   );
 };
