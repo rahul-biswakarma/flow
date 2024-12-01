@@ -1,6 +1,5 @@
 import { useFlowContext } from "@/context";
 import { useScopedI18n } from "@/locales/client";
-import { createSupabaseClient } from "@v1/supabase/client";
 import type { ComponentStatus } from "@v1/supabase/types/component";
 import { Icons } from "@v1/ui/icons";
 import { Tabs } from "@v1/ui/tabs";
@@ -18,7 +17,6 @@ export function ComponentLibrary() {
   const { projectData } = useFlowContext();
   const [activeTab, setActiveTab] = useState<ComponentStatus>("draft");
   const [search, setSearch] = useState("");
-  const supabase = createSupabaseClient();
 
   const { components, isLoading, error } = useComponents({
     projectId: projectData?.id,

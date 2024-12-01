@@ -13,19 +13,16 @@ export type Database = {
         Row: {
           component_id: string
           created_at: string
-          position: number
           properties_id: string
         }
         Insert: {
           component_id: string
           created_at?: string
-          position: number
           properties_id: string
         }
         Update: {
           component_id?: string
           created_at?: string
-          position?: number
           properties_id?: string
         }
         Relationships: [
@@ -49,6 +46,7 @@ export type Database = {
         Row: {
           code: string | null
           created_at: string
+          description: string | null
           id: string
           keywords: string[] | null
           name: string
@@ -57,6 +55,7 @@ export type Database = {
         Insert: {
           code?: string | null
           created_at?: string
+          description?: string | null
           id?: string
           keywords?: string[] | null
           name: string
@@ -65,6 +64,7 @@ export type Database = {
         Update: {
           code?: string | null
           created_at?: string
+          description?: string | null
           id?: string
           keywords?: string[] | null
           name?: string
@@ -130,19 +130,16 @@ export type Database = {
         Row: {
           created_at: string
           page_id: string
-          position: number
           project_id: string
         }
         Insert: {
           created_at?: string
           page_id: string
-          position: number
           project_id: string
         }
         Update: {
           created_at?: string
           page_id?: string
-          position?: number
           project_id?: string
         }
         Relationships: [
@@ -169,6 +166,7 @@ export type Database = {
           created_at: string
           created_by: string
           id: string
+          is_hosted: boolean | null
           name: string
           slug: string
           updated_at: string
@@ -179,6 +177,7 @@ export type Database = {
           created_at?: string
           created_by: string
           id?: string
+          is_hosted?: boolean | null
           name: string
           slug: string
           updated_at?: string
@@ -189,6 +188,7 @@ export type Database = {
           created_at?: string
           created_by?: string
           id?: string
+          is_hosted?: boolean | null
           name?: string
           slug?: string
           updated_at?: string

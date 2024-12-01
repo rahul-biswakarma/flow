@@ -76,6 +76,7 @@ export default {
   "component_builder.preview": "Preview",
   "component_builder.code": "Code",
   "component_builder.publish": "Publish",
+  "component_builder.creating": "Creating",
   "component_builder.field.component_info_group_title": "Component Info",
   "component_builder.field.props_schema_group_title":
     "Component Input Data Schema",
@@ -89,6 +90,7 @@ export default {
   "component_builder.project_not_found": "Project not found",
   "component_builder.component_published": "Component published successfully",
   "component_builder.publish_error": "Failed to publish component",
+  "component_builder.build_new_component": "Build new component",
 
   "component_library.title": "Components",
   "component_library.create_new": "Create Component",

@@ -44,9 +44,9 @@ export function NavigationBar() {
   }, []);
 
   const projectName = projectData?.name ?? "Untitled";
-  const published = projectData?.is_published ?? false;
+  const published = projectData?.is_hosted ?? false;
   const avatar = projectData?.avatar ?? DEFAULT_ORG_AVATAR;
-  const userAvatar = user?.avatar_url ?? DEFAULT_ORG_AVATAR;
+  const userAvatar = user?.avatar ?? DEFAULT_ORG_AVATAR;
 
   // Render a placeholder or loading state until mounted
   if (!mounted) {

@@ -2,11 +2,14 @@ import type { UserResponse } from "@supabase/supabase-js";
 import { createSupabaseClient } from "@v1/supabase/client";
 import type { Tables } from "../types";
 import {
+  addComponentPropertiesRelationQuires,
+  addProjectComponentRelationQuery,
+  addUserProjectRelationQuery,
   createComponentQuery,
   createProjectQuery,
+  createPropertiesQuery,
   getAuthUserQuery,
   getProjectBySlugQuery,
-  getProjectMembersQuery,
   getProjectWithPagesQuery,
   getUserDetailsQuery,
   getUserProjectsQuery,
@@ -58,7 +61,7 @@ export const getProjectBySlug = async (slug: string) => {
 };
 
 export async function addProjectMember(membership: Tables<"user_projects">) {
-  return getProjectMembersQuery({ supabase, membership });
+  return addUserProjectRelationQuery({ supabase, membership });
 }
 
 export async function createProjectWithMember(
@@ -102,9 +105,58 @@ export async function createProjectWithMember(
 export async function createComponent({
   component,
   properties,
+  projectId,
 }: {
   component: Tables<"components">;
-  properties: object;
+  properties: Tables<"properties">[];
+  projectId: string;
 }) {
-  return createComponentQuery({ supabase, component });
+  try {
+    // Create component and properties in parallel if properties exist
+    const [componentResponse, propsResponse] = await Promise.all([
+      createComponentQuery({ supabase, component }),
+      properties.length > 0
+        ? createPropertiesQuery({ supabase, properties })
+        : Promise.resolve(null),
+    ]);
+
+    if (!componentResponse) {
+      throw new Error("Failed to create component");
+    }
+
+    // Create relations in parallel if properties exist
+    if (properties.length > 0 && propsResponse) {
+      const propertyIds = propsResponse.map((prop) => prop.id);
+
+      await Promise.all([
+        addComponentPropertiesRelationQuires({
+          supabase,
+          componentId: componentResponse.id,
+          properties: propertyIds,
+        }),
+        addProjectComponentRelationQuery({
+          supabase,
+          componentId: componentResponse.id,
+          projectId,
+        }),
+      ]);
+    } else {
+      // If no properties, just create project component relation
+      const projectComponentRelation = await addProjectComponentRelationQuery({
+        supabase,
+        componentId: componentResponse.id,
+        projectId,
+      });
+
+      if (!projectComponentRelation) {
+        throw new Error("Failed to create project component relation");
+      }
+    }
+
+    return componentResponse;
+  } catch (error) {
+    throw new Error(
+      `Failed to create component: ${error instanceof Error ? error.message : "Unknown error"}`,
+    );
+  }
 }

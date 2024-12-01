@@ -10,6 +10,7 @@ import {
   IconArrowLeft,
   IconArrowNarrowRight,
   IconArrowRight,
+  IconBolt,
   IconBorderBottom,
   IconBorderCorners,
   IconBorderLeft,
@@ -52,6 +53,7 @@ import {
   IconLayoutAlignTop,
   IconLayoutDistributeHorizontal,
   IconLayoutDistributeVertical,
+  IconLayoutGridAdd,
   IconLayoutOff,
   IconLineDashed,
   IconLineDotted,
@@ -72,6 +74,7 @@ import {
   IconSearch,
   IconSend,
   IconSettings,
+  IconSitemap,
   IconSparkles,
   IconSun,
   IconSunMoon,
@@ -80,6 +83,7 @@ import {
   IconTrash,
   IconUser,
   IconWand,
+  IconWorld,
   IconX,
 } from "@tabler/icons-react";
 
@@ -90,7 +94,11 @@ const IconWrapper = (Icon: React.ComponentType<IconProps>) => {
 };
 
 export const Icons = {
+  Bolt: IconWrapper(IconBolt),
   Brush: IconWrapper(IconBrush),
+  LayoutGridAdd: IconWrapper(IconLayoutGridAdd),
+  World: IconWrapper(IconWorld),
+  Sitemap: IconWrapper(IconSitemap),
   Bulb: IconWrapper(IconBulb),
   Layout: IconWrapper(IconLayout),
   LayoutOff: IconWrapper(IconLayoutOff),

@@ -179,7 +179,7 @@ export const updateProjectConfigQuery = async ({
   }
 };
 
-export const getProjectMembersQuery = async ({
+export const addUserProjectRelationQuery = async ({
   supabase,
   membership,
 }: { supabase: SupabaseClient; membership: Tables<"user_projects"> }) => {
@@ -218,6 +218,82 @@ export const createComponentQuery = async ({
     return data;
   } catch (error) {
     logger.error("Error creating component:", error);
+    throw error;
+  }
+};
+
+export const createPropertiesQuery = async ({
+  supabase,
+  properties,
+}: {
+  supabase: SupabaseClient;
+  properties: Tables<"properties">[];
+}) => {
+  await verifyAuthUser({ supabase });
+
+  try {
+    const { data, error } = await supabase
+      .from("properties")
+      .insert(properties)
+      .select();
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    logger.error("Error creating properties:", error);
+    throw error;
+  }
+};
+
+export const addComponentPropertiesRelationQuires = async ({
+  supabase,
+  componentId,
+  properties,
+}: {
+  supabase: SupabaseClient;
+  componentId: string;
+  properties: string[];
+}) => {
+  try {
+    await verifyAuthUser({ supabase });
+
+    const { data, error } = await supabase.from("component_properties").insert(
+      properties.map((propertyId) => ({
+        component_id: componentId,
+        properties_id: propertyId,
+      })),
+    );
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    logger.error("Error adding project member:", error);
+    throw error;
+  }
+};
+
+export const addProjectComponentRelationQuery = async ({
+  supabase,
+  projectId,
+  componentId,
+}: {
+  supabase: SupabaseClient;
+  projectId: string;
+  componentId: string;
+}) => {
+  try {
+    await verifyAuthUser({ supabase });
+
+    const { data, error } = await supabase
+      .from("project_components")
+      .insert({
+        project_id: projectId,
+        component_id: componentId,
+      })
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    logger.error("Error adding project component:", error);
     throw error;
   }
 };
