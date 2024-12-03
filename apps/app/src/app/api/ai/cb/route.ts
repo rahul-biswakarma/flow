@@ -40,15 +40,19 @@ Example of INCORRECT format:
     "id": "prop-unique-id",
     "visualName": "Human Readable Name",
     "propName": "camelCasePropName",
-    "propType": "text|number|boolean|object|array",
+    "propType": "text|number|boolean|object|array", // NOTE: sticky to these types only
     "description": "Clear, specific prop description",
     "required": boolean,
-    "isList": boolean,
+    "isList": boolean, // NOTE: if prop is an array, set to true
     "defaultValue": "default value if any",
-    "validation": "validation rules if any",
-    "objectSchema": {
+    "objectSchema": { // NOTE: if propType is object, include objectSchema
+      [id]: { // NOTE: unique id for each property
+              name: string;
+              type: PropsType;
+              properties?: ObjectSchema; // NOTE: if type is object, include properties
+            }
+      }
     }
-  }
 ]
 </cb004>
 

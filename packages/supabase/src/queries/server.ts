@@ -2,10 +2,10 @@ import type { UserResponse } from "@supabase/supabase-js";
 import { createSupabaseClient } from "@v1/supabase/server";
 import type { Tables } from "../types";
 import {
+  addUserProjectRelationQuery,
   createProjectQuery,
   getAuthUserQuery,
   getProjectBySlugQuery,
-  getProjectMembersQuery,
   getProjectWithPagesQuery,
   getUserDetailsQuery,
   getUserProjectsQuery,
@@ -53,9 +53,7 @@ export const getProjectBySlug = async (slug: string) => {
   return getProjectBySlugQuery({ supabase, slug });
 };
 
-export async function addProjectMember(
-  membership: Tables<"project_memberships">,
-) {
+export async function addProjectMember(membership: Tables<"user_projects">) {
   const supabase = await createSupabaseClient();
-  return getProjectMembersQuery({ supabase, membership });
+  return addUserProjectRelationQuery({ supabase, membership });
 }

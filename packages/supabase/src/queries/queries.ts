@@ -8,13 +8,24 @@ export const getAuthUserQuery = async ({
   supabase,
 }: { supabase: SupabaseClient }) => {
   try {
-    const response = supabase.auth.getUser();
+    const response = await supabase.auth.getUser();
 
     return response;
   } catch (error) {
     logger.error("Error in getUser:", error);
     throw error;
   }
+};
+
+const verifyAuthUser = async ({ supabase }: { supabase: SupabaseClient }) => {
+  const {
+    data: { user },
+    error: authError,
+  } = await getAuthUserQuery({
+    supabase,
+  });
+
+  if (authError || !user) throw authError;
 };
 
 export const getUserDetailsQuery = async ({
@@ -29,7 +40,7 @@ export const getUserDetailsQuery = async ({
     const { data: response, error } = await supabase
       .from("users")
       .select("*")
-      .eq("id", data.user.id)
+      .eq("auth_id", data.user.id)
       .single();
     if (error) throw error;
 
@@ -43,23 +54,19 @@ export const getUserDetailsQuery = async ({
 export const getUserProjectsQuery = async ({
   supabase,
   userId,
-  page,
+  page = 1,
 }: { supabase: SupabaseClient; userId: string; page: number }): Promise<
   Tables<"projects">[]
 > => {
   try {
-    const { error: authError } = await getAuthUserQuery({ supabase });
-
-    if (authError) throw authError;
+    await verifyAuthUser({ supabase });
 
     const { data: response, error } = await supabase
-      .from("project_memberships")
-      .select(`project_id, projects (  id,
-          name,
-          slug,
-          description,
-          created_at,
-          updated_at )`)
+      .from("user_projects")
+      .select(`
+          project_id,
+          projects(id, name, slug)
+      `)
       .eq("user_id", userId)
       .range(page * BATCH_SIZE - BATCH_SIZE, page * BATCH_SIZE - 1);
 
@@ -85,14 +92,7 @@ export const getProjectWithPagesQuery = async ({
   supabase: SupabaseClient;
   slug: string;
 }) => {
-  const {
-    data: { user },
-    error: authError,
-  } = await getAuthUserQuery({
-    supabase,
-  });
-
-  if (authError || !user) throw authError;
+  await verifyAuthUser({ supabase });
 
   try {
     const { data: response, error: projectError } = await supabase
@@ -116,14 +116,7 @@ export const createProjectQuery = async ({
   supabase: SupabaseClient;
   project: Tables<"projects">;
 }) => {
-  const {
-    data: { user },
-    error: authError,
-  } = await getAuthUserQuery({
-    supabase,
-  });
-
-  if (authError || !user) throw authError;
+  await verifyAuthUser({ supabase });
 
   try {
     const { data, error } = await supabase
@@ -147,14 +140,8 @@ export const getProjectBySlugQuery = async ({
   slug: string;
 }) => {
   try {
-    const {
-      data: { user },
-      error: authError,
-    } = await getAuthUserQuery({
-      supabase,
-    });
+    await verifyAuthUser({ supabase });
 
-    if (authError || !user) throw authError;
     const { data, error } = await supabase
       .from("projects")
       .select("*")
@@ -167,22 +154,40 @@ export const getProjectBySlugQuery = async ({
   }
 };
 
-export const getProjectMembersQuery = async ({
+export const updateProjectConfigQuery = async ({
+  supabase,
+  slug,
+  config,
+}: {
+  supabase: SupabaseClient;
+  slug: string;
+  config: object;
+}) => {
+  await verifyAuthUser({ supabase });
+
+  try {
+    const { data, error } = await supabase
+      .from("projects")
+      .update({ config })
+      .eq("slug", slug)
+      .select();
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    logger.error("Error updating project config:", error);
+    throw error;
+  }
+};
+
+export const addUserProjectRelationQuery = async ({
   supabase,
   membership,
-}: { supabase: SupabaseClient; membership: Tables<"project_memberships"> }) => {
+}: { supabase: SupabaseClient; membership: Tables<"user_projects"> }) => {
   try {
-    const {
-      data: { user },
-      error: authError,
-    } = await getAuthUserQuery({
-      supabase,
-    });
-
-    if (authError || !user) throw authError;
+    await verifyAuthUser({ supabase });
 
     const { data, error } = await supabase
-      .from("project_memberships")
+      .from("user_projects")
       .insert(membership)
       .select()
       .single();
@@ -190,6 +195,105 @@ export const getProjectMembersQuery = async ({
     return data;
   } catch (error) {
     logger.error("Error adding project member:", error);
+    throw error;
+  }
+};
+
+export const createComponentQuery = async ({
+  supabase,
+  component,
+}: {
+  supabase: SupabaseClient;
+  component: Tables<"components">;
+}) => {
+  await verifyAuthUser({ supabase });
+
+  try {
+    const { data, error } = await supabase
+      .from("components")
+      .insert(component)
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    logger.error("Error creating component:", error);
+    throw error;
+  }
+};
+
+export const createPropertiesQuery = async ({
+  supabase,
+  properties,
+}: {
+  supabase: SupabaseClient;
+  properties: Tables<"properties">[];
+}) => {
+  await verifyAuthUser({ supabase });
+
+  try {
+    const { data, error } = await supabase
+      .from("properties")
+      .insert(properties)
+      .select();
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    logger.error("Error creating properties:", error);
+    throw error;
+  }
+};
+
+export const addComponentPropertiesRelationQuires = async ({
+  supabase,
+  componentId,
+  properties,
+}: {
+  supabase: SupabaseClient;
+  componentId: string;
+  properties: string[];
+}) => {
+  try {
+    await verifyAuthUser({ supabase });
+
+    const { data, error } = await supabase.from("component_properties").insert(
+      properties.map((propertyId) => ({
+        component_id: componentId,
+        properties_id: propertyId,
+      })),
+    );
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    logger.error("Error adding project member:", error);
+    throw error;
+  }
+};
+
+export const addProjectComponentRelationQuery = async ({
+  supabase,
+  projectId,
+  componentId,
+}: {
+  supabase: SupabaseClient;
+  projectId: string;
+  componentId: string;
+}) => {
+  try {
+    await verifyAuthUser({ supabase });
+
+    const { data, error } = await supabase
+      .from("project_components")
+      .insert({
+        project_id: projectId,
+        component_id: componentId,
+      })
+      .select()
+      .single();
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    logger.error("Error adding project component:", error);
     throw error;
   }
 };

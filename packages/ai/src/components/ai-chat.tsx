@@ -80,15 +80,10 @@ export const AIChat = ({
       <ScrollArea ref={scrollAreaRef}>
         <div className="relative flex gap-2 flex-col justify-end h-full p-3 pb-0">
           {messages.map((message, index) => (
-            <div
-              key={message.id}
-              className={clsx("w-full", {
-                "px-4": message.role === "user",
-              })}
-            >
+            <div key={message.id} className={clsx("w-full")}>
               <div
                 className={clsx("flex gap-2 py-3 rounded-md", {
-                  "bg-gray-a2 ml-auto px-4 w-fit": message.role === "user",
+                  "bg-gray-a2 px-4": message.role === "user",
                 })}
               >
                 {message.role === "assistant" && (

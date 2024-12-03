@@ -1,6 +1,6 @@
 import { useFlowContext } from "@/context";
 import { useScopedI18n } from "@/locales/client";
-import { createSupabaseClient } from "@v1/supabase/client";
+import { updateProjectConfig } from "@v1/supabase/queries/client";
 import { Button } from "@v1/ui/button";
 import { Heading } from "@v1/ui/heading";
 import { Icons } from "@v1/ui/icons";
@@ -18,7 +18,6 @@ type FinalPageProps = {
 export const FinalPage = ({ onComplete }: FinalPageProps) => {
   const scopedT = useScopedI18n("setup");
   const { projectData } = useFlowContext();
-  const supabase = createSupabaseClient();
   const router = useRouter();
 
   const containerVariants = {
@@ -68,15 +67,10 @@ export const FinalPage = ({ onComplete }: FinalPageProps) => {
   const handleEnterApp = async () => {
     if (projectData?.id) {
       try {
-        const { error } = await supabase
-          .from("projects")
-          .update({ setup_flow_completed: true })
-          .eq("id", projectData.id);
-
-        if (error) {
-          throw error;
-        }
-
+        updateProjectConfig(projectData.slug, {
+          ...JSON.parse(JSON.stringify(projectData.config)),
+          setup_flow_completed: true,
+        });
         toast.success(scopedT("setup_flow_completed"));
         onComplete();
       } catch (error) {

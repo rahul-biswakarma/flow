@@ -6,6 +6,7 @@ import { LogicBuilder } from "@/components/product/logic-builder/logic-builder";
 import { Marketplace } from "@/components/product/marketplace/marketplace";
 import { SchemaEditor } from "@/components/product/schema-editor/schema-editor";
 import { Settings } from "@/components/product/settings/settings";
+import { VisualEditor } from "@/components/product/visual-editor";
 import { useScopedI18n } from "@/locales/client";
 import type { ProjectWithPages, User } from "@/types";
 import { Icons } from "@v1/ui/icons";
@@ -50,14 +51,14 @@ export const FlowContextProvider = ({
   const scopedT = useScopedI18n("navigation_bar");
 
   const navigationBarMenuItems: NavigationBarMenuItem[] = [
-    // {
-    //   icon: <Icons.AppWindow />,
-    //   title: scopedT("visual_editor"),
-    //   component: <VisualEditor />,
-    //   key: "nav-bar-visual-editor",
-    // },
     {
-      icon: <Icons.Schema />,
+      icon: <Icons.LayoutGridAdd />,
+      title: scopedT("visual_editor"),
+      component: <VisualEditor />,
+      key: "nav-bar-visual-editor",
+    },
+    {
+      icon: <Icons.Sitemap />,
       title: scopedT("logic_builder"),
       key: "nav-bar-logic-builder",
       component: <LogicBuilder />,
@@ -69,19 +70,19 @@ export const FlowContextProvider = ({
       component: <SchemaEditor />,
     },
     {
-      icon: <Icons.Components />,
+      icon: <Icons.Box />,
       title: scopedT("component_builder"),
       key: "nav-bar-component-builder",
       component: <ComponentBuilder />,
     },
     {
-      icon: <Icons.Globe />,
+      icon: <Icons.World />,
       title: scopedT("marketplace"),
       key: "nav-bar-marketplace",
       component: <Marketplace />,
     },
     {
-      icon: <Icons.Affiliate />,
+      icon: <Icons.Bolt />,
       title: scopedT("connections"),
       key: "nav-bar-connections",
       component: <Connections />,

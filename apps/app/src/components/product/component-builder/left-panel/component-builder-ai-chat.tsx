@@ -18,7 +18,6 @@ export const ComponentBuilderAIChat = () => {
     componentNameRef,
     componentDescriptionRef,
     componentKeywordsRef,
-    componentPropsRef,
     componentCodeRef,
     setIsAIGenerating,
     setComponentName,
@@ -37,6 +36,17 @@ export const ComponentBuilderAIChat = () => {
   });
 
   const updateState = useCallback(() => {
+    if (
+      componentKeywordsRef?.current?.firstChild &&
+      latestDataRef?.current?.componentKeywords
+    ) {
+      let keyCount = componentKeywordsRef.current.children.length;
+      while (keyCount > 0) {
+        componentKeywordsRef.current.lastChild?.remove();
+        keyCount--;
+      }
+    }
+
     setComponentName(latestDataRef.current.componentName ?? "");
     setComponentDescription(latestDataRef.current.componentDescription ?? "");
     setComponentKeywords(latestDataRef.current.componentKeywords ?? []);
@@ -82,28 +92,28 @@ export const ComponentBuilderAIChat = () => {
     }
 
     if (rawParsedData.componentKeywords) {
+      for (const keyword of rawParsedData.componentKeywords.content) {
+        if (!latestDataRef.current?.componentKeywords?.includes(keyword)) {
+          const keywordElement = document.createElement("div");
+          keywordElement.classList.add(
+            "flex",
+            "gap-1",
+            "items-center",
+            "justify-center",
+            "px-2",
+            "py-1",
+            "rounded",
+            "bg-gray-surface",
+            "border",
+            "border-outline-01",
+            "cursor-default",
+          );
+          keywordElement.textContent = keyword;
+          componentKeywordsRef?.current?.appendChild(keywordElement);
+        }
+      }
       latestDataRef.current.componentKeywords =
         rawParsedData.componentKeywords.content;
-
-      for (const keyword of rawParsedData.componentKeywords.content) {
-        const keywordElement = document.createElement("div");
-        keywordElement.classList.add(
-          "flex",
-          "gap-1",
-          "items-center",
-          "justify-center",
-          "px-2",
-          "py-1",
-          "rounded",
-          "bg-gray-surface",
-          "border",
-          "border-outline-01",
-          "cursor-default",
-        );
-        keywordElement.textContent = keyword;
-
-        componentKeywordsRef?.current?.appendChild(keywordElement);
-      }
     }
 
     if (

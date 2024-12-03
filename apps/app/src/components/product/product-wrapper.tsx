@@ -14,7 +14,7 @@ export default function ProductWrapper({
   user: User;
   projectData: ProjectWithPages;
 }) {
-  const showSetupFlow = !projectData?.setup_flow_completed;
+  const showSetupFlow = !projectData?.config?.setup_flow_completed;
 
   const [isSetupFlowEnabled, setIsSetupFlowEnabled] = useState(showSetupFlow);
 

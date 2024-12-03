@@ -1,11 +1,6 @@
 import { useScopedI18n } from "@/locales/client";
 import type { Project } from "@/types";
-import { createSupabaseClient } from "@v1/supabase/client";
-import {
-  addProjectMember,
-  createProject,
-  getProjectBySlug,
-} from "@v1/supabase/queries/client";
+import { createProjectWithMember } from "@v1/supabase/queries/client";
 import { Button } from "@v1/ui/button";
 import { Heading } from "@v1/ui/heading";
 import { Icons } from "@v1/ui/icons";
@@ -18,7 +13,6 @@ import { useState } from "react";
 export const CreateProject = ({
   showProjectManger,
 }: { showProjectManger: () => void }) => {
-  const supabase = createSupabaseClient();
   const router = useRouter();
   const scopedT = useScopedI18n("onboarding");
   const [name, setName] = useState("");
@@ -35,42 +29,10 @@ export const CreateProject = ({
     e.preventDefault();
     setIsLoading(true);
     try {
-      // Get the current user
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-      if (userError || !user) {
-        throw new Error("Unauthorized");
-      }
-
-      // Check if slug is already taken
-      const projectsWithSameSlug = await getProjectBySlug(slug);
-      if (projectsWithSameSlug.length > 0) {
-        throw new Error("Slug already taken");
-      }
-
-      // Create project
-      const projectData = {
-        name,
-        slug,
-        created_by: user.id,
-        admins: [user.id],
-      } as Project;
-      const project = await createProject(projectData);
-
-      if (project.id) {
-        // Add project member
-        await addProjectMember({
-          project_id: project.id,
-          user_id: user.id,
-        });
-
+      createProjectWithMember(slug, name, (project: Project) => {
         toast.success(scopedT("project_created"));
         handleProjectRedirect(project.slug);
-      } else {
-        throw new Error("Failed to create project");
-      }
+      });
     } catch (error) {
       toast.error(
         scopedT("project_create_error", {
