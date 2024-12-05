@@ -1,7 +1,7 @@
 import { TextFieldElement } from "@/components/field-elements";
 import type { FieldOnChangeProps } from "@/components/field-elements/types";
+import { useComponentBuilderContext } from "@/components/product/component-builder/context";
 import { useScopedI18n } from "@/locales/client";
-import { useComponentBuilderContext } from "../../../context";
 
 export const ComponentNameField = () => {
   const scopedT = useScopedI18n("component_builder.field");

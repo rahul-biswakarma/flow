@@ -1,4 +1,5 @@
 import { StylePanel } from "@/components/panels/style-panel/style-panel";
+import { useComponentBuilderContext } from "@/components/product/component-builder/context";
 import { SandpackPreview } from "@codesandbox/sandpack-react";
 import { IconButton } from "@v1/ui/icon-button";
 import { Icons } from "@v1/ui/icons";
@@ -11,7 +12,6 @@ import { ScrollArea } from "@v1/ui/scroll-area";
 import { Tabs } from "@v1/ui/tabs";
 import { Text } from "@v1/ui/text";
 import { useState } from "react";
-import { useComponentBuilderContext } from "../context";
 
 export const ComponentBuilderPreview = () => {
   const { isAIGenerating, styleValue, setStyleValue } =

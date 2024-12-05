@@ -9,6 +9,7 @@ import {
   getProjectWithPagesQuery,
   getUserDetailsQuery,
   getUserProjectsQuery,
+  listComponentsByStatusQuery,
 } from "./queries";
 
 export async function getAuthUser(): Promise<UserResponse> {
@@ -56,4 +57,13 @@ export const getProjectBySlug = async (slug: string) => {
 export async function addProjectMember(membership: Tables<"user_projects">) {
   const supabase = await createSupabaseClient();
   return addUserProjectRelationQuery({ supabase, membership });
+}
+
+export async function listComponentsByStatus(
+  projectId: string,
+  status: Tables<"components">["status"],
+  page = 1,
+) {
+  const supabase = await createSupabaseClient();
+  return listComponentsByStatusQuery({ supabase, projectId, status, page });
 }

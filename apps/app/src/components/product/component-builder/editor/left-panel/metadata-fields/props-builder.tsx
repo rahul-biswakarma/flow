@@ -5,6 +5,8 @@ import {
 import { fieldFontSize } from "@/components/field-elements/constants";
 import { DropdownFieldElement } from "@/components/field-elements/dropdown-field";
 import type { FieldOnChangeProps } from "@/components/field-elements/types";
+import { useComponentBuilderContext } from "@/components/product/component-builder/context";
+import type { PropsType } from "@/components/product/component-builder/types";
 import type { PropSchema } from "@/components/product/component-builder/types";
 import { useI18n, useScopedI18n } from "@/locales/client";
 import { Button } from "@v1/ui/button";
@@ -13,8 +15,6 @@ import { Text } from "@v1/ui/text";
 import { clsx } from "clsx";
 import { nanoid } from "nanoid";
 import { useMemo, useState } from "react";
-import { useComponentBuilderContext } from "../../context";
-import type { PropsType } from "../../types";
 import { ObjectTypeFields } from "../object-field";
 
 const ICON_CLASSES = "!w-4 !h-4 !text-gray-10";

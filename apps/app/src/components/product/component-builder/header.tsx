@@ -26,7 +26,7 @@ export const ComponentBuilderHeader = ({
 
   const [isComponentCreating, setIsComponentCreating] = useState(false);
 
-  const { projectData } = useFlowContext();
+  const { projectData, user } = useFlowContext();
   const {
     componentName,
     componentDescription,
@@ -49,6 +49,8 @@ export const ComponentBuilderHeader = ({
           description: componentDescription,
           code: componentCode,
           keywords: componentKeywords,
+          status: "published",
+          created_by: user.id,
         } as unknown as Component,
         properties: propertiesClientToServer(componentProps),
         projectId: projectData.id,

@@ -1,8 +1,8 @@
+import { useComponentBuilderContext } from "@/components/product/component-builder/context";
+import type { PropSchema } from "@/components/product/component-builder/types";
+import { parseAIResponse } from "@/components/product/component-builder/utils";
 import { AIChat } from "@v1/ai/ai-chat";
 import { useCallback, useRef } from "react";
-import { useComponentBuilderContext } from "../context";
-import type { PropSchema } from "../types";
-import { parseAIResponse } from "../utils";
 
 type UpdateStateProps = {
   componentName?: string;

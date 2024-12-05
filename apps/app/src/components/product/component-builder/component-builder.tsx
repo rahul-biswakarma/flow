@@ -3,12 +3,12 @@ import {} from "@v1/ui/resizable";
 import { ComponentBuilderHeader } from "./header";
 import "./styles.css";
 import { useState } from "react";
-import { ComponentBuilderEditor } from "./component-builder-editor";
-import { ComponentManager } from "./component-manager";
+import { ComponentManager } from "./manager/component-manager";
 import {
   ComponentBuilderProvider,
   useComponentBuilderContext,
 } from "./context/component-builder.context";
+import { ComponentBuilderEditor } from "./editor/component-builder-editor";
 
 export const ComponentBuilder = () => {
   const { isConfigValid } = useComponentBuilderContext();
