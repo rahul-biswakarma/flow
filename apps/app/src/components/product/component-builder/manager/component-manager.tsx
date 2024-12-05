@@ -1,6 +1,8 @@
-import { ScrollArea } from "@v1/ui/scroll-area";
 import { Tabs } from "@v1/ui/tabs";
 import { ComponentList } from "./component-list";
+
+const TAB_CONTENT_CLASSNAME =
+  "flex w-full max-h-full min-w-full overflow-x-hidden";
 
 export const ComponentManager = () => {
   return (
@@ -11,18 +13,17 @@ export const ComponentManager = () => {
           <Tabs.Trigger value="published">Published</Tabs.Trigger>
           <Tabs.Trigger value="private">Private</Tabs.Trigger>
         </Tabs.List>
-        <div className="flex-1 min-h-0">
-          <ScrollArea className="h-full">
-            <Tabs.Content value="all">
-              <ComponentList />
-            </Tabs.Content>
-            <Tabs.Content value="published">
-              <ComponentList status="public" />
-            </Tabs.Content>
-            <Tabs.Content value="private">
-              <ComponentList status="private" />
-            </Tabs.Content>
-          </ScrollArea>
+
+        <div className="flex max-h-full min-h-0">
+          <Tabs.Content className={TAB_CONTENT_CLASSNAME} value="all">
+            <ComponentList />
+          </Tabs.Content>
+          <Tabs.Content className="max-h-full" value="published">
+            <ComponentList status="public" />
+          </Tabs.Content>
+          <Tabs.Content className="max-h-full" value="private">
+            <ComponentList status="private" />
+          </Tabs.Content>
         </div>
       </Tabs.Root>
     </div>

@@ -4,7 +4,6 @@
   --line-thickness: 1px;
   --line-color: var(--gray-6);
   --padding: 1rem;
-  overflow: hidden;
   gap: var(--gap);
   padding: var(--padding);
 }
@@ -17,7 +16,7 @@
   content: "";
   position: absolute;
   background-color: var(--line-color);
-  z-index: 1;
+  z-index: 0;
 }
 
 .component-grid-item::after {

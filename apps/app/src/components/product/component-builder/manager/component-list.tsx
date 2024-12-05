@@ -5,6 +5,7 @@ import axios from "axios";
 import { Fragment, useEffect, useState } from "react";
 import { ComponentListItem } from "./component-list-item";
 import "./styles.css";
+import { ScrollArea } from "@v1/ui/scroll-area";
 
 const SKELETON_HEIGHT = "20px";
 const LOADER_COUNT = 5;
@@ -74,10 +75,64 @@ export const ComponentList = ({
     <TableTemplate>
       {components.map((component) => {
         return (
-          <ComponentListItem
-            key={`table-data-${page}-${status}-${component.id}`}
-            component={component}
-          />
+          <>
+            <ComponentListItem
+              key={`table-data-${page}-${status}-${component.id}`}
+              component={component}
+            />
+            <ComponentListItem
+              key={`table-data-${page}-${status}-${component.id}`}
+              component={component}
+            />
+            <ComponentListItem
+              key={`table-data-${page}-${status}-${component.id}`}
+              component={component}
+            />
+            <ComponentListItem
+              key={`table-data-${page}-${status}-${component.id}`}
+              component={component}
+            />
+            <ComponentListItem
+              key={`table-data-${page}-${status}-${component.id}`}
+              component={component}
+            />
+            <ComponentListItem
+              key={`table-data-${page}-${status}-${component.id}`}
+              component={component}
+            />
+            <ComponentListItem
+              key={`table-data-${page}-${status}-${component.id}`}
+              component={component}
+            />
+            <ComponentListItem
+              key={`table-data-${page}-${status}-${component.id}`}
+              component={component}
+            />
+            <ComponentListItem
+              key={`table-data-${page}-${status}-${component.id}`}
+              component={component}
+            />
+            <ComponentListItem
+              key={`table-data-${page}-${status}-${component.id}`}
+              component={component}
+            />
+            <ComponentListItem
+              key={`table-data-${page}-${status}-${component.id}`}
+              component={component}
+            />
+            <ComponentListItem
+              key={`table-data-${page}-${status}-${component.id}`}
+              component={component}
+            />
+            <ComponentListItem
+              key={`table-data-${page}-${status}-${component.id}`}
+              component={component}
+            />
+            <ComponentListItem
+              key={`table-data-${page}-${status}-${component.id}`}
+              component={component}
+            />
+          </>
         );
       })}
     </TableTemplate>
@@ -90,24 +145,26 @@ const TableTemplate = ({
   children?: React.ReactNode;
 }) => {
   return (
-    <div className="p-2">
+    <div className="p-2 max-h-full w-full">
       <div className="flex h-full max-h-full border border-gray-6 rounded-sm">
-        <div className="grid grid-cols-[auto_auto_1fr_auto_auto] w-full h-fit component-grid-layout">
-          <div className="relative font-medium text-gray-10 bg-transparent text-[13px] component-grid-item" />
-          <div className="relative font-medium text-gray-10 bg-transparent text-[13px] component-grid-item">
-            Name
+        <ScrollArea className="relative !overflow-x-hidden">
+          <div className="grid grid-cols-[auto_auto_1fr_auto_auto] w-full h-fit max-h-full component-grid-layout">
+            <div className="relative font-medium text-gray-10 bg-transparent text-[13px] component-grid-item" />
+            <div className="relative font-medium text-gray-10 bg-transparent text-[13px] component-grid-item">
+              Name
+            </div>
+            <div className="relative font-medium text-gray-10 bg-transparent text-[13px] component-grid-item">
+              Description
+            </div>
+            <div className="relative font-medium text-gray-10 bg-transparent text-[13px] component-grid-item">
+              Keywords
+            </div>
+            <div className="relative font-medium text-gray-10 bg-transparent text-[13px] component-grid-item">
+              Last Updated
+            </div>
+            {children}
           </div>
-          <div className="relative font-medium text-gray-10 bg-transparent text-[13px] component-grid-item">
-            Description
-          </div>
-          <div className="relative font-medium text-gray-10 bg-transparent text-[13px] component-grid-item">
-            Keywords
-          </div>
-          <div className="relative font-medium text-gray-10 bg-transparent text-[13px] component-grid-item">
-            Last Updated
-          </div>
-          {children}
-        </div>
+        </ScrollArea>
       </div>
     </div>
   );
