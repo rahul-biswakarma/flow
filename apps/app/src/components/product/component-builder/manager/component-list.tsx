@@ -91,8 +91,8 @@ const TableTemplate = ({
   setPage?: React.Dispatch<React.SetStateAction<number>>;
 }) => {
   return (
-    <div className="flex p-2 h-full">
-      <div className="flex flex-col max-h-full w-full border border-gray-6 rounded-sm">
+    <div className="flex h-full">
+      <div className="flex flex-col max-h-full w-full border-gray-6 rounded-sm">
         <div className="flex h-full max-h-full">
           <div className="grid grid-cols-[auto_auto_1fr_auto_auto] w-full h-fit max-h-full component-grid-layout overflow-hidden">
             <div className="relative font-medium text-gray-10 bg-transparent text-[13px] component-grid-item" />

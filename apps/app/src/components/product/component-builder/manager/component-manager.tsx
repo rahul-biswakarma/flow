@@ -4,6 +4,7 @@ import { Tabs } from "@v1/ui/tabs";
 import { ComponentList } from "./component-list";
 
 const TAB_CONTENT_CLASSNAME = "w-full h-full";
+const TAB_TRIGGER_CLASSNAME = "px-4 text-[13px]";
 
 export const ComponentManager = () => {
   const { projectData } = useFlowContext();
@@ -26,19 +27,19 @@ export const ComponentManager = () => {
     <div className="flex w-full h-full max-h-full min-h-0">
       <Tabs.Root className="flex flex-col w-full max-h-full" defaultValue="all">
         <Tabs.List size="2" className="bg-panel-header !shadow-inset-gray">
-          <Tabs.Trigger value="all">
-            All{" "}
+          <Tabs.Trigger className={TAB_TRIGGER_CLASSNAME} value="all">
+            All
             {allComponentsCount && (
               <span className="pl-2 text-gray-10">{allComponentsCount}</span>
             )}
           </Tabs.Trigger>
-          <Tabs.Trigger value="published">
+          <Tabs.Trigger className={TAB_TRIGGER_CLASSNAME} value="published">
             Public
             {publicComponentsCount && (
               <span className="pl-2 text-gray-10">{publicComponentsCount}</span>
             )}
           </Tabs.Trigger>
-          <Tabs.Trigger value="private">
+          <Tabs.Trigger className={TAB_TRIGGER_CLASSNAME} value="private">
             Private
             {privateComponentsCount && (
               <span className="pl-2 text-gray-10">
