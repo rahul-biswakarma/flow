@@ -1,0 +1,27 @@
+.component-grid-layout {
+  --gap: 2rem;
+  --line-offset: calc(2.5rem / 2);
+  --line-thickness: 1px;
+  --line-color: var(--gray-6);
+  --padding: 1rem;
+  gap: var(--gap);
+  padding: var(--padding);
+}
+.component-grid-item {
+  display: flex;
+}
+
+.component-grid-item::before,
+.component-grid-item::after {
+  content: "";
+  position: absolute;
+  background-color: var(--line-color);
+  z-index: 0;
+}
+
+.component-grid-item::after {
+  inline-size: 100vw;
+  block-size: var(--line-thickness);
+  inset-inline-start: -16px;
+  inset-block-start: calc(var(--line-offset) * -1);
+}

@@ -46,31 +46,45 @@ export type Database = {
         Row: {
           code: string | null
           created_at: string
+          created_by: string
           description: string | null
           id: string
           keywords: string[] | null
           name: string
+          status: Database["public"]["Enums"]["component_status"]
           updated_at: string
         }
         Insert: {
           code?: string | null
           created_at?: string
+          created_by: string
           description?: string | null
           id?: string
           keywords?: string[] | null
           name: string
+          status: Database["public"]["Enums"]["component_status"]
           updated_at?: string
         }
         Update: {
           code?: string | null
           created_at?: string
+          created_by?: string
           description?: string | null
           id?: string
           keywords?: string[] | null
           name?: string
+          status?: Database["public"]["Enums"]["component_status"]
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "components_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       pages: {
         Row: {
@@ -94,19 +108,16 @@ export type Database = {
         Row: {
           component_id: string
           created_at: string
-          position: number
           project_id: string
         }
         Insert: {
           component_id: string
           created_at?: string
-          position: number
           project_id: string
         }
         Update: {
           component_id?: string
           created_at?: string
-          position?: number
           project_id?: string
         }
         Relationships: [
@@ -329,6 +340,7 @@ export type Database = {
       }
     }
     Enums: {
+      component_status: "public" | "private" | "in_review"
       properties_type: "string" | "number" | "boolean" | "object" | "self"
     }
     CompositeTypes: {

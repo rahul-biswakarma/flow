@@ -12,11 +12,11 @@
     "@supabase/ssr": "^0.5.1",
     "@v1/logger": "workspace:*",
     "react": "^18.2.0",
-    "server-only": "^0.0.1",
-    "supabase": "^1.219.2"
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@supabase/supabase-js": "^2.45.6",
+    "supabase": "^2.0.0",
     "typescript": "^5.6.3"
   },
   "exports": {

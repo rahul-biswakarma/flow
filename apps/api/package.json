@@ -9,7 +9,7 @@
     "reset": "supabase db reset",
     "generate": "supabase gen types --lang=typescript --project-id vfexamrpxscbtrhbwddy --schema public > ../../packages/supabase/src/types/db.ts"
   },
-  "dependencies": {
-    "supabase": "^1.219.2"
+  "devDependencies": {
+    "supabase": "^2.0.0"
   }
 }

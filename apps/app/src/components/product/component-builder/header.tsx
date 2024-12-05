@@ -12,27 +12,27 @@ import { useState } from "react";
 import { useComponentBuilderContext } from "./context";
 
 export const ComponentBuilderHeader = ({
-  isConfigValid,
-  disabled,
+  disabled = false,
   viewState,
   setViewState,
 }: {
   disabled?: boolean;
   setViewState: React.Dispatch<React.SetStateAction<"editor" | "manager">>;
   viewState: "editor" | "manager";
-  isConfigValid: boolean;
 }) => {
   const scopedT = useScopedI18n("component_builder");
 
   const [isComponentCreating, setIsComponentCreating] = useState(false);
 
-  const { projectData } = useFlowContext();
+  const { projectData, user } = useFlowContext();
+
   const {
     componentName,
     componentDescription,
     componentKeywords,
     componentCode,
     componentProps,
+    isConfigValid,
   } = useComponentBuilderContext();
 
   const handleCreate = async () => {
@@ -49,6 +49,8 @@ export const ComponentBuilderHeader = ({
           description: componentDescription,
           code: componentCode,
           keywords: componentKeywords,
+          status: "private",
+          created_by: user.id,
         } as unknown as Component,
         properties: propertiesClientToServer(componentProps),
         projectId: projectData.id,
@@ -63,6 +65,7 @@ export const ComponentBuilderHeader = ({
       setIsComponentCreating(false);
     }
   };
+
   return (
     <div className="flex justify-between items-center gap-2 py-4 px-4 border-b border-panel bg-panel-header">
       <div className="flex gap-4 items-center">

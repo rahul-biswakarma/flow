@@ -18,10 +18,13 @@ export const Product = () => {
     >
       <TooltipProvider>
         <NavigationBar />
-        <div className="w-full h-full p-2 pl-0">
+        <div className="w-full h-full p-2 pl-0 max-h-screen">
           <div className="w-full h-full border rounded-sm overflow-hidden bg-panel border-panel">
             {activeItem && (
-              <div key={activeItem.key} className="flex h-full w-full">
+              <div
+                key={activeItem.key}
+                className="flex h-full w-full max-h-full"
+              >
                 {activeItem.component}
               </div>
             )}

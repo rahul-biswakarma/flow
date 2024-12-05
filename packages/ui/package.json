@@ -14,6 +14,7 @@
   "exports": {
     "./avatar": "./src/components/avatar.tsx",
     "./background-gradient-animation": "./src/components/background-gradient-animation.tsx",
+    "./badge": "./src/components/badge.tsx",
     "./button": "./src/components/button.tsx",
     "./card": "./src/components/card.tsx",
     "./checkbox": "./src/components/checkbox.tsx",
@@ -34,7 +35,9 @@
     "./segmented-control": "./src/components/segmented-control.tsx",
     "./separator": "./src/components/separator.tsx",
     "./sidebar": "./src/components/sidebar.tsx",
+    "./skeleton": "./src/components/skeleton.tsx",
     "./switch": "./src/components/switch.tsx",
+    "./table": "./src/components/table.tsx",
     "./tabs": "./src/components/tabs.tsx",
     "./tailwind.config": "./tailwind.config.ts",
     "./text": "./src/components/text.tsx",

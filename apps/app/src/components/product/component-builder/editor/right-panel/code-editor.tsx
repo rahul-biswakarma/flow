@@ -1,3 +1,4 @@
+import { useComponentBuilderContext } from "@/components/product/component-builder/context";
 import { SandpackCodeEditor, useSandpack } from "@codesandbox/sandpack-react";
 import { IconButton } from "@v1/ui/icon-button";
 import { Icons } from "@v1/ui/icons";
@@ -7,7 +8,6 @@ import * as parserBabel from "prettier/parser-babel";
 import * as prettierPluginEstree from "prettier/plugins/estree";
 import * as prettier from "prettier/standalone";
 import { useCallback, useEffect } from "react";
-import { useComponentBuilderContext } from "../context";
 
 export const CodeEditor = () => {
   const { sandpack } = useSandpack();

@@ -2,12 +2,16 @@ import { TextFieldElement } from "@/components/field-elements";
 import { fieldFontSize } from "@/components/field-elements/constants";
 import { DropdownFieldElement } from "@/components/field-elements/dropdown-field";
 import type { FieldOnChangeProps } from "@/components/field-elements/types";
+import type {
+  ObjectSchema,
+  ObjectSchemaProperty,
+  PropsType,
+} from "@/components/product/component-builder/types";
 import { Button } from "@v1/ui/button";
 import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
 import type React from "react";
 import { useState } from "react";
-import type { ObjectSchema, ObjectSchemaProperty, PropsType } from "../types";
 
 const MAX_KEYS = 8;
 const MAX_OBJECT_NESTING = 2;
@@ -60,7 +64,11 @@ export const ObjectTypeFields: React.FC<ObjectTypeFieldsProps> = ({
   const updateType = (key: string, newType: PropsType) => {
     onChange({
       ...objectSchema,
-      [key]: { ...objectSchema[key], type: newType },
+      [key]: {
+        ...objectSchema[key],
+        type: newType,
+        name: objectSchema[key]?.name || key,
+      },
     });
   };
 
