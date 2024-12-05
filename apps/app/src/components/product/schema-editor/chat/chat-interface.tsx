@@ -1,4 +1,4 @@
-import { AIChat } from "@v1/ai/ai-chat";
+import { AIChat } from "@/ai";
 import { useCallback } from "react";
 import { useSchemas } from "../use-schemas";
 import type { DetectedSchema } from "./types";

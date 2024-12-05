@@ -18,7 +18,6 @@
     "@ai-sdk/openai": "^0.0.72",
     "@codesandbox/sandpack-react": "^2.19.10",
     "@codesandbox/sandpack-themes": "^2.0.21",
-    "@v1/ai": "workspace:*",
     "@v1/analytics": "workspace:*",
     "@v1/kv": "workspace:*",
     "@v1/logic-engine": "workspace:*",

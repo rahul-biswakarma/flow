@@ -1,7 +1,7 @@
+import { AIChat } from "@/ai";
 import { useComponentBuilderContext } from "@/components/product/component-builder/context";
 import type { PropSchema } from "@/components/product/component-builder/types";
 import { parseAIResponse } from "@/components/product/component-builder/utils";
-import { AIChat } from "@v1/ai/ai-chat";
 import { useCallback, useRef } from "react";
 
 type UpdateStateProps = {
