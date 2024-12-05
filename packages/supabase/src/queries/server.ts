@@ -1,6 +1,7 @@
 import type { UserResponse } from "@supabase/supabase-js";
 import { createSupabaseClient } from "@v1/supabase/server";
 import type { Tables } from "../types";
+import { countComponentsByStatusQuery } from "./queries";
 import {
   addUserProjectRelationQuery,
   createProjectQuery,
@@ -63,7 +64,22 @@ export async function listComponentsByStatus(
   projectId: string,
   status: Tables<"components">["status"],
   page = 1,
+  countPerPage?: number,
 ) {
   const supabase = await createSupabaseClient();
-  return listComponentsByStatusQuery({ supabase, projectId, status, page });
+  return listComponentsByStatusQuery({
+    supabase,
+    projectId,
+    status,
+    page,
+    countPerPage,
+  });
+}
+
+export async function countComponentsByStatus(
+  projectId: string,
+  status: Tables<"components">["status"],
+) {
+  const supabase = await createSupabaseClient();
+  return countComponentsByStatusQuery({ supabase, projectId, status });
 }

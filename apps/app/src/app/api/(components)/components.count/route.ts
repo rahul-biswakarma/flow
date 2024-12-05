@@ -1,5 +1,5 @@
 import { ratelimit } from "@v1/kv/ratelimit";
-import { listComponentsByStatus } from "@v1/supabase/queries/server";
+import { countComponentsByStatus } from "@v1/supabase/queries/server";
 import { headers } from "next/headers";
 
 export async function POST(req: Request) {
@@ -16,25 +16,23 @@ export async function POST(req: Request) {
     }
 
     const payload = await req.json();
-    const data = await listComponentsByStatus(
+    const data = await countComponentsByStatus(
       payload.projectId,
       payload.status || undefined,
-      payload.page || 1,
-      payload.countPerPage,
     );
 
     if (!data) {
       return new Response(
-        JSON.stringify({ error: "Failed to get components" }),
+        JSON.stringify({ error: "Failed to count components" }),
         { status: 500 },
       );
     }
 
     return new Response(JSON.stringify(data), { status: 200 });
   } catch (error) {
-    console.error("components.list API error:", error);
+    console.error("components.count API error:", error);
     return new Response(
-      JSON.stringify({ error: "Failed to process components.list request" }),
+      JSON.stringify({ error: "Failed to process components.count request" }),
       { status: 500 },
     );
   }
