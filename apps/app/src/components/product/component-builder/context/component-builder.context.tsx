@@ -1,9 +1,19 @@
 import type { StyleData } from "@/components/panels/style-panel/type";
+import type { ThemeData } from "@/components/panels/theme-panel/type";
 import React, { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { defaultComponentCode } from "../constants";
 import type { CodeMirrorRef, PropSchema } from "../types";
 import type { ComponentBuilderContextType } from "./type";
+
+const defaultThemeValue: ThemeData = {
+  accentColor: "indigo",
+  grayColor: "slate",
+  appearance: "dark",
+  radius: "medium",
+  scaling: "100%",
+  panelBackground: "translucent",
+};
 
 const ComponentBuilderContext = createContext<ComponentBuilderContextType>({
   isConfigValid: false,
@@ -20,6 +30,8 @@ const ComponentBuilderContext = createContext<ComponentBuilderContextType>({
   componentKeywords: [],
   componentProps: [],
   componentCode: defaultComponentCode,
+  themeValue: defaultThemeValue,
+  setThemeValue: () => {},
   setIsAIGenerating: () => {},
   setStyleValue: () => {},
   setComponentName: () => {},
@@ -46,6 +58,7 @@ export const ComponentBuilderProvider = ({
   const [componentKeywords, setComponentKeywords] = useState<string[]>([]);
   const [componentProps, setComponentProps] = useState<PropSchema[]>([]);
   const [componentCode, setComponentCode] = useState(defaultComponentCode);
+  const [themeValue, setThemeValue] = useState<ThemeData>(defaultThemeValue);
 
   useEffect(() => {
     isAIGeneratingRef.current = isAIGenerating;
@@ -72,7 +85,9 @@ export const ComponentBuilderProvider = ({
         componentKeywords,
         componentProps,
         componentCode,
+        themeValue,
         setIsAIGenerating,
+        setThemeValue,
         setStyleValue,
         setComponentName,
         setComponentDescription,

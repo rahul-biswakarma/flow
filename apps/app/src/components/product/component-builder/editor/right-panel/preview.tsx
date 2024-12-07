@@ -1,4 +1,5 @@
 import { StylePanel } from "@/components/panels/style-panel/style-panel";
+import { ThemePanel } from "@/components/panels/theme-panel/theme-panel";
 import { useComponentBuilderContext } from "@/components/product/component-builder/context";
 import { SandpackLayout, SandpackPreview } from "@codesandbox/sandpack-react";
 import { IconButton } from "@v1/ui/icon-button";
@@ -14,8 +15,13 @@ import { Text } from "@v1/ui/text";
 import { useState } from "react";
 
 export const ComponentBuilderPreview = () => {
-  const { isAIGenerating, styleValue, setStyleValue } =
-    useComponentBuilderContext();
+  const {
+    isAIGenerating,
+    styleValue,
+    setStyleValue,
+    themeValue,
+    setThemeValue,
+  } = useComponentBuilderContext();
   const [showPreviewSettings, setShowPreviewSettings] = useState(true);
 
   return (
@@ -67,6 +73,7 @@ export const ComponentBuilderPreview = () => {
                   className="relative !shadow-inset-gray bg-panel-header"
                 >
                   <Tabs.Trigger value="style-panel">Styles</Tabs.Trigger>
+                  <Tabs.Trigger value="theme-panel">Theme</Tabs.Trigger>
                   <IconButton
                     variant="ghost"
                     color="gray"
@@ -83,6 +90,14 @@ export const ComponentBuilderPreview = () => {
                       <StylePanel
                         styleValue={styleValue}
                         setStyleValue={setStyleValue}
+                      />
+                    </div>
+                  </Tabs.Content>
+                  <Tabs.Content className="bg-panel" value="theme-panel">
+                    <div className="p-4 w-full h-full max-h-full">
+                      <ThemePanel
+                        themeValue={themeValue}
+                        setThemeValue={setThemeValue}
                       />
                     </div>
                   </Tabs.Content>

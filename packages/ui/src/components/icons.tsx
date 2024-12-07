@@ -33,6 +33,8 @@ import {
   IconChevronLeft,
   IconChevronRight,
   IconChevronUp,
+  IconCircle,
+  IconCircleHalf2,
   IconComet,
   IconComponents,
   IconCopy,
@@ -96,6 +98,8 @@ const IconWrapper = (Icon: React.ComponentType<IconProps>) => {
 
 export const Icons = {
   Bolt: IconWrapper(IconBolt),
+  CircleHalf2: IconWrapper(IconCircleHalf2),
+  Circle: IconWrapper(IconCircle),
   Brush: IconWrapper(IconBrush),
   LayoutGridAdd: IconWrapper(IconLayoutGridAdd),
   World: IconWrapper(IconWorld),

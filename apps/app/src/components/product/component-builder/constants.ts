@@ -1,9 +1,17 @@
 import type { StyleData } from "@/components/panels/style-panel/type";
+import type { ThemeData } from "@/components/panels/theme-panel";
+
+type sandPackFilesConfigTypes = {
+  componentCode: string;
+  style: StyleData;
+  theme: ThemeData;
+};
 
 export const sandPackFilesConfig = ({
   componentCode,
   style,
-}: { componentCode: string; style: StyleData }) => ({
+  theme,
+}: sandPackFilesConfigTypes) => ({
   "tsconfig.json": {
     code: `{
   "include": [
@@ -29,7 +37,7 @@ export const sandPackFilesConfig = ({
     }`,
   },
   "/index.tsx": {
-    code: defaultCodeWrapper(style),
+    code: defaultCodeWrapper(theme, style),
   },
   "/public/index.html": {
     code: `<!DOCTYPE html>
@@ -84,7 +92,7 @@ export default function App(props): JSX.Element {
 }
 `;
 
-export const defaultCodeWrapper = (style?: StyleData) => {
+export const defaultCodeWrapper = (theme: ThemeData, style?: StyleData) => {
   return `import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Theme as ThemeProvider } from "@radix-ui/themes";
@@ -97,12 +105,12 @@ const root = createRoot(document.getElementById("component-builder-preview-root"
 root.render(
   <StrictMode>
     <ThemeProvider
-      accentColor="indigo"
-      grayColor="slate"
-      panelBackground="translucent"
-      radius="medium"
-      scaling="100%"
-      appearance="dark"
+      ${theme.accentColor ? `accentColor="${theme.accentColor}"` : ""}
+      ${theme.grayColor ? `grayColor="${theme.grayColor}"` : ""}
+      ${theme.appearance ? `appearance="${theme.appearance}"` : ""}
+      ${theme.radius ? `radius="${theme.radius}"` : ""}
+      ${theme.scaling ? `scaling="${theme.scaling}"` : ""}
+      ${theme.panelBackground ? `panelBackground="${theme.panelBackground}"` : ""}
     >
       <App style={${JSON.stringify(style)}} />
     </ThemeProvider>

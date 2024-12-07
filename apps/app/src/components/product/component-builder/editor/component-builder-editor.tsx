@@ -17,13 +17,18 @@ import { MetadataFields } from "./left-panel/metadata-fields/metadata-fields";
 
 export const ComponentBuilderEditor = () => {
   const { resolvedTheme } = useTheme();
-  const { componentCode, styleValue } = useComponentBuilderContext();
+  const { componentCode, styleValue, themeValue } =
+    useComponentBuilderContext();
 
   // Create files config when component code or style changes
   const files = useMemo(
     () =>
-      sandPackFilesConfig({ componentCode: componentCode, style: styleValue }),
-    [componentCode, styleValue],
+      sandPackFilesConfig({
+        componentCode: componentCode,
+        style: styleValue,
+        theme: themeValue,
+      }),
+    [componentCode, styleValue, themeValue],
   );
 
   return (

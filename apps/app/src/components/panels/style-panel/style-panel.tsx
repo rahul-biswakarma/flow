@@ -13,6 +13,7 @@ import type { StyleData } from "./type";
 import { UnitTextInput } from "./unit-text-input";
 import "./style-panel.css";
 import { IconButton } from "@v1/ui/icon-button";
+import { Section } from "../common/section";
 
 const DIMENSION_UNITS = ["px", "rem", "%"];
 const SPACING_UNITS = ["px", "rem", "em"];
@@ -344,28 +345,6 @@ export const StylePanel = ({
           </div>
         </div>
       </Section> */}
-    </div>
-  );
-};
-
-const Section = ({
-  title,
-  children,
-  actions,
-}: {
-  title: string;
-  actions?: React.ReactNode;
-  children: React.ReactNode;
-}) => {
-  return (
-    <div className="flex flex-col gap-2">
-      <div className="flex justify-between items-center gap-2">
-        <Text size="2" weight="medium">
-          {title}
-        </Text>
-        <div className="flex gap-2 items-center">{actions}</div>
-      </div>
-      {children}
     </div>
   );
 };
