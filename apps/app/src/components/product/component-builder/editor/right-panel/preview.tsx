@@ -1,3 +1,4 @@
+import { PropsPanel } from "@/components/panels/props-panel/props-panel";
 import { StylePanel } from "@/components/panels/style-panel/style-panel";
 import { ThemePanel } from "@/components/panels/theme-panel/theme-panel";
 import { useComponentBuilderContext } from "@/components/product/component-builder/context";
@@ -21,6 +22,9 @@ export const ComponentBuilderPreview = () => {
     setStyleValue,
     themeValue,
     setThemeValue,
+    componentProps,
+    propsValue,
+    setPropsValue,
   } = useComponentBuilderContext();
   const [showPreviewSettings, setShowPreviewSettings] = useState(true);
 
@@ -74,6 +78,7 @@ export const ComponentBuilderPreview = () => {
                 >
                   <Tabs.Trigger value="style-panel">Styles</Tabs.Trigger>
                   <Tabs.Trigger value="theme-panel">Theme</Tabs.Trigger>
+                  <Tabs.Trigger value="props-panel">Props</Tabs.Trigger>
                   <IconButton
                     variant="ghost"
                     color="gray"
@@ -98,6 +103,15 @@ export const ComponentBuilderPreview = () => {
                       <ThemePanel
                         themeValue={themeValue}
                         setThemeValue={setThemeValue}
+                      />
+                    </div>
+                  </Tabs.Content>
+                  <Tabs.Content className="bg-panel" value="props-panel">
+                    <div className="p-4 w-full h-full max-h-full">
+                      <PropsPanel
+                        props={componentProps}
+                        propValues={propsValue}
+                        setPropValues={setPropsValue}
                       />
                     </div>
                   </Tabs.Content>

@@ -5,7 +5,7 @@ export const Section = ({
   children,
   actions,
 }: {
-  title: string;
+  title?: string;
   actions?: React.ReactNode;
   children: React.ReactNode;
 }) => {

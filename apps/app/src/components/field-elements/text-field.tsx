@@ -20,10 +20,22 @@ interface TextFieldElementProps {
   fieldInfo?: string;
   labelClassName?: string;
   onChange?: (e: FieldOnChangeProps<string>) => void;
+  type?: "text" | "number";
+  required?: boolean;
 }
 
 export const TextFieldElement: React.FC<TextFieldElementProps> = React.memo(
-  ({ label, placeholder, value, fieldInfo, onChange, labelClassName, ref }) => {
+  ({
+    label,
+    placeholder,
+    value,
+    fieldInfo,
+    onChange,
+    labelClassName,
+    ref,
+    type,
+    required,
+  }) => {
     const handleChange = React.useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
         onChange?.({
@@ -57,6 +69,8 @@ export const TextFieldElement: React.FC<TextFieldElementProps> = React.memo(
           </Text>
         )}
         <TextField.Root
+          type={type}
+          required={required}
           ref={ref}
           className={clsx(fieldStyles, fieldFontSize)}
           value={value}

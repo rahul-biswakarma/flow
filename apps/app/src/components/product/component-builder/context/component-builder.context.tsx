@@ -3,7 +3,7 @@ import type { ThemeData } from "@/components/panels/theme-panel/type";
 import React, { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
 import { defaultComponentCode } from "../constants";
-import type { CodeMirrorRef, PropSchema } from "../types";
+import type { CodeMirrorRef, PropSchema, PropValues } from "../types";
 import type { ComponentBuilderContextType } from "./type";
 
 const defaultThemeValue: ThemeData = {
@@ -31,6 +31,8 @@ const ComponentBuilderContext = createContext<ComponentBuilderContextType>({
   componentProps: [],
   componentCode: defaultComponentCode,
   themeValue: defaultThemeValue,
+  propsValue: {},
+  setPropsValue: () => {},
   setThemeValue: () => {},
   setIsAIGenerating: () => {},
   setStyleValue: () => {},
@@ -59,6 +61,7 @@ export const ComponentBuilderProvider = ({
   const [componentProps, setComponentProps] = useState<PropSchema[]>([]);
   const [componentCode, setComponentCode] = useState(defaultComponentCode);
   const [themeValue, setThemeValue] = useState<ThemeData>(defaultThemeValue);
+  const [propsValue, setPropsValue] = useState<PropValues>({});
 
   useEffect(() => {
     isAIGeneratingRef.current = isAIGenerating;
@@ -86,6 +89,8 @@ export const ComponentBuilderProvider = ({
         componentProps,
         componentCode,
         themeValue,
+        propsValue,
+        setPropsValue,
         setIsAIGenerating,
         setThemeValue,
         setStyleValue,

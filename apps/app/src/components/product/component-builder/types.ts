@@ -10,7 +10,7 @@ export interface ComponentData {
   code: string;
 }
 
-export type PropsType = "string" | "number" | "boolean" | "object" | "self";
+export type PropsType = "text" | "number" | "boolean" | "object" | "self";
 export type StreamDataStatus = "not-started" | "in-progress" | "complete";
 
 export interface PropSchema {
@@ -51,3 +51,11 @@ export interface GenerationStatus {
 export interface CodeMirrorRef {
   getCodemirror: () => EditorView | undefined;
 }
+
+export interface ObjectPropValue {
+  [key: string]: BasePropValue;
+}
+
+export type BasePropValue = string | number | boolean | ObjectPropValue | null;
+
+export type PropValues = Record<string, BasePropValue | BasePropValue[]>;

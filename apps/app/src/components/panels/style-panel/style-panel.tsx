@@ -94,14 +94,14 @@ export const StylePanel = ({
       <Section title="Spacing">
         <div className="grid grid-cols-2 gap-2">
           <UnitTextInput
-            slotValue={<Icons.BoxPadding />}
+            slotValue={<Icons.BoxMargin />}
             tooltipContent="Padding"
             value={styleValue.padding ?? "0"}
             handleChange={(v) => updateStyle({ padding: v })}
             units={SPACING_UNITS}
           />
           <UnitTextInput
-            slotValue={<Icons.BoxMargin />}
+            slotValue={<Icons.BoxPadding />}
             tooltipContent="Margin"
             value={styleValue.margin ?? "0"}
             handleChange={(v) => updateStyle({ margin: v })}
