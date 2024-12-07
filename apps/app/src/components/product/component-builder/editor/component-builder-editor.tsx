@@ -9,23 +9,11 @@ import { useTheme } from "next-themes";
 import { sandPackFilesConfig } from "../constants";
 import { ComponentBuilderAIChat } from "./left-panel/component-builder-ai-chat";
 import { CodeEditor } from "./right-panel/code-editor";
-import {} from "./right-panel/preview";
+import { ComponentBuilderPreview } from "./right-panel/preview";
 import "../styles.css";
-import dynamic from "next/dynamic";
 import { useMemo } from "react";
 import { useComponentBuilderContext } from "../context/component-builder.context";
 import { MetadataFields } from "./left-panel/metadata-fields/metadata-fields";
-
-export const ComponentBuilderPreview = dynamic(
-  () =>
-    import("./right-panel/preview").then((mod) => mod.ComponentBuilderPreview),
-  {
-    ssr: false,
-    loading: () => (
-      <div className="h-full w-full relative overflow-hidden top-0 left-0" />
-    ),
-  },
-);
 
 export const ComponentBuilderEditor = () => {
   const { resolvedTheme } = useTheme();
@@ -33,7 +21,8 @@ export const ComponentBuilderEditor = () => {
 
   // Create files config when component code or style changes
   const files = useMemo(
-    () => sandPackFilesConfig({ code: componentCode, styleValue }),
+    () =>
+      sandPackFilesConfig({ componentCode: componentCode, style: styleValue }),
     [componentCode, styleValue],
   );
 

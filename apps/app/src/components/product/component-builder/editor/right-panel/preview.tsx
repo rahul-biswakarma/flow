@@ -1,6 +1,6 @@
 import { StylePanel } from "@/components/panels/style-panel/style-panel";
 import { useComponentBuilderContext } from "@/components/product/component-builder/context";
-import { SandpackPreview } from "@codesandbox/sandpack-react";
+import { SandpackLayout, SandpackPreview } from "@codesandbox/sandpack-react";
 import { IconButton } from "@v1/ui/icon-button";
 import { Icons } from "@v1/ui/icons";
 import {
@@ -39,13 +39,22 @@ export const ComponentBuilderPreview = () => {
                 </IconButton>
               )}
             </div>
-            <SandpackPreview
-              showOpenInCodeSandbox={false}
-              showRefreshButton={true}
+            <SandpackLayout
               style={{
-                height: "calc(100% - 40px)",
+                border: "none",
+                height: "100%",
+                borderRadius: "0px",
               }}
-            />
+            >
+              <SandpackPreview
+                showRestartButton={true}
+                showOpenInCodeSandbox={false}
+                showRefreshButton={true}
+                style={{
+                  height: "calc(100% - 40px)",
+                }}
+              />
+            </SandpackLayout>
           </div>
         </ResizablePanel>
         {showPreviewSettings && (
