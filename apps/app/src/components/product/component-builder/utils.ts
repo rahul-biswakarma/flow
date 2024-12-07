@@ -15,6 +15,16 @@ interface ParsedFields {
 }
 
 function generateExplanationText(parsedData: ParsedFields): string {
+  if (
+    parsedData.componentName.status === "not-started" &&
+    parsedData.componentDescription.status === "not-started" &&
+    parsedData.componentKeywords.status === "not-started" &&
+    parsedData.componentProps.status === "not-started" &&
+    parsedData.componentCode.status === "not-started"
+  ) {
+    return "";
+  }
+
   const steps = [
     {
       field: "componentName",
@@ -97,12 +107,26 @@ export function parseAIResponse(response: string): ParsedFields {
 
   const text = response.toString();
 
-  // Extract fields
+  // Extract explanation content
   const explanationContent = extractStreamingContent(
     text,
     "<cb000>",
     "</cb000>",
   ).content;
+
+  // If only explanation exists (no other tags), return early with just the explanation
+  if (
+    !text.includes("<cb001>") &&
+    !text.includes("<cb002>") &&
+    !text.includes("<cb003>") &&
+    !text.includes("<cb004>") &&
+    !text.includes("<cb005>")
+  ) {
+    parsedData.explanation = explanationContent;
+    return parsedData;
+  }
+
+  // Continue with existing parsing logic for component generation
   parsedData.componentName = extractStreamingContent(
     text,
     "<cb001>",
@@ -130,35 +154,9 @@ export function parseAIResponse(response: string): ParsedFields {
     "</cb005>",
   );
 
-  if (
-    parsedData.componentProps.status === "complete" ||
-    parsedData.componentProps.status === "in-progress"
-  ) {
-    parsedData.componentKeywords.status = "complete";
-  }
-
-  // Clean up code block markers in componentCode.content
-  let codeContent = parsedData.componentCode.content.trim();
-  // Remove content from start until first newline if it starts with ```
-  if (codeContent.startsWith("```")) {
-    const firstNewlineIndex = codeContent.indexOf("\n");
-    if (firstNewlineIndex !== -1) {
-      codeContent = codeContent.substring(firstNewlineIndex + 1);
-      // Remove content from last ``` to end
-      const lastBackticksIndex = codeContent.lastIndexOf("```");
-      if (lastBackticksIndex !== -1) {
-        codeContent = codeContent.substring(0, lastBackticksIndex);
-      }
-    }
-  }
-
-  // Update the cleaned content
-  parsedData.componentCode.content = codeContent.trim();
-
-  // Generate dynamic explanation text
+  // Only generate explanation text with steps if we're creating a component
   const generatedExplanation = generateExplanationText(parsedData);
-  parsedData.explanation = `${explanationContent}
-  ${generatedExplanation}`;
+  parsedData.explanation = `${explanationContent}\n${generatedExplanation}`;
 
   return parsedData;
 }

@@ -10,7 +10,13 @@ export interface ComponentData {
   code: string;
 }
 
-export type PropsType = "text" | "number" | "boolean" | "object" | "self";
+export type PropsType =
+  | "string"
+  | "text"
+  | "number"
+  | "boolean"
+  | "object"
+  | "self";
 export type StreamDataStatus = "not-started" | "in-progress" | "complete";
 
 export interface PropSchema {

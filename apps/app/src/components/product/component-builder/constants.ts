@@ -1,16 +1,19 @@
 import type { StyleData } from "@/components/panels/style-panel/type";
 import type { ThemeData } from "@/components/panels/theme-panel";
+import type { PropValues } from "./types";
 
 type sandPackFilesConfigTypes = {
   componentCode: string;
   style: StyleData;
   theme: ThemeData;
+  props: PropValues;
 };
 
 export const sandPackFilesConfig = ({
   componentCode,
   style,
   theme,
+  props,
 }: sandPackFilesConfigTypes) => ({
   "tsconfig.json": {
     code: `{
@@ -37,7 +40,7 @@ export const sandPackFilesConfig = ({
     }`,
   },
   "/index.tsx": {
-    code: defaultCodeWrapper(theme, style),
+    code: defaultCodeWrapper({ theme, style, props }),
   },
   "/public/index.html": {
     code: `<!DOCTYPE html>
@@ -92,7 +95,11 @@ export default function App(props): JSX.Element {
 }
 `;
 
-export const defaultCodeWrapper = (theme: ThemeData, style?: StyleData) => {
+export const defaultCodeWrapper = ({
+  theme,
+  style,
+  props,
+}: { theme: ThemeData; style?: StyleData; props: PropValues }) => {
   return `import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Theme as ThemeProvider } from "@radix-ui/themes";
@@ -112,7 +119,7 @@ root.render(
       ${theme.scaling ? `scaling="${theme.scaling}"` : ""}
       ${theme.panelBackground ? `panelBackground="${theme.panelBackground}"` : ""}
     >
-      <App style={${JSON.stringify(style)}} />
+      <App style={${JSON.stringify(style)}} {...${JSON.stringify(props)}} />
     </ThemeProvider>
   </StrictMode>
 );`;

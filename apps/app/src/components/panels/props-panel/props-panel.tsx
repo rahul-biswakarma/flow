@@ -68,6 +68,7 @@ const PropField = ({
 }) => {
   switch (prop.propType) {
     case "text":
+    case "string":
       return (
         <TextFieldElement
           label={prop.visualName}
@@ -216,6 +217,8 @@ const ListPropField = ({
 const getDefaultValueForType = (type: PropsType): BasePropValue => {
   switch (type) {
     case "text":
+      return "";
+    case "string":
       return "";
     case "number":
       return 0;

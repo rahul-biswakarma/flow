@@ -17,7 +17,7 @@ import { MetadataFields } from "./left-panel/metadata-fields/metadata-fields";
 
 export const ComponentBuilderEditor = () => {
   const { resolvedTheme } = useTheme();
-  const { componentCode, styleValue, themeValue } =
+  const { componentCode, styleValue, themeValue, propsValue } =
     useComponentBuilderContext();
 
   // Create files config when component code or style changes
@@ -27,8 +27,9 @@ export const ComponentBuilderEditor = () => {
         componentCode: componentCode,
         style: styleValue,
         theme: themeValue,
+        props: propsValue,
       }),
-    [componentCode, styleValue, themeValue],
+    [componentCode, styleValue, themeValue, propsValue],
   );
 
   return (
