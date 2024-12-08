@@ -48,6 +48,7 @@ export const RichTextEditor = ({
   const editor = useEditor({
     immediatelyRender: false,
     extensions,
+    editable: !props.readOnly,
   });
 
   useEffect(() => {

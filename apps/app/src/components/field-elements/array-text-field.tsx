@@ -70,14 +70,11 @@ export const ArrayTextFieldElement = ({
         }}
         inputRenderer={
           <TextField.Root
-            autoFocus={value.length > 0}
+            autoFocus={true}
             className={clsx(
-              "grow p-0 !bg-transparent",
+              "grow p-0 !bg-transparent !border-none !outline-none",
               fieldStyles,
               fieldFontSize,
-              {
-                "!border-none !outline-none": value.length > 0,
-              },
               { "!w-0": isStreaming },
             )}
             value={inputValue}

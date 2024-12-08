@@ -8,6 +8,7 @@ import { IconButton } from "@v1/ui/icon-button";
 import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
 import { toast } from "@v1/ui/toast";
+import { clsx } from "clsx";
 import { useState } from "react";
 import { useComponentBuilderContext } from "./context";
 import { CodeReviewDialog } from "./modals/review-modal";
@@ -99,7 +100,13 @@ export const ComponentBuilderHeader = ({
               color="green"
               loading={isComponentCreating}
             >
-              {!isComponentCreating && <Icons.Box />}
+              {!isComponentCreating && (
+                <Icons.Box
+                  className={clsx({
+                    "!text-gray-9": !isConfigValid || disabled,
+                  })}
+                />
+              )}
               {isComponentCreating ? scopedT("creating") : scopedT("publish")}
             </Button>
           </CodeReviewDialog>

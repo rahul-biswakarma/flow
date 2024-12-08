@@ -26,7 +26,7 @@ export const ArrayValueRenderer = <T,>({
       ref={ref}
       tabIndex={-1}
       className={clsx(
-        "flex gap-1 flex-wrap border-gray-7 bg-gray-a3 rounded-sm min-h-10",
+        "flex gap-1 items-center flex-wrap border-gray-7 bg-gray-a3 rounded-sm min-h-10",
         {
           "rounded p-1": value.length > 0 || isStreaming,
         },
@@ -34,10 +34,13 @@ export const ArrayValueRenderer = <T,>({
       onFocus={() => setIsFocused(true)}
       onBlur={() => setIsFocused(false)}
     >
-      {value.map((value) => (
+      {value.map((value, index) => (
         <div
-          key={`${value}`}
-          className="flex gap-1 group/arrayKeywords items-center justify-center px-2 py-1 rounded bg-gray-surface border border-outline-01 cursor-default"
+          key={`${value}-${
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            index
+          }`}
+          className="flex gap-1 group/arrayKeywords items-center justify-center px-2 py-1 rounded bg-gray-a4 border border-gray-a6 cursor-default"
         >
           {valueRender(value)}
           <IconButton

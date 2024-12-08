@@ -67,6 +67,7 @@ export const CodeReviewDialog = ({
         </Dialog.Title>
         <div className="relative h-full justify-between gap-4 min-h-[300px]">
           <RichTextEditor
+            readOnly
             content={
               messages[1]?.content.trim() ??
               "We will review your code to ensure it meets the required guidelines. Please click on the button below to start the review."
