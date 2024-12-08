@@ -39,7 +39,7 @@ export const ComponentBuilderEditor = () => {
       files={files}
     >
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel minSize={30} defaultSize={40}>
+        <ResizablePanel minSize={30} defaultSize={30}>
           <ResizablePanelGroup direction="vertical">
             <ResizablePanel minSize={30}>
               <MetadataFields />

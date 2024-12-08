@@ -130,7 +130,7 @@ export async function POST(req: Request) {
   try {
     const header = await headers();
     const ip = header.get("x-forwarded-for");
-    const { success } = await ratelimit.chat.limit(`${ip}-component-builder`);
+    const { success } = await ratelimit.chat.limit(`${ip}-ai`);
 
     if (!success) {
       return new Response(

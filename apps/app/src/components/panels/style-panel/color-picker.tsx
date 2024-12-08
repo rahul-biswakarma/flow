@@ -1,6 +1,7 @@
 import { HoverCard } from "@v1/ui/hover-card";
 import { TextField } from "@v1/ui/text-field";
 import convert from "color-convert";
+import debounce from "lodash/debounce";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
@@ -89,7 +90,10 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
             </HoverCard.Trigger>
             <HoverCard.Content maxWidth="300px">
               <div>
-                <HexColorPicker color={color} onChange={handleColorChange} />
+                <HexColorPicker
+                  color={color}
+                  onChange={debounce(handleColorChange, 500)}
+                />
               </div>
             </HoverCard.Content>
           </HoverCard.Root>

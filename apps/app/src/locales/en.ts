@@ -110,6 +110,7 @@ export default {
   "props_builder.add_field": "Add Field",
   "props_builder.field.unnamed_prop": "Unnamed Prop",
   "props_builder.field.field": "Field: ",
+  "props_builder.no_props": "No props defined",
   "props_builder.field.visual_name": "Visual Name",
   "props_builder.field.visual_name_info":
     "This will be displayed in the builder UI",

@@ -11,7 +11,7 @@ import { RichTextEditor } from "@v1/ui/rte";
 import { ScrollArea } from "@v1/ui/scroll-area";
 import { Tabs } from "@v1/ui/tabs";
 import { Text } from "@v1/ui/text";
-import * as parserBabel from "prettier/parser-babel";
+import parserTypeScript from "prettier/parser-typescript";
 import * as prettierPluginEstree from "prettier/plugins/estree";
 import * as prettier from "prettier/standalone";
 import { useCallback, useEffect, useState } from "react";
@@ -46,8 +46,8 @@ export const CodeEditor = () => {
   const formatCode = useCallback(async (codeToFormat: string) => {
     try {
       const formattedCode = await prettier.format(codeToFormat, {
-        parser: "babel",
-        plugins: [parserBabel, prettierPluginEstree],
+        parser: "typescript",
+        plugins: [parserTypeScript, prettierPluginEstree],
         semi: true,
         singleQuote: true,
       });

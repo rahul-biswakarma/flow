@@ -10,6 +10,7 @@ import { Text } from "@v1/ui/text";
 import { toast } from "@v1/ui/toast";
 import { useState } from "react";
 import { useComponentBuilderContext } from "./context";
+import { CodeReviewDialog } from "./modals/review-modal";
 
 export const ComponentBuilderHeader = ({
   disabled = false,
@@ -88,16 +89,20 @@ export const ComponentBuilderHeader = ({
       </div>
       <div className="flex justify-end items-center gap-2">
         {viewState === "editor" ? (
-          <Button
-            disabled={!isConfigValid || disabled}
-            variant="surface"
-            color="green"
-            onClick={handleCreate}
-            loading={isComponentCreating}
+          <CodeReviewDialog
+            componentCode={componentCode}
+            createHandler={handleCreate}
           >
-            {!isComponentCreating && <Icons.Box />}
-            {isComponentCreating ? scopedT("creating") : scopedT("publish")}
-          </Button>
+            <Button
+              disabled={!isConfigValid || disabled}
+              variant="surface"
+              color="green"
+              loading={isComponentCreating}
+            >
+              {!isComponentCreating && <Icons.Box />}
+              {isComponentCreating ? scopedT("creating") : scopedT("publish")}
+            </Button>
+          </CodeReviewDialog>
         ) : (
           showHeaderCreateButton && (
             <Button

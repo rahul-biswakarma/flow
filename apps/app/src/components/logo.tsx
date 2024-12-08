@@ -1,5 +1,5 @@
 import Image from "next/image";
 
-export const Logo = () => {
-  return <Image width={25} height={25} alt="logo" src="/logo.webp" />;
+export const Logo = ({ width = 25, height = 25 }) => {
+  return <Image width={width} height={height} alt="logo" src="/logo.webp" />;
 };

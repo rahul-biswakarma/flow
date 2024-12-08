@@ -35,29 +35,33 @@ export const PropsBuilder = () => {
       key="component-builder-prop-builder"
       className="flex flex-col w-full text-gray-10 gap-2"
     >
-      {componentProps.length === 0
-        ? null
-        : componentProps.map((prop) => (
-            <div key={`props_builder_${prop.id}`}>
-              <PropsField
-                propData={prop}
-                onChange={(propData) => {
-                  if (!isAIGeneratingRef.current) {
-                    setComponentProps((prev) =>
-                      prev.map((p) => (p.id === propData.id ? propData : p)),
-                    );
-                  }
-                }}
-                onDelete={() => {
-                  if (!isAIGeneratingRef.current) {
-                    setComponentProps((prev) =>
-                      prev.filter((p) => p.id !== prop.id),
-                    );
-                  }
-                }}
-              />
-            </div>
-          ))}
+      {componentProps.length === 0 ? (
+        <div className="flex justify-center items-center p-6 border border-dashed border-gray-4 bg-gray-2 rounded-sm text-gray-7 cursor-default">
+          {t("props_builder.no_props")}
+        </div>
+      ) : (
+        componentProps.map((prop) => (
+          <div key={`props_builder_${prop.id}`}>
+            <PropsField
+              propData={prop}
+              onChange={(propData) => {
+                if (!isAIGeneratingRef.current) {
+                  setComponentProps((prev) =>
+                    prev.map((p) => (p.id === propData.id ? propData : p)),
+                  );
+                }
+              }}
+              onDelete={() => {
+                if (!isAIGeneratingRef.current) {
+                  setComponentProps((prev) =>
+                    prev.filter((p) => p.id !== prop.id),
+                  );
+                }
+              }}
+            />
+          </div>
+        ))
+      )}
       <Button
         variant="soft"
         color="gray"
