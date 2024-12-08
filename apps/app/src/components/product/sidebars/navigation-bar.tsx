@@ -1,5 +1,6 @@
 "use client";
 
+import { Logo } from "@/components/logo";
 import { DEFAULT_ORG_AVATAR, DEFAULT_ORG_AVATAR_FALLBACK } from "@/constants";
 import { useFlowContext } from "@/context/flow-context";
 import { useScopedI18n } from "@/locales/client";
@@ -63,13 +64,9 @@ export function NavigationBar() {
                 <HoverCard.Trigger>
                   <SidebarMenuButton
                     size="lg"
-                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground md:h-8 md:p-0"
+                    className="flex justify-center items-center data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground md:h-8 md:p-0"
                   >
-                    <Avatar
-                      className="h-8 w-8 rounded-md"
-                      src={avatar}
-                      fallback={projectName[0] ?? "U"}
-                    />
+                    <Logo />
                   </SidebarMenuButton>
                 </HoverCard.Trigger>
                 <HoverCard.Content side="right" maxWidth="300px">

@@ -9,18 +9,23 @@ import { ComponentManager } from "./manager/component-manager";
 
 export const ComponentBuilder = () => {
   const [viewState, setViewState] = useState<"editor" | "manager">("manager");
+  const [showHeaderCreateButton, setShowHeaderCreateButton] = useState(true);
 
   return (
     <ComponentBuilderProvider>
       <div className="w-full grid grid-rows-[auto_1fr] h-full max-h-full">
         <ComponentBuilderHeader
+          showHeaderCreateButton={showHeaderCreateButton}
           setViewState={setViewState}
           viewState={viewState}
         />
         {viewState === "editor" ? (
           <ComponentBuilderEditor />
         ) : (
-          <ComponentManager />
+          <ComponentManager
+            setViewState={setViewState}
+            setShowHeaderCreateButton={setShowHeaderCreateButton}
+          />
         )}
       </div>
     </ComponentBuilderProvider>

@@ -14,7 +14,7 @@ export const useCountComponents = ({
 } => {
   const key = `/api/components.count?projectId=${projectId}&status=${status}`;
 
-  const { data, error, isLoading } = useSWR(key, () => {
+  const { data, error, isLoading } = useSWR(key, async () => {
     return axios
       .post("/api/components.count", {
         projectId: projectId,

@@ -44,7 +44,7 @@
 }
 
 .boxes .box > div {
-  --background: #5C8DF6;
+  --background: #5c8df6;
   --top: auto;
   --right: auto;
   --bottom: auto;
@@ -60,7 +60,8 @@
   right: var(--right);
   bottom: var(--bottom);
   left: var(--left);
-  transform: rotateY(var(--rotateY)) rotateX(var(--rotateX)) translateZ(var(--translateZ));
+  transform: rotateY(var(--rotateY)) rotateX(var(--rotateX))
+    translateZ(var(--translateZ));
 }
 
 .boxes .box > div:nth-child(1) {
@@ -87,7 +88,8 @@
 }
 
 @-webkit-keyframes box1 {
-  0%, 50% {
+  0%,
+  50% {
     transform: translate(100%, 0);
   }
 
@@ -97,7 +99,8 @@
 }
 
 @keyframes box1 {
-  0%, 50% {
+  0%,
+  50% {
     transform: translate(100%, 0);
   }
 
@@ -135,7 +138,8 @@
 }
 
 @-webkit-keyframes box3 {
-  0%, 50% {
+  0%,
+  50% {
     transform: translate(100%, 100%);
   }
 
@@ -145,7 +149,8 @@
 }
 
 @keyframes box3 {
-  0%, 50% {
+  0%,
+  50% {
     transform: translate(100%, 100%);
   }
 

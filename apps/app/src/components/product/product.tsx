@@ -77,7 +77,7 @@ export const Product = () => {
                 className="absolute w-full h-full"
               >
                 {activeItem && (
-                  <div className="flex h-full w-full max-h-full border rounded-sm bg-panel border-panel">
+                  <div className="flex h-full w-full max-h-full border rounded-sm bg-panel border-panel overflow-hidden">
                     {activeItem.component}
                   </div>
                 )}

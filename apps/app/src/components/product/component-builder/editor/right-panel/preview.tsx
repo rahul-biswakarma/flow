@@ -78,7 +78,9 @@ export const ComponentBuilderPreview = () => {
                 >
                   <Tabs.Trigger value="style-panel">Styles</Tabs.Trigger>
                   <Tabs.Trigger value="theme-panel">Theme</Tabs.Trigger>
-                  <Tabs.Trigger value="props-panel">Props</Tabs.Trigger>
+                  {Object.keys(componentProps).length > 0 && (
+                    <Tabs.Trigger value="props-panel">Props</Tabs.Trigger>
+                  )}
                   <IconButton
                     variant="ghost"
                     color="gray"

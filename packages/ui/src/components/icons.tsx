@@ -41,6 +41,7 @@ import {
   IconCross,
   IconDatabase,
   IconFile,
+  IconFileTypeDoc,
   IconFileTypography,
   IconGlobe,
   IconGolf,
@@ -98,6 +99,7 @@ const IconWrapper = (Icon: React.ComponentType<IconProps>) => {
 
 export const Icons = {
   Bolt: IconWrapper(IconBolt),
+  FileTypeDoc: IconWrapper(IconFileTypeDoc),
   CircleHalf2: IconWrapper(IconCircleHalf2),
   Circle: IconWrapper(IconCircle),
   Brush: IconWrapper(IconBrush),

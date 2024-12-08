@@ -32,6 +32,7 @@ export const CreateProject = ({
       createProjectWithMember(slug, name, (project: Project) => {
         toast.success(scopedT("project_created"));
         handleProjectRedirect(project.slug);
+        setIsLoading(false);
       });
     } catch (error) {
       toast.error(
@@ -39,7 +40,6 @@ export const CreateProject = ({
           error: error instanceof Error ? error.message : "Unknown error",
         }),
       );
-    } finally {
       setIsLoading(false);
     }
   };
@@ -55,7 +55,7 @@ export const CreateProject = ({
       <Text size="2" className="text-gray-10">
         {scopedT("create_new_project_description")}
       </Text>
-      <div className="flex flex-col gap-5 justify-center items-center py-8 h-full max-h-[350px] border border-outline-00 bg-gray-a2 rounded-base w-full max-w-[700px] px-4">
+      <div className="flex flex-col gap-5 justify-center items-center py-8 h-full max-h-[350px] border border-gray-6 bg-gray-a2 rounded-base w-full max-w-[700px] px-4">
         <div className="flex flex-col gap-1 w-full max-w-[400px]">
           <Text>{scopedT("project_name")}</Text>
           <TextField.Root

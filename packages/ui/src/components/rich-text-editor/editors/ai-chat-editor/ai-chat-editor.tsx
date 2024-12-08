@@ -1,10 +1,10 @@
 import { type Editor, EditorContent } from "@tiptap/react";
 import { clsx } from "clsx";
 import { useCallback } from "react";
-import type { RichTextEditorProps } from "../types";
+import type { RichTextEditorProps } from "../../types";
 import "./ai-chat.css";
-import { IconButton } from "../../icon-button";
-import { Icons } from "../../icons";
+import { IconButton } from "../../../icon-button";
+import { Icons } from "../../../icons";
 
 export const AIChatEditor = ({
   containerClassName,

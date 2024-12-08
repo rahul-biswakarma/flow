@@ -15,10 +15,12 @@ export const ComponentBuilderHeader = ({
   disabled = false,
   viewState,
   setViewState,
+  showHeaderCreateButton,
 }: {
   disabled?: boolean;
   setViewState: React.Dispatch<React.SetStateAction<"editor" | "manager">>;
   viewState: "editor" | "manager";
+  showHeaderCreateButton?: boolean;
 }) => {
   const scopedT = useScopedI18n("component_builder");
 
@@ -97,16 +99,17 @@ export const ComponentBuilderHeader = ({
             {isComponentCreating ? scopedT("creating") : scopedT("publish")}
           </Button>
         ) : (
-          <Button
-            variant="surface"
-            color="green"
-            onClick={() => {
-              setViewState("editor");
-            }}
-          >
-            <Icons.Plus />
-            {scopedT("build_new_component")}
-          </Button>
+          showHeaderCreateButton && (
+            <Button
+              variant="soft"
+              onClick={() => {
+                setViewState("editor");
+              }}
+            >
+              <Icons.Plus />
+              {scopedT("build_new_component")}
+            </Button>
+          )
         )}
       </div>
     </div>

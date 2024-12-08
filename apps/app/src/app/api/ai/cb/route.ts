@@ -119,9 +119,9 @@ TECHNICAL REQUIREMENTS:
 Available Props and Utilities:
 1. style: React.CSSProperties
 2. className: string
-3. - COLORS: Object (theme colors, e.g., COLORS["gray-1"])
-  Colors: gray, accent, crimson, jade, indigo, green, blue, orange
-  Keys: "color_name-1" to "color_name-12" and "color_name-a1" to "color_name-a12"
+3. use theme colors for consistency, e.g.,var(--gray-1).
+  colors: gray, accent, crimson, jade, indigo, green, blue, orange
+  variable: "color_name-1" to "color_name-12" and "color_name-a1" to "color_name-a12"
 }
 
 Generate clean, maintainable, and well-documented code that follows these specifications exactly.`;
