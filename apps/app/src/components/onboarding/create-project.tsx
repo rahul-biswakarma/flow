@@ -29,7 +29,7 @@ export const CreateProject = ({
     e.preventDefault();
     setIsLoading(true);
     try {
-      createProjectWithMember(slug, name, (project: Project) => {
+      await createProjectWithMember(slug, name, (project: Project) => {
         toast.success(scopedT("project_created"));
         handleProjectRedirect(project.slug);
         setIsLoading(false);
