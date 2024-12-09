@@ -37,7 +37,10 @@ export const sandPackFilesConfig = ({
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-    }`,
+    }
+  html, body {height: 100%; width: 100%;}
+  #component-builder-preview-root {height: 100%; width: 100%;}
+    `,
   },
   "/index.tsx": {
     code: defaultCodeWrapper({ theme, style, props }),
@@ -73,26 +76,26 @@ export const sandPackFilesConfig = ({
   },
 });
 
-export const defaultComponentCode = `import React, {useState} from "react";
-import { Button } from "@radix-ui/themes";
+export const defaultComponentCode = `import React, { useState } from 'react';
+import { Button } from '@radix-ui/themes';
 
 export default function App(props): JSX.Element {
   const [counter, setCounter] = useState(0);
   return (
     <div
       style={{
-        height: '100%',
         ...props.style,
       }}
     >
-      <Button
-        onClick={() => setCounter(counter + 1)}
-      >
+      <Button onClick={() => setCounter(counter + 1)}>
         Counter: {counter}
       </Button>
     </div>
   );
 }
+
+
+
 `;
 
 export const defaultCodeWrapper = ({
@@ -119,7 +122,7 @@ root.render(
       ${theme.scaling ? `scaling="${theme.scaling}"` : ""}
       ${theme.panelBackground ? `panelBackground="${theme.panelBackground}"` : ""}
     >
-      <App style={${JSON.stringify(style)}} {...${JSON.stringify(props)}} />
+     <div style={{position: "relative", display: "flex", justifyContent: "center", alignItems: "center", width: "100%", overflowY: "auto", height: "100dvh"}}><App style={${JSON.stringify(style)}} {...${JSON.stringify(props)}} /></div>
     </ThemeProvider>
   </StrictMode>
 );`;

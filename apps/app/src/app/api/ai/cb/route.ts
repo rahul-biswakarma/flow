@@ -44,7 +44,7 @@ Example of INCORRECT format:
 5. <cb004>
  [
   {
-    "id": "prop-unique-id",
+    "id": "prop-unique-id", // NOTE: unique id for each property
     "visualName": "Human Readable Name",
     "propName": "camelCasePropName",
     "propType": "string|text|number|boolean|object", // NOTE: sticky to these types only, for array field use "isList"

@@ -108,9 +108,9 @@ export const ComponentBuilderAIChat = () => {
             "px-2",
             "py-1",
             "rounded",
-            "bg-gray-surface",
+            "bg-gray-a4",
             "border",
-            "border-outline-01",
+            "border-gray-a6",
             "cursor-default",
           );
           keywordElement.textContent = keyword;

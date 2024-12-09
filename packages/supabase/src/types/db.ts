@@ -222,6 +222,7 @@ export type Database = {
           id: string;
           is_list: boolean | null;
           object_schema: Json | null;
+          options: Json | null;
           required: boolean | null;
           type: Database["public"]["Enums"]["properties_type"];
           updated_at: string;
@@ -234,6 +235,7 @@ export type Database = {
           id?: string;
           is_list?: boolean | null;
           object_schema?: Json | null;
+          options?: Json | null;
           required?: boolean | null;
           type: Database["public"]["Enums"]["properties_type"];
           updated_at?: string;
@@ -246,6 +248,7 @@ export type Database = {
           id?: string;
           is_list?: boolean | null;
           object_schema?: Json | null;
+          options?: Json | null;
           required?: boolean | null;
           type?: Database["public"]["Enums"]["properties_type"];
           updated_at?: string;
