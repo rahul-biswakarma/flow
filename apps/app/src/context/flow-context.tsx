@@ -45,7 +45,7 @@ export const FlowContextProvider = ({
   const [projectData, setProjectData] =
     useState<ProjectWithPages>(projectWithPages);
   const [activeNavBarItem, setActiveNavBarItem] = useState<string>(
-    "nav-bar-component-builder",
+    "nav-bar-visual-editor",
   );
 
   const scopedT = useScopedI18n("navigation_bar");

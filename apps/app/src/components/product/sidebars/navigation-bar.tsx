@@ -1,6 +1,7 @@
 "use client";
 
-import { DEFAULT_ORG_AVATAR, DEFAULT_ORG_AVATAR_FALLBACK } from "@/constants";
+import { Logo } from "@/components/logo";
+import { DEFAULT_ORG_AVATAR } from "@/constants";
 import { useFlowContext } from "@/context/flow-context";
 import { useScopedI18n } from "@/locales/client";
 import { Avatar } from "@v1/ui/avatar";
@@ -63,22 +64,20 @@ export function NavigationBar() {
                 <HoverCard.Trigger>
                   <SidebarMenuButton
                     size="lg"
-                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground md:h-8 md:p-0"
+                    className="flex justify-center items-center data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground md:h-8 md:p-0"
                   >
-                    <Avatar
-                      className="h-8 w-8 rounded-md"
-                      src={avatar}
-                      fallback={projectName[0] ?? "U"}
-                    />
+                    <Logo />
                   </SidebarMenuButton>
                 </HoverCard.Trigger>
-                <HoverCard.Content side="right" maxWidth="300px">
+                <HoverCard.Content
+                  side="right"
+                  maxWidth="300px"
+                  className="rounded-sm"
+                >
                   <div className="flex gap-3">
-                    <Avatar
-                      size="3"
-                      src={avatar ?? DEFAULT_ORG_AVATAR}
-                      fallback={projectName[0] ?? DEFAULT_ORG_AVATAR_FALLBACK}
-                    />
+                    <div className="w-[30px] h-[30px]">
+                      <Logo />
+                    </div>
                     <div className="flex gap-1 flex-col">
                       <Heading size="3" as="h3">
                         {projectName}
@@ -110,6 +109,7 @@ export function NavigationBar() {
               {navigationBarMenuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
+                    tooltip={item.title}
                     onClick={() => setActiveNavBarItem(item.key)}
                     isActive={activeNavBarItem === item.key}
                     className="px-2.5 md:px-2"

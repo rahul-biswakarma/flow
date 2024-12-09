@@ -36,7 +36,7 @@ export const ObjectTypeFields: React.FC<ObjectTypeFieldsProps> = ({
   const addKey = () => {
     const newKey = `New Key ${nestingLevel}${keys.length}`;
     setKeys([...keys, newKey]);
-    onChange({ ...objectSchema, [newKey]: { type: "string", name: newKey } });
+    onChange({ ...objectSchema, [newKey]: { type: "text", name: newKey } });
   };
 
   const removeKey = (keyToRemove: string) => {

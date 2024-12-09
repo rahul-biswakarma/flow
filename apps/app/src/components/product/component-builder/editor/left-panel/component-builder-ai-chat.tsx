@@ -1,7 +1,7 @@
+import { AIChat } from "@/ai";
 import { useComponentBuilderContext } from "@/components/product/component-builder/context";
 import type { PropSchema } from "@/components/product/component-builder/types";
 import { parseAIResponse } from "@/components/product/component-builder/utils";
-import { AIChat } from "@v1/ai/ai-chat";
 import { useCallback, useRef } from "react";
 
 type UpdateStateProps = {
@@ -47,11 +47,16 @@ export const ComponentBuilderAIChat = () => {
       }
     }
 
-    setComponentName(latestDataRef.current.componentName ?? "");
-    setComponentDescription(latestDataRef.current.componentDescription ?? "");
-    setComponentKeywords(latestDataRef.current.componentKeywords ?? []);
-    setComponentProps(latestDataRef.current.componentProps ?? []);
-    setComponentCode(latestDataRef.current.componentCode ?? "");
+    latestDataRef.current.componentName &&
+      setComponentName(latestDataRef.current.componentName ?? "");
+    latestDataRef.current.componentDescription &&
+      setComponentDescription(latestDataRef.current.componentDescription ?? "");
+    latestDataRef.current.componentKeywords?.length &&
+      setComponentKeywords(latestDataRef.current.componentKeywords ?? []);
+    latestDataRef.current.componentProps?.length &&
+      setComponentProps(latestDataRef.current.componentProps ?? []);
+    latestDataRef.current.componentCode &&
+      setComponentCode(latestDataRef.current.componentCode ?? "");
   }, []);
 
   const handleMetadataStream = (data: {
@@ -66,7 +71,7 @@ export const ComponentBuilderAIChat = () => {
       return rawParsedData.explanation;
     }
 
-    if (rawParsedData.componentName) {
+    if (rawParsedData.componentName.content) {
       latestDataRef.current.componentName = rawParsedData.componentName.content;
       if (
         componentNameRef?.current &&
@@ -78,7 +83,7 @@ export const ComponentBuilderAIChat = () => {
       }
     }
 
-    if (rawParsedData.componentDescription) {
+    if (rawParsedData.componentDescription.content) {
       latestDataRef.current.componentDescription =
         rawParsedData.componentDescription.content;
       if (
@@ -91,7 +96,7 @@ export const ComponentBuilderAIChat = () => {
       }
     }
 
-    if (rawParsedData.componentKeywords) {
+    if (rawParsedData.componentKeywords.content.length) {
       for (const keyword of rawParsedData.componentKeywords.content) {
         if (!latestDataRef.current?.componentKeywords?.includes(keyword)) {
           const keywordElement = document.createElement("div");

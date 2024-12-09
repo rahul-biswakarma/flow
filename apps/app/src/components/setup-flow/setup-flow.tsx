@@ -230,7 +230,7 @@ export const SetupFlow = ({
             }}
           />
         </div>
-        <div className="px-5 py-3 rounded-3xl flex justify-center items-center gap-4 border border-transparent backdrop-blur hover:border:outline-03 hover:bg-gray-4 transition-all">
+        <div className="px-5 py-3 bg-gray-2 rounded-3xl flex justify-center items-center gap-4 border border-transparent backdrop-blur hover:!border-gray-6 hover:bg-gray-4 transition-all">
           {pages.map(({ id, icon }) => (
             <IconButton
               key={id}

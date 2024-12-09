@@ -9,6 +9,12 @@ const radixColors = [
   "green",
   "blue",
   "orange",
+  "purple",
+  "teal",
+  "gold",
+  "violet",
+  "plum",
+  "yellow",
 ];
 
 const generateRadixColorScale = (color: string) => {

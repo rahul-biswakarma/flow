@@ -66,7 +66,7 @@ export const ProjectManager = ({
       {!projectsAvailable && (
         <motion.div
           variants={itemVariants}
-          className="w-full max-w-[700px] border border-outline-00 bg-surface rounded-base"
+          className="w-full max-w-[700px] border border-gray-4 bg-surface rounded-base"
         >
           <div className="flex flex-col gap-0.5 justify-center items-center py-8 h-full min-h-[200px] ">
             <Text size="2">{scopedT("empty")}</Text>

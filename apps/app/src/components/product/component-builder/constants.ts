@@ -1,9 +1,20 @@
 import type { StyleData } from "@/components/panels/style-panel/type";
+import type { ThemeData } from "@/components/panels/theme-panel";
+import type { PropValues } from "./types";
+
+type sandPackFilesConfigTypes = {
+  componentCode: string;
+  style: StyleData;
+  theme: ThemeData;
+  props: PropValues;
+};
 
 export const sandPackFilesConfig = ({
-  code,
-  styleValue,
-}: { code: string; styleValue: StyleData }) => ({
+  componentCode,
+  style,
+  theme,
+  props,
+}: sandPackFilesConfigTypes) => ({
   "tsconfig.json": {
     code: `{
   "include": [
@@ -18,7 +29,7 @@ export const sandPackFilesConfig = ({
 }`,
   },
   "/App.tsx": {
-    code: code,
+    code: componentCode,
   },
   "/index.css": {
     code: `body {
@@ -29,29 +40,7 @@ export const sandPackFilesConfig = ({
     }`,
   },
   "/index.tsx": {
-    code: `import React, { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { Theme as ThemeProvider } from "@radix-ui/themes";
-
-import App from "./App";
-import "@radix-ui/themes/styles.css";
-import "./index.css";
-
-const root = createRoot(document.getElementById("root"));
-root.render(
-  <StrictMode>
-    <ThemeProvider
-      accentColor="indigo"
-      grayColor="slate"
-      panelBackground="translucent"
-      radius="medium"
-      scaling="100%"
-      appearance="dark"
-    >
-      <App style={${JSON.stringify(styleValue)}} />
-    </ThemeProvider>
-  </StrictMode>
-);`,
+    code: defaultCodeWrapper({ theme, style, props }),
   },
   "/public/index.html": {
     code: `<!DOCTYPE html>
@@ -62,7 +51,7 @@ root.render(
     <title>Document</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="component-builder-preview-root"></div>
   </body>
 </html>`,
   },
@@ -85,6 +74,7 @@ root.render(
 });
 
 export const defaultComponentCode = `import React, {useState} from "react";
+import { Button } from "@radix-ui/themes";
 
 export default function App(props): JSX.Element {
   const [counter, setCounter] = useState(0);
@@ -95,18 +85,42 @@ export default function App(props): JSX.Element {
         ...props.style,
       }}
     >
-      <button
+      <Button
         onClick={() => setCounter(counter + 1)}
-        style={{
-          background: '#ccc',
-          color: '#000',
-          padding: '8px 16px',
-          borderRadius: '6px',
-        }}
       >
         Counter: {counter}
-      </button>
+      </Button>
     </div>
   );
 }
 `;
+
+export const defaultCodeWrapper = ({
+  theme,
+  style,
+  props,
+}: { theme: ThemeData; style?: StyleData; props: PropValues }) => {
+  return `import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { Theme as ThemeProvider } from "@radix-ui/themes";
+
+import App from "./App";
+import "@radix-ui/themes/styles.css";
+import "./index.css";
+
+const root = createRoot(document.getElementById("component-builder-preview-root"));
+root.render(
+  <StrictMode>
+    <ThemeProvider
+      ${theme.accentColor ? `accentColor="${theme.accentColor}"` : ""}
+      ${theme.grayColor ? `grayColor="${theme.grayColor}"` : ""}
+      ${theme.appearance ? `appearance="${theme.appearance}"` : ""}
+      ${theme.radius ? `radius="${theme.radius}"` : ""}
+      ${theme.scaling ? `scaling="${theme.scaling}"` : ""}
+      ${theme.panelBackground ? `panelBackground="${theme.panelBackground}"` : ""}
+    >
+      <App style={${JSON.stringify(style)}} {...${JSON.stringify(props)}} />
+    </ThemeProvider>
+  </StrictMode>
+);`;
+};

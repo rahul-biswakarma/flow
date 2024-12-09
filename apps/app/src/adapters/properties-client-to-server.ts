@@ -22,7 +22,7 @@ export const propertiesClientToServer = (props: PropSchema[]): Properties[] => {
 
 function propsTypesClientToServer(props: PropsType): Properties["type"] {
   switch (props) {
-    case "string":
+    case "text":
       return "string";
     case "number":
       return "number";

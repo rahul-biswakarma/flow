@@ -35,29 +35,33 @@ export const PropsBuilder = () => {
       key="component-builder-prop-builder"
       className="flex flex-col w-full text-gray-10 gap-2"
     >
-      {componentProps.length === 0
-        ? null
-        : componentProps.map((prop) => (
-            <div key={`props_builder_${prop.id}`}>
-              <PropsField
-                propData={prop}
-                onChange={(propData) => {
-                  if (!isAIGeneratingRef.current) {
-                    setComponentProps((prev) =>
-                      prev.map((p) => (p.id === propData.id ? propData : p)),
-                    );
-                  }
-                }}
-                onDelete={() => {
-                  if (!isAIGeneratingRef.current) {
-                    setComponentProps((prev) =>
-                      prev.filter((p) => p.id !== prop.id),
-                    );
-                  }
-                }}
-              />
-            </div>
-          ))}
+      {componentProps.length === 0 ? (
+        <div className="flex justify-center items-center p-6 border border-dashed border-gray-4 bg-gray-2 rounded-sm text-gray-7 cursor-default">
+          {t("props_builder.no_props")}
+        </div>
+      ) : (
+        componentProps.map((prop) => (
+          <div key={`props_builder_${prop.id}`}>
+            <PropsField
+              propData={prop}
+              onChange={(propData) => {
+                if (!isAIGeneratingRef.current) {
+                  setComponentProps((prev) =>
+                    prev.map((p) => (p.id === propData.id ? propData : p)),
+                  );
+                }
+              }}
+              onDelete={() => {
+                if (!isAIGeneratingRef.current) {
+                  setComponentProps((prev) =>
+                    prev.filter((p) => p.id !== prop.id),
+                  );
+                }
+              }}
+            />
+          </div>
+        ))
+      )}
       <Button
         variant="soft"
         color="gray"
@@ -120,10 +124,10 @@ const PropsField = ({
   }, [scopedTForTypes]);
 
   return (
-    <div className="bg-gray-2 border border-gray-a2 rounded-sm mb-2">
+    <div className="bg-gray-2 border border-gray-a4 rounded-sm mb-2">
       <div
         className={clsx(
-          "flex justify-between items-center p-4 cursor-pointer border-gray-a2",
+          "flex justify-between items-center p-4 cursor-pointer border-gray-a4",
           {
             "border-b": isExpanded,
           },
@@ -235,7 +239,7 @@ const PropsField = ({
           </div>
           {propData.propType === "object" && (
             <>
-              <div className="w-full h-0.5 bg-gray-03 border border-dashed border-gray-a3" />
+              <div className="w-full h-0.5 bg-gray-03 border border-dashed border-gray-a4" />
               <ObjectTypeFields
                 objectSchema={propData.objectSchema || {}}
                 fieldName={propData.visualName || propData.propName || "Object"}

@@ -8,17 +8,21 @@ import { IconButton } from "@v1/ui/icon-button";
 import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
 import { toast } from "@v1/ui/toast";
+import { clsx } from "clsx";
 import { useState } from "react";
 import { useComponentBuilderContext } from "./context";
+import { CodeReviewDialog } from "./modals/review-modal";
 
 export const ComponentBuilderHeader = ({
   disabled = false,
   viewState,
   setViewState,
+  showHeaderCreateButton,
 }: {
   disabled?: boolean;
   setViewState: React.Dispatch<React.SetStateAction<"editor" | "manager">>;
   viewState: "editor" | "manager";
+  showHeaderCreateButton?: boolean;
 }) => {
   const scopedT = useScopedI18n("component_builder");
 
@@ -86,27 +90,38 @@ export const ComponentBuilderHeader = ({
       </div>
       <div className="flex justify-end items-center gap-2">
         {viewState === "editor" ? (
-          <Button
-            disabled={!isConfigValid || disabled}
-            variant="surface"
-            color="green"
-            onClick={handleCreate}
-            loading={isComponentCreating}
+          <CodeReviewDialog
+            componentCode={componentCode}
+            createHandler={handleCreate}
           >
-            {!isComponentCreating && <Icons.Box />}
-            {isComponentCreating ? scopedT("creating") : scopedT("publish")}
-          </Button>
+            <Button
+              disabled={!isConfigValid || disabled}
+              variant="surface"
+              color="green"
+              loading={isComponentCreating}
+            >
+              {!isComponentCreating && (
+                <Icons.Box
+                  className={clsx({
+                    "!text-gray-9": !isConfigValid || disabled,
+                  })}
+                />
+              )}
+              {isComponentCreating ? scopedT("creating") : scopedT("publish")}
+            </Button>
+          </CodeReviewDialog>
         ) : (
-          <Button
-            variant="surface"
-            color="green"
-            onClick={() => {
-              setViewState("editor");
-            }}
-          >
-            <Icons.Plus />
-            {scopedT("build_new_component")}
-          </Button>
+          showHeaderCreateButton && (
+            <Button
+              variant="soft"
+              onClick={() => {
+                setViewState("editor");
+              }}
+            >
+              <Icons.Plus />
+              {scopedT("build_new_component")}
+            </Button>
+          )
         )}
       </div>
     </div>
