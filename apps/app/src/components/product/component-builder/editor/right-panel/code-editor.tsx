@@ -47,7 +47,7 @@ export const CodeEditor = () => {
     try {
       const formattedCode = await prettier.format(codeToFormat, {
         parser: "typescript",
-        plugins: [parserTypeScript, prettierPluginEstree],
+        plugins: [parserTypeScript, prettierPluginEstree as unknown as string],
         semi: true,
         singleQuote: true,
       });
