@@ -8,27 +8,31 @@ type ComponentListItemProps = {
 };
 
 const CELL_CLASSES = "relative text-sm component-grid-item";
+const NO_CONTENT = (
+  <div className="w-full flex justify-center text-gray-8">-</div>
+);
 
 export const ComponentListItem = ({ component }: ComponentListItemProps) => {
   return (
     <>
       <div className={CELL_CLASSES}>
         <Badge
-          className="text-mono"
+          className="text-mono -mt-[1.5px]"
           size="2"
           color={getStatusColor(component.status)}
         >
-          {component.status}
+          {component.status ?? NO_CONTENT}
         </Badge>
       </div>
 
       <div className={CELL_CLASSES}>{component.name}</div>
 
       <div className={clsx("max-w-[50vw]", CELL_CLASSES)}>
-        {component.description}
+        {component.description ?? NO_CONTENT}
       </div>
 
       <div className={clsx("flex gap-1 flex-wrap h-fit", CELL_CLASSES)}>
+        {component?.keywords?.length === 0 && NO_CONTENT}
         {component?.keywords?.map((keyword) => {
           return (
             <Badge key={keyword} size="1" color="gray">

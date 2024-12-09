@@ -1,6 +1,6 @@
 import type { Component } from "@/types";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import useSWR from "swr";
 
 export const useListComponents = ({
   projectId,
@@ -19,15 +19,19 @@ export const useListComponents = ({
 } => {
   const key = `/api/components.list?status=${status}&projectId=${projectId}&page=${page}&countPerPage=${countPerPage}`;
 
-  const { data, error, isLoading } = useSWR(key, () => {
-    return axios
-      .post("/api/components.list", {
-        status,
-        projectId,
-        page,
-        countPerPage,
-      })
-      .then((res) => res.data);
+  const { data, error, isLoading } = useQuery({
+    queryKey: [key],
+    queryFn: () => {
+      return axios
+        .post("/api/components.list", {
+          status,
+          projectId,
+          page,
+          countPerPage,
+        })
+        .then((res) => res.data);
+    },
+    staleTime: 5 * 60 * 1000,
   });
 
   return {

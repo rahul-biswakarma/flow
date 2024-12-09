@@ -100,7 +100,7 @@ const PropsField = ({
   const t = useI18n();
   const scopedT = useScopedI18n("props_builder.field");
   const scopedTForTypes = useScopedI18n("props_builder.type");
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const propsTypeOptions = useMemo(() => {
     return [

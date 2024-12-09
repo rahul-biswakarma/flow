@@ -17,12 +17,18 @@ export const ComponentManager = ({
 }) => {
   const { projectData } = useFlowContext();
 
-  const { data: publicComponentsCount } = useCountComponents({
+  const {
+    data: publicComponentsCount,
+    isLoading: publicComponentCountLoading,
+  } = useCountComponents({
     projectId: projectData.id,
     status: "public",
   });
 
-  const { data: privateComponentsCount } = useCountComponents({
+  const {
+    data: privateComponentsCount,
+    isLoading: privateComponentCountLoading,
+  } = useCountComponents({
     projectId: projectData.id,
     status: "private",
   });
@@ -62,14 +68,22 @@ export const ComponentManager = ({
         <div className="h-full max-h-full min-h-0">
           <Tabs.Content className={TAB_CONTENT_CLASSNAME} value="all">
             {!allComponentsCount ? (
-              <ComponentListEmpty setViewState={setViewState} />
+              <ComponentListEmpty
+                isLoading={
+                  publicComponentCountLoading || privateComponentCountLoading
+                }
+                setViewState={setViewState}
+              />
             ) : (
               <ComponentList totalCount={allComponentsCount} />
             )}
           </Tabs.Content>
           <Tabs.Content className={TAB_CONTENT_CLASSNAME} value="published">
             {!publicComponentsCount ? (
-              <ComponentListEmpty setViewState={setViewState} />
+              <ComponentListEmpty
+                isLoading={publicComponentCountLoading}
+                setViewState={setViewState}
+              />
             ) : (
               <ComponentList
                 totalCount={publicComponentsCount}
@@ -79,7 +93,10 @@ export const ComponentManager = ({
           </Tabs.Content>
           <Tabs.Content className={TAB_CONTENT_CLASSNAME} value="private">
             {!privateComponentsCount ? (
-              <ComponentListEmpty setViewState={setViewState} />
+              <ComponentListEmpty
+                isLoading={privateComponentCountLoading}
+                setViewState={setViewState}
+              />
             ) : (
               <ComponentList
                 totalCount={privateComponentsCount}
