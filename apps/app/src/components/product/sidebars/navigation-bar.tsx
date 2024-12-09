@@ -109,6 +109,7 @@ export function NavigationBar() {
               {navigationBarMenuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
+                    tooltip={item.title}
                     onClick={() => setActiveNavBarItem(item.key)}
                     isActive={activeNavBarItem === item.key}
                     className="px-2.5 md:px-2"
