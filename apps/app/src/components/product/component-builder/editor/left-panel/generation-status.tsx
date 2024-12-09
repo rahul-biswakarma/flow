@@ -1,7 +1,7 @@
 import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
 import { motion } from "framer-motion";
-import type { GenerationStatus } from "../types";
+import type { GenerationStatus } from "../../types";
 
 interface GenerationStatusProps {
   status: GenerationStatus;
