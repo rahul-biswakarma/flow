@@ -1,7 +1,7 @@
 import type { Editor } from "@tiptap/react";
 
 export interface RichTextEditorProps {
-content?: string
+  content?: string;
   readOnly?: boolean;
   afterSlot?: React.ReactNode;
   beforeSlot?: React.ReactNode;
