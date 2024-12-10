@@ -30,14 +30,21 @@
         "noNonNullAssertion": "off"
       },
       "correctness": {
-        "useExhaustiveDependencies": "off",
+        "noUnusedVariables": "warn",
+        "useExhaustiveDependencies": "warn",
         "noUnusedImports": {
           "level": "error",
           "fix": "safe"
         }
       },
       "suspicious": {
-        "noDuplicateJsxProps": "warn"
+        "noDuplicateJsxProps": "warn",
+        "noConsole": {
+          "level": "warn",
+          "options": {
+            "allow": ["error"]
+          }
+        }
       },
       "complexity": {
         "useLiteralKeys": "error"

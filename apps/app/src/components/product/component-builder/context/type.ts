@@ -28,4 +28,5 @@ export type ComponentBuilderContextType = {
   setComponentKeywords: React.Dispatch<React.SetStateAction<string[]>>;
   setComponentProps: React.Dispatch<React.SetStateAction<PropSchema[]>>;
   setComponentCode: React.Dispatch<React.SetStateAction<string>>;
+  resetComponentBuilder: () => void;
 };

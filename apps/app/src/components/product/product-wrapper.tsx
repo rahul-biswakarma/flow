@@ -5,6 +5,7 @@ import { SetupFlow } from "@/components/setup-flow";
 import { FlowContextProvider } from "@/context";
 import type { ProjectWithPages, User } from "@/types";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "@v1/ui/toast";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -59,6 +60,7 @@ export default function ProductWrapper({
             </motion.div>
           )}
         </AnimatePresence>
+        <Toaster richColors position="top-center" />
       </FlowContextProvider>
     </QueryClientProvider>
   );

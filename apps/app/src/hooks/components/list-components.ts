@@ -1,6 +1,7 @@
 import type { Component } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { generateComponentListKey } from "./keys";
 
 export const useListComponents = ({
   projectId,
@@ -17,12 +18,16 @@ export const useListComponents = ({
   error: unknown;
   isLoading: boolean;
 } => {
-  const key = `/api/components.list?status=${status}&projectId=${projectId}&page=${page}&countPerPage=${countPerPage}`;
+  const key = generateComponentListKey({
+    projectId,
+    status: status ?? "all",
+    page,
+  });
 
   const { data, error, isLoading } = useQuery({
     queryKey: [key],
-    queryFn: () => {
-      return axios
+    queryFn: async () => {
+      return await axios
         .post("/api/components.list", {
           status,
           projectId,
