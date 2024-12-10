@@ -136,6 +136,9 @@ export default {
   "props_builder.type.boolean": "boolean",
   "props_builder.type.boolean_info":
     "Boolean allows you to define a true/false",
+  "props_builder.type.dropdown": "dropdown",
+  "props_builder.type.dropdown_info":
+    "Dropdown allows you to define a list of options",
   "props_builder.type.object": "object",
   "props_builder.type.object_info":
     "Object allows you to define a nested structure with multiple fields",

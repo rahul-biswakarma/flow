@@ -209,9 +209,16 @@ export const createComponentQuery = async ({
   await verifyAuthUser({ supabase });
 
   try {
+    if (!component.code) {
+      throw new Error("Component code is required");
+    }
+
     const { data, error } = await supabase
       .from("components")
-      .insert(component)
+      .insert({
+        ...component,
+        code: Buffer.from(component.code).toString("base64"),
+      })
       .select()
       .single();
     if (error) throw error;

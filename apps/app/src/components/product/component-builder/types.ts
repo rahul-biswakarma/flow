@@ -1,5 +1,10 @@
 import type { EditorView } from "@codemirror/view";
 
+export interface PropOptions {
+  label: string;
+  value: string;
+}
+
 export interface ComponentData {
   name: string;
   description: string;
@@ -16,6 +21,7 @@ export type PropsType =
   | "number"
   | "boolean"
   | "object"
+  | "dropdown"
   | "self";
 export type StreamDataStatus = "not-started" | "in-progress" | "complete";
 
@@ -28,6 +34,7 @@ export interface PropSchema {
   required?: boolean;
   isList?: boolean;
   objectSchema?: ObjectSchema;
+  options?: PropOptions[];
 }
 
 export interface ObjectSchemaProperty {

@@ -2,6 +2,10 @@ import {
   BooleanFieldElement,
   TextFieldElement,
 } from "@/components/field-elements";
+import {
+  DropdownFieldElement,
+  type Option,
+} from "@/components/field-elements/dropdown-field";
 import type { FieldOnChangeProps } from "@/components/field-elements/types";
 import type {
   BasePropValue,
@@ -66,12 +70,13 @@ const PropField = ({
   value: BasePropValue;
   onChange: (value: BasePropValue) => void;
 }) => {
+  const visualName = prop.visualName || prop.propName || "no_name";
   switch (prop.propType) {
     case "text":
     case "string":
       return (
         <TextFieldElement
-          label={prop.visualName}
+          label={visualName}
           fieldInfo={prop.description}
           value={(value as string) || ""}
           onChange={(e: FieldOnChangeProps<string>) => onChange(e.value)}
@@ -83,7 +88,7 @@ const PropField = ({
       return (
         <TextFieldElement
           type="number"
-          label={prop.visualName}
+          label={visualName}
           fieldInfo={prop.description}
           value={value?.toString() ?? ""}
           onChange={(e: FieldOnChangeProps<string>) =>
@@ -96,10 +101,21 @@ const PropField = ({
     case "boolean":
       return (
         <BooleanFieldElement
-          label={prop.visualName}
+          label={visualName}
           fieldInfo={prop.description}
           value={(value as boolean) ?? false}
           onChange={(e: FieldOnChangeProps<boolean>) => onChange(e.value)}
+        />
+      );
+
+    case "dropdown":
+      return (
+        <DropdownFieldElement
+          label={visualName}
+          fieldInfo={prop.description}
+          value={(value as string) || undefined}
+          options={(prop.options as unknown as Option[]) ?? []}
+          onChange={(e: FieldOnChangeProps<Option>) => onChange(e.value.value)}
         />
       );
 
@@ -108,7 +124,7 @@ const PropField = ({
         return (
           <div className="flex flex-col gap-2">
             <Text size="2" className="text-gray-11 flex gap-2 items-center">
-              {prop.visualName}{" "}
+              {visualName}{" "}
               {prop.description && (
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -224,6 +240,8 @@ const getDefaultValueForType = (type: PropsType): BasePropValue => {
       return 0;
     case "boolean":
       return false;
+    case "dropdown":
+      return "";
     case "object":
       return {};
     case "self":

@@ -58,8 +58,13 @@ export const ArrayTextFieldElement = ({
       <ArrayValueRenderer<string>
         ref={ref}
         value={value}
+        placeholder={placeholder}
         isStreaming={isStreaming}
-        valueRender={(value: string) => <Text size="2">{value}</Text>}
+        valueRender={(value: string) => (
+          <Text size="2" className="text-gray-12">
+            {value}
+          </Text>
+        )}
         removeItem={(discardedValue) => {
           const newValue = value.filter((v) => v !== discardedValue);
           onChange({
@@ -70,9 +75,10 @@ export const ArrayTextFieldElement = ({
         }}
         inputRenderer={
           <TextField.Root
+            size="1"
             autoFocus={true}
             className={clsx(
-              "grow p-0 !bg-transparent !border-none !outline-none",
+              "grow p-0 pl-[1px] !bg-transparent !border-none !outline-none",
               fieldStyles,
               fieldFontSize,
               { "!w-0": isStreaming },
@@ -92,7 +98,7 @@ export const ArrayTextFieldElement = ({
                 }
               }
             }}
-            placeholder={placeholder}
+            placeholder={value.length > 0 ? "" : placeholder}
             disabled={isStreaming}
           />
         }

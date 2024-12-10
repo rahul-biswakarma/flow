@@ -68,8 +68,8 @@ export const CodeEditor = () => {
     <div className="w-full h-full max-h-full">
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel>
-          <div className="w-full h-full max-h-full min-h-0">
-            <div className="flex justify-between w-full px-3 py-2 border-b border-panel bg-panel-header items-center h-10">
+          <div className="flex flex-col w-full h-full max-h-full min-h-0">
+            <div className="flex justify-between w-full px-3 py-2 border-b border-panel bg-panel-header items-center h-10 min-h-10">
               <Text size="2" className="text-gray-11">
                 Editor
               </Text>

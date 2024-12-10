@@ -7,7 +7,7 @@ import { clsx } from "clsx";
 import { fieldFontSize, infoIconSize, tooltipProps } from "./constants";
 import type { FieldOnChangeProps } from "./types";
 
-type Option = {
+export type Option = {
   label: string;
   value: string;
   disabled?: boolean;
@@ -33,7 +33,7 @@ export const DropdownFieldElement = ({
   fieldInfo,
   labelClassName,
   onChange,
-  placeholder,
+  placeholder = "Select option",
   dropdownKey,
   triggerSize = "1",
 }: DropdownFieldElementProps) => {
@@ -60,9 +60,14 @@ export const DropdownFieldElement = ({
       )}
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
-          <Button color="gray" variant="soft" size={triggerSize}>
+          <Button
+            color="gray"
+            variant="soft"
+            size="2"
+            className="flex justify-between"
+          >
             {placeholder && !value && (
-              <Text className={clsx("text-gray-11 capitalize", fieldFontSize)}>
+              <Text className={clsx("text-gray-8", fieldFontSize)}>
                 {placeholder}
               </Text>
             )}

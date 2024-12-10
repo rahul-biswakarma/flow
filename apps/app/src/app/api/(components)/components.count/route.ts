@@ -21,7 +21,7 @@ export async function POST(req: Request) {
       payload.status || undefined,
     );
 
-    if (!data) {
+    if (!(data >= 0)) {
       return new Response(
         JSON.stringify({ error: "Failed to count components" }),
         { status: 500 },

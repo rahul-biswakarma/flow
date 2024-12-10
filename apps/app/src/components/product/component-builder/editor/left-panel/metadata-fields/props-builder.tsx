@@ -1,4 +1,5 @@
 import {
+  ArrayTextFieldElement,
   BooleanFieldElement,
   TextFieldElement,
 } from "@/components/field-elements";
@@ -99,7 +100,7 @@ const PropsField = ({
   const t = useI18n();
   const scopedT = useScopedI18n("props_builder.field");
   const scopedTForTypes = useScopedI18n("props_builder.type");
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const propsTypeOptions = useMemo(() => {
     return [
@@ -109,6 +110,11 @@ const PropsField = ({
         label: scopedTForTypes("boolean"),
         value: "boolean",
         info: scopedTForTypes("boolean_info"),
+      },
+      {
+        label: scopedTForTypes("dropdown"),
+        value: "dropdown",
+        info: scopedTForTypes("dropdown_info"),
       },
       {
         label: scopedTForTypes("object"),
@@ -251,6 +257,26 @@ const PropsField = ({
                 nestingLevel={0}
               />
             </>
+          )}
+          {propData.propType === "dropdown" && (
+            <div className="flex gap-2 flex-col">
+              <div className="w-full h-0.5 bg-gray-03 border border-dashed border-gray-a4" />
+              <ArrayTextFieldElement
+                label={"Dropdown Options"}
+                value={propData.options?.map((option) => option.value) || []}
+                onChange={(e: FieldOnChangeProps<string[]>): void => {
+                  if (onChange) {
+                    onChange({
+                      ...propData,
+                      options: e.value.map((value) => ({
+                        label: value,
+                        value,
+                      })),
+                    });
+                  }
+                }}
+              />
+            </div>
           )}
         </div>
       )}

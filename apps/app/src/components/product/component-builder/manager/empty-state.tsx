@@ -2,6 +2,7 @@ import { Button } from "@v1/ui/button";
 import { Icons } from "@v1/ui/icons";
 import { Text } from "@v1/ui/text";
 import { motion } from "framer-motion";
+import { TableLoadingState } from "./table-loading-state";
 
 const itemVariants = {
   hidden: { opacity: 0, y: 10 },
@@ -13,9 +14,15 @@ const itemVariants = {
 };
 export const ComponentListEmpty = ({
   setViewState,
+  isLoading,
 }: {
+  isLoading: boolean;
   setViewState: React.Dispatch<React.SetStateAction<"editor" | "manager">>;
 }) => {
+  if (isLoading) {
+    return <TableLoadingState />;
+  }
+
   return (
     <div className="flex w-full h-full items-center justify-center pb-20">
       <motion.div
