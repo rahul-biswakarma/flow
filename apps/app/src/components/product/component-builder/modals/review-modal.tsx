@@ -15,10 +15,37 @@ export const CodeReviewDialog = ({
   createHandler: () => void;
   componentCode: string;
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  if (isModalOpen) {
+    return (
+      <Modal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        createHandler={createHandler}
+        componentCode={componentCode}
+      >
+        {children}
+      </Modal>
+    );
+  }
+  return <div onClick={() => setIsModalOpen(true)}>{children}</div>;
+};
+
+const Modal = ({
+  isModalOpen,
+  setIsModalOpen,
+  componentCode,
+  createHandler,
+  children,
+}: {
+  isModalOpen: boolean;
+  setIsModalOpen: (value: boolean) => void;
+  children: React.ReactNode;
+  componentCode: string;
+  createHandler: () => void;
+}) => {
   // 0: don't show, 1: show publish button, 2: show ignore and acknowledge buttons
   const [showActionItem, setShowActionItem] = useState<0 | 1 | 2>(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const contentRef = useRef<string>("");
 
   const { submitMessage, messages, isLoading } = useAIChat({
@@ -36,6 +63,13 @@ export const CodeReviewDialog = ({
   useEffect(() => {
     contentRef.current = messages[1]?.content.trim() ?? "";
   }, [messages]);
+
+  const reviewMessage = messages[1]?.content.trim();
+
+  const onClose = () => {
+    setIsModalOpen(false);
+    setShowActionItem(0);
+  };
 
   return (
     <Dialog.Root open={isModalOpen}>
@@ -55,11 +89,7 @@ export const CodeReviewDialog = ({
           <Icons.GitMerge className="!w-[25px] !h-[25px] !text-purple-10" />{" "}
           Code Review
           <Dialog.Close className="absolute top-6 right-4">
-            <IconButton
-              onClick={() => setIsModalOpen(false)}
-              color="gray"
-              variant="ghost"
-            >
+            <IconButton onClick={onClose} color="gray" variant="ghost">
               <Icons.X />
             </IconButton>
           </Dialog.Close>
@@ -68,7 +98,7 @@ export const CodeReviewDialog = ({
           <RichTextEditor
             readOnly
             content={
-              messages[1]?.content.trim() ??
+              reviewMessage ??
               "We will review your code to ensure it meets the required guidelines. Please click on the button below to start the review."
             }
           />
@@ -78,7 +108,7 @@ export const CodeReviewDialog = ({
             <>
               <Button
                 onClick={async () => {
-                  setIsModalOpen(false);
+                  onClose();
                   await createHandler();
                 }}
                 variant="ghost"
@@ -94,7 +124,7 @@ export const CodeReviewDialog = ({
           {showActionItem === 1 && (
             <Button
               onClick={() => {
-                setIsModalOpen(false);
+                onClose();
                 createHandler();
               }}
               variant="surface"

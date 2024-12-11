@@ -55,8 +55,6 @@ function getStatusColor(status: Component["status"]) {
       return "gray";
     case "public":
       return "green";
-    case "in_review":
-      return "orange";
     default:
       return "gray";
   }

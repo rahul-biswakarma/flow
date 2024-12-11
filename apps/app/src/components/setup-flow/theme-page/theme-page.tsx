@@ -101,7 +101,6 @@ export const ThemePage = ({ onNext }: { onNext: () => void }) => {
 const Card = ({
   children,
   theme,
-  selectedTheme,
 }: {
   children: React.ReactNode;
   theme: "light" | "dark";

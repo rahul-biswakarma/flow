@@ -23,10 +23,8 @@ export const useAIChat = ({
   id,
   initialMessages = [],
   onResponse,
-  onMessageComplete,
   onFinish,
   onError,
-  onStream,
 }: UseAIChatOptions = {}) => {
   const {
     messages,

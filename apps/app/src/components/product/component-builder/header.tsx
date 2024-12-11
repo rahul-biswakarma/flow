@@ -101,7 +101,7 @@ export const ComponentBuilderHeader = ({
           setViewState("manager");
         }, 3000);
       }
-    } catch (error) {
+    } catch {
       toast.error(scopedT("publish_error"));
     } finally {
       setIsComponentCreating(false);

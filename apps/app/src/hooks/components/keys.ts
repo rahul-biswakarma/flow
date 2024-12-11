@@ -1,7 +1,6 @@
 export const generateComponentListKey = ({
   projectId,
   status,
-  page,
 }: {
   projectId: string;
   status?: string;

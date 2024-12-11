@@ -11,7 +11,6 @@ const COUNT_PER_PAGE = 15;
 
 export const ComponentList = ({
   status,
-  totalCount,
 }: {
   status?: Component["status"];
   totalCount: number;

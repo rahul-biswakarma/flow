@@ -35,7 +35,7 @@ export const DropdownFieldElement = ({
   onChange,
   placeholder = "Select option",
   dropdownKey,
-  triggerSize = "1",
+  triggerSize = "2",
 }: DropdownFieldElementProps) => {
   return (
     <>
@@ -63,7 +63,7 @@ export const DropdownFieldElement = ({
           <Button
             color="gray"
             variant="soft"
-            size="2"
+            size={triggerSize}
             className="flex justify-between"
           >
             {placeholder && !value && (
