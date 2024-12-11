@@ -1,5 +1,6 @@
 import {
   BooleanFieldElement,
+  DynamicFieldRenderer,
   TextFieldElement,
 } from "@/components/field-elements";
 import {
@@ -33,16 +34,21 @@ export const PropsPanel = ({
       {props.map((prop) => (
         <Section key={prop.id}>
           {prop.isList ? (
-            <ListPropField
-              prop={prop}
-              values={(propValues[prop.propName] as BasePropValue[]) || []}
-              onChange={(value) =>
-                setPropValues((prev) => ({
-                  ...prev,
-                  [prop.propName]: value,
-                }))
-              }
-            />
+            <DynamicFieldRenderer
+              label={prop.visualName}
+              fieldInfo={prop.description}
+            >
+              <ListPropField
+                prop={prop}
+                values={(propValues[prop.propName] as BasePropValue[]) || []}
+                onChange={(value) =>
+                  setPropValues((prev) => ({
+                    ...prev,
+                    [prop.propName]: value,
+                  }))
+                }
+              />
+            </DynamicFieldRenderer>
           ) : (
             <PropField
               prop={prop}
@@ -65,12 +71,16 @@ const PropField = ({
   prop,
   value,
   onChange,
+  showTitle = true,
 }: {
   prop: PropSchema;
   value: BasePropValue;
+  showTitle?: boolean;
   onChange: (value: BasePropValue) => void;
 }) => {
-  const visualName = prop.visualName || prop.propName || "no_name";
+  const visualName = showTitle
+    ? prop.visualName || prop.propName || "no_name"
+    : undefined;
   switch (prop.propType) {
     case "text":
     case "string":
@@ -191,11 +201,12 @@ const ListPropField = ({
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             index
           }`}
-          className="flex gap-2 items-start"
+          className="flex gap-2 items-center"
         >
           <div className="flex-1">
             <PropField
               prop={prop}
+              showTitle={false}
               value={value}
               onChange={(newValue) => {
                 const newValues = [...values];

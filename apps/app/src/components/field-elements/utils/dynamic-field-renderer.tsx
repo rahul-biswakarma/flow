@@ -1,24 +1,20 @@
 import { Icons } from "@v1/ui/icons";
-import { Switch } from "@v1/ui/switch";
 import { Text } from "@v1/ui/text";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@v1/ui/tooltip";
 import { clsx } from "clsx";
-import { fieldFontSize, infoIconSize, tooltipProps } from "./constants";
-import type { FieldOnChangeProps } from "./types";
+import { fieldFontSize, infoIconSize, tooltipProps } from "../constants";
 
 interface BooleanFieldElementProps {
   label?: string;
-  value: boolean;
+  children: React.ReactNode;
   fieldInfo?: string;
   labelClassName?: string;
-  onChange: (e: FieldOnChangeProps<boolean>) => void;
 }
 
-export const BooleanFieldElement = ({
+export const DynamicFieldRenderer = ({
   label,
-  value,
+  children,
   fieldInfo,
-  onChange,
   labelClassName,
 }: BooleanFieldElementProps) => {
   return (
@@ -42,17 +38,7 @@ export const BooleanFieldElement = ({
           )}
         </Text>
       )}
-      <Switch
-        checked={value}
-        size="1"
-        onCheckedChange={(e) =>
-          onChange({
-            isEmpty: false,
-            type: "boolean",
-            value: e,
-          })
-        }
-      />
+      {children}
     </>
   );
 };

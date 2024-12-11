@@ -141,6 +141,7 @@ export function parseAIResponse(response: string): ParsedFields {
     text,
     "<cb003>",
     "</cb003>",
+    "<cb004>",
   );
   parsedData.componentProps = extractCompleteContent(
     text,
@@ -211,6 +212,7 @@ function extractStreamingStringArrayContent(
   text: string,
   openTag: string,
   closeTag: string,
+  nextTag?: string,
 ): StreamParsedData<string[]> {
   const regex = new RegExp(`${openTag}(.+?)${closeTag}`, "g");
   const matches = text.match(regex);
@@ -221,6 +223,14 @@ function extractStreamingStringArrayContent(
     const endIndex = match.lastIndexOf(closeTag);
     return match.slice(startIndex + openTag.length, endIndex).trim();
   });
+
+  console.log("keyword", result);
+
+  if (nextTag) {
+    const regex = new RegExp(`${nextTag}`, "g");
+    const nextMatches = text.match(regex);
+    if (nextMatches) return { content: result, status: "complete" };
+  }
 
   return {
     content: result,

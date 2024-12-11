@@ -57,7 +57,7 @@ export const ComponentBuilderAIChat = () => {
       setComponentProps(latestDataRef.current.componentProps ?? []);
     latestDataRef.current.componentCode &&
       setComponentCode(latestDataRef.current.componentCode ?? "");
-  }, []);
+  }, [componentKeywordsRef, latestDataRef]);
 
   const handleMetadataStream = (data: {
     response: string;
@@ -98,7 +98,10 @@ export const ComponentBuilderAIChat = () => {
 
     if (rawParsedData.componentKeywords.content.length) {
       for (const keyword of rawParsedData.componentKeywords.content) {
-        if (!latestDataRef.current?.componentKeywords?.includes(keyword)) {
+        if (
+          !latestDataRef.current?.componentKeywords?.includes(keyword) &&
+          keyword
+        ) {
           const keywordElement = document.createElement("div");
           keywordElement.classList.add(
             "flex",

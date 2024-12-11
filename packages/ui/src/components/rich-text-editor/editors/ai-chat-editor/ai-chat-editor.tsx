@@ -52,7 +52,12 @@ export const AIChatEditor = ({
             color="gray"
             onClick={() => {
               editor.commands.setContent(
-                "Build a Pokemon Card component that show random pokemon stats",
+                `Build a Pokemon Card component that shows random pokemon stats:
+- Fetch and display random Pokemon using PokeAPI (https://pokeapi.co/api/v2/pokemon/)
+- Show name, image, types and basic stats
+- Add loading state and error handling
+- Card layout with hover effects
+- Refresh button for new random Pokemon`,
               );
             }}
             size="1"
