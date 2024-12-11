@@ -46,7 +46,7 @@ export function NavigationBar() {
 
   const projectName = projectData?.name ?? "Untitled";
   const published = projectData?.is_hosted ?? false;
-  const avatar = projectData?.avatar ?? DEFAULT_ORG_AVATAR;
+  const avatar = projectData?.avatar;
   const userAvatar = user?.avatar ?? DEFAULT_ORG_AVATAR;
 
   // Render a placeholder or loading state until mounted
@@ -62,12 +62,17 @@ export function NavigationBar() {
             <SidebarMenuItem>
               <HoverCard.Root>
                 <HoverCard.Trigger>
-                  <SidebarMenuButton
-                    size="lg"
-                    className="flex justify-center items-center data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground md:h-8 md:p-0"
-                  >
-                    <Logo />
-                  </SidebarMenuButton>
+                  <div className="flex justify-center items-center data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground h-9 w-9 p-1 -ml-0.5 rounded-sm">
+                    {!avatar && <Logo />}
+                    {avatar && (
+                      <Avatar
+                        className="h-8 w-8"
+                        radius="small"
+                        src={avatar}
+                        fallback={projectName[0] ?? "F"}
+                      />
+                    )}
+                  </div>
                 </HoverCard.Trigger>
                 <HoverCard.Content
                   side="right"

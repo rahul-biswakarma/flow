@@ -26,7 +26,7 @@ export default function ProductWrapper({
     if (showSetupFlow !== isSetupFlowEnabled) {
       setIsSetupFlowEnabled(showSetupFlow);
     }
-  }, [showSetupFlow]);
+  }, [showSetupFlow, isSetupFlowEnabled]);
 
   return (
     <QueryClientProvider client={queryClient}>
