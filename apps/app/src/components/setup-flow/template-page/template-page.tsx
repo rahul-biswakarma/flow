@@ -16,7 +16,6 @@ type TemplatePageProps = {
 };
 
 export const TemplatePage = ({
-  onPrev,
   onNext,
   selectedTemplate,
   setSelectedTemplate,

@@ -57,7 +57,14 @@ export const ComponentBuilderAIChat = () => {
       setComponentProps(latestDataRef.current.componentProps ?? []);
     latestDataRef.current.componentCode &&
       setComponentCode(latestDataRef.current.componentCode ?? "");
-  }, [componentKeywordsRef, latestDataRef]);
+  }, [
+    setComponentName,
+    componentKeywordsRef,
+    setComponentKeywords,
+    setComponentProps,
+    setComponentCode,
+    setComponentDescription,
+  ]);
 
   const handleMetadataStream = (data: {
     response: string;
@@ -132,7 +139,7 @@ export const ComponentBuilderAIChat = () => {
         latestDataRef.current.componentProps = JSON.parse(
           rawParsedData.componentProps.content,
         );
-      } catch (e) {
+      } catch {
         // ignore
       }
     }

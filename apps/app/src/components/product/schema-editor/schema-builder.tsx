@@ -36,20 +36,20 @@ export const SchemaBuilder = ({
     );
   }
 
-  const validateSchema = () => {
-    const errors: typeof validationErrors = {};
+  // const validateSchema = () => {
+  //   const errors: typeof validationErrors = {};
 
-    if (!selectedSchema.name.trim()) {
-      errors.name = "Schema name is required";
-    }
+  //   if (!selectedSchema.name.trim()) {
+  //     errors.name = "Schema name is required";
+  //   }
 
-    if (selectedSchema.fields.length === 0) {
-      errors.fields = "Add at least one field to your schema";
-    }
+  //   if (selectedSchema.fields.length === 0) {
+  //     errors.fields = "Add at least one field to your schema";
+  //   }
 
-    setValidationErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
+  //   setValidationErrors(errors);
+  //   return Object.keys(errors).length === 0;
+  // };
 
   const addField = () => {
     const newField: SchemaField = {

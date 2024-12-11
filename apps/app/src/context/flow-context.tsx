@@ -6,7 +6,7 @@ import { LogicBuilder } from "@/components/product/logic-builder/logic-builder";
 import { Marketplace } from "@/components/product/marketplace/marketplace";
 import { SchemaEditor } from "@/components/product/schema-editor/schema-editor";
 import { Settings } from "@/components/product/settings/settings";
-import { VisualBuilder } from "@/components/visual-builder/visual-builder";
+import { VisualBuilder } from "@/components/product/visual-builder/visual-builder";
 import { useScopedI18n } from "@/locales/client";
 import type { ProjectWithPages, User } from "@/types";
 import { Icons } from "@v1/ui/icons";
@@ -98,7 +98,7 @@ export const FlowContextProvider = ({
   useEffect(() => {
     if (projectWithPages && projectWithPages?.id !== projectData?.id)
       setProjectData(projectWithPages);
-  }, [projectWithPages]);
+  }, [projectWithPages, projectData?.id]);
 
   return (
     <FlowContext.Provider

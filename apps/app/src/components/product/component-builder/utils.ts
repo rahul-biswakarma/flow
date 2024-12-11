@@ -224,8 +224,6 @@ function extractStreamingStringArrayContent(
     return match.slice(startIndex + openTag.length, endIndex).trim();
   });
 
-  console.log("keyword", result);
-
   if (nextTag) {
     const regex = new RegExp(`${nextTag}`, "g");
     const nextMatches = text.match(regex);

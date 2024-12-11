@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useThrottle } from "./use-throttle";
+
+import throttle from "lodash/throttle";
 
 interface UseInfiniteScrollOptions<T> {
   fetchData: (cursor?: string) => Promise<{
@@ -37,7 +38,7 @@ export function useInfiniteScroll<T>({
     }
   }, [fetchData, hasMore, isLoading]);
 
-  const throttledLoadMore = useThrottle(loadMore, 500);
+  const throttledLoadMore = throttle(loadMore, 500);
 
   const handleScroll = useCallback(
     (containerRef: HTMLElement | null) => {

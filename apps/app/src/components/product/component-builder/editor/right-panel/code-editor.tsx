@@ -41,7 +41,14 @@ export const CodeEditor = () => {
       // Update the preview by syncing file changes
       updateFile(activeFile, newCode);
     }
-  }, [files, activeFile, setComponentCode, componentCode, updateFile]);
+  }, [
+    files,
+    activeFile,
+    setComponentCode,
+    componentCode,
+    updateFile,
+    isAIGeneratingRef,
+  ]);
 
   const formatCode = useCallback(async (codeToFormat: string) => {
     try {

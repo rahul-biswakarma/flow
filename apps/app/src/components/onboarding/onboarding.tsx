@@ -2,7 +2,8 @@
 
 import { useScopedI18n } from "@/locales/client";
 import type { Project, User } from "@/types";
-import { Button } from "@v1/ui/button";2
+import { Button } from "@v1/ui/button";
+2;
 import { Icons } from "@v1/ui/icons";
 import { Toaster } from "@v1/ui/toast";
 import { AnimatePresence, motion } from "framer-motion";

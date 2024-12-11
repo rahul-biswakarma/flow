@@ -26,7 +26,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
       setInputColor(hex);
       setOpacity(Math.round(alpha * 100));
     }
-  }, [value]);
+  }, [value, color, opacity]);
 
   const handleColorChange = (newColor: string) => {
     if (newColor !== color) {

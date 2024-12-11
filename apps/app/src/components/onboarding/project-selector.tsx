@@ -28,7 +28,7 @@ export function ProjectSelector({
       <div className="flex group/project-selector gap-2 justify-between items-center p-3 border border-outline-02 bg-gray-a2 rounded-md overflow-hidden">
         <div className="flex gap-2 w-full">
           <div className="w-10 h-10 flex items-center justify-center rounded-sm ">
-            <Logo width={30} height={30} />
+            <Logo />
           </div>
           <div className="flex flex-col w-full">
             <Text size="3" weight="medium" className="w-full truncate">

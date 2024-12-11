@@ -43,6 +43,7 @@ export const AIChat = ({
   const { messages, isLoading, submitMessage } = useAIChat(chatOptions);
 
   // Auto-scroll effect
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const scrollToBottom = () => {
       if (scrollAreaRef.current) {
@@ -60,7 +61,7 @@ export const AIChat = ({
     const timeoutId = setTimeout(scrollToBottom, 100);
 
     return () => clearTimeout(timeoutId);
-  }, [messages]); // Re-run when messages change
+  }, [messages.length]); // Re-run when messages change
 
   const handleMessageSubmit = async (editor: Editor) => {
     try {
