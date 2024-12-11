@@ -1,7 +1,12 @@
 import { propertiesClientToServer } from "@/adapters";
 import { useFlowContext } from "@/context";
+import {
+  generateComponentCountKey,
+  generateComponentListKey,
+} from "@/hooks/components/keys";
 import { useScopedI18n } from "@/locales/client";
 import type { Component } from "@/types";
+import { useQueryClient } from "@tanstack/react-query";
 import { createComponent } from "@v1/supabase/queries/client";
 import { Button } from "@v1/ui/button";
 import { IconButton } from "@v1/ui/icon-button";
@@ -37,7 +42,10 @@ export const ComponentBuilderHeader = ({
     componentCode,
     componentProps,
     isConfigValid,
+    resetComponentBuilder,
   } = useComponentBuilderContext();
+
+  const queryClient = useQueryClient();
 
   const handleCreate = async () => {
     setIsComponentCreating(true);
@@ -47,7 +55,7 @@ export const ComponentBuilderHeader = ({
     }
 
     try {
-      const project = await createComponent({
+      const component = await createComponent({
         component: {
           name: componentName,
           description: componentDescription,
@@ -60,8 +68,38 @@ export const ComponentBuilderHeader = ({
         projectId: projectData.id,
       });
 
-      if (project) {
+      if (component) {
         toast.success(scopedT("component_published"));
+        resetComponentBuilder();
+
+        queryClient.invalidateQueries({
+          queryKey: [
+            generateComponentListKey({
+              projectId: projectData.id,
+              status: "private",
+              page: 1,
+            }),
+          ],
+        });
+        queryClient.invalidateQueries({
+          queryKey: [
+            generateComponentListKey({
+              projectId: projectData.id,
+              page: 1,
+            }),
+          ],
+        });
+        queryClient.invalidateQueries({
+          queryKey: [
+            generateComponentCountKey({
+              projectId: projectData.id,
+              status: "private",
+            }),
+          ],
+        });
+        setTimeout(() => {
+          setViewState("manager");
+        }, 3000);
       }
     } catch (error) {
       toast.error(scopedT("publish_error"));

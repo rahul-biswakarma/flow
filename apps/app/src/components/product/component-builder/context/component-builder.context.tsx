@@ -41,6 +41,7 @@ const ComponentBuilderContext = createContext<ComponentBuilderContextType>({
   setComponentKeywords: () => {},
   setComponentProps: () => {},
   setComponentCode: () => {},
+  resetComponentBuilder: () => {},
 });
 
 export const ComponentBuilderProvider = ({
@@ -71,6 +72,17 @@ export const ComponentBuilderProvider = ({
     componentName && componentDescription && componentCode,
   );
 
+  const resetComponentBuilder = () => {
+    setComponentName("");
+    setComponentDescription("");
+    setComponentKeywords([]);
+    setComponentProps([]);
+    setComponentCode(defaultComponentCode);
+    setStyleValue({});
+    setThemeValue(defaultThemeValue);
+    setPropsValue({});
+  };
+
   return (
     <ComponentBuilderContext.Provider
       value={{
@@ -99,6 +111,7 @@ export const ComponentBuilderProvider = ({
         setComponentKeywords,
         setComponentProps,
         setComponentCode,
+        resetComponentBuilder,
       }}
     >
       {children}

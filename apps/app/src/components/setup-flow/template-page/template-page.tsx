@@ -24,7 +24,7 @@ export const TemplatePage = ({
   const scopedT = useScopedI18n("setup");
 
   const handleExploreMore = () => {
-    console.log("Explore more");
+    // not implemented
   };
 
   const buttonVariants = {

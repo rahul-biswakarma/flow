@@ -25,7 +25,6 @@ export const CodeReviewDialog = ({
     api: "/api/ai/rv",
     onFinish: () => {
       const response = contentRef.current;
-      console.log(response);
       if (response?.includes("data-good-job")) {
         setShowActionItem(1);
       } else {
@@ -78,9 +77,9 @@ export const CodeReviewDialog = ({
           {showActionItem === 2 && (
             <>
               <Button
-                onClick={() => {
+                onClick={async () => {
                   setIsModalOpen(false);
-                  createHandler();
+                  await createHandler();
                 }}
                 variant="ghost"
                 color="crimson"
