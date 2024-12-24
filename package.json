@@ -1,12 +1,12 @@
 {
-  "name": "v1",
+  "name": "ren",
   "private": true,
-  "workspaces": ["packages/*", "apps/*", "tooling/*"],
+  "workspaces": ["apps/*", "packages/*", "tooling/*"],
   "scripts": {
     "build": "turbo build",
     "clean": "git clean -xdf node_modules && turbo clean",
     "clean:workspaces": "turbo clean",
-    "dev": "turbo dev --filter=@v1/app",
+    "dev": "turbo dev --filter=@ren/flow",
     "dev:all": "turbo dev --parallel",
     "dev:web": "turbo dev --filter=@v1/web",
     "dev:jobs": "turbo jobs --filter=@v1/jobs",
@@ -20,11 +20,12 @@
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "@t3-oss/env-nextjs": "^0.11.1",
-    "@types/react-dom": "^18.3.1",
     "turbo": "^2.3.3",
+    "@biomejs/biome": "1.9.4",
     "typescript": "^5.6.3"
   },
-  "packageManager": "bun@1.1.26"
+  "packageManager": "bun@1.1.40",
+  "dependencies": {
+    "clsx": "^2.1.1"
+  }
 }
