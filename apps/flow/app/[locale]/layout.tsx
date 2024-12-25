@@ -1,7 +1,8 @@
 import "@ren/ui/globals.css";
 
 import { FlowLoader } from "@flow/components";
-import { ClientThemeProvider } from "@flow/components/client-theme-provider";
+
+import { ClientThemeProvider } from "@flow/providers/client-theme-provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Suspense } from "react";

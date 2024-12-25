@@ -8,8 +8,6 @@ export function GoogleSignin() {
     supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   });
 
-  console.log("test", window.location.origin);
-
   const handleSignin = () => {
     supabase.auth.signInWithOAuth({
       provider: "google",

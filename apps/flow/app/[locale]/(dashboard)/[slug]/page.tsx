@@ -1,4 +1,5 @@
 import { FlowLoader } from "@flow/components";
+import ProductWrapper from "@flow/components/product-wrapper";
 import {
   getProjectWithPages,
   getUserDetails,
@@ -26,7 +27,7 @@ export default async function Page(props: {
 
   return (
     <Suspense fallback={<FlowLoader />}>
-      {/* <ProductWrapper user={user} projectData={projectData} /> */}
+      <ProductWrapper user={user} projectData={projectData} />
     </Suspense>
   );
 }

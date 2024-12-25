@@ -1,4 +1,5 @@
 import { FlowLoader } from "@flow/components";
+import { Projects } from "@flow/components/projects";
 import {
   getUserDetails,
   getUserProjects,
@@ -8,8 +9,6 @@ import { Suspense } from "react";
 
 export default async function PageWrapper() {
   const user = await getUserDetails();
-
-  console.log("hello", user);
 
   if (!user) {
     redirect("/login");
@@ -22,7 +21,7 @@ export default async function PageWrapper() {
 
   return (
     <Suspense fallback={<FlowLoader />}>
-      {/* <OnboardingPage userData={user} projects={projects || []} /> */}
+      <Projects userData={user} projects={projects || []} />
     </Suspense>
   );
 }

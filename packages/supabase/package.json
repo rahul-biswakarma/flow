@@ -9,8 +9,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@supabase/ssr": "^0.5.1",
-    "@ren/logger": "workspace:*"
+    "@ren/logger": "workspace:*",
+    "@supabase/ssr": "^0.5.1"
   },
   "devDependencies": {
     "@supabase/supabase-js": "^2.45.6",

@@ -1,6 +1,5 @@
 {
   "name": "ren",
-  "private": true,
   "workspaces": ["apps/*", "packages/*", "tooling/*"],
   "scripts": {
     "build": "turbo build",
@@ -20,12 +19,10 @@
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {
-    "turbo": "^2.3.3",
     "@biomejs/biome": "1.9.4",
+    "turbo": "^2.3.3",
     "typescript": "^5.6.3"
   },
   "packageManager": "bun@1.1.40",
-  "dependencies": {
-    "clsx": "^2.1.1"
-  }
+  "private": true
 }

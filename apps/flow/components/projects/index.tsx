@@ -1,0 +1,131 @@
+"use client";
+
+import type { Project, User } from "@flow/data-layer/types";
+import { useScopedI18n } from "@flow/locales/client";
+import { Button, Toaster } from "@ren/ui/components";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+
+import { Icons } from "@ren/ui/icons";
+import { CreateProject } from "./create-project";
+import { ProjectManager } from "./manager";
+import type { OnboardingViews } from "./type";
+import { ProjectHeaderUserCard } from "./user-card";
+
+const pageVariants = {
+  initial: (direction: number) => ({
+    x: direction > 0 ? 20 : -20,
+    opacity: 0,
+  }),
+  animate: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction < 0 ? 20 : -20,
+    opacity: 0,
+  }),
+};
+
+const buttonVariants = {
+  initial: {
+    x: -10,
+    opacity: 0,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: {
+    x: -10,
+    opacity: 0,
+  },
+};
+
+const pageTransition = {
+  type: "tween",
+  ease: "easeInOut",
+  duration: 0.3,
+};
+
+export const Projects = ({
+  userData,
+  projects,
+}: {
+  userData: User;
+  projects: Project[];
+}) => {
+  const scopedT = useScopedI18n("onboarding");
+  const [view, setView] = useState<OnboardingViews>("select_project");
+  const [direction, setDirection] = useState(0);
+
+  const changeView = (newView: OnboardingViews) => {
+    setDirection(newView === "create_project" ? 1 : -1);
+    setView(newView);
+  };
+
+  return (
+    <div className="relative h-screen w-screen flex flex-col items-center justify-center overflow-hidden">
+      <div className="w-full flex justify-between gap-2 absolute top-0 left-0 px-4 py-2">
+        <div>
+          <AnimatePresence>
+            {view === "create_project" && (
+              <motion.div
+                key="onboarding-back-button"
+                variants={buttonVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={pageTransition}
+              >
+                <Button
+                  onClick={() => changeView("select_project")}
+                  variant="ghost"
+                  className="space-x-3"
+                >
+                  <Icons.ChevronLeft />
+                  {scopedT("back_to_selection")}
+                </Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+        <ProjectHeaderUserCard userData={userData} />
+      </div>
+      <AnimatePresence initial={false} custom={direction} mode="wait">
+        {view === "select_project" ? (
+          <motion.div
+            key="project-manager"
+            custom={direction}
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={pageTransition}
+          >
+            <ProjectManager
+              showCreateView={() => changeView("create_project")}
+              projects={projects}
+              userData={userData}
+            />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="create-project"
+            custom={direction}
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            transition={pageTransition}
+          >
+            <CreateProject
+              showProjectManger={() => changeView("select_project")}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <Toaster richColors position="top-center" />
+    </div>
+  );
+};

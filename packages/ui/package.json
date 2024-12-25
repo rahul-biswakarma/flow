@@ -15,22 +15,24 @@
     "@radix-ui/themes": "^3.1.6",
     "@tabler/icons-react": "^3.26.0",
     "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "react-resizable-panels": "^2.1.7",
-    "sonner": "^1.7.1"
+    "sonner": "^1.7.1",
+    "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
     "@ren/tailwind": "workspace:*",
     "@types/node": "^22.7.9",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
-    "tailwindcss": "^3.4.14",
     "typescript": "^5.6.3"
   },
   "exports": {
     "./globals.css": "./src/globals.css",
     "./components": "./src/components/index.ts",
     "./hooks": "./src/hooks/index.ts",
-    "./icons": "./src/icons/index.ts",
-    "./themes": "./src/themes/index.ts"
+    "./icons": "./src/icons/index.tsx",
+    "./themes": "./src/themes/index.ts",
+    "./decorators": "./src/decorators/index.ts"
   }
 }

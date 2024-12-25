@@ -1,10 +1,10 @@
 import { logger } from "@ren/logger";
 import { createSupabaseClient } from "../clients/server";
-import type { TablesUpdate } from "../types";
 
 export async function updateUser(
   userId: string,
-  data: TablesUpdate<"users">,
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  data: any,
   options?: {
     supabaseUrl: string | undefined;
     supabaseAnonKey: string | undefined;
