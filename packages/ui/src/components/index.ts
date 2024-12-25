@@ -21,6 +21,7 @@ export * from "./sheet";
 export * from "./switch";
 export * from "./table";
 export * from "./tabs";
+export * from "./classic-tabs";
 export * from "./text";
 export * from "./text-area";
 export * from "./text-field";

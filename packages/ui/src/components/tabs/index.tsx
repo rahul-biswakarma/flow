@@ -1,15 +1,54 @@
-import type { Root } from "@radix-ui/react-tabs";
-import { Tabs as RadixTabs } from "@radix-ui/react-tabs";
-import type { ComponentProps } from "react";
-import { Tabs as ShadTab } from "./tab-2";
+"use client";
 
-type CustomTabsProps = {
-  tabVariant: 1 | 2;
-} & Partial<ComponentProps<typeof Root>>;
+import * as TabsPrimitive from "@radix-ui/react-tabs";
+import clsx from "clsx";
+import * as React from "react";
 
-export const Tabs = ({ tabVariant, ...props }: CustomTabsProps) => {
-  if (tabVariant === 1) {
-    return <RadixTabs {...props} />;
-  }
-  return <ShadTab {...props} />;
-};
+const Tabs = TabsPrimitive.Root;
+
+const TabsList = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.List>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.List
+    ref={ref}
+    className={clsx(
+      "inline-flex h-10 items-center justify-center rounded-md bg-gray-surface p-1 text-gray-10",
+      className,
+    )}
+    {...props}
+  />
+));
+TabsList.displayName = TabsPrimitive.List.displayName;
+
+const TabsTrigger = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Trigger
+    ref={ref}
+    className={clsx(
+      "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-gray-a3 data-[state=active]:text-gray-12 data-[state=active]:shadow-sm",
+      className,
+    )}
+    {...props}
+  />
+));
+TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
+
+const TabsContent = React.forwardRef<
+  React.ElementRef<typeof TabsPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.Content
+    ref={ref}
+    className={clsx(
+      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-surface focus-visible:ring-offset-2",
+      className,
+    )}
+    {...props}
+  />
+));
+TabsContent.displayName = TabsPrimitive.Content.displayName;
+
+export { Tabs, TabsList, TabsTrigger, TabsContent };

@@ -1,11 +1,13 @@
 {
   "extends": "@ren/typescript/react-library.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "../../apps/flow/components/product/component-builder/props-panel"
+  ],
   "exclude": ["node_modules"]
 }

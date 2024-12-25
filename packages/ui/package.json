@@ -15,6 +15,15 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/themes": "^3.1.6",
     "@tabler/icons-react": "^3.26.0",
+    "@tiptap/react": "^2.10.4",
+    "@tiptap/extension-placeholder": "^2.10.4",
+    "@tiptap/pm": "^2.10.4",
+    "@tiptap/starter-kit": "^2.10.4",
+    "@tiptap/extension-code": "^2.10.4",
+    "@tiptap/extension-code-block": "^2.10.4",
+    "@tiptap/extension-code-block-lowlight": "^2.10.4",
+    "@tiptap/extension-highlight": "^2.10.4",
+    "@tiptap/extension-typography": "^2.10.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "react-resizable-panels": "^2.1.7",
@@ -33,6 +42,9 @@
     "./hooks": "./src/hooks/index.ts",
     "./icons": "./src/icons/index.tsx",
     "./themes": "./src/themes/index.ts",
-    "./decorators": "./src/decorators/index.ts"
+    "./decorators": "./src/decorators/index.ts",
+    "./field-elements": "./src/field-elements/index.ts",
+    "./panels": "./src/panels/index.ts",
+    "./editors": "./src/editors/index.ts"
   }
 }

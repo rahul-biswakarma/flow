@@ -12,12 +12,17 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@monaco-editor/react": "^4.6.0",
     "@ren/supabase": "workspace:*",
     "@ren/ui": "workspace:*",
+    "@ren/kv": "workspace:*",
     "@swc/wasm-web": "^1.10.1",
     "@tanstack/react-query": "^5.62.3",
+    "ai": "^4.0.22",
+    "axios": "^1.7.9",
     "clsx": "^2.1.1",
     "color-convert": "^2.0.1",
+    "dateformat": "^5.0.3",
     "framer-motion": "^11.15.0",
     "loadash": "^1.0.0",
     "nanoid": "^5.0.9",

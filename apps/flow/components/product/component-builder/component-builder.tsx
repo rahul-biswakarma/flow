@@ -1,5 +1,32 @@
+import { useState } from "react";
+import { ComponentBuilderProvider } from "./context/component-builder.context";
+import { ComponentBuilderHeader } from "./header";
+import { ComponentManager } from "./manager/component-manager";
+
+import "./styles.css";
+
 export const ComponentBuilder = () => {
+  const [viewState, setViewState] = useState<"editor" | "manager">("manager");
+  const [showHeaderCreateButton, setShowHeaderCreateButton] = useState(true);
+
   return (
-    <div className="flex w-full justify-center p-5">Component Builder</div>
+    <ComponentBuilderProvider>
+      <div className="w-full grid grid-rows-[auto_1fr] h-full max-h-full">
+        <ComponentBuilderHeader
+          showHeaderCreateButton={showHeaderCreateButton}
+          setViewState={setViewState}
+          viewState={viewState}
+        />
+        {viewState === "editor" ? (
+          <div>Editor</div>
+          // <ComponentBuilderEditor />
+        ) : (
+          <ComponentManager
+            setViewState={setViewState}
+            setShowHeaderCreateButton={setShowHeaderCreateButton}
+          />
+        )}
+      </div>
+    </ComponentBuilderProvider>
   );
 };
