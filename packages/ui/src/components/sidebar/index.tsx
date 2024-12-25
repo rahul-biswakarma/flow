@@ -2,8 +2,9 @@
 
 import { Slot } from "@radix-ui/react-slot";
 import { type VariantProps, cva } from "class-variance-authority";
-import * as React from "react";
-import { useIsMobile } from "../../hooks/use-is-mobile";
+
+import React from "react";
+import { useIsMobile } from "../../hooks";
 import { Icons } from "../../icons";
 import { cn } from "../../utils/cn";
 import type { Button } from "../button";
@@ -19,13 +20,6 @@ import {
   TooltipTrigger,
 } from "../tooltip";
 
-const SIDEBAR_COOKIE_NAME = "sidebar:state";
-const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
-const SIDEBAR_WIDTH = "16rem";
-const SIDEBAR_WIDTH_MOBILE = "18rem";
-const SIDEBAR_WIDTH_ICON = "3rem";
-const SIDEBAR_KEYBOARD_SHORTCUT = "b";
-
 type SidebarContext = {
   state: "expanded" | "collapsed";
   open: boolean;
@@ -35,6 +29,13 @@ type SidebarContext = {
   isMobile: boolean;
   toggleSidebar: () => void;
 };
+
+const SIDEBAR_COOKIE_NAME = "sidebar:state";
+const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
+const SIDEBAR_WIDTH = "16rem";
+const SIDEBAR_WIDTH_MOBILE = "18rem";
+const SIDEBAR_WIDTH_ICON = "3rem";
+const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
 const SidebarContext = React.createContext<SidebarContext | null>(null);
 
@@ -76,22 +77,20 @@ const SidebarProvider = React.forwardRef<
     const open = openProp ?? _open;
     const setOpen = React.useCallback(
       (value: boolean | ((value: boolean) => boolean)) => {
+        const openState = typeof value === "function" ? value(open) : value;
         if (setOpenProp) {
-          return setOpenProp?.(
-            typeof value === "function" ? value(open) : value,
-          );
+          setOpenProp(openState);
+        } else {
+          _setOpen(openState);
         }
 
-        _setOpen(value);
-
         // This sets the cookie to keep the sidebar state.
-        document.cookie = `${SIDEBAR_COOKIE_NAME}=${open}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+        document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
       },
       [setOpenProp, open],
     );
 
     // Helper to toggle the sidebar.
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     const toggleSidebar = React.useCallback(() => {
       return isMobile
         ? setOpenMobile((open) => !open)
@@ -118,7 +117,6 @@ const SidebarProvider = React.forwardRef<
     // This makes it easier to style the sidebar with Tailwind classes.
     const state = open ? "expanded" : "collapsed";
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
     const contextValue = React.useMemo<SidebarContext>(
       () => ({
         state,
@@ -252,7 +250,7 @@ const Sidebar = React.forwardRef<
             // Adjust the padding for floating and inset variants.
             variant === "floating" || variant === "inset"
               ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]"
-              : "group-data-[collapsible=icon]:w-[--sidebar-width-icon] border-sidebar-border group-data-[side=left]:border-r group-data-[side=right]:border-l",
+              : "group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l",
             className,
           )}
           {...props}
@@ -528,7 +526,7 @@ const sidebarMenuButtonVariants = cva(
       variant: {
         default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
         outline:
-          "bg-background shadow-[0_0_0_1px_var(--sidebar-border)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_var(--sidebar-accent)]",
+          "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
       },
       size: {
         default: "h-8 text-sm",

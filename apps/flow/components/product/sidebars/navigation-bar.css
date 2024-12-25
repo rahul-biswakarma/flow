@@ -4,3 +4,9 @@
   padding-top: 8px;
   padding-bottom: 8px;
 }
+
+.tabler-icon {
+  color: currentColor;
+  width: 16px;
+  height: 16px;
+}
