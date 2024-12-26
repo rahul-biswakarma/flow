@@ -151,21 +151,9 @@ export const ComponentBuilderAIChat = () => {
     ) {
       latestDataRef.current.componentCode = rawParsedData.componentCode.content;
       Promise.resolve().then(() => {
-        const editor = componentCodeRef.current?.getCodemirror();
+        const editor = componentCodeRef.current;
         if (!editor) return;
-
-        const currentContent = editor.state.doc.toString();
-        const newContent = rawParsedData.componentCode.content;
-
-        if (currentContent !== newContent) {
-          editor.dispatch({
-            changes: {
-              from: 0,
-              to: editor.state.doc.length,
-              insert: newContent,
-            },
-          });
-        }
+        editor.setValue(rawParsedData.componentCode.content);
       });
     }
 

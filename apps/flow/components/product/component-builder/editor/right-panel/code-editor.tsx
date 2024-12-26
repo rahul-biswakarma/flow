@@ -21,7 +21,7 @@ export const ComponentCodeEditor = () => {
   const [showDocs, setShowDocs] = useState(false);
   const { resolvedTheme } = useTheme();
 
-  const { isAIGenerating, setComponentCode, componentCode } =
+  const { isAIGenerating, setComponentCode, componentCode, componentCodeRef } =
     useComponentBuilderContext();
 
   const formatCode = useCallback(async (codeToFormat: string) => {
@@ -80,6 +80,7 @@ export const ComponentCodeEditor = () => {
             <ScrollArea>
               <CodeEditor
                 code={componentCode}
+                editorRef={componentCodeRef}
                 appliedTheme={resolvedTheme ?? "dark"}
                 handleCodeChange={(newCode: string | undefined): void => {
                   setComponentCode(newCode ?? "");

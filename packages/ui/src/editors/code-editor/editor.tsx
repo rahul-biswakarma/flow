@@ -1,6 +1,6 @@
 import Editor from "@monaco-editor/react";
-import type { editor } from "monaco-editor";
-import { useCallback, useRef } from "react";
+import { useCallback } from "react";
+import type { CodeEditorType } from "./type";
 
 enum EDITOR_THEME {
   DARK = "vs-dark",
@@ -21,25 +21,27 @@ const EDITOR_OPTIONS = {
   wordWrap: "on" as const,
 };
 
+interface CodeEditorProps {
+  code: string;
+  defaultLanguage?: string;
+  appliedTheme: string;
+  editorRef?: React.RefObject<CodeEditorType | null>;
+  handleCodeChange: (newCode: string | undefined) => void;
+}
+
 export const CodeEditor = ({
   code,
   handleCodeChange,
   appliedTheme,
   defaultLanguage = "javascript",
-}: {
-  code: string;
-  defaultLanguage?: string;
-  appliedTheme: string;
-  handleCodeChange: (newCode: string | undefined) => void;
-}) => {
-  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
-
+  editorRef,
+}: CodeEditorProps) => {
   // Initialize editor on mount
   const handleEditorDidMount = useCallback(
-    (editor: editor.IStandaloneCodeEditor) => {
-      editorRef.current = editor;
+    (editor: CodeEditorType) => {
+      if (editorRef) editorRef.current = editor;
     },
-    [],
+    [editorRef],
   );
 
   return (

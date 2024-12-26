@@ -15,7 +15,7 @@ export const ComponentBuilderEditor = () => {
     <ResizablePanelGroup direction="horizontal">
       <ResizablePanel minSize={30} defaultSize={30}>
         <ResizablePanelGroup direction="vertical">
-          <ResizablePanel minSize={30}>
+          <ResizablePanel minSize={30} defaultSize={40}>
             <MetadataFields />
           </ResizablePanel>
           <ResizableHandle />

@@ -85,7 +85,6 @@ export const Preview = () => {
     isAIGenerating,
     transformedCode,
     styleValue,
-    themeValue,
     componentProps,
   ]);
 

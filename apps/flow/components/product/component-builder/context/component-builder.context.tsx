@@ -1,7 +1,7 @@
+import type { CodeEditorType } from "@ren/ui/editors";
 import type { StyleData, ThemeData } from "@ren/ui/panels";
 import React, { useEffect, useRef, useState } from "react";
 import { createContext } from "react";
-
 import { defaultComponentCode } from "../constants";
 import type { PropSchema, PropValues } from "../types";
 import type { ComponentBuilderContextType } from "./type";
@@ -52,7 +52,7 @@ export const ComponentBuilderProvider = ({
   const componentDescriptionRef = useRef<HTMLTextAreaElement>(null);
   const componentKeywordsRef = useRef<HTMLDivElement>(null);
   const componentPropsRef = useRef<PropSchema[]>([]);
-  const componentCodeRef = useRef<any>(null);
+  const componentCodeRef = useRef<CodeEditorType>(null);
 
   const [isAIGenerating, setIsAIGenerating] = useState(false);
   const [styleValue, setStyleValue] = useState<StyleData>({});
