@@ -31,7 +31,12 @@ export const transformCode = (codeToTransform: string) => {
 export const generatePreview = (transformedCode: string) => {
   try {
     if (!transformedCode || typeof transformedCode !== "string") {
-      throw new Error("Invalid code provided");
+      return () => (
+        <div className="p-4 bg-crimson-a3 text-crimson-10 rounded-md">
+          <h4 className="font-medium">Preview Error</h4>
+          <pre className="mt-2 text-sm">Invalid code provided</pre>
+        </div>
+      );
     }
 
     const PreviewComponent = new Function(
@@ -40,27 +45,58 @@ export const generatePreview = (transformedCode: string) => {
       `
       try {
         ${transformedCode}
+
+        const ComponentFn = (() => {
+          try {
+            if (typeof App !== 'undefined') return App;
+            if (typeof FlowComponent !== 'undefined') return FlowComponent;
+            if (typeof exports !== 'undefined' && exports.default) return exports.default;
+            return null;
+          } catch (err) {
+            console.error('Error finding component:', err);
+            return null;
+          }
+        })();
+
+        if (!ComponentFn) {
+          throw new Error('No valid component found');
+        }
+
+        return function SafePreview(props) {
+          try {
+            const { style, ...restProps } = props;
+            const combinedProps = {
+              ...restProps,
+              style: {
+                ...style,
+                ...(ComponentFn.defaultProps?.style || {})
+              }
+            };
+
+            return React.createElement(ComponentFn, combinedProps);
+          } catch (err) {
+            console.error('Error rendering component:', err);
+            return React.createElement('div', { className: 'custom-block-error' },
+              React.createElement('h4', null, 'Runtime Error'),
+              React.createElement('pre', null, err.message)
+            );
+          }
+        }
       } catch (err) {
-        throw new Error('Preview generation failed: ' + err.message);
+        console.error('Error in preview setup:', err);
+        return function ErrorComponent() {
+          return React.createElement('div', { className: 'custom-block-error' },
+            React.createElement('h4', null, 'Error in preview'),
+            React.createElement('pre', null, err.message)
+          );
+        }
       }
       `,
     )(React, CustomBlockUtils);
 
-    return () => (
-      <ErrorBoundary
-        fallback={(error) => (
-          <div className="p-4 bg-crimson-a3 text-crimson-10 rounded-md">
-            <h4 className="font-medium">Runtime Error</h4>
-            <pre className="mt-2 text-sm whitespace-pre-wrap">
-              {error.message}
-            </pre>
-          </div>
-        )}
-      >
-        <PreviewComponent />
-      </ErrorBoundary>
-    );
+    return PreviewComponent;
   } catch (error) {
+    console.error("Fatal preview error:", error);
     return () => (
       <div className="p-4 bg-crimson-a3 text-crimson-10 rounded-md">
         <h4 className="font-medium">Preview Error</h4>
@@ -72,7 +108,7 @@ export const generatePreview = (transformedCode: string) => {
   }
 };
 
-class ErrorBoundary extends React.Component<{
+export class ErrorBoundary extends React.Component<{
   children: React.ReactNode;
   fallback: (error: Error) => React.ReactNode;
 }> {
