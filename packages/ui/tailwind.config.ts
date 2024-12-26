@@ -3,7 +3,7 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   presets: [baseConfig],
-  content: ["./src/**/*.{ts,tsx}"],
+  content: ["./src/**/*.{ts,tsx}", "**/*.{ts,tsx}"],
 };
 
 export default config;

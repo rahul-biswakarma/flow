@@ -5,9 +5,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": [
-    "src",
-    "../../apps/flow/components/product/component-builder/props-panel"
-  ],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }

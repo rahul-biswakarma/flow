@@ -14,6 +14,7 @@
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
     "@ren/kv": "workspace:*",
+    "@ren/tailwind": "workspace:*",
     "@ren/supabase": "workspace:*",
     "@ren/ui": "workspace:*",
     "@swc/wasm-web": "^1.10.1",
