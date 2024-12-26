@@ -17,7 +17,7 @@ export const ArrayValueRenderer = <T,>({
   inputRenderer?: ReactNode;
   removeItem?: (value: T) => void;
   isStreaming?: boolean;
-  ref?: React.RefObject<HTMLDivElement>;
+  ref?: React.RefObject<HTMLDivElement | null>;
   placeholder?: string;
 }) => {
   const [isFocused, setIsFocused] = useState(false);

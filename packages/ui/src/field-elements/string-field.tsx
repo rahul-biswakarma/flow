@@ -22,7 +22,7 @@ interface StringFieldElementProps {
   fieldInfo?: string;
   labelClassName?: string;
   onChange: (e: FieldOnChangeProps<string>) => void;
-  ref?: React.RefObject<HTMLTextAreaElement>;
+  ref?: React.RefObject<HTMLTextAreaElement | null>;
 }
 
 export const StringFieldElement = ({

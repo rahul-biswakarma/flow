@@ -4,4 +4,4 @@ export const tooltipProps = {
 };
 export const infoIconSize = "!w-[16px] !h-[16px] !text-gray-8";
 export const fieldFontSize = "text-[14px]";
-export const fieldStyles = "shadow-none";
+export const fieldStyles = "!shadow-none";

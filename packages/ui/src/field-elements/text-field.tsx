@@ -18,7 +18,7 @@ import {
 import type { FieldOnChangeProps } from "./types";
 
 interface TextFieldElementProps {
-  ref?: React.RefObject<HTMLInputElement>;
+  ref?: React.RefObject<HTMLInputElement | null>;
   label?: string;
   placeholder?: string;
   value: string;

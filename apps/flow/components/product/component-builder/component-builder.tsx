@@ -4,6 +4,7 @@ import { ComponentBuilderHeader } from "./header";
 import { ComponentManager } from "./manager/component-manager";
 
 import "./styles.css";
+import { ComponentBuilderEditor } from "./editor/component-builder-editor";
 
 export const ComponentBuilder = () => {
   const [viewState, setViewState] = useState<"editor" | "manager">("manager");
@@ -18,8 +19,7 @@ export const ComponentBuilder = () => {
           viewState={viewState}
         />
         {viewState === "editor" ? (
-          <div>Editor</div>
-          // <ComponentBuilderEditor />
+          <ComponentBuilderEditor />
         ) : (
           <ComponentManager
             setViewState={setViewState}

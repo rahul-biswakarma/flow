@@ -44,7 +44,7 @@ export class StylePanelErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <div className="p-4 text-center">
-          <Text className="text-red-9">
+          <Text className="text-crimson-10">
             Something went wrong with the style panel.
           </Text>
           <Button onClick={() => this.setState({ hasError: false })}>

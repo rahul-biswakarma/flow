@@ -36,8 +36,15 @@ export const ComponentManager = ({
   const allComponentsCount = publicComponentsCount + privateComponentsCount;
 
   useEffect(() => {
-    setShowHeaderCreateButton(!!allComponentsCount);
-  }, [allComponentsCount, setShowHeaderCreateButton]);
+    if (!publicComponentCountLoading && !privateComponentCountLoading) {
+      setShowHeaderCreateButton(!!allComponentsCount);
+    }
+  }, [
+    allComponentsCount,
+    setShowHeaderCreateButton,
+    publicComponentCountLoading,
+    privateComponentCountLoading,
+  ]);
 
   return (
     <div className="flex w-full h-full max-h-full min-h-0">

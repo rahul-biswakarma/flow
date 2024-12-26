@@ -25,7 +25,7 @@ interface ArrayTextFieldElementProps {
   fieldInfo?: string;
   onChange: (e: FieldOnChangeProps<string[]>) => void;
   isStreaming?: boolean;
-  ref?: RefObject<HTMLDivElement>;
+  ref?: RefObject<HTMLDivElement | null>;
 }
 
 export const ArrayTextFieldElement = ({
