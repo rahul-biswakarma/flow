@@ -1,9 +1,9 @@
-import { HoverCard, TextField } from "@/components";
 import convert from "color-convert";
 import debounce from "lodash/debounce";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
+import { HoverCard, TextField } from "../../components";
 
 interface ColorPickerProps {
   value: string;

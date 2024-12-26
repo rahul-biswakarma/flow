@@ -1,8 +1,7 @@
-import { Text } from "@/components";
-
-import { Icons } from "@/icons";
 import { clsx } from "clsx";
 import type React from "react";
+import { Text } from "../../components";
+import { Icons } from "../../icons";
 import { Section } from "../common/section";
 import { THEME_ACCENT_COLORS, THEME_GRAY_COLORS } from "./constants";
 import type { ThemeData } from "./type";

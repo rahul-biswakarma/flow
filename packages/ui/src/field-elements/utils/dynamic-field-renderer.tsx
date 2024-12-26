@@ -1,6 +1,11 @@
-import { Text, Tooltip, TooltipContent, TooltipTrigger } from "@/components";
-import { Icons } from "@/icons";
 import { clsx } from "clsx";
+import {
+  Text,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "../../components";
+import { Icons } from "../../icons";
 import { fieldFontSize, infoIconSize, tooltipProps } from "../constants";
 
 interface BooleanFieldElementProps {

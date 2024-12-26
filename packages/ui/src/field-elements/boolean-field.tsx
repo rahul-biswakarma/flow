@@ -1,12 +1,12 @@
+import { clsx } from "clsx";
 import {
   Switch,
   Text,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components";
-import { Icons } from "@/icons";
-import { clsx } from "clsx";
+} from "../components";
+import { Icons } from "../icons";
 import { fieldFontSize, infoIconSize, tooltipProps } from "./constants";
 import type { FieldOnChangeProps } from "./types";
 

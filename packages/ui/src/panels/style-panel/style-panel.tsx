@@ -15,9 +15,9 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components";
-import { Icons } from "@/icons";
-import { TOOLTIP_DELAY_DURATION } from "@/utils/constants";
+} from "../../components";
+import { Icons } from "../../icons";
+import { TOOLTIP_DELAY_DURATION } from "../../utils/constants";
 import { Section } from "../common/section";
 
 const DIMENSION_UNITS = ["px", "rem", "%"];

@@ -1,13 +1,13 @@
+import { clsx } from "clsx";
+import { type RefObject, useState } from "react";
 import {
   Text,
   TextField,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components";
-import { Icons } from "@/icons";
-import { clsx } from "clsx";
-import { type RefObject, useState } from "react";
+} from "../components";
+import { Icons } from "../icons";
 import {
   fieldFontSize,
   fieldStyles,

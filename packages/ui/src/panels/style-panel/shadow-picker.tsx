@@ -1,5 +1,5 @@
-import { Button, DropdownMenu, Text } from "@/components";
 import { useState } from "react";
+import { Button, DropdownMenu, Text } from "../../components";
 
 export const ShadowPicker = ({
   value,

@@ -1,12 +1,12 @@
+import { clsx } from "clsx";
 import {
   Text,
   TextArea,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components";
-import { Icons } from "@/icons";
-import { clsx } from "clsx";
+} from "../components";
+import { Icons } from "../icons";
 import {
   fieldFontSize,
   fieldStyles,

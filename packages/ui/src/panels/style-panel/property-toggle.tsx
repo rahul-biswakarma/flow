@@ -1,6 +1,6 @@
-import { IconButton, Text } from "@/components";
-import { Icons } from "@/icons";
 import { clsx } from "clsx";
+import { IconButton, Text } from "../../components";
+import { Icons } from "../../icons";
 
 interface PropertyToggleProps {
   label: string;

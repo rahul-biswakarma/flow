@@ -1,5 +1,5 @@
-import { Button, Text, toast } from "@/components";
 import { Component, type ErrorInfo, type ReactNode } from "react";
+import { Button, Text, toast } from "../../components";
 
 interface Props {
   children: ReactNode;

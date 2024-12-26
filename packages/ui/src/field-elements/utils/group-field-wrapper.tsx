@@ -1,5 +1,5 @@
-import { Text } from "@/components";
 import { clsx } from "clsx";
+import { Text } from "../../components";
 
 export const GroupFieldCardWrapper = ({
   children,

@@ -5,9 +5,9 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components";
-import { Icons } from "@/icons";
-import { TOOLTIP_DELAY_DURATION } from "@/utils/constants";
+} from "../../components";
+import { Icons } from "../../icons";
+import { TOOLTIP_DELAY_DURATION } from "../../utils/constants";
 
 import { clsx } from "clsx";
 import type React from "react";

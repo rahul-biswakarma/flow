@@ -1,5 +1,5 @@
-import { Button, DropdownMenu } from "@/components";
-import { Icons } from "@/icons";
+import { Button, DropdownMenu } from "../../components";
+import { Icons } from "../../icons";
 
 interface FontOption {
   label: string;

@@ -1,8 +1,8 @@
-import { IconButton } from "@/components";
-import { Icons } from "@/icons";
 import { clsx } from "clsx";
 import { type JSX, useState } from "react";
 import type { ReactNode } from "react";
+import { IconButton } from "../../components";
+import { Icons } from "../../icons";
 
 export const ArrayValueRenderer = <T,>({
   value,

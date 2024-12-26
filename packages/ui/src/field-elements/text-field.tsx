@@ -7,8 +7,8 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components";
-import { Icons } from "@/icons";
+} from "../components";
+import { Icons } from "../icons";
 import {
   fieldFontSize,
   fieldStyles,
