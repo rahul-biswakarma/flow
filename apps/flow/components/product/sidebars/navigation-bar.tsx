@@ -1,6 +1,6 @@
 "use client";
 
-import { Logo } from "@flow/components/logo";
+import { Logo } from "@flow/components/flow/logo";
 import { DEFAULT_ORG_AVATAR } from "@flow/constants";
 import { useScopedI18n } from "@flow/locales/client";
 import { useFlowContext } from "@flow/providers";

@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^1.0.11",
     "@monaco-editor/react": "^4.6.0",
     "@ren/kv": "workspace:*",
     "@ren/supabase": "workspace:*",

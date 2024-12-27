@@ -74,6 +74,7 @@ import {
   IconMoodWrrr,
   IconMoon,
   IconPhoto,
+  IconPhotoScan,
   IconPlus,
   IconPuzzle,
   IconRadiusBottomLeft,
@@ -83,6 +84,7 @@ import {
   IconSchema,
   IconSearch,
   IconSend,
+  IconSend2,
   IconSettings,
   IconSitemap,
   IconSparkles,
@@ -101,11 +103,12 @@ import {
 import type { IconProps } from "@tabler/icons-react";
 
 const IconWrapper = (Icon: React.ComponentType<IconProps>) => {
-  return (props: IconProps) => <Icon {...props} />;
+  return (props: IconProps) => <Icon {...props} size={props.size ?? 16} />;
 };
 
 export const Icons = {
   Bolt: IconWrapper(IconBolt),
+  PhotoScan: IconWrapper(IconPhotoScan),
   LayoutSidebar: IconWrapper(IconLayoutSidebar),
   Award: IconWrapper(IconAward),
   MoodWrr: IconWrapper(IconMoodWrrr),
@@ -154,6 +157,7 @@ export const Icons = {
   Photo: IconWrapper(IconPhoto),
   File: IconWrapper(IconFile),
   Send: IconWrapper(IconSend),
+  Send2: IconWrapper(IconSend2),
   ArrowDown: IconWrapper(IconArrowDown),
   LayoutDistributeVertical: IconWrapper(IconLayoutDistributeVertical),
   LayoutDistributeHorizontal: IconWrapper(IconLayoutDistributeHorizontal),

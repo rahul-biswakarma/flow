@@ -2,7 +2,7 @@ import type { Project } from "@flow/data-layer/types";
 import { IconButton, Text } from "@ren/ui/components";
 import { Icons } from "@ren/ui/icons";
 import { useEffect, useState } from "react";
-import { Logo } from "../logo";
+import { Logo } from "../flow/logo";
 
 interface ProjectSelectorProps {
   project: Project;

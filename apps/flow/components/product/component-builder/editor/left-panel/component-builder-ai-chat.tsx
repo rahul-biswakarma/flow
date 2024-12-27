@@ -165,7 +165,7 @@ export const ComponentBuilderAIChat = () => {
       <AIChat
         api="/api/ai/cb"
         title="Component Assistant"
-        placeholder="Describe the component you want to create..."
+        placeholder="Write here..."
         contentHandler={handleMetadataStream}
         disabled={isAIGenerating}
         onSend={() => {

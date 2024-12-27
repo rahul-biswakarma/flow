@@ -8,7 +8,7 @@ import {
   ResizablePanelGroup,
 } from "@ren/ui/components";
 import { MetadataFields } from "./left-panel/metadata-fields/metadata-fields";
-import { ComponentCodeEditor } from "./right-panel/code-editor";
+import { ComponentCodeEditor } from "./right-panel/component-code-editor";
 
 export const ComponentBuilderEditor = () => {
   return (

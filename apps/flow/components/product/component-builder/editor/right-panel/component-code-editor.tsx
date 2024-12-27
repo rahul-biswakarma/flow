@@ -112,7 +112,10 @@ export const ComponentCodeEditor = () => {
                   </IconButton>
                 </ClassicTabs.List>
                 <ScrollArea className="flex relative max-h-full">
-                  <ClassicTabs.Content className="bg-panel" value="doc-panel">
+                  <ClassicTabs.Content
+                    className="bg-panel p-1"
+                    value="doc-panel"
+                  >
                     <RichTextEditor readOnly content={codeDocs} />
                   </ClassicTabs.Content>
                 </ScrollArea>

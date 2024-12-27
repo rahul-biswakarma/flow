@@ -1,5 +1,6 @@
-.rte-content-editor {
-  padding: 12px 12px;
+.tiptap {
+  padding: 8px;
+  border-radius: 4px;
 }
 
 .tiptap :first-child {
@@ -9,8 +10,16 @@
   margin-bottom: 0;
 }
 
+.tiptap p.is-editor-empty:first-child::before {
+  color: var(--gray-9);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
 .tiptap {
-  font-size: 14px;
+  font-size: 15px;
 
   /* List styles */
   ul,

@@ -1,64 +1,81 @@
-import { EditorContent, useEditor } from "@tiptap/react";
+import {
+  EditorContent,
+  type Predicate,
+  findChildren,
+  useEditor,
+} from "@tiptap/react";
 import "./rich-text-editor.css";
-import Code from "@tiptap/extension-code";
-import CodeBlock from "@tiptap/extension-code-block";
-import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
-import Highlight from "@tiptap/extension-highlight";
-import Placeholder from "@tiptap/extension-placeholder";
-import Typography from "@tiptap/extension-typography";
-import css from "highlight.js/lib/languages/css";
-import js from "highlight.js/lib/languages/javascript";
-import ts from "highlight.js/lib/languages/typescript";
-import html from "highlight.js/lib/languages/xml";
-import { all, createLowlight } from "lowlight";
-import { useEffect } from "react";
-import { starterExtension } from "./extension";
-import type { RichTextEditorProps } from "./types";
+import clsx from "clsx";
+import { useEffect, useImperativeHandle, useMemo } from "react";
+import React from "react";
+import { getRteExtensions } from "./extension";
+import type { RichTextEditorProps, RichTextEditorRef } from "./types";
+import { cleanNodes } from "./utils/clean-node";
 
-export const RichTextEditor = ({
-  content,
-  placeholder,
-  ...props
-}: RichTextEditorProps & {}) => {
-  const lowlight = createLowlight(all);
-  lowlight.register("html", html);
-  lowlight.register("css", css);
-  lowlight.register("js", js);
-  lowlight.register("ts", ts);
+const RichTextEditor = React.forwardRef<RichTextEditorRef, RichTextEditorProps>(
+  (props, ref) => {
+    const { content, placeholder } = props;
 
-  const extensions = [
-    starterExtension,
-    Highlight,
-    Typography,
-    CodeBlock,
-    CodeBlockLowlight.configure({
-      lowlight,
-    }),
-    Code,
-    Placeholder.configure({
-      placeholder: "How can I help you?",
-    }),
-  ];
+    const editor = useEditor({
+      immediatelyRender: false,
+      extensions: getRteExtensions({
+        placeholder,
+      }),
+      editable: !props.readOnly,
+      editorProps: {
+        attributes: {
+          class: props.editorClassName ?? "",
+        },
+      },
+    });
 
-  const editor = useEditor({
-    immediatelyRender: false,
-    extensions,
-    editable: !props.readOnly,
-  });
+    const editorOperations = useMemo(() => {
+      return {
+        editor,
+        editorView: () => editor?.view,
+        focus: () => editor?.commands.focus(),
+        getContent: () => {
+          return editor?.storage?.contentUtils?.getMarkdown?.(editor);
+        },
+        getHTML: () => editor?.getHTML() || "",
+        getJSON: (clean = true) => {
+          if (!editor) return {};
 
-  useEffect(() => {
-    if (editor) {
-      editor.commands.setContent(content || "");
-    }
-  }, [content, editor]);
+          if (clean) {
+            cleanNodes(editor);
+          }
 
-  if (!editor) return null;
+          return editor.getJSON();
+        },
+        getNodes: (fn: Predicate) =>
+          editor?.state.doc ? findChildren(editor.state.doc, fn) : [],
+        isEmpty: () => editor?.isEmpty ?? true,
+        isFocused: () => editor?.isFocused,
+        setContent: (newContent: string) =>
+          editor?.commands.setContent(newContent),
+      } as RichTextEditorRef;
+    }, [editor]);
 
-  return (
-    <EditorContent
-      className="rte-content-editor"
-      readOnly={props.readOnly}
-      editor={editor}
-    />
-  );
-};
+    useImperativeHandle(ref, () => editorOperations, [editorOperations]);
+
+    useEffect(() => {
+      if (editor) {
+        editor.commands.setContent(content || "");
+      }
+    }, [content, editor]);
+
+    if (!editor) return null;
+
+    return (
+      <EditorContent
+        className={clsx("rte-content-editor")}
+        readOnly={props.readOnly}
+        editor={editor}
+      />
+    );
+  },
+);
+
+RichTextEditor.displayName = "RichTextEditor";
+
+export { RichTextEditor };
