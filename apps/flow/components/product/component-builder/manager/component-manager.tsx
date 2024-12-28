@@ -3,13 +3,11 @@ import { useFlowContext } from "@flow/providers";
 import { ClassicTabs } from "@ren/ui/components";
 import { useEffect } from "react";
 import { ComponentList } from "./component-list";
-import { ComponentListEmpty } from "./empty-state";
 
 const TAB_CONTENT_CLASSNAME = "w-full h-full";
 const TAB_TRIGGER_CLASSNAME = "px-4 text-[13px]";
 
 export const ComponentManager = ({
-  setViewState,
   setShowHeaderCreateButton,
 }: {
   setViewState: React.Dispatch<React.SetStateAction<"editor" | "manager">>;
@@ -86,48 +84,22 @@ export const ComponentManager = ({
 
         <div className="h-full max-h-full min-h-0">
           <ClassicTabs.Content className={TAB_CONTENT_CLASSNAME} value="all">
-            {!allComponentsCount ? (
-              <ComponentListEmpty
-                isLoading={
-                  publicComponentCountLoading || privateComponentCountLoading
-                }
-                setViewState={setViewState}
-              />
-            ) : (
-              <ComponentList totalCount={allComponentsCount} />
-            )}
+            <ComponentList totalCount={allComponentsCount} />
           </ClassicTabs.Content>
           <ClassicTabs.Content
             className={TAB_CONTENT_CLASSNAME}
             value="published"
           >
-            {!publicComponentsCount ? (
-              <ComponentListEmpty
-                isLoading={publicComponentCountLoading}
-                setViewState={setViewState}
-              />
-            ) : (
-              <ComponentList
-                totalCount={publicComponentsCount}
-                status="public"
-              />
-            )}
+            <ComponentList totalCount={publicComponentsCount} status="public" />
           </ClassicTabs.Content>
           <ClassicTabs.Content
             className={TAB_CONTENT_CLASSNAME}
             value="private"
           >
-            {!privateComponentsCount ? (
-              <ComponentListEmpty
-                isLoading={privateComponentCountLoading}
-                setViewState={setViewState}
-              />
-            ) : (
-              <ComponentList
-                totalCount={privateComponentsCount}
-                status="private"
-              />
-            )}
+            <ComponentList
+              totalCount={privateComponentsCount}
+              status="private"
+            />
           </ClassicTabs.Content>
         </div>
       </ClassicTabs.Root>

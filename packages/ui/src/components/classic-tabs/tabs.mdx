@@ -1,0 +1,146 @@
+---
+metaTitle: ClassicTabs
+metaDescription: Set of content sections to be displayed one at a time.
+---
+
+```jsx live=true
+<ClassicTabs.Root defaultValue="account">
+	<ClassicTabs.List>
+		<ClassicTabs.Trigger value="account">Account</ClassicTabs.Trigger>
+		<ClassicTabs.Trigger value="documents">Documents</ClassicTabs.Trigger>
+		<ClassicTabs.Trigger value="settings">Settings</ClassicTabs.Trigger>
+	</ClassicTabs.List>
+
+	<Box pt="3">
+		<ClassicTabs.Content value="account">
+			<Text size="2">Make changes to your account.</Text>
+		</ClassicTabs.Content>
+
+		<ClassicTabs.Content value="documents">
+			<Text size="2">Access and update your documents.</Text>
+		</ClassicTabs.Content>
+
+		<ClassicTabs.Content value="settings">
+			<Text size="2">Edit your profile or update contact information.</Text>
+		</ClassicTabs.Content>
+	</Box>
+</ClassicTabs.Root>
+```
+
+## API Reference
+
+This component inherits props from the [ClassicTabs primitive](/primitives/docs/components/tabs) and supports [common margin props](/themes/docs/overview/layout#margin-props).
+
+### Root
+
+Contains all component parts.
+
+<ThemesPropsTable defs="tabsRootPropDefs" />
+
+### List
+
+Contains the triggers that sit alongside the active content.
+
+<ThemesPropsTable defs="tabsListPropDefs" />
+
+### Trigger
+
+The button that activates its associated content.
+
+### Content
+
+Contains the content associated with each trigger.
+
+## Examples
+
+### Size
+
+Use the `size` prop to control the size of the tab list.
+
+```jsx live=true line="3,11"
+<Flex direction="column" gap="4" pb="2">
+	<ClassicTabs.Root defaultValue="account">
+		<ClassicTabs.List size="1">
+			<ClassicTabs.Trigger value="account">Account</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="documents">Documents</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="settings">Settings</ClassicTabs.Trigger>
+		</ClassicTabs.List>
+	</ClassicTabs.Root>
+
+	<ClassicTabs.Root defaultValue="account">
+		<ClassicTabs.List size="2">
+			<ClassicTabs.Trigger value="account">Account</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="documents">Documents</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="settings">Settings</ClassicTabs.Trigger>
+		</ClassicTabs.List>
+	</ClassicTabs.Root>
+</Flex>
+```
+
+### Color
+
+Use the `color` prop to assign a specific [color](/themes/docs/theme/color) to the tab list.
+
+```jsx live=true line="3,11,19,27"
+<Flex direction="column" gap="4" pb="2">
+	<ClassicTabs.Root defaultValue="account">
+		<ClassicTabs.List color="indigo">
+			<ClassicTabs.Trigger value="account">Account</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="documents">Documents</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="settings">Settings</ClassicTabs.Trigger>
+		</ClassicTabs.List>
+	</ClassicTabs.Root>
+
+	<ClassicTabs.Root defaultValue="account">
+		<ClassicTabs.List color="cyan">
+			<ClassicTabs.Trigger value="account">Account</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="documents">Documents</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="settings">Settings</ClassicTabs.Trigger>
+		</ClassicTabs.List>
+	</ClassicTabs.Root>
+
+	<ClassicTabs.Root defaultValue="account">
+		<ClassicTabs.List color="orange">
+			<ClassicTabs.Trigger value="account">Account</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="documents">Documents</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="settings">Settings</ClassicTabs.Trigger>
+		</ClassicTabs.List>
+	</ClassicTabs.Root>
+
+	<ClassicTabs.Root defaultValue="account">
+		<ClassicTabs.List color="crimson">
+			<ClassicTabs.Trigger value="account">Account</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="documents">Documents</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="settings">Settings</ClassicTabs.Trigger>
+		</ClassicTabs.List>
+	</ClassicTabs.Root>
+</Flex>
+```
+
+### High-contrast
+
+Use the `highContrast` prop to increase color contrast with the background.
+
+```jsx live=true line="11"
+<Flex direction="column" gap="4" pb="2">
+	<ClassicTabs.Root defaultValue="account">
+		<ClassicTabs.List color="gray">
+			<ClassicTabs.Trigger value="account">Account</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="documents">Documents</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="settings">Settings</ClassicTabs.Trigger>
+		</ClassicTabs.List>
+	</ClassicTabs.Root>
+
+	<ClassicTabs.Root defaultValue="account">
+		<ClassicTabs.List color="gray" highContrast>
+			<ClassicTabs.Trigger value="account">Account</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="documents">Documents</ClassicTabs.Trigger>
+			<ClassicTabs.Trigger value="settings">Settings</ClassicTabs.Trigger>
+		</ClassicTabs.List>
+	</ClassicTabs.Root>
+</Flex>
+```
+
+### Navigation
+
+ClassicTabs should not be used for page navigation. Use [Tab Nav](/themes/docs/components/tab-nav) instead, which is designed for this purpose and has equivalent styles.
