@@ -9,7 +9,8 @@
     "lint": "biome lint",
     "format": "biome format --write .",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "ingest": "node ./ai/utils/ingest.js"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.0.11",
@@ -32,6 +33,7 @@
     "next": "15.1.2",
     "next-international": "^1.3.1",
     "next-themes": "^0.4.4",
+    "openai": "^4.77.0",
     "prettier-standalone": "^1.3.1-0",
     "react": "^19.0.0",
     "react-colorful": "^5.6.1",
