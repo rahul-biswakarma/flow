@@ -1,8 +1,17 @@
 import { Text, ThemeProvider } from "@ren/ui/components";
+import type { StyleData, ThemeData } from "@ren/ui/panels";
 import initSwc from "@swc/wasm-web";
 import { useCallback, useEffect, useState } from "react";
-import { useComponentBuilderContext } from "../../../context";
+import type { PropSchema } from "../product/component-builder/types";
 import { ErrorBoundary, generatePreview, transformCode } from "./utils";
+
+interface ComponentPreviewProps {
+  componentCode: string;
+  isAIGenerating: boolean;
+  styleValue: StyleData;
+  componentProps: PropSchema[];
+  themeValue: ThemeData;
+}
 
 const PreviewErrorDisplay = ({ error }: { error: string }) => (
   <div className="p-4 bg-crimson-a3 text-crimson-10 rounded-md">
@@ -13,14 +22,13 @@ const PreviewErrorDisplay = ({ error }: { error: string }) => (
   </div>
 );
 
-export const Preview = () => {
-  const {
-    componentCode,
-    isAIGenerating,
-    styleValue,
-    componentProps,
-    themeValue,
-  } = useComponentBuilderContext();
+export const ComponentPreview = ({
+  componentCode,
+  isAIGenerating,
+  styleValue,
+  componentProps,
+  themeValue,
+}: ComponentPreviewProps) => {
   const [error, setError] = useState<string | null>(null);
   const [initialized, setInitialized] = useState(false);
   const [transformedCode, setTransformedCode] = useState<string | null>(null);

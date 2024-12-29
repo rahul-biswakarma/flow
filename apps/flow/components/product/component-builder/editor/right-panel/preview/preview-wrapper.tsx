@@ -1,3 +1,4 @@
+import { ComponentPreview } from "@flow/components/preview";
 import {
   ClassicTabs,
   IconButton,
@@ -12,8 +13,6 @@ import { StylePanel, ThemePanel } from "@ren/ui/panels";
 import { useState } from "react";
 import { useComponentBuilderContext } from "../../../context";
 import { PropsPanel } from "../../../props-panel/props-panel";
-import { Preview } from "./preview";
-import {} from "./utils";
 
 export const ComponentBuilderPreview = () => {
   const {
@@ -25,6 +24,7 @@ export const ComponentBuilderPreview = () => {
     componentProps,
     propsValue,
     setPropsValue,
+    componentCode,
   } = useComponentBuilderContext();
   const [showPreviewSettings, setShowPreviewSettings] = useState(true);
 
@@ -49,7 +49,15 @@ export const ComponentBuilderPreview = () => {
                 </IconButton>
               )}
             </div>
-            <Preview />
+            <ComponentPreview
+              {...{
+                componentCode,
+                isAIGenerating,
+                styleValue,
+                componentProps,
+                themeValue,
+              }}
+            />
           </div>
         </ResizablePanel>
         {showPreviewSettings && (
