@@ -1,1 +1,1 @@
-export * from "./properties-client-to-server";
+export * from "./components/properties-client-to-server";

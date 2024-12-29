@@ -3,7 +3,10 @@ import type { UserResponse } from "@supabase/supabase-js";
 import { supabaseOption } from "@flow/utils/supabase";
 import { createSupabaseClient } from "@ren/supabase/server";
 import type { Tables } from "../internal-data-contract";
-import { countComponentsByStatusQuery } from "./queries";
+import {
+  countComponentsByStatusQuery,
+  listComponentsSummaryByStatusQuery,
+} from "./queries";
 import {
   addUserProjectRelationQuery,
   createProjectQuery,
@@ -60,6 +63,22 @@ export const getProjectBySlug = async (slug: string) => {
 export async function addProjectMember(membership: Tables<"user_projects">) {
   const supabase = await createSupabaseClient(supabaseOption);
   return addUserProjectRelationQuery({ supabase, membership });
+}
+
+export async function listComponentsSummaryByStatus(
+  projectId: string,
+  status: Tables<"components">["status"],
+  page = 1,
+  countPerPage?: number,
+) {
+  const supabase = await createSupabaseClient(supabaseOption);
+  return listComponentsSummaryByStatusQuery({
+    supabase,
+    projectId,
+    status,
+    page,
+    countPerPage,
+  });
 }
 
 export async function listComponentsByStatus(

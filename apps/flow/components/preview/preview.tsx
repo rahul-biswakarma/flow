@@ -1,16 +1,13 @@
-import { Text, ThemeProvider } from "@ren/ui/components";
-import type { StyleData, ThemeData } from "@ren/ui/panels";
-import initSwc from "@swc/wasm-web";
-import { useCallback, useEffect, useState } from "react";
+import { Text } from "@ren/ui/components";
+import type { StyleData } from "@ren/ui/panels";
+import { useCallback } from "react";
 import type { PropSchema } from "../product/component-builder/types";
-import { ErrorBoundary, generatePreview, transformCode } from "./utils";
+import { ErrorBoundary, generatePreview } from "./utils";
 
 interface ComponentPreviewProps {
   componentCode: string;
-  isAIGenerating: boolean;
   styleValue: StyleData;
   componentProps: PropSchema[];
-  themeValue: ThemeData;
 }
 
 const PreviewErrorDisplay = ({ error }: { error: string }) => (
@@ -24,56 +21,15 @@ const PreviewErrorDisplay = ({ error }: { error: string }) => (
 
 export const ComponentPreview = ({
   componentCode,
-  isAIGenerating,
   styleValue,
   componentProps,
-  themeValue,
 }: ComponentPreviewProps) => {
-  const [error, setError] = useState<string | null>(null);
-  const [initialized, setInitialized] = useState(false);
-  const [transformedCode, setTransformedCode] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function importAndRunSwcOnMount() {
-      await initSwc();
-      setInitialized(true);
-    }
-    importAndRunSwcOnMount();
-  }, []);
-
-  useEffect(() => {
-    if (!initialized) {
-      return;
-    }
-
-    try {
-      const { code: transformedCode } = transformCode(componentCode);
-      setTransformedCode(transformedCode);
-      setError(null);
-    } catch (e) {
-      if (e instanceof Error) {
-        setError(e.message);
-      } else {
-        setError(String(e));
-      }
-    }
-  }, [componentCode, initialized]);
-
   const renderPreview = useCallback(() => {
-    if (!initialized) {
-      return <Text>Loading preview...</Text>;
-    }
-
-    if (error) {
-      return <PreviewErrorDisplay error={error} />;
-    }
-
-    if (isAIGenerating) {
-      return <Text>Generating preview...</Text>;
-    }
-
-    const PreviewComponent = transformedCode
-      ? generatePreview(transformedCode)
+    const decodedComponentCode = Buffer.from(componentCode, "base64").toString(
+      "utf8",
+    );
+    const PreviewComponent = decodedComponentCode
+      ? generatePreview(decodedComponentCode)
       : null;
 
     if (!PreviewComponent) {
@@ -87,28 +43,7 @@ export const ComponentPreview = ({
         <PreviewComponent style={styleValue || {}} {...componentProps} />
       </ErrorBoundary>
     );
-  }, [
-    initialized,
-    error,
-    isAIGenerating,
-    transformedCode,
-    styleValue,
-    componentProps,
-  ]);
+  }, [componentCode, styleValue, componentProps]);
 
-  return (
-    <div className="w-full h-full min-h-full">
-      <ThemeProvider
-        style={{
-          width: "100%",
-          height: "100%",
-        }}
-        {...themeValue}
-      >
-        <div className="p-4 flex justify-center items-center h-full w-full">
-          {renderPreview()}
-        </div>
-      </ThemeProvider>
-    </div>
-  );
+  return renderPreview();
 };

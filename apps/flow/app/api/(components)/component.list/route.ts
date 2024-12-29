@@ -1,5 +1,5 @@
 import { listComponentsByStatus } from "@flow/data-layer/queries/server";
-import { createApiHandler } from "@flow/utils/api-handler";
+import { createApiHandler } from "../../../../utils/api-handler";
 
 export const POST = createApiHandler(
   async (payload) => {

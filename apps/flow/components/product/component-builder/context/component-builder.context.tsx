@@ -15,34 +15,9 @@ const defaultThemeValue: ThemeData = {
   panelBackground: "translucent",
 };
 
-const ComponentBuilderContext = createContext<ComponentBuilderContextType>({
-  isConfigValid: false,
-  isAIGenerating: false,
-  isAIGeneratingRef: { current: false },
-  componentNameRef: undefined,
-  componentDescriptionRef: undefined,
-  componentKeywordsRef: undefined,
-  componentPropsRef: undefined,
-  componentCodeRef: undefined,
-  styleValue: {},
-  componentName: "",
-  componentDescription: "",
-  componentKeywords: [],
-  componentProps: [],
-  componentCode: defaultComponentCode,
-  themeValue: defaultThemeValue,
-  propsValue: {},
-  setPropsValue: () => {},
-  setThemeValue: () => {},
-  setIsAIGenerating: () => {},
-  setStyleValue: () => {},
-  setComponentName: () => {},
-  setComponentDescription: () => {},
-  setComponentKeywords: () => {},
-  setComponentProps: () => {},
-  setComponentCode: () => {},
-  resetComponentBuilder: () => {},
-});
+const ComponentBuilderContext = createContext<ComponentBuilderContextType>(
+  {} as ComponentBuilderContextType,
+);
 
 export const ComponentBuilderProvider = ({
   children,
@@ -61,6 +36,7 @@ export const ComponentBuilderProvider = ({
   const [componentKeywords, setComponentKeywords] = useState<string[]>([]);
   const [componentProps, setComponentProps] = useState<PropSchema[]>([]);
   const [componentCode, setComponentCode] = useState(defaultComponentCode);
+  const [transformedCode, setTransformedCode] = useState<string | null>(null);
   const [themeValue, setThemeValue] = useState<ThemeData>(defaultThemeValue);
   const [propsValue, setPropsValue] = useState<PropValues>({});
 
@@ -100,6 +76,7 @@ export const ComponentBuilderProvider = ({
         componentKeywords,
         componentProps,
         componentCode,
+        transformedCode,
         themeValue,
         propsValue,
         setPropsValue,
@@ -111,6 +88,7 @@ export const ComponentBuilderProvider = ({
         setComponentKeywords,
         setComponentProps,
         setComponentCode,
+        setTransformedCode,
         resetComponentBuilder,
       }}
     >

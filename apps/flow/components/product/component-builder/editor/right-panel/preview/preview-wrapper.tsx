@@ -1,4 +1,4 @@
-import { ComponentPreview } from "@flow/components/preview";
+import { StandaloneComponentPreview } from "@flow/components/preview";
 import {
   ClassicTabs,
   IconButton,
@@ -25,6 +25,8 @@ export const ComponentBuilderPreview = () => {
     propsValue,
     setPropsValue,
     componentCode,
+    transformedCode,
+    setTransformedCode,
   } = useComponentBuilderContext();
   const [showPreviewSettings, setShowPreviewSettings] = useState(true);
 
@@ -49,13 +51,15 @@ export const ComponentBuilderPreview = () => {
                 </IconButton>
               )}
             </div>
-            <ComponentPreview
+            <StandaloneComponentPreview
               {...{
                 componentCode,
                 isAIGenerating,
                 styleValue,
                 componentProps,
                 themeValue,
+                transformedCode,
+                setTransformedCode,
               }}
             />
           </div>

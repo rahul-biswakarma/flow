@@ -88,6 +88,8 @@ export default {
   "component_builder.field.keywords": "Keywords",
   "component_builder.field.keywords_placeholder": "Enter component keywords",
   "component_builder.project_not_found": "Project not found",
+  "component_builder.wrong_transformed_code":
+    "Something is wrong with the code",
   "component_builder.component_published":
     "Component published successfully. Redirecting to component library...",
   "component_builder.publish_error": "Failed to publish component",

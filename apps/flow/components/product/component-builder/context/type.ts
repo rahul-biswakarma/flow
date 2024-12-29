@@ -19,6 +19,7 @@ export type ComponentBuilderContextType = {
   componentCode: string;
   themeValue: ThemeData;
   propsValue: PropValues;
+  transformedCode: string | null;
   setPropsValue: React.Dispatch<React.SetStateAction<PropValues>>;
   setThemeValue: React.Dispatch<React.SetStateAction<ThemeData>>;
   setIsAIGenerating: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,5 +29,6 @@ export type ComponentBuilderContextType = {
   setComponentKeywords: React.Dispatch<React.SetStateAction<string[]>>;
   setComponentProps: React.Dispatch<React.SetStateAction<PropSchema[]>>;
   setComponentCode: React.Dispatch<React.SetStateAction<string>>;
+  setTransformedCode: React.Dispatch<React.SetStateAction<string | null>>;
   resetComponentBuilder: () => void;
 };

@@ -40,6 +40,7 @@ export const ComponentBuilderHeader = ({
     componentProps,
     isConfigValid,
     resetComponentBuilder,
+    transformedCode,
   } = useComponentBuilderContext();
 
   const queryClient = useQueryClient();
@@ -51,12 +52,16 @@ export const ComponentBuilderHeader = ({
       return toast.error(scopedT("project_not_found"));
     }
 
+    if (!transformedCode) {
+      return toast.error(scopedT("wrong_transformed_code"));
+    }
+
     try {
       const component = await createComponent({
         component: {
           name: componentName,
           description: componentDescription,
-          code: componentCode,
+          code: transformedCode,
           keywords: componentKeywords,
           status: "private",
           created_by: user.id,

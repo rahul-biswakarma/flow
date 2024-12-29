@@ -305,7 +305,7 @@ export const addProjectComponentRelationQuery = async ({
   }
 };
 
-export const listComponentsByStatusQuery = async ({
+export const listComponentsSummaryByStatusQuery = async ({
   supabase,
   projectId,
   status,
@@ -326,6 +326,52 @@ export const listComponentsByStatusQuery = async ({
       .select(`
         component_id,
         components(name, id, status, description, keywords, updated_at)
+      `)
+      .eq("project_id", projectId)
+      .range(page * countPerPage - countPerPage, page * countPerPage - 1);
+
+    if (status) {
+      query = query.eq("components.status", status);
+    }
+
+    const { data: response, error } = await query;
+
+    if (error) throw error;
+
+    const components = response
+      ?.map((item) => item.components)
+      .filter((component) => component !== null) as unknown as Promise<
+      Tables<"components">[]
+    >;
+
+    return components ?? [];
+  } catch (error) {
+    logger.error("Error fetching components by status:", error);
+    throw error;
+  }
+};
+
+export const listComponentsByStatusQuery = async ({
+  supabase,
+  projectId,
+  status,
+  page = 1,
+  countPerPage = BATCH_SIZE,
+}: {
+  page: number;
+  supabase: SupabaseClient;
+  projectId: string;
+  status?: Tables<"components">["status"];
+  countPerPage?: number;
+}) => {
+  try {
+    await verifyAuthUser({ supabase });
+
+    let query = supabase
+      .from("project_components")
+      .select(`
+        component_id,
+        components(name, id, status, code, description, keywords, updated_at)
       `)
       .eq("project_id", projectId)
       .range(page * countPerPage - countPerPage, page * countPerPage - 1);

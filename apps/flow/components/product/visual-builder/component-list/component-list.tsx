@@ -1,12 +1,13 @@
-import { useListComponents } from "@flow/hooks/components/list-components";
+import { useListComponents } from "@flow/hooks";
 import { useFlowContext } from "@flow/providers";
 import { Skeleton } from "@ren/ui/components";
 import { useState } from "react";
+import { ComponentListItem } from "./component-list-item";
 
 const COUNT_PER_PAGE = 20;
 
 export const ComponentList = () => {
-  const [page, setPage] = useState(1);
+  const [page, _setPage] = useState(1);
   const { projectData } = useFlowContext();
 
   const { data: components, isLoading } = useListComponents({
@@ -26,4 +27,20 @@ export const ComponentList = () => {
       </div>
     );
   }
+
+  return (
+    <div>
+      {components?.map((component) => {
+        return (
+          <ComponentListItem
+            key={component.id}
+            componentName={component.name}
+            componentCode={component.code ?? ""}
+            styleValue={{}}
+            propsValue={[]}
+          />
+        );
+      })}
+    </div>
+  );
 };
