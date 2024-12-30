@@ -38,7 +38,7 @@ export const BorderControl = ({
   };
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 w-full">
       {!unified ? (
         <UnitTextInput
           type="number"

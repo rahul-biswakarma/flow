@@ -56,13 +56,13 @@ export const ComponentCodeEditor = () => {
               </Text>
               <div className="flex gap-4 justify-end items-center">
                 <IconButton
-                  color="gray"
+                  color="purple"
                   size="1"
                   variant="ghost"
                   onClick={handleFormatClick}
                   disabled={isAIGenerating}
                 >
-                  <Icons.Wand className="!w-4 !h-4 !text-gray-11" />
+                  <Icons.Wand className="!w-4 !h-4 !text-purple-a10" />
                 </IconButton>
                 {!showDocs && (
                   <IconButton

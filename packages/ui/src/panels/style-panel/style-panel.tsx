@@ -38,6 +38,7 @@ export const StylePanel = ({
   setStyleValue: React.Dispatch<React.SetStateAction<StyleData>>;
 }) => {
   const [borderUnified, setBorderUnified] = useState(true);
+  const [roundnessUnified, setRoundnessUnified] = useState(true);
   const updateStyle = (updates: Partial<StyleData>) => {
     setStyleValue((prev) => ({ ...prev, ...updates }));
   };
@@ -50,9 +51,9 @@ export const StylePanel = ({
           <IconButton
             variant="ghost"
             size="2"
-            color="gray"
+            color="brown"
             className={
-              styleValue.display !== "flex" ? "text-gray-10" : "text-accent-12"
+              styleValue.display !== "flex" ? "!text-brown-8" : "!text-brown-9"
             }
             onClick={() => {
               styleValue.display === "flex"
@@ -61,9 +62,9 @@ export const StylePanel = ({
             }}
           >
             {styleValue.display === "flex" ? (
-              <Icons.Layout />
+              <Icons.Adjustments />
             ) : (
-              <Icons.LayoutOff />
+              <Icons.AdjustmentsOff />
             )}
           </IconButton>
         }
@@ -162,6 +163,26 @@ export const StylePanel = ({
         </div>
       </Section>
 
+      <Section title="Roundness">
+        <BorderRadiusControl
+          value={{
+            topLeft: styleValue.borderTopLeftRadius ?? "0",
+            topRight: styleValue.borderTopRightRadius ?? "0",
+            bottomRight: styleValue.borderBottomRightRadius ?? "0",
+            bottomLeft: styleValue.borderBottomLeftRadius ?? "0",
+          }}
+          onChange={(v) =>
+            updateStyle({
+              borderTopLeftRadius: v.topLeft,
+              borderTopRightRadius: v.topRight,
+              borderBottomRightRadius: v.bottomRight,
+              borderBottomLeftRadius: v.bottomLeft,
+            })
+          }
+          unified={roundnessUnified}
+        />
+      </Section>
+
       <Section title="Colors">
         <div className="flex flex-col gap-2 pt-1">
           <PropertyToggle
@@ -247,25 +268,30 @@ export const StylePanel = ({
       >
         {styleValue.borderStyle !== undefined && (
           <div className="space-y-4">
-            <BorderControl
-              unified={borderUnified}
-              value={{
-                top: styleValue.borderTopWidth,
-                right: styleValue.borderRightWidth,
-                bottom: styleValue.borderBottomWidth,
-                left: styleValue.borderLeftWidth,
-              }}
-              onChange={(v) =>
-                updateStyle({
-                  borderTopWidth: v.top,
-                  borderRightWidth: v.right,
-                  borderBottomWidth: v.bottom,
-                  borderLeftWidth: v.left,
-                })
-              }
-            />
+            <div className="row-style-fields !gap-6">
+              <Text size="2" className="text-gray-11">
+                Border Width
+              </Text>
+              <BorderControl
+                unified={borderUnified}
+                value={{
+                  top: styleValue.borderTopWidth,
+                  right: styleValue.borderRightWidth,
+                  bottom: styleValue.borderBottomWidth,
+                  left: styleValue.borderLeftWidth,
+                }}
+                onChange={(v) =>
+                  updateStyle({
+                    borderTopWidth: v.top,
+                    borderRightWidth: v.right,
+                    borderBottomWidth: v.bottom,
+                    borderLeftWidth: v.left,
+                  })
+                }
+              />
+            </div>
 
-            <div className="space-y-2">
+            <div className="row-style-fields !gap-6">
               <Text size="2" className="text-gray-11">
                 Border Color
               </Text>
@@ -275,7 +301,7 @@ export const StylePanel = ({
               />
             </div>
 
-            <div className="row-style-fields">
+            <div className="row-style-fields !gap-6">
               <Text size="2" className="text-gray-11">
                 Border Style
               </Text>
@@ -297,24 +323,6 @@ export const StylePanel = ({
                 </SegmentedControl.Item>
               </SegmentedControl.Root>
             </div>
-
-            <BorderRadiusControl
-              value={{
-                topLeft: styleValue.borderTopLeftRadius ?? "0",
-                topRight: styleValue.borderTopRightRadius ?? "0",
-                bottomRight: styleValue.borderBottomRightRadius ?? "0",
-                bottomLeft: styleValue.borderBottomLeftRadius ?? "0",
-              }}
-              onChange={(v) =>
-                updateStyle({
-                  borderTopLeftRadius: v.topLeft,
-                  borderTopRightRadius: v.topRight,
-                  borderBottomRightRadius: v.bottomRight,
-                  borderBottomLeftRadius: v.bottomLeft,
-                })
-              }
-              unified={borderUnified}
-            />
           </div>
         )}
       </Section>

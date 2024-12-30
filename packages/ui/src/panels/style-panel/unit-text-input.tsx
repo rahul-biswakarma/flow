@@ -73,7 +73,7 @@ export const UnitTextInput = ({
           type={type}
           value={numericValue}
           onChange={handleNumericChange}
-          className={clsx("shadow-none", { "border-red-7": error })}
+          className={clsx("shadow-none w-full", { "border-red-7": error })}
         >
           <TextField.Slot>
             <Text size="2" className="lowercase">

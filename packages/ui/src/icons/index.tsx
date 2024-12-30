@@ -1,4 +1,6 @@
 import {
+  IconAdjustments,
+  IconAdjustmentsOff,
   IconAffiliate,
   IconAlertTriangle,
   IconAlignCenter,
@@ -108,6 +110,8 @@ const IconWrapper = (Icon: React.ComponentType<IconProps>) => {
 
 export const Icons = {
   Bolt: IconWrapper(IconBolt),
+  Adjustments: IconWrapper(IconAdjustments),
+  AdjustmentsOff: IconWrapper(IconAdjustmentsOff),
   PhotoScan: IconWrapper(IconPhotoScan),
   LayoutSidebar: IconWrapper(IconLayoutSidebar),
   Award: IconWrapper(IconAward),

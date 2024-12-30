@@ -15,6 +15,9 @@ const radixColors = [
   "violet",
   "plum",
   "yellow",
+  "brown",
+  "bronze",
+  "amber",
 ];
 
 const generateRadixColorScale = (color: string) => {

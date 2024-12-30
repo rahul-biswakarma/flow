@@ -67,7 +67,7 @@ export const ComponentBuilderPreview = () => {
         {showPreviewSettings && (
           <>
             <ResizableHandle />
-            <ResizablePanel minSize={40} defaultSize={40}>
+            <ResizablePanel minSize={40} defaultSize={40} maxSize={50}>
               <ClassicTabs.Root
                 className="max-h-full"
                 defaultValue="style-panel"

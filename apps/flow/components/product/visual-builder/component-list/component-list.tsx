@@ -18,18 +18,18 @@ export const ComponentList = () => {
 
   if (isLoading) {
     return (
-      <div>
-        <Skeleton width="100%" height="30px" />
-        <Skeleton className="opacity-80" width="100%" height="30px" />
-        <Skeleton className="opacity-60" width="100%" height="30px" />
-        <Skeleton className="opacity-40" width="100%" height="30px" />
-        <Skeleton className="opacity-20" width="100%" height="30px" />
+      <div className="flex w-full flex-col gap-3">
+        <Skeleton width="100%" height="80px" />
+        <Skeleton className="opacity-80" width="100%" height="80px" />
+        <Skeleton className="opacity-60" width="100%" height="80px" />
+        <Skeleton className="opacity-40" width="100%" height="80px" />
+        <Skeleton className="opacity-20" width="100%" height="80px" />
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="w-full">
       {components?.map((component) => {
         return (
           <ComponentListItem
