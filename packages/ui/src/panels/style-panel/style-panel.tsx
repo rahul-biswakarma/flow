@@ -7,6 +7,7 @@ import type { StyleData } from "./type";
 import { UnitTextInput } from "./unit-text-input";
 import "./style-panel.css";
 
+import clsx from "clsx";
 import {
   IconButton,
   SegmentedControl,
@@ -165,10 +166,11 @@ export const StylePanel = ({
 
       <Section
         title="Roundness"
+        actionPosition="end"
         actions={
           <Toggle
             size="sm"
-            pressed={borderUnified}
+            pressed={roundnessUnified}
             onPressedChange={() => setRoundnessUnified(!roundnessUnified)}
           >
             <Icons.Maximize className="!w-3.5 !h-3.5" />
@@ -236,15 +238,18 @@ export const StylePanel = ({
 
       <Section
         title="Border"
+        actionPosition="end"
         actions={
           <>
-            <Toggle
-              size="sm"
-              pressed={borderUnified}
-              onPressedChange={() => setBorderUnified(!borderUnified)}
-            >
-              <Icons.Maximize className="!w-3.5 !h-3.5" />
-            </Toggle>
+            {styleValue.borderStyle !== undefined && (
+              <Toggle
+                size="sm"
+                pressed={borderUnified}
+                onPressedChange={() => setBorderUnified(!borderUnified)}
+              >
+                <Icons.Maximize className="!w-3.5 !h-3.5" />
+              </Toggle>
+            )}
             <IconButton
               variant="ghost"
               color="gray"
@@ -278,7 +283,11 @@ export const StylePanel = ({
       >
         {styleValue.borderStyle !== undefined && (
           <div className="space-y-4">
-            <div className="row-style-fields !gap-6">
+            <div
+              className={clsx("row-style-fields !gap-6", {
+                "!items-start": borderUnified,
+              })}
+            >
               <Text size="2" className="text-gray-11">
                 Border Width
               </Text>
