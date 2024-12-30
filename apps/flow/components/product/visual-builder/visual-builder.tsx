@@ -16,7 +16,9 @@ export const VisualBuilder = () => {
           </div>
         </ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel>hello</ResizablePanel>
+        <ResizablePanel>
+          
+        </ResizablePanel>
       </ResizablePanelGroup>
     </VisualBuilderProvider>
   );

@@ -218,6 +218,8 @@ export const StylePanel = ({
             </div>
           )}
 
+          <div className="w-full" />
+
           <PropertyToggle
             label="Text Color"
             enabled={styleValue.color !== undefined}
