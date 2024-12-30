@@ -163,7 +163,18 @@ export const StylePanel = ({
         </div>
       </Section>
 
-      <Section title="Roundness">
+      <Section
+        title="Roundness"
+        actions={
+          <Toggle
+            size="sm"
+            pressed={borderUnified}
+            onPressedChange={() => setRoundnessUnified(!roundnessUnified)}
+          >
+            <Icons.Maximize className="!w-3.5 !h-3.5" />
+          </Toggle>
+        }
+      >
         <BorderRadiusControl
           value={{
             topLeft: styleValue.borderTopLeftRadius ?? "0",
@@ -227,7 +238,6 @@ export const StylePanel = ({
         title="Border"
         actions={
           <>
-            {" "}
             <Toggle
               size="sm"
               pressed={borderUnified}
