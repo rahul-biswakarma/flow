@@ -7,11 +7,26 @@ export type VisualBuilderContainerLayout = {
   gap: string;
 };
 
+export type DropZone = "left" | "right" | "top" | "bottom";
+export type ContainerDirection = "row" | "column";
+
+export interface DropTarget {
+  containerId: string;
+  targetId?: string;
+  zone?: DropZone;
+}
+
+export interface DragItem {
+  id?: string;
+  type: "new-component" | "existing-component";
+  componentCode?: string;
+}
+
 export type VisualBuilderComponent = {
   id: string;
   code: string;
   styles: Record<string, unknown>;
-  props: Record<string, unknown>;
+  props: Record<string, unknown>[];
 };
 
 export type VisualBuilderContainer = {

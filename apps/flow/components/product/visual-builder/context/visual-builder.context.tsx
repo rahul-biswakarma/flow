@@ -3,7 +3,7 @@ import type {
   VisualBuilderComponent,
   VisualBuilderContainer,
   VisualBuilderContextType,
-} from "./types";
+} from "../types";
 
 const VisualBuilderContext = createContext<VisualBuilderContextType>(
   {} as VisualBuilderContextType,
