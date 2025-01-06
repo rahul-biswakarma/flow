@@ -1,4 +1,5 @@
 import { ComponentPreview } from "@flow/components/preview";
+import { Button } from "@ren/ui/components";
 import clsx from "clsx";
 import {} from "react";
 // components/builder-container.tsx
@@ -63,7 +64,7 @@ export function BuilderContainer({
       className={clsx(
         "relative min-h-[50px] p-2 transition-colors",
         isOver && "bg-blue-50/50",
-        !container.children?.length && "border-2 border-dashed border-gray-300"
+        !container.children?.length && "border-2 border-dashed border-gray-300",
       )}
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
@@ -78,12 +79,9 @@ export function BuilderContainer({
     >
       {showControls && (
         <div className="absolute right-2 top-2 z-50 rounded-md bg-white/90 shadow-sm">
-          <button
-            onClick={toggleDirection}
-            className="rounded-md p-1 hover:bg-gray-100"
-          >
+          <Button onClick={toggleDirection}>
             {container.layout.direction === "row" ? "⇋" : "⇅"}
-          </button>
+          </Button>
         </div>
       )}
       {(container.children || []).map((child) =>

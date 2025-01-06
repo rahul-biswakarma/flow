@@ -1,4 +1,5 @@
 import * as RenComponents from "@ren/ui/components";
+import { Heading } from "@ren/ui/components";
 import * as RenIcons from "@ren/ui/icons";
 import { transformSync } from "@swc/wasm-web";
 import React from "react";
@@ -33,7 +34,9 @@ export const generatePreview = (transformedCode: string) => {
     if (!transformedCode || typeof transformedCode !== "string") {
       return () => (
         <div className="p-4 bg-crimson-a3 text-crimson-10 rounded-md">
-          <h4 className="font-medium">Preview Error</h4>
+          <Heading as="h4" className="font-medium">
+            Preview Error
+          </Heading>
           <pre className="mt-2 text-sm">Invalid code provided</pre>
         </div>
       );
