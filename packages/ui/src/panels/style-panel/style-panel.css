@@ -1,0 +1,12 @@
+.style-editor .tabler-icon {
+  color: currentColor;
+  width: 16px;
+  height: 16px;
+}
+
+.row-style-fields {
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+}

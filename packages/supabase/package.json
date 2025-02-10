@@ -1,5 +1,5 @@
 {
-  "name": "@v1/supabase",
+  "name": "@ren/supabase",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -9,10 +9,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@supabase/ssr": "^0.5.1",
-    "@v1/logger": "workspace:*",
-    "react": "^18.2.0",
-    "server-only": "^0.0.1"
+    "@ren/logger": "workspace:*",
+    "@supabase/ssr": "^0.5.1"
   },
   "devDependencies": {
     "@supabase/supabase-js": "^2.45.6",
@@ -23,9 +21,6 @@
     "./server": "./src/clients/server.ts",
     "./client": "./src/clients/client.ts",
     "./mutations": "./src/mutations/index.ts",
-    "./middleware": "./src/clients/middleware.ts",
-    "./queries/client": "./src/queries/client.ts",
-    "./queries/server": "./src/queries/server.ts",
-    "./types": "./src/types/index.ts"
+    "./middleware": "./src/clients/middleware.ts"
   }
 }

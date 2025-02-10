@@ -1,0 +1,32 @@
+.cube1 {
+  animation: float1 2.5s ease-in-out infinite;
+}
+.cube2 {
+  animation: float 2.5s ease-in-out infinite 0.2s;
+}
+.cube3 {
+  animation: float 2.5s ease-in-out infinite 0.4s;
+}
+.cube4 {
+  animation: float 2.5s ease-in-out infinite 0.6s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-13px);
+  }
+}
+
+@keyframes float1 {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}

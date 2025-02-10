@@ -1,4 +1,4 @@
-import { logger } from "@v1/logger";
+import { logger } from "@ren/logger";
 
 import { redisClient } from "./client";
 import { CACHE_TTL, type CacheTTL } from "./utils";

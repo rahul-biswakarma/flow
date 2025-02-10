@@ -1,0 +1,10 @@
+.navigation-bar {
+  --sidebar-background: var(--product-bg);
+  border: 0px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.tabler-icon {
+  color: currentColor;
+}

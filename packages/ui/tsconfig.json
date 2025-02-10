@@ -1,11 +1,5 @@
 {
-  "extends": "@v1/typescript/react-library.json",
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
+  "extends": "@ren/typescript/react-library.json",
   "include": ["src"],
   "exclude": ["node_modules"]
 }
